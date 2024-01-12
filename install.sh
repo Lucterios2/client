@@ -1,6 +1,6 @@
 #!/bin/bash
 
-root_dir="$(dirname $(readlink -f "$0")))"
+root_dir="$(dirname $(readlink -f "$0"))"
 current_dir="$root_dir/web"
 mkdir -p $current_dir
 cd $current_dir
@@ -48,9 +48,9 @@ server {
     error_log  $current_dir/clienttest.error.log;
 
 
-    index index.html;
-
     location / {
+ #       alias $root_dir/;
+ #       index index.html;
         proxy_pass http://127.0.0.1:5173;
         proxy_read_timeout    300;
         proxy_connect_timeout 300;
