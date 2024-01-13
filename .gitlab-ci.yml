@@ -3,7 +3,7 @@ stages:
   - build
 
 build:
-  image: node:6
+  image: node:latest
   stage: build
   script:
     - npm install
@@ -14,14 +14,14 @@ build:
       - dist
 
 unit-test:
-  image: node:6
+  image: node:latest
   stage: test
   script:
     - npm install
     - npm run test:unit
 
 lint-test:
-  image: node:6
+  image: node:latest
   stage: test
   script:
     - npm run lint
