@@ -1,5 +1,4 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
   <div class="menu">
@@ -9,8 +8,8 @@
 </template>
 
 <style scoped>
-  .menu {
-    position: fixed;
-    top: 100px;
-  }
+.menu {
+  position: fixed;
+  top: 100px;
+}
 </style>

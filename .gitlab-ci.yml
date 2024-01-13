@@ -1,12 +1,12 @@
 stages:
-  - build
   - test
+  - build
 
 build:
   image: node:6
   stage: build
   script:
-    - npm install --progress=false
+    - npm install
     - npm run build
   artifacts:
     expire_in: 1 week
@@ -17,8 +17,8 @@ unit-test:
   image: node:6
   stage: test
   script:
-    - npm install --progress=false
-    - npm run unit
+    - npm install
+    - npm run test:unit
 
 lint-test:
   image: node:6

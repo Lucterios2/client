@@ -1,25 +1,24 @@
 <script>
-export default {  
-  mounted() {  
-    document.title = this.$store.state.server.title+ " - " + this.$store.state.server.sub_title
+export default {
+  mounted() {
+    document.title = this.$store.state.server.title + ' - ' + this.$store.state.server.sub_title
   }
 }
 </script>
 <script setup>
-import Status from './components/Status.vue'
-import Waiting from './components/Waiting.vue'
-import Login from './components/Login.vue'
-import Menu from './components/Menu.vue'
+import StatusBar from './components/StatusBar.vue'
+import WaitingFrame from './components/WaitingFrame.vue'
+import LoginBox from './components/LoginBox.vue'
+import MainMenu from './components/MainMenu.vue'
 </script>
 
 <template>
   <v-app>
-    <Status v-if="$store.state.show_status " />
-    <Waiting v-if="$store.state.show_waiting" />
-    <Login v-if="$store.state.show_login" />
-    <Menu />
+    <StatusBar v-if="$store.state.show_status" />
+    <WaitingFrame v-if="$store.state.show_waiting" />
+    <LoginBox v-if="$store.state.show_login" />
+    <MainMenu />
   </v-app>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

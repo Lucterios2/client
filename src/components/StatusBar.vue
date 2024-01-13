@@ -1,39 +1,37 @@
 <script setup>
-const color = "#888"
+const color = '#888'
 const items = [
-        { title: 'Logoff', action: logoff },
-        { title: 'Refresh' ,action: refresh },
-        { title: 'About ...' ,action: about},
-        { title: 'Help',action: help },
-      ]
+  { title: 'Logoff', action: logoff },
+  { title: 'Refresh', action: refresh },
+  { title: 'About ...', action: about },
+  { title: 'Help', action: help }
+]
 </script>
 <script>
 function logoff() {
-  alert("logoff")
+  alert('logoff')
 }
 function refresh() {
-  alert("refresh")
+  alert('refresh')
 }
 function about() {
-  alert("about")
+  alert('about')
 }
 function help() {
-  alert("help")
+  alert('help')
 }
 </script>
 
 <template>
-  <v-app-bar
-    :color="color"
-    density="compact"
-  >
+  <v-app-bar :color="color" density="compact">
     <template v-slot:prepend>
       <v-app-bar-nav-icon @click="$store.dispatch('toggle_summary')"></v-app-bar-nav-icon>
       <v-img :src="$store.state.server.logo_iconname" alt="Logo" height="32px" width="32px"></v-img>
     </template>
 
-    
-    <v-app-bar-title>{{ $store.state.server.login }}@{{ $store.state.server.instance_name }}</v-app-bar-title>
+    <v-app-bar-title
+      >{{ $store.state.server.login }}@{{ $store.state.server.instance_name }}</v-app-bar-title
+    >
 
     <template v-slot:append>
       <v-menu>
@@ -50,5 +48,4 @@ function help() {
   </v-app-bar>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

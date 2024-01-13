@@ -31,3 +31,4 @@ coverage
 
 # lucterios
 web/*
+package-lock.json
