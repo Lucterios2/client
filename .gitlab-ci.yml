@@ -24,4 +24,5 @@ lint-test:
   image: node:latest
   stage: test
   script:
+    - npm install
     - npm run lint
