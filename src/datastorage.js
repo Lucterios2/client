@@ -4,9 +4,10 @@ import { createStore } from 'vuex'
 const storage = createStore({
   state: {
     show_waiting: false,
-    show_status: true,
-    show_login: false,
+    show_status: false,
+    show_login: true,
     show_summary: false,
+    show_menu: false,
     server: {
       title: 'Lucterios client!!',
       sub_title: '???',
@@ -24,7 +25,7 @@ const storage = createStore({
       login: 'xxx',
       real_name: '',
       instance_name: 'unknown',
-      message_before: '',
+      message_before: 'coucou',
       mode: 0,
       login_field: 'username',
       language: '',
@@ -43,6 +44,9 @@ const storage = createStore({
     },
     change_summary(state, summary) {
       state.show_summary = summary
+    },
+    change_menu(state, menu) {
+      state.show_menu = menu
     },
     change_server(state, server) {
       state.server = server

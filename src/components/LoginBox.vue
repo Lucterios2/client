@@ -1,28 +1,28 @@
 <script setup></script>
 
 <template>
-  <div class="container">
-    <div class="login">
-      <h1>Login</h1>
-    </div>
-  </div>
+
+  <v-dialog v-model="$store.state.show_login" activator="parent" persistent max-width="400px">
+    <v-card>
+      <v-card-title>
+        <span class="headline">Logon</span>
+      </v-card-title>      
+      <v-card-text>
+        <v-container grid-list-md>
+            <v-flex md1>
+              <v-text-field label="Email" required></v-text-field>
+            </v-flex>
+            <v-flex md1>
+              <v-text-field label="Password" type="password" required></v-text-field>
+            </v-flex>
+        </v-container>
+      </v-card-text>
+      <v-card-actions>
+        <v-btn color="primary" block>OK</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <style scoped>
-.container {
-  position: fixed;
-  top: 200px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.login {
-  width: 300px;
-  height: 300px;
-  border: 2px solid black;
-}
-h1 {
-  text-align: center;
-}
 </style>

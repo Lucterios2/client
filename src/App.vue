@@ -17,7 +17,7 @@ import MainMenu from './components/MainMenu.vue'
     <StatusBar v-if="$store.state.show_status" />
     <WaitingFrame v-if="$store.state.show_waiting" />
     <LoginBox v-if="$store.state.show_login" />
-    <MainMenu />
+    <MainMenu v-if="$store.state.show_menu" />
   </v-app>
 </template>
 
