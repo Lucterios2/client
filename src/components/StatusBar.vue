@@ -1,24 +1,68 @@
 <script setup>
+import { useStore } from 'vuex'
+const emit = defineEmits(['login', 'logoff', 'refresh', 'help', 'about'])
+const store = useStore()
 const color = '#888'
 const items = [
-  { title: 'Refresh', action: refresh, icon: 'mdi:mdi-refresh' },
-  { title: 'Help', action: help, icon: 'mdi:mdi-help' },
-  { title: 'About ...', action: about, icon: 'mdi:mdi-information-variant' },
-  { title: 'Logoff', action: logoff, icon: 'mdi:mdi-logout' }
+  {
+    title: 'Refresh',
+    action: () => {
+      emit('refresh')
+    },
+    icon: 'mdi:mdi-refresh',
+    condition: function () {
+      return true
+    }
+  },
+  {
+    title: 'Help',
+    action: () => {
+      emit('help')
+    },
+    icon: 'mdi:mdi-help',
+    condition: function () {
+      return true
+    }
+  },
+  {
+    title: 'About ...',
+    action: () => {
+      emit('about')
+    },
+    icon: 'mdi:mdi-information-variant',
+    condition: function () {
+      return true
+    }
+  },
+  {
+    title: 'Login',
+    action: () => {
+      emit('login')
+    },
+    icon: 'mdi:mdi-login',
+    condition: function () {
+      return store.state.server.mode === 1 && store.state.server.login === ''
+    }
+  },
+  {
+    title: 'Logoff',
+    action: () => {
+      emit('logoff')
+    },
+    icon: 'mdi:mdi-logout',
+    condition: function () {
+      return store.state.server.login !== ''
+    }
+  }
 ]
-</script>
-<script>
-function logoff() {
-  alert('logoff')
-}
-function refresh() {
-  alert('refresh')
-}
-function about() {
-  alert('about')
-}
-function help() {
-  alert('help')
+function get_items() {
+  var new_items = []
+  items.forEach((item) => {
+    if (item.condition()) {
+      new_items.push(item)
+    }
+  })
+  return new_items
 }
 </script>
 
@@ -35,7 +79,7 @@ function help() {
       ></v-img>
     </div>
 
-    <v-app-bar-title
+    <v-app-bar-title v-if="$store.state.server.login !== ''"
       >{{ $store.state.server.login }}@{{ $store.state.server.instance_name }}</v-app-bar-title
     >
 
@@ -45,7 +89,7 @@ function help() {
           <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>
         </template>
         <v-list>
-          <v-list-item v-for="(item, i) in items" :key="i">
+          <v-list-item v-for="(item, index) in get_items()" :key="index" :value="index">
             <v-list-item-title @click="item.action">
               <v-icon :icon="item.icon"></v-icon>
               {{ item.title }}

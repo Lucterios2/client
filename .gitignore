@@ -32,3 +32,4 @@ coverage
 # lucterios
 web/*
 package-lock.json
+test-results.xml

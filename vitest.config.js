@@ -13,7 +13,14 @@ export default mergeConfig(
       },      
       environment: 'jsdom',
       exclude: [...configDefaults.exclude, 'e2e/*'],
-      root: fileURLToPath(new URL('./', import.meta.url))
+      root: fileURLToPath(new URL('./', import.meta.url)),
+      reporter: ["junit", "default"],
+      outputFile: "./test-results.xml",
+      coverage: {
+        reporter: ['text', 'html', 'cobertura'],
+        reportsDirectory: './coverage',
+        exclude: ['**/*.cjs', '**/plugins', '**/main.js'],
+      },      
     }
   })
 )

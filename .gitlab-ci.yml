@@ -2,6 +2,27 @@ stages:
   - test
   - build
 
+unit-test:
+  image: node:latest
+  stage: test
+  script:
+    - npm install
+    - npm run test:unit
+  coverage: '/All files\s+\|\s+\d+\.\d+/'
+  reports:
+    junit:
+      - test-results.xml
+    coverage_report:
+      coverage_format: cobertura
+      path: coverage/cobertura-coverage.xml
+
+lint-test:
+  image: node:latest
+  stage: test
+  script:
+    - npm install
+    - npm run lint
+
 build:
   image: node:latest
   stage: build
@@ -12,17 +33,3 @@ build:
     expire_in: 1 week
     paths:
       - dist
-
-unit-test:
-  image: node:latest
-  stage: test
-  script:
-    - npm install
-    - npm run test:unit
-
-lint-test:
-  image: node:latest
-  stage: test
-  script:
-    - npm install
-    - npm run lint
