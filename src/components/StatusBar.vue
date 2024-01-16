@@ -1,10 +1,10 @@
 <script setup>
 const color = '#888'
 const items = [
-  { title: 'Refresh', action: refresh, icon: "mdi:mdi-refresh" },
-  { title: 'Help', action: help, icon: "mdi:mdi-help" },
-  { title: 'About ...', action: about, icon: "mdi:mdi-information-variant" },
-  { title: 'Logoff', action: logoff, icon: "mdi:mdi-logout" }
+  { title: 'Refresh', action: refresh, icon: 'mdi:mdi-refresh' },
+  { title: 'Help', action: help, icon: 'mdi:mdi-help' },
+  { title: 'About ...', action: about, icon: 'mdi:mdi-information-variant' },
+  { title: 'Logoff', action: logoff, icon: 'mdi:mdi-logout' }
 ]
 </script>
 <script>
@@ -26,7 +26,13 @@ function help() {
   <v-app-bar :color="color" density="compact">
     <div class="v-toolbar__prepend">
       <v-app-bar-nav-icon @click="$store.dispatch('toggle_summary')"></v-app-bar-nav-icon>
-      <v-img id="logo" :src="$store.state.server.logo_iconname" alt="Logo" height="32px" width="32px"></v-img>
+      <v-img
+        id="logo"
+        :src="$store.state.server.logo_iconname"
+        alt="Logo"
+        height="32px"
+        width="32px"
+      ></v-img>
     </div>
 
     <v-app-bar-title
