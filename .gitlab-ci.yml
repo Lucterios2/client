@@ -9,12 +9,13 @@ unit-test:
     - npm install
     - npm run test:unit
   coverage: '/All files\s+\|\s+\d+\.\d+/'
-  reports:
-    junit:
-      - test-results.xml
-    coverage_report:
-      coverage_format: cobertura
-      path: coverage/cobertura-coverage.xml
+  artifacts:
+    reports:
+      junit:
+        - test-results.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml
 
 lint-test:
   image: node:latest
