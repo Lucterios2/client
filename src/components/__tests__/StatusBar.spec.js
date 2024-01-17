@@ -80,6 +80,7 @@ describe('StatusBar', () => {
         'mdi:mdi-login'
       )
 
+      expect(wrapper.emitted('login')).toStrictEqual(undefined)
       await wrapper.findAll('v-list-item-title').at(3).trigger('click')
       expect(wrapper.emitted('login')).toStrictEqual([[]])
     }),
