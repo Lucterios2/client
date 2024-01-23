@@ -3,6 +3,7 @@ import { shallowMount } from '@vue/test-utils'
 
 import AboutFrame from '../AboutFrame.vue'
 import storage from '../../datastorage.js'
+import i18n from '../../i18n.js'
 
 describe('AboutFrame', () => {
   it('show about', async () => {
@@ -38,10 +39,10 @@ describe('AboutFrame', () => {
 
     const wrapper = shallowMount(AboutFrame, {
       global: {
-        plugins: [storage]
+        plugins: [storage, i18n]
       }
     })
-    expect(wrapper.find('v-card-title').text()).toBe('About')
+    expect(wrapper.find('v-card-title').text()).toBe('A propos...')
     expect(
       wrapper
         .find('v-card-text > v-row:nth-of-type(1) > v-col:nth-of-type(1) > v-img')
@@ -145,7 +146,7 @@ describe('AboutFrame', () => {
 
     await wrapper.find('v-card-actions > v-btn:nth-of-type(1)').trigger('click')
     expect(window.location).toBe(
-      'mailto:support@lucterios.org?subject=Bug report&body=%0ADescrib%20your%20problem.%0AThanks%0A'
+      'mailto:support@lucterios.org?subject=Rapport%20de%20bogue&body=%0AD%C3%A9crivez%20le%20plus%20pr%C3%A9cis%C3%A9ment%20possible%2C%20comment%20vous%20avez%20obtenu%20ce%20probl%C3%A8me.%0AMerci%20de%20votre%20aide.%0A%0A'
     )
   })
 })

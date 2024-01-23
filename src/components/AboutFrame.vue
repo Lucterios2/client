@@ -1,13 +1,15 @@
 <script setup>
 import { useStore } from 'vuex'
+import { useI18n } from 'vue-i18n'
 const store = useStore()
+const i18n = useI18n()
 const emit = defineEmits(['close'])
 const more_version = defineModel({ type: Boolean, default: false })
 const visible = true
 function send_support() {
   var url = 'mailto:' + store.state.server.support_email
-  url += '?subject=Bug report'
-  url += '&body=' + encodeURIComponent('\nDescrib your problem.\nThanks\n')
+  url += '?subject=' + encodeURIComponent(i18n.t('support_subject'))
+  url += '&body=' + encodeURIComponent(i18n.t('support_body'))
   window.location = url
 }
 </script>
@@ -15,7 +17,7 @@ function send_support() {
 <template>
   <v-dialog v-model="visible" persistent max-width="500px">
     <v-card>
-      <v-card-title class="bg-grey-lighten-3"> About </v-card-title>
+      <v-card-title class="bg-grey-lighten-3"> {{ $t('about') }} </v-card-title>
       <v-card-text>
         <v-row>
           <v-col cols="4">
@@ -24,7 +26,7 @@ function send_support() {
           <v-col cols="8">
             <h2 class="text-center">{{ $store.state.server.title }}</h2>
             <v-row>
-              <v-col cols="4" class="text-center space small">version</v-col>
+              <v-col cols="4" class="text-center space small">{{ $t('version') }}</v-col>
               <v-col cols="8" class="text-center space small">{{
                 $store.state.server.applis_version
               }}</v-col>
@@ -38,14 +40,14 @@ function send_support() {
         <v-divider :thickness="3"></v-divider>
         <v-row class="space"></v-row>
         <v-row class="space">
-          <v-col cols="12" class="text-center space"
-            >Utilise le cadre d'application Lucterios</v-col
-          >
-          <v-col cols="6" class="text-center space small">Serveur</v-col>
+          <v-col cols="12" class="text-center space">
+            {{ $t('use_lucterios_framework') }}
+          </v-col>
+          <v-col cols="6" class="text-center space small">{{ $t('server') }}</v-col>
           <v-col cols="6" class="text-center space small">{{
             $store.state.server.applis_version
           }}</v-col>
-          <v-col cols="6" class="text-center space small">Client</v-col>
+          <v-col cols="6" class="text-center space small">{{ $t('client') }}</v-col>
           <v-col cols="6" class="text-center space small">{{
             $store.state.server.version_current
           }}</v-col>
@@ -63,9 +65,7 @@ function send_support() {
           @click="more_version = !more_version"
         />
         <v-row class="space">
-          <v-col cols="12" class="text-center space"
-            >Outil de gestion personnalisé sous licence GPL</v-col
-          >
+          <v-col cols="12" class="text-center space">{{ $t('gpl_licence_tool') }}</v-col>
           <v-col cols="6" class="text-center space small"
             ><a href="https://www.lucterios.org" target="_blank"
               >https://www.lucterios.org</a
@@ -74,7 +74,7 @@ function send_support() {
           <v-col cols="6" class="text-center space small"
             ><a href="https://www.sd-libre.fr" target="_blank">https://www.sd-libre.fr</a></v-col
           >
-          <v-col cols="12" class="text-center space small">Merci de soutenir notre travail.</v-col>
+          <v-col cols="12" class="text-center space small">{{ $t('thank_to_supporting') }}</v-col>
         </v-row>
         <v-row>
           <v-col cols="4" />
@@ -98,10 +98,10 @@ function send_support() {
       <v-card-actions class="bg-grey-lighten-3">
         <v-spacer></v-spacer>
         <v-btn class="bg-grey" @click="send_support" v-if="$store.state.server.support_email !== ''"
-          ><v-icon icon="mdi:mdi-mail" width="100px" />Support</v-btn
+          ><v-icon icon="mdi:mdi-mail" width="100px" />{{ $t('support') }}</v-btn
         >
         <v-btn class="bg-grey" @click="emit('close')" width="100px"
-          ><v-icon icon="mdi:mdi-check" />OK</v-btn
+          ><v-icon icon="mdi:mdi-check" />{{ $t('ok') }}</v-btn
         >
       </v-card-actions>
     </v-card>

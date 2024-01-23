@@ -1,11 +1,13 @@
 <script setup>
 import { useStore } from 'vuex'
-const emit = defineEmits(['login', 'logoff', 'refresh', 'help', 'about'])
+import { useI18n } from 'vue-i18n'
 const store = useStore()
+const i18n = useI18n()
+const emit = defineEmits(['login', 'logoff', 'refresh', 'help', 'about'])
 const color = '#888'
 const items = [
   {
-    title: 'Refresh',
+    title: i18n.t('refresh'),
     action: () => {
       emit('refresh')
     },
@@ -15,7 +17,7 @@ const items = [
     }
   },
   {
-    title: 'Help',
+    title: i18n.t('help'),
     action: () => {
       emit('help')
     },
@@ -25,7 +27,7 @@ const items = [
     }
   },
   {
-    title: 'About ...',
+    title: i18n.t('about'),
     action: () => {
       emit('about')
     },
@@ -35,7 +37,7 @@ const items = [
     }
   },
   {
-    title: 'Login',
+    title: i18n.t('login'),
     action: () => {
       emit('login')
     },
@@ -45,7 +47,7 @@ const items = [
     }
   },
   {
-    title: 'Logoff',
+    title: i18n.t('logoff'),
     action: () => {
       emit('logoff')
     },

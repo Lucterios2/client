@@ -3,6 +3,7 @@ import { shallowMount } from '@vue/test-utils'
 
 import App from '../App.vue'
 import storage from '../datastorage.js'
+import i18n from '../i18n.js'
 
 describe('App', () => {
   it('empty', () => {
@@ -13,7 +14,7 @@ describe('App', () => {
 
     const wrapper = shallowMount(App, {
       global: {
-        plugins: [storage]
+        plugins: [storage, i18n]
       }
     })
     expect(wrapper.element.childElementCount).toBe(0)
@@ -26,7 +27,7 @@ describe('App', () => {
 
       const wrapper = shallowMount(App, {
         global: {
-          plugins: [storage]
+          plugins: [storage, i18n]
         }
       })
       expect(wrapper.element.childElementCount).toBe(1)
@@ -40,7 +41,7 @@ describe('App', () => {
 
       const wrapper = shallowMount(App, {
         global: {
-          plugins: [storage]
+          plugins: [storage, i18n]
         }
       })
       expect(wrapper.element.childElementCount).toBe(1)
@@ -54,7 +55,7 @@ describe('App', () => {
 
       const wrapper = shallowMount(App, {
         global: {
-          plugins: [storage]
+          plugins: [storage, i18n]
         }
       })
       expect(wrapper.element.childElementCount).toBe(1)
@@ -68,7 +69,7 @@ describe('App', () => {
 
       const wrapper = shallowMount(App, {
         global: {
-          plugins: [storage]
+          plugins: [storage, i18n]
         }
       })
       expect(wrapper.element.childElementCount).toBe(1)

@@ -7,18 +7,26 @@ export default {
 </script>
 <script setup>
 import { useStore } from 'vuex'
+import { useI18n } from 'vue-i18n'
 import StatusBar from './components/StatusBar.vue'
 import LoginBox from './components/LoginBox.vue'
 import MainMenu from './components/MainMenu.vue'
 import WaitingFrame from './components/WaitingFrame.vue'
 import AboutFrame from './components/AboutFrame.vue'
 const store = useStore()
-const show_about = defineModel({ type: Boolean, default: false })
+const i18n = useI18n()
+const show_about = defineModel('show_about', { type: Boolean, default: false })
+const logon_data = defineModel('logon_data', { type: String, default: '' })
+const logon_actions = defineModel('logon_actions', { type: Array, default: [] })
 
 function logon(login, password) {
-  store.commit('call_status', true)
   store.commit('call_login', false)
+  store.commit('call_waiting', true)
   console.log(login + ' - ' + password)
+  setInterval(() => {
+    store.commit('call_status', true)
+    store.commit('call_waiting', false)
+  }, 5 * 1000) // 5 sec
 }
 function login() {
   store.commit('call_status', false)
@@ -67,6 +75,37 @@ store.commit('change_server', {
   language: 'fr',
   only_admin: false
 })
+
+console.log('lang', i18n.locale.value)
+i18n.locale.value = 'fr'
+
+logon_data.value = 'NEEDAUTH'
+logon_actions.value = [
+  {
+    text: 'Mot de passe ou alias oublié?',
+    id: 'CORE/askPassword',
+    icon: 'mdi:mdi-key',
+    extension: 'CORE',
+    action: 'askPassword',
+    modal: '1',
+    close: '0',
+    unique: '1',
+    method: 'POST',
+    params: null
+  },
+  {
+    text: 'Créer un compte',
+    id: 'lucterios.contacts/createAccount',
+    icon: 'mdi:mdi-account-plus',
+    extension: 'lucterios.contacts',
+    action: 'createAccount',
+    modal: '1',
+    close: '0',
+    unique: '1',
+    method: 'POST',
+    params: null
+  }
+]
 </script>
 
 <template>
@@ -80,7 +119,13 @@ store.commit('change_server', {
       @about="show_about = true"
     />
     <WaitingFrame v-if="$store.state.show_waiting" />
-    <LoginBox v-if="$store.state.show_login" @logon="logon" @logoff="logoff" />
+    <LoginBox
+      v-if="$store.state.show_login"
+      :data="logon_data"
+      :actions="logon_actions"
+      @logon="logon"
+      @logoff="logoff"
+    />
     <MainMenu v-if="$store.state.show_menu" />
     <AboutFrame v-if="show_about" @close="show_about = false" :key="show_about" />
   </v-app>
