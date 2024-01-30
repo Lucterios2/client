@@ -9,7 +9,7 @@ describe('LoginBox', () => {
   it('login mode 0', async () => {
     storage.commit('change_server', {
       mode: 0,
-      login_field: 'email',
+      login_field: 'email'
     })
     const wrapper = shallowMount(LoginBox, {
       propsData: {
@@ -43,7 +43,7 @@ describe('LoginBox', () => {
   it('login mode 1', async () => {
     storage.commit('change_server', {
       mode: 1,
-      login_field: 'email',
+      login_field: 'email'
     })
     const wrapper = shallowMount(LoginBox, {
       propsData: {
@@ -78,7 +78,7 @@ describe('LoginBox', () => {
   it('login need auth', async () => {
     storage.commit('change_server', {
       mode: 0,
-      login_field: 'email',
+      login_field: 'email'
     })
     const wrapper = shallowMount(LoginBox, {
       propsData: {
@@ -130,7 +130,7 @@ describe('LoginBox', () => {
         .find('v-card > v-card-text > v-container > v-text-field:nth-of-type(2)')
         .attributes('label')
     ).toBe('Mot de passe')
-    
+
     expect(wrapper1.find('v-card > v-card-actions').element.childElementCount).toBe(2)
 
     storage.commit('change_server', {

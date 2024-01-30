@@ -33,3 +33,4 @@ coverage
 web/*
 package-lock.json
 test-results.xml
+public/static

@@ -17,7 +17,9 @@ describe('App', () => {
         plugins: [storage, i18n]
       }
     })
-    expect(wrapper.element.childElementCount).toBe(0)
+    expect(wrapper.element.childElementCount).toBe(2)
+    expect(wrapper.find('v-row:nth-of-type(1)').element.childElementCount).toBe(0)
+    expect(wrapper.find('v-row:nth-of-type(2)').element.childElementCount).toBe(0)
   }),
     it('status', () => {
       storage.commit('call_status', true)
@@ -30,8 +32,10 @@ describe('App', () => {
           plugins: [storage, i18n]
         }
       })
-      expect(wrapper.element.childElementCount).toBe(1)
-      expect(wrapper.get('status-bar-stub').text()).toBe('')
+      expect(wrapper.element.childElementCount).toBe(2)
+      expect(wrapper.find('v-row:nth-of-type(1)').element.childElementCount).toBe(1)
+      expect(wrapper.find('v-row:nth-of-type(1) > status-bar-stub').text()).toBe('')
+      expect(wrapper.find('v-row:nth-of-type(2)').element.childElementCount).toBe(0)
     }),
     it('login', () => {
       storage.commit('call_status', false)
@@ -44,7 +48,9 @@ describe('App', () => {
           plugins: [storage, i18n]
         }
       })
-      expect(wrapper.element.childElementCount).toBe(1)
+      expect(wrapper.element.childElementCount).toBe(3)
+      expect(wrapper.find('v-row:nth-of-type(1)').element.childElementCount).toBe(0)
+      expect(wrapper.find('v-row:nth-of-type(2)').element.childElementCount).toBe(0)
       expect(wrapper.get('login-box-stub').text()).toBe('')
     }),
     it('menu', () => {
@@ -58,8 +64,10 @@ describe('App', () => {
           plugins: [storage, i18n]
         }
       })
-      expect(wrapper.element.childElementCount).toBe(1)
-      expect(wrapper.get('main-menu-stub').text()).toBe('')
+      expect(wrapper.element.childElementCount).toBe(2)
+      expect(wrapper.find('v-row:nth-of-type(1)').element.childElementCount).toBe(0)
+      expect(wrapper.find('v-row:nth-of-type(2)').element.childElementCount).toBe(1)
+      expect(wrapper.find('v-row:nth-of-type(2) > main-menu-stub').text()).toBe('')
     }),
     it('waiting', () => {
       storage.commit('call_status', false)
@@ -72,7 +80,9 @@ describe('App', () => {
           plugins: [storage, i18n]
         }
       })
-      expect(wrapper.element.childElementCount).toBe(1)
+      expect(wrapper.element.childElementCount).toBe(3)
+      expect(wrapper.find('v-row:nth-of-type(1)').element.childElementCount).toBe(0)
+      expect(wrapper.find('v-row:nth-of-type(2)').element.childElementCount).toBe(0)
       expect(wrapper.get('waiting-frame-stub').text()).toBe('')
     })
 })

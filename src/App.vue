@@ -18,6 +18,7 @@ const i18n = useI18n()
 const show_about = defineModel('show_about', { type: Boolean, default: false })
 const logon_data = defineModel('logon_data', { type: String, default: '' })
 const logon_actions = defineModel('logon_actions', { type: Array, default: [] })
+const menu_data = defineModel('menu_data', { type: Array, default: [] })
 
 function logon(login, password) {
   store.commit('call_login', false)
@@ -25,8 +26,9 @@ function logon(login, password) {
   console.log(login + ' - ' + password)
   setInterval(() => {
     store.commit('call_status', true)
+    store.commit('call_menu', true)
     store.commit('call_waiting', false)
-  }, 5 * 1000) // 5 sec
+  }, 2 * 1000) // 2 sec
 }
 function login() {
   store.commit('call_status', false)
@@ -43,6 +45,10 @@ function help() {
   var win = window.open('Docs', '_blank')
   win.focus()
 }
+function click_action(menu) {
+  alert('action : ' + menu.id)
+}
+
 store.commit('change_server', {
   title: 'Lucterios',
   sub_title: 'Nouveau client',
@@ -106,19 +112,530 @@ logon_actions.value = [
     params: null
   }
 ]
+
+menu_data.value = [
+  {
+    text: '',
+    id: 'core.menu',
+    modal: '1',
+    close: '1',
+    unique: '1',
+    method: 'POST',
+    params: null,
+    menus: [
+      {
+        text: 'Résumé 1',
+        id: 'CORE/statusMenu1',
+        icon: '/static/lucterios.CORE/images/status.png',
+        short_icon: '',
+        extension: 'CORE',
+        action: 'statusMenu',
+        help: 'Résumé',
+        modal: '1',
+        close: '1',
+        unique: '1',
+        method: 'GET',
+        params: null
+      },
+      {
+        text: 'Résumé 2',
+        id: 'CORE/statusMenu2',
+        icon: '/static/lucterios.CORE/images/status.png',
+        short_icon: '',
+        extension: 'CORE',
+        action: 'statusMenu2',
+        help: 'Résumé',
+        modal: '1',
+        close: '1',
+        unique: '1',
+        method: 'GET',
+        params: null
+      }
+    ]
+  },
+  {
+    text: 'Général',
+    id: 'core.general',
+    icon: '/static/lucterios.CORE/images/general.png',
+    short_icon: 'mdi:mdi-home',
+    help: "Ensemble d'actions génériques liées à l'utilisateur connecté.",
+    modal: '1',
+    close: '1',
+    unique: '1',
+    method: 'POST',
+    params: null,
+    menus: [
+      {
+        text: 'Nos coordonnées',
+        id: 'lucterios.contacts/currentStructure',
+        icon: '/static/lucterios.contacts/images/ourDetails.png',
+        short_icon: 'mdi:mdi-account',
+        extension: 'lucterios.contacts',
+        action: 'currentStructure',
+        help: 'Fiche de notre structure et de ses responsables',
+        modal: '1',
+        close: '1',
+        unique: '1',
+        method: 'GET',
+        params: null
+      }
+    ]
+  },
+  {
+    text: 'Bureautique',
+    id: 'office',
+    icon: '/static/lucterios.contacts/images/office.png',
+    short_icon: 'mdi:mdi-desktop-tower',
+    help: "Ensemble d'outils de gestion génériques",
+    modal: '1',
+    close: '1',
+    unique: '1',
+    method: 'POST',
+    params: null,
+    menus: [
+      {
+        text: 'Adresses et Contacts',
+        id: 'contact.actions',
+        icon: '/static/lucterios.contacts/images/contacts.png',
+        short_icon: 'mdi-account',
+        help: "Ensemble d'actions permettant la gestion de vos contacts:{[br/]}{[ul]}{[li]}Les personnes morales sont des groupements de personnes comme des associations ou des entreprises.{[li]}Les personnes physiques sont les êtres humains identifiés chacun par un nom et un prénom.{[l/i]}{[/ul]}Vous pouvez alors créer, consulter, modifier ou faire des recherches parmi ces fiches de contact.{[br/]}Notez que d'autres modules de l'application peuvent les utiliser ou les associer à d'autres données.",
+        modal: '1',
+        close: '1',
+        unique: '1',
+        method: 'POST',
+        params: null,
+        menus: [
+          {
+            text: 'Personnes morales',
+            id: 'lucterios.contacts/legalEntityList',
+            icon: '/static/lucterios.contacts/images/legalEntity.png',
+            short_icon: '',
+            extension: 'lucterios.contacts',
+            action: 'legalEntityList',
+            help: "Gestion d'une personne morale (entreprise, association, administration, ...)",
+            modal: '0',
+            close: '1',
+            unique: '1',
+            method: 'GET',
+            params: null
+          },
+          {
+            text: 'Personnes physiques',
+            id: 'lucterios.contacts/individualList',
+            icon: '/static/lucterios.contacts/images/individual.png',
+            short_icon: 'mdi:mdi-alert',
+            extension: 'lucterios.contacts',
+            action: 'individualList',
+            help: 'Gestion des hommes et des femmes enregistrés',
+            modal: '0',
+            close: '1',
+            unique: '1',
+            method: 'GET',
+            params: null
+          },
+          {
+            text: 'Recherche de personne physique',
+            id: 'lucterios.contacts/individualSearch',
+            icon: '/static/lucterios.contacts/images/individualFind.png',
+            short_icon: '',
+            extension: 'lucterios.contacts',
+            action: 'individualSearch',
+            help: 'Pour trouver une personne physique suivant un ensemble de critères.',
+            modal: '0',
+            close: '1',
+            unique: '1',
+            method: 'GET',
+            params: null
+          },
+          {
+            text: 'Recherche de personne morale',
+            id: 'lucterios.contacts/legalEntitySearch',
+            icon: '/static/lucterios.contacts/images/legalEntityFind.png',
+            short_icon: '',
+            extension: 'lucterios.contacts',
+            action: 'legalEntitySearch',
+            help: 'Pour trouver une personne morale{[newline]}suivant un ensemble de critères.',
+            modal: '0',
+            close: '1',
+            unique: '1',
+            method: 'GET',
+            params: null
+          }
+        ]
+      },
+      {
+        text: 'Messagerie',
+        id: 'mailing.actions',
+        icon: '/static/lucterios.mailing/images/mailing.png',
+        short_icon: '',
+        help: 'Ensemble pour créer et envoyer un publipostage à des contacts.',
+        modal: '1',
+        close: '1',
+        unique: '1',
+        method: 'POST',
+        params: null,
+        menus: [
+          {
+            text: 'Messages courriel',
+            id: 'lucterios.mailing/messageEmailList',
+            icon: '/static/lucterios.mailing/images/email.png',
+            short_icon: '',
+            extension: 'lucterios.mailing',
+            action: 'messageEmailList',
+            help: 'Gestion de liste de messages pour publipostage',
+            modal: '0',
+            close: '1',
+            unique: '1',
+            method: 'GET',
+            params: null
+          },
+          {
+            text: 'Messages SMS',
+            id: 'lucterios.mailing/messageSMSList',
+            icon: '/static/lucterios.mailing/images/sms.png',
+            short_icon: '',
+            extension: 'lucterios.mailing',
+            action: 'messageSMSList',
+            help: 'Gestion de liste de messages via SMS',
+            modal: '0',
+            close: '1',
+            unique: '1',
+            method: 'GET',
+            params: null
+          }
+        ]
+      },
+      {
+        text: 'Gestion de fichiers et de documents',
+        id: 'documents.actions',
+        icon: '/static/lucterios.documents/images/document.png',
+        short_icon: '',
+        help: "Ensemble d'actions permettant une gestion documentaire électronique.{[br/]}Vous avez la possibilité ici de stocker de façon centraliser des fichiers, de les consulter et de les modifier.",
+        modal: '1',
+        close: '1',
+        unique: '1',
+        method: 'POST',
+        params: null,
+        menus: [
+          {
+            text: 'Documents',
+            id: 'lucterios.documents/documentList',
+            icon: '/static/lucterios.documents/images/document.png',
+            short_icon: '',
+            extension: 'lucterios.documents',
+            action: 'documentList',
+            help: 'Gestion de documents',
+            modal: '0',
+            close: '1',
+            unique: '1',
+            method: 'GET',
+            params: null
+          },
+          {
+            text: 'Recherche de document',
+            id: 'lucterios.documents/documentSearch',
+            icon: '/static/lucterios.documents/images/documentFind.png',
+            short_icon: '',
+            extension: 'lucterios.documents',
+            action: 'documentSearch',
+            help: 'Pour trouver un document suivant un ensemble de critères.',
+            modal: '0',
+            close: '1',
+            unique: '1',
+            method: 'GET',
+            params: null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    text: 'Administration',
+    id: 'core.admin',
+    icon: '/static/lucterios.CORE/images/admin.png',
+    short_icon: '',
+    help: "Menu général permettant le réglage et la configuration de l'application.",
+    modal: '1',
+    close: '1',
+    unique: '1',
+    method: 'POST',
+    params: null,
+    menus: [
+      {
+        text: 'Configuration générale',
+        id: 'CORE/configuration',
+        icon: '/static/lucterios.CORE/images/config.png',
+        short_icon: '',
+        extension: 'CORE',
+        action: 'configuration',
+        help: 'Afficher et modifier les paramètres principaux.',
+        modal: '1',
+        close: '1',
+        unique: '1',
+        method: 'GET',
+        params: null
+      },
+      {
+        text: 'Modules (conf.)',
+        id: 'core.extensions',
+        icon: '/static/lucterios.CORE/images/config_ext.png',
+        short_icon: '',
+        help: "Ensemble d'actions de configuration liées spécifiquement à un module de l'application.",
+        modal: '1',
+        close: '1',
+        unique: '1',
+        method: 'POST',
+        params: null,
+        menus: [
+          {
+            text: 'Critères sauvegardés',
+            id: 'CORE/savedCriteriaList',
+            icon: '/static/lucterios.CORE/images/config_search.png',
+            short_icon: '',
+            extension: 'CORE',
+            action: 'savedCriteriaList',
+            help: 'Liste de critères sauvegardés pour les outils de recherche',
+            modal: '1',
+            close: '1',
+            unique: '1',
+            method: 'GET',
+            params: null
+          },
+          {
+            text: 'Contact',
+            id: 'contact.conf',
+            modal: '1',
+            close: '1',
+            unique: '1',
+            method: 'POST',
+            params: null,
+            menus: [
+              {
+                text: 'Configuration des contacts',
+                id: 'lucterios.contacts/configuration',
+                icon: '/static/lucterios.contacts/images/contactsConfig.png',
+                extension: 'lucterios.contacts',
+                action: 'configuration',
+                help: 'Gestion des fonctions des personnes physiques et des catégories de structures morales.',
+                modal: '1',
+                close: '1',
+                unique: '1',
+                method: 'GET',
+                params: null
+              },
+              {
+                text: 'Code postal',
+                id: 'lucterios.contacts/postalCodeList',
+                icon: '/static/lucterios.contacts/images/postalCode.png',
+                extension: 'lucterios.contacts',
+                action: 'postalCodeList',
+                help: 'Gestion des codes postaux associés à leurs communes.',
+                modal: '1',
+                close: '1',
+                unique: '1',
+                method: 'GET',
+                params: null
+              },
+              {
+                text: 'Importation de contacts',
+                id: 'lucterios.contacts/contactImport',
+                icon: '/static/lucterios.contacts/images/contactsConfig.png',
+                extension: 'lucterios.contacts',
+                action: 'contactImport',
+                help: "Outil d'import de contacts via fichier CSV",
+                modal: '1',
+                close: '1',
+                unique: '1',
+                method: 'POST',
+                params: null
+              },
+              {
+                text: 'Configuration des possessions',
+                id: 'lucterios.contacts/confPossession',
+                icon: '/static/lucterios.contacts/images/possession.png',
+                extension: 'lucterios.contacts',
+                action: 'confPossession',
+                help: 'Gestion et configuration des possessions.',
+                modal: '1',
+                close: '1',
+                unique: '1',
+                method: 'GET',
+                params: null
+              },
+              {
+                text: 'Paramètres de courrier & SMS',
+                id: 'lucterios.mailing/configuration',
+                icon: '/static/lucterios.mailing/images/config_mail.png',
+                extension: 'lucterios.mailing',
+                action: 'configuration',
+                help: 'Modifier les paramétrages du courrier et du SMS',
+                modal: '1',
+                close: '1',
+                unique: '1',
+                method: 'GET',
+                params: null
+              }
+            ]
+          },
+          {
+            text: 'Gestion documentaire',
+            id: 'documents.conf',
+            modal: '1',
+            close: '1',
+            unique: '1',
+            method: 'POST',
+            params: null,
+            menus: [
+              {
+                text: 'Dossiers',
+                id: 'lucterios.documents/folderList',
+                icon: '/static/lucterios.documents/images/documentConf.png',
+                short_icon: '',
+                extension: 'lucterios.documents',
+                action: 'folderList',
+                help: 'Gestion des dossiers de documents',
+                modal: '0',
+                close: '1',
+                unique: '1',
+                method: 'GET',
+                params: null
+              }
+            ]
+          }
+        ]
+      },
+      {
+        text: 'Rapport et impression',
+        id: 'core.print',
+        icon: '/static/lucterios.CORE/images/PrintReport.png',
+        short_icon: '',
+        help: "Ensemble d'actions pour gérer les rapport et outils d'impression:{[br/]}{[ul]}{[li]}Les modèles d'impressions permettent d'adapter des rapports personnalisés.{[/li]}{[li]}La configuration des planches d'étiques permet de définir les tailles et le nombre d'étiquettes sur votre page.{[/li]}{[/ul]}",
+        modal: '1',
+        close: '1',
+        unique: '1',
+        method: 'POST',
+        params: null,
+        menus: [
+          {
+            text: "Patrons d'impression",
+            id: 'CORE/printModelList',
+            icon: '/static/lucterios.CORE/images/PrintReportModel.png',
+            short_icon: '',
+            extension: 'CORE',
+            action: 'printModelList',
+            help: "Gérer les patrons d'impression.",
+            modal: '0',
+            close: '1',
+            unique: '1',
+            method: 'GET',
+            params: null
+          },
+          {
+            text: 'Etiquettes',
+            id: 'CORE/labelList',
+            icon: '/static/lucterios.CORE/images/PrintReportLabel.png',
+            short_icon: '',
+            extension: 'CORE',
+            action: 'labelList',
+            help: "Gérer les planches d'étiquettes",
+            modal: '0',
+            close: '1',
+            unique: '1',
+            method: 'GET',
+            params: null
+          }
+        ]
+      },
+      {
+        text: 'Gestion des droits',
+        id: 'core.right',
+        icon: '/static/lucterios.CORE/images/permissions.png',
+        short_icon: '',
+        help: "Ensemble d'actions permettant de gérer les droits d'accès:{[br/]}{[ul]}{[li]}Créer et modifier des groupes de permission.{[/li]}{[li]}Créer et modifier des utilisateurs{[/li]}{[li]}Suivre les sessions de connexion.{[/li]}{[li]}Gérer le journal d'historiques.{[/li]}{[/ul]}",
+        modal: '1',
+        close: '1',
+        unique: '1',
+        method: 'POST',
+        params: null,
+        menus: [
+          {
+            text: 'Les groupes',
+            id: 'CORE/groupsList',
+            icon: '/static/lucterios.CORE/images/group.png',
+            short_icon: '',
+            extension: 'CORE',
+            action: 'groupsList',
+            help: 'Gérer les groupes.',
+            modal: '0',
+            close: '1',
+            unique: '1',
+            method: 'GET',
+            params: null
+          },
+          {
+            text: 'Utilisateurs du logiciel',
+            id: 'CORE/usersList',
+            icon: '/static/lucterios.CORE/images/user.png',
+            short_icon: '',
+            extension: 'CORE',
+            action: 'usersList',
+            help: 'Gérer les utilisateurs.',
+            modal: '0',
+            close: '1',
+            unique: '1',
+            method: 'GET',
+            params: null
+          },
+          {
+            text: 'Sessions & taches',
+            id: 'CORE/sessionList',
+            icon: '/static/lucterios.CORE/images/session.png',
+            short_icon: '',
+            extension: 'CORE',
+            action: 'sessionList',
+            help: 'Gérer les sessions et les taches.',
+            modal: '0',
+            close: '1',
+            unique: '1',
+            method: 'GET',
+            params: null
+          },
+          {
+            text: 'Configuration de la journalisation',
+            id: 'CORE/audiLogConfig',
+            icon: '/static/lucterios.CORE/images/auditlog.png',
+            short_icon: '',
+            extension: 'CORE',
+            action: 'audiLogConfig',
+            help: "Gérer le journal d'évenements.",
+            modal: '0',
+            close: '1',
+            unique: '1',
+            method: 'GET',
+            params: null
+          }
+        ]
+      }
+    ]
+  }
+]
 </script>
 
 <template>
   <v-app>
-    <StatusBar
-      v-if="$store.state.show_status"
-      @login="login"
-      @logoff="logoff"
-      @refresh="refresh"
-      @help="help"
-      @about="show_about = true"
-    />
-    <WaitingFrame v-if="$store.state.show_waiting" />
+    <v-row align="start">
+      <StatusBar
+        v-if="$store.state.show_status"
+        @login="login"
+        @logoff="logoff"
+        @refresh="refresh"
+        @help="help"
+        @about="show_about = true"
+      />
+    </v-row>
+    <v-row align="start">
+      <MainMenu v-if="$store.state.show_menu" :data="menu_data" @clickaction="click_action" />
+    </v-row>
     <LoginBox
       v-if="$store.state.show_login"
       :data="logon_data"
@@ -126,8 +643,8 @@ logon_actions.value = [
       @logon="logon"
       @logoff="logoff"
     />
-    <MainMenu v-if="$store.state.show_menu" />
     <AboutFrame v-if="show_about" @close="show_about = false" :key="show_about" />
+    <WaitingFrame v-if="$store.state.show_waiting" />
   </v-app>
 </template>
 

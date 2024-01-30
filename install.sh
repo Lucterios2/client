@@ -23,6 +23,7 @@ then
 else
     lucterios_admin.py modif -n clienttest -p lucterios.standard -e '{"FORCE_SCRIPT_NAME":"lct","USE_X_FORWARDED_HOST":true}'
 fi
+python manage_clienttest.py collectstatic --noinput -l
 
 supervisorfile="$current_dir/clienttest.conf"
 nginxfile="$current_dir/nginxclienttest"
