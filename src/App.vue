@@ -45,8 +45,8 @@ function help() {
   var win = window.open('Docs', '_blank')
   win.focus()
 }
-function click_action(menu) {
-  alert('action : ' + menu.id)
+function click_action(action) {
+  alert('action : ' + action.id)
 }
 
 store.commit('change_server', {
@@ -141,7 +141,7 @@ menu_data.value = [
         text: 'Résumé 2',
         id: 'CORE/statusMenu2',
         icon: '/static/lucterios.CORE/images/status.png',
-        short_icon: '',
+        short_icon: 'mdi:mdi-information',
         extension: 'CORE',
         action: 'statusMenu2',
         help: 'Résumé',
@@ -642,6 +642,7 @@ menu_data.value = [
       :actions="logon_actions"
       @logon="logon"
       @logoff="logoff"
+      @clickaction="click_action"
     />
     <AboutFrame v-if="show_about" @close="show_about = false" :key="show_about" />
     <WaitingFrame v-if="$store.state.show_waiting" />

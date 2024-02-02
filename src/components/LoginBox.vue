@@ -8,7 +8,7 @@ const props = defineProps({
   data: String,
   actions: Array
 })
-const emit = defineEmits(['logon', 'logoff'])
+const emit = defineEmits(['logon', 'logoff', 'clickaction'])
 const form = defineModel('form', { type: Boolean, default: false })
 const login = defineModel('login', { type: String, default: '' })
 const password = defineModel('password', { type: String, default: '' })
@@ -20,6 +20,9 @@ function login_label() {
   } else {
     return i18n.t('username')
   }
+}
+function click_action(action) {
+  emit('clickaction', action)
 }
 
 function onSubmit() {
@@ -70,7 +73,7 @@ if (props.data === 'BADAUTH') {
         </v-card-text>
 
         <v-card-actions class="logactions" v-for="action in props.actions" :key="action.id">
-          <ButtonAction :action="action" />
+          <ButtonAction :action="action" @click="click_action" />
         </v-card-actions>
 
         <v-card-actions class="bg-grey-lighten-3">

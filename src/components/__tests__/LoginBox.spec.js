@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 
 import LoginBox from '../LoginBox.vue'
+import ButtonAction from '../ButtonAction.vue'
 import storage from '../../datastorage.js'
 import i18n from '../../i18n.js'
 
@@ -222,14 +223,14 @@ describe('LoginBox', () => {
     expect(
       wrapper
         .find('v-card > v-card-actions:nth-of-type(1) > button-action-stub')
-        .attributes('action') === undefined
-    ).toBe(false)
+        .getCurrentComponent().props.action
+    ).toStrictEqual({ id: 'abc', text: 'action1', icon: 'icon1' })
     expect(wrapper.find('v-card > v-card-actions:nth-of-type(2)').element.childElementCount).toBe(1)
     expect(
       wrapper
         .find('v-card > v-card-actions:nth-of-type(2) > button-action-stub')
-        .attributes('action') === undefined
-    ).toBe(false)
+        .getCurrentComponent().props.action
+    ).toStrictEqual({ id: 'def', text: 'action2', icon: 'icon2' })
     expect(wrapper.find('v-card > v-card-actions:nth-of-type(3)').element.childElementCount).toBe(3)
     expect(wrapper.find('v-card > v-card-actions:nth-of-type(3) > v-spacer').exists()).toBe(true)
     expect(
@@ -238,5 +239,32 @@ describe('LoginBox', () => {
     expect(
       wrapper.find('v-card > v-card-actions:nth-of-type(3) > v-btn:nth-of-type(2)').text()
     ).toBe('OK')
+
+    expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
+    await wrapper
+      .find('v-card > v-card-actions:nth-of-type(1) > button-action-stub')
+      .trigger('click', { id: 'abc' })
+    expect(wrapper.emitted('clickaction').length).toStrictEqual(1)
+    expect(wrapper.emitted('clickaction')[0].length).toStrictEqual(1)
+    expect(wrapper.emitted('clickaction')[0][0].id).toStrictEqual('abc')
+  })
+
+  it('Button', async () => {
+    const wrapper = shallowMount(ButtonAction, {
+      propsData: {
+        action: { id: 'abc', text: 'action1', icon: 'icon1' }
+      },
+      global: {
+        plugins: [storage, i18n]
+      }
+    })
+    expect(wrapper.find('v-btn').element.childElementCount).toBe(0)
+    expect(wrapper.find('v-btn').attributes('prepend-icon')).toBe('icon1')
+    expect(wrapper.find('v-btn').text()).toBe('action1')
+    expect(wrapper.emitted('click')).toStrictEqual(undefined)
+    await wrapper.trigger('click', { id: 'abc' })
+    expect(wrapper.emitted('click')).toStrictEqual([
+      [{ id: 'abc', text: 'action1', icon: 'icon1' }]
+    ])
   })
 })

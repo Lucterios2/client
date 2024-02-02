@@ -68,6 +68,10 @@ describe('App', () => {
       expect(wrapper.find('v-row:nth-of-type(1)').element.childElementCount).toBe(0)
       expect(wrapper.find('v-row:nth-of-type(2)').element.childElementCount).toBe(1)
       expect(wrapper.find('v-row:nth-of-type(2) > main-menu-stub').text()).toBe('')
+      expect(
+        wrapper.find('v-row:nth-of-type(2) > main-menu-stub').getCurrentComponent().props.data
+          .length
+      ).toStrictEqual(4)
     }),
     it('waiting', () => {
       storage.commit('call_status', false)
