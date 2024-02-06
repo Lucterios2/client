@@ -117,7 +117,7 @@ describe('MainMenu', () => {
     expect(
       wrapper
         .find(
-          'v-row > div > v-expansion-panels > v-expansion-panel:nth-of-type(1) > v-expansion-panel-title > spam'
+          'v-row > div > v-expansion-panels > v-expansion-panel:nth-of-type(1) > v-expansion-panel-title > span'
         )
         .text()
     ).toBe('Résumé 1')
@@ -149,7 +149,7 @@ describe('MainMenu', () => {
     expect(
       wrapper
         .find(
-          'v-row > div > v-expansion-panels > v-expansion-panel:nth-of-type(2) > v-expansion-panel-title > spam'
+          'v-row > div > v-expansion-panels > v-expansion-panel:nth-of-type(2) > v-expansion-panel-title > span'
         )
         .text()
     ).toBe('Résumé 2')
@@ -457,13 +457,7 @@ describe('MainMenu', () => {
     expect(wrapper.find('v-card > v-card-item > v-toolbar > v-img').attributes('src')).toBe(
       '/static/lucterios.CORE/images/general.png'
     )
-    expect(
-      wrapper.find('v-card > v-card-item > v-toolbar > v-toolbar-side-icon').element
-        .childElementCount
-    ).toBe(1)
-    expect(
-      wrapper.find('v-card > v-card-item > v-toolbar > v-toolbar-side-icon > v-icon').text()
-    ).toBe('')
+    expect(wrapper.find('v-card > v-card-item > v-toolbar > v-icon').text()).toBe('')
     expect(wrapper.find('v-card > v-card-item > v-toolbar > v-toolbar-title').text()).toBe(
       'Général'
     )
@@ -514,21 +508,11 @@ describe('MainMenu', () => {
     expect(wrapper.element.childElementCount).toBe(1)
     expect(wrapper.find('v-card').element.childElementCount).toBe(1)
     expect(wrapper.find('v-card > v-card-item').element.childElementCount).toBe(4)
-    expect(wrapper.find('v-card > v-card-item > v-toolbar').element.childElementCount).toBe(4)
-    expect(
-      wrapper.find('v-card > v-card-item > v-toolbar > v-toolbar-side-icon').element
-        .childElementCount
-    ).toBe(2)
-    expect(
-      wrapper
-        .find('v-card > v-card-item > v-toolbar > v-toolbar-side-icon > v-icon:nth-of-type(1)')
-        .text()
-    ).toBe('')
-    expect(
-      wrapper
-        .find('v-card > v-card-item > v-toolbar > v-toolbar-side-icon > v-icon:nth-of-type(2)')
-        .text()
-    ).toBe('mdi:mdi-home')
+    expect(wrapper.find('v-card > v-card-item > v-toolbar').element.childElementCount).toBe(5)
+    expect(wrapper.find('v-card > v-card-item > v-toolbar > v-icon:nth-of-type(1)').text()).toBe('')
+    expect(wrapper.find('v-card > v-card-item > v-toolbar > v-icon:nth-of-type(2)').text()).toBe(
+      'mdi:mdi-home'
+    )
     expect(wrapper.find('v-card > v-card-item > v-toolbar > v-toolbar-title').text()).toBe(
       'Général'
     )

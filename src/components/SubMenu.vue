@@ -1,4 +1,6 @@
 <script setup>
+import { convertLuctoriosFormatToHtml } from '@/tools/utils'
+
 const emit = defineEmits(['click'])
 const prop = defineProps({
   menu: Object
@@ -30,7 +32,11 @@ function click_action() {
         <v-card-title>
           <br v-if="menu.short_icon !== ''" />
           {{ menu.text }}
-          <v-tooltip :text="menu.help" activator="parent" location="bottom"></v-tooltip>
+          <v-tooltip
+            :text="convertLuctoriosFormatToHtml(menu.help)"
+            activator="parent"
+            location="bottom"
+          ></v-tooltip>
         </v-card-title>
       </v-card-item>
     </v-card>

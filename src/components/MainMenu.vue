@@ -52,7 +52,7 @@ function tabs_menus() {
               <div v-if="submenu.short_icon === ''">
                 <v-img :src="submenu.icon" height="20" :width="20" :alt="submenu.text"></v-img>
               </div>
-              <spam style="margin-left: 5px">{{ submenu.text }}</spam>
+              <span style="margin-left: 5px">{{ submenu.text }}</span>
             </v-expansion-panel-title>
             <v-expansion-panel-text>
               {{ submenu.extension }} - {{ submenu.action }}

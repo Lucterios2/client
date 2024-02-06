@@ -4,7 +4,6 @@ const props = defineProps({
   action: Object
 })
 function clickaction() {
-  console.log('click', props.action)
   emit('click', props.action)
 }
 </script>

@@ -41,10 +41,8 @@ function click_action(menu) {
           :alt="menu.text"
           v-if="menu.short_icon === ''"
         ></v-img>
-        <v-toolbar-side-icon>
-          <v-icon></v-icon>
-          <v-icon v-if="menu.short_icon !== ''">{{ menu.short_icon }}</v-icon>
-        </v-toolbar-side-icon>
+        <v-icon></v-icon>
+        <v-icon v-if="menu.short_icon !== ''">{{ menu.short_icon }}</v-icon>
         <v-toolbar-title>{{ menu.text }}</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon @click="show_help = !show_help" v-if="menu.help !== undefined">
