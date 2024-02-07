@@ -134,7 +134,7 @@ export const example_server_data = {
   real_name: '',
   instance_name: 'truc-muche',
   message_before: 'Coucou les amis!',
-  mode: 0,
+  mode: 1,
   login_field: 'username',
   language: 'fr',
   only_admin: false
@@ -594,7 +594,7 @@ export const example_menu_data = [
             help: "Gérer les planches d'étiquettes",
             modal: '0',
             close: '1',
-            unique: '1',
+            unique: '0',
             method: 'GET',
             params: null
           }
@@ -636,7 +636,7 @@ export const example_menu_data = [
             help: 'Gérer les utilisateurs.',
             modal: '0',
             close: '1',
-            unique: '1',
+            unique: '2',
             method: 'GET',
             params: null
           },
@@ -650,7 +650,7 @@ export const example_menu_data = [
             help: 'Gérer les sessions et les taches.',
             modal: '0',
             close: '1',
-            unique: '1',
+            unique: '3',
             method: 'GET',
             params: null
           },
@@ -664,7 +664,7 @@ export const example_menu_data = [
             help: "Gérer le journal d'évenements.",
             modal: '0',
             close: '1',
-            unique: '1',
+            unique: '4',
             method: 'GET',
             params: null
           }

@@ -6,8 +6,8 @@ const storage = createStore({
     show_waiting: false,
     show_status: true,
     show_login: false,
-    show_summary: false,
-    show_menu: false,
+    show_summary: true,
+    show_menu: true,
     server: {
       title: '',
       sub_title: '',

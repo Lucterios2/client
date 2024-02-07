@@ -26,7 +26,11 @@ const messages = {
     refresh: 'Refresh',
     help: 'Help',
     login: 'Login',
-    logoff: 'Logoff'
+    logoff: 'Logoff',
+    Failure: 'Failure',
+    Error: 'Error',
+    Warning: 'Warning',
+    Information: 'Information'
   },
   fr: {
     about: 'A propos...',
@@ -54,7 +58,11 @@ const messages = {
     refresh: 'Rafraichir',
     help: 'Aide',
     login: 'Connexion',
-    logoff: 'Déconnexion'
+    logoff: 'Déconnexion',
+    Failure: 'Écheck',
+    Error: 'Erreur',
+    Warning: 'Avertissement',
+    Information: 'Information'
   }
 }
 
