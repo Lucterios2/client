@@ -1,8 +1,9 @@
 <script setup>
+import { useStore } from 'vuex'
 import { useI18n } from 'vue-i18n'
 import { computed } from 'vue'
-import ButtonAction from './ButtonAction.vue'
-import { convertLuctoriosFormatToHtml } from '@/tools/utils'
+import ButtonsBar from '@/components/ButtonsBar.vue'
+import { convertLuctoriosFormatToHtml, send_to_support, part_for_email } from '@/tools/utils'
 const FAILURE = 0
 const CRITIC = 1
 const GRAVE = 2
@@ -10,6 +11,7 @@ const IMPORTANT = 3
 const MINOR = 4
 const emit = defineEmits(['close'])
 const i18n = useI18n()
+const store = useStore()
 const props = defineProps({
   context: Object,
   close: Object,
@@ -19,18 +21,33 @@ const props = defineProps({
 const tab = defineModel('tab')
 const visible = true
 const more = defineModel('more', { type: Boolean, default: false })
+
 function toggle_more() {
   more.value = !more.value
 }
-const action_list = computed(() => {
-  return [{ text: i18n.t('close'), id: '', icon: 'mdi:mdi-close', close: '0' }]
-})
-function click_close(action) {
-  if (Number(action.close) === 0) {
-    emit('close')
+function action_click(action) {
+  if (action.id === 'send') {
+    var complement = '\n### ' + convertLuctoriosFormatToHtml(props.exception.message) + ' ###\n'
+    complement += part_for_email(i18n.t('Call-stack'), props.exception.debug)
+    complement += part_for_email(i18n.t('Extra'), props.exception.type)
+    complement += part_for_email(i18n.t('Request'), props.exception.request)
+    complement += part_for_email(i18n.t('Response'), props.exception.response)
+    send_to_support(i18n, store, complement)
   }
 }
 
+const action_list = computed(() => {
+  const actions = Array()
+  if (
+    props.exception.code === FAILURE ||
+    props.exception.code === CRITIC ||
+    props.exception.code === GRAVE
+  ) {
+    actions.push({ text: i18n.t('support'), id: 'send', icon: 'mdi:mdi-mail', close: '1' })
+  }
+  actions.push({ text: i18n.t('close'), id: '', icon: 'mdi:mdi-close', close: '0' })
+  return actions
+})
 const except_icon = computed(() => {
   switch (props.exception.code) {
     case FAILURE:
@@ -47,7 +64,6 @@ const except_icon = computed(() => {
       return 'mdi:mdi-alert-circle'
   }
 })
-
 const except_title = computed(() => {
   switch (props.exception.code) {
     case FAILURE:
@@ -65,7 +81,7 @@ const except_title = computed(() => {
 })
 const callstack = computed(() => {
   var stackText = ''
-  const stackTexts = props.exception.debug.split('{[br/]}')
+  const stackTexts = props.exception.debug.replaceAll('{[br/]}', '{[br]}').split('{[br]}')
   for (var sIdx = 0; sIdx < stackTexts.length; sIdx++) {
     stackText += stackTexts[sIdx]
     stackText += '\n'
@@ -141,12 +157,7 @@ const response_ex = computed(() => {
           </v-col>
         </v-row>
       </v-card-text>
-      <v-card-actions class="bg-grey-lighten-3">
-        <v-spacer></v-spacer>
-        <div v-for="action in action_list" :key="action.id">
-          <ButtonAction :action="action" @click="click_close(action)" />
-        </div>
-      </v-card-actions>
+      <ButtonsBar :actions="action_list" @actionclick="action_click" @close="emit('close')" />
     </v-card>
   </v-dialog>
 </template>

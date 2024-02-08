@@ -16,12 +16,8 @@ import WaitingFrame from './components/WaitingFrame.vue'
 import AboutFrame from './components/AboutFrame.vue'
 import DialogBox from './components/DialogBox.vue'
 import ExceptionBox from './components/ExceptionBox.vue'
-import {
-  example_logon_actions,
-  example_menu_data,
-  example_server_data,
-  mountComponent
-} from './tools/utils.js'
+import { example_logon_actions, example_menu_data, example_server_data } from './__tests__/tools.js'
+import { mountComponent } from './tools/utils.js'
 const store = useStore()
 const i18n = useI18n()
 const show_about = defineModel('show_about', { type: Boolean, default: false })
@@ -63,49 +59,22 @@ function help() {
   win.focus()
 }
 function click_action(action) {
-  if (action.id.startsWith('CORE/')) {
+  const result = action.result
+  var current_comp = null
+  switch (result.meta.observer) {
+    case 'core.exception':
+      current_comp = ExceptionBox
+      break
+    case 'core.dialogbox':
+      current_comp = DialogBox
+      break
+    default:
+      current_comp = null
+  }
+  if (current_comp !== null) {
     mountComponent(
-      ExceptionBox,
-      {
-        context: {},
-        close: null,
-        exception: {
-          type: 'LucteriosException',
-          debug:
-            "/usr/local/lib/python3.4/site-packages/django/views/generic/base.py in line 88 in dispatch: return handler(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 332 in get: return self.get_post(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferadvance.py in line 162 in get_post: self._initialize(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 260 in _initialize: self._search_model(){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 172 in _search_model: self._load_unique_record(ids[0]){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 160 in _load_unique_record: IMPORTANT, _('This record not exist!\\nRefresh your application.')){[br/]}",
-          message: action.text,
-          code: Number(action.unique),
-          request: action.id === 'CORE/labelList' ? 'CORE/labelList?aa=1&bb=true' : '',
-          response: action.id === 'CORE/labelList' ? JSON.stringify(example_logon_actions) : ''
-        },
-        meta: {
-          extension: action.extension,
-          title: action.text,
-          action: action.action,
-          observer: 'core.exception'
-        }
-      },
-      {},
-      app
-    )
-  } else {
-    mountComponent(
-      DialogBox,
-      {
-        context: {},
-        data: {
-          message: action.help ? action.help : action.text,
-          type: Number(action.unique)
-        },
-        meta: {
-          extension: action.extension,
-          title: action.text,
-          action: action.action,
-          observer: 'core.dialogbox'
-        },
-        actions: action.id == 'lucterios.contacts/currentStructure' ? example_logon_actions : [],
-        close: action.id == 'lucterios.contacts/legalEntityList' ? example_logon_actions[0] : null
-      },
+      current_comp,
+      result,
       {
         clickaction: click_action
       },

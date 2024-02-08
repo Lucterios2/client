@@ -57,7 +57,7 @@ describe('AboutFrame', () => {
           'v-card-text > v-row:nth-of-type(1) > v-col:nth-of-type(2) > v-row > v-col:nth-of-type(1)'
         )
         .text()
-    ).toBe('version')
+    ).toBe('Version')
     expect(
       wrapper
         .find(
@@ -146,7 +146,7 @@ describe('AboutFrame', () => {
 
     await wrapper.find('v-card-actions > v-btn:nth-of-type(1)').trigger('click')
     expect(window.location).toBe(
-      'mailto:support@lucterios.org?subject=Rapport%20de%20bogue&body=%0AD%C3%A9crivez%20le%20plus%20pr%C3%A9cis%C3%A9ment%20possible%2C%20comment%20vous%20avez%20obtenu%20ce%20probl%C3%A8me.%0AMerci%20de%20votre%20aide.%0A%0A'
+      "mailto:support@lucterios.org?subject=Rapport%20de%20bogue&body=%0AD%C3%A9crivez%20le%20plus%20pr%C3%A9cis%C3%A9ment%20possible%2C%20comment%20vous%20avez%20obtenu%20ce%20probl%C3%A8me.%0AMerci%20de%20votre%20aide.%0A%0A__________________________________________%0A%23%23%23%23%20Lucterios%20%23%23%23%23%0AVersion%20%3A%202.x.yy.zzzzzzzz%0AServeur%20%3A%202.x.yy.zzzzzzzz%0AClient%20%3A%202.a.bb.cccccccc%0AConnection%20%3A%20admin%40lucterios-test%0Ahttp%3A%2F%2Flocalhost%3A3000%2F%0A(c)%20GPL%20Licence%0A__________________________________________%0AC%C5%93ur%20Lucterios%3D2.u.vv.wwwwww1%0AContacts%20Lucterios%3D2.u.vv.wwwwww2%0ADocuments%20Lucterios%3D2.u.vv.wwwwww3%0A%0ALinux%20x86_64%204.xx.x-x%20-%20Python%203.10%20-%20Django%203.2%20-%20langage%20'en'%0A"
     )
   })
 })

@@ -3,14 +3,13 @@ import { useStore } from 'vuex'
 import { useI18n } from 'vue-i18n'
 const store = useStore()
 const i18n = useI18n()
+
+import { send_to_support } from '@/tools/utils.js'
 const emit = defineEmits(['close'])
 const more_version = defineModel({ type: Boolean, default: false })
 const visible = true
 function send_support() {
-  var url = 'mailto:' + store.state.server.support_email
-  url += '?subject=' + encodeURIComponent(i18n.t('support_subject'))
-  url += '&body=' + encodeURIComponent(i18n.t('support_body'))
-  window.location = url
+  send_to_support(i18n, store, '')
 }
 </script>
 

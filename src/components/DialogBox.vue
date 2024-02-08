@@ -1,7 +1,6 @@
 <script setup>
 import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
-import ButtonAction from './ButtonAction.vue'
+import ButtonsBar from './ButtonsBar.vue'
 import { convertLuctoriosFormatToHtml } from '@/tools/utils'
 const props = defineProps({
   context: Object,
@@ -11,33 +10,13 @@ const props = defineProps({
   meta: Object // {extension: String, title: String, action: String, observer: String}
 })
 const emit = defineEmits(['clickaction', 'close'])
-const i18n = useI18n()
 const visible = true
-const action_list = computed(() => {
-  if (props.actions.length > 0) {
-    return props.actions
-  } else {
-    return [{ text: i18n.t('ok'), id: '', icon: 'mdi:mdi-check', close: '0' }]
-  }
-})
-function merge_action_params(action) {
+function click_action(action) {
   if (action.params === undefined) {
     action.params = {}
   }
   action.params = Object.assign({}, action.params, props.context)
-}
-function click_action(action) {
-  merge_action_params(action)
-  if (action.id !== '') {
-    emit('clickaction', action)
-  }
-  if (Number(action.close) === 0) {
-    if (props.close !== null) {
-      merge_action_params(props.close)
-      emit('clickaction', props.close)
-    }
-    emit('close')
-  }
+  emit('clickaction', action)
 }
 const icon = computed(() => {
   /*
@@ -71,12 +50,12 @@ const icon = computed(() => {
           </v-col>
         </v-row>
       </v-card-text>
-      <v-card-actions class="bg-grey-lighten-3">
-        <v-spacer></v-spacer>
-        <div v-for="action in action_list" :key="action.id">
-          <ButtonAction :action="action" @click="click_action(action)" />
-        </div>
-      </v-card-actions>
+      <ButtonsBar
+        :actions="actions"
+        :close="close"
+        @clickaction="click_action"
+        @close="emit('close')"
+      />
     </v-card>
   </v-dialog>
 </template>

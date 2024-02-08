@@ -49,7 +49,7 @@ const storage = createStore({
       state.show_summary = summary
     },
     change_server(state, server) {
-      state.server = server
+      state.server = Object.assign({}, state.server, server)
     }
   },
   actions: {

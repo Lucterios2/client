@@ -3,7 +3,7 @@ import { createI18n } from 'vue-i18n'
 const messages = {
   en: {
     about: 'About...',
-    version: 'version',
+    version: 'Version',
     use_lucterios_framework: 'Use the Lucterios framework',
     server: 'Serveur',
     client: 'Client',
@@ -19,6 +19,7 @@ const messages = {
     identify_you: 'Please, identify you',
     only_admin: 'Only administrators can access!',
     ok: 'OK',
+    close: 'Close',
     cancel: 'Cancel',
     field_required: 'Field is required',
     support_subject: 'Bug report',
@@ -30,11 +31,15 @@ const messages = {
     Failure: 'Failure',
     Error: 'Error',
     Warning: 'Warning',
-    Information: 'Information'
+    Information: 'Information',
+    'Call-stack': 'Call-stack',
+    Extra: 'Extra',
+    Request: 'Request',
+    Response: 'Response'
   },
   fr: {
     about: 'A propos...',
-    version: 'version',
+    version: 'Version',
     use_lucterios_framework: "Utilise le cadre d'application Lucterios",
     server: 'Serveur',
     client: 'Client',
@@ -50,6 +55,7 @@ const messages = {
     identify_you: 'Veuillez vous identifier',
     only_admin: 'Seuls les administrateurs peuvent accéder !',
     ok: 'OK',
+    close: 'Fermer',
     cancel: 'Annuler',
     field_required: 'Champ demandé',
     support_subject: 'Rapport de bogue',
@@ -59,10 +65,14 @@ const messages = {
     help: 'Aide',
     login: 'Connexion',
     logoff: 'Déconnexion',
-    Failure: 'Écheck',
+    Failure: 'Échec',
     Error: 'Erreur',
     Warning: 'Avertissement',
-    Information: 'Information'
+    Information: 'Information',
+    'Call-stack': "Pile d'appel",
+    Extra: 'Extra',
+    Request: 'Requête',
+    Response: 'Reponse'
   }
 }
 

@@ -3,6 +3,7 @@ import { shallowMount } from '@vue/test-utils'
 
 import DialogBox from '../DialogBox.vue'
 import i18n from '../../i18n.js'
+import { convert_event_to_object } from '../../__tests__/tools'
 
 describe('DialogBox', () => {
   it('Information', async () => {
@@ -39,22 +40,9 @@ describe('DialogBox', () => {
     expect(wrapper.find('v-card > v-card-text > v-row > v-col:nth-of-type(2) > span').text()).toBe(
       'Message simple'
     )
-
-    expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(2)
-    expect(wrapper.find('v-card > v-card-actions > v-spacer').exists()).toBe(true)
-    expect(wrapper.find('v-card > v-card-actions > div').element.childElementCount).toBe(1)
     expect(
-      wrapper.find('v-card > v-card-actions > div > button-action-stub').getCurrentComponent().props
-        .action
-    ).toStrictEqual({ id: '', text: 'OK', icon: 'mdi:mdi-check', close: '0' })
-
-    expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
-    expect(wrapper.emitted('close')).toStrictEqual(undefined)
-    await wrapper
-      .find('v-card > v-card-actions:nth-of-type(1) > div > button-action-stub')
-      .trigger('click')
-    expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
-    expect(wrapper.emitted('close')).toStrictEqual([[]])
+      wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
+    ).toStrictEqual([])
   })
 
   it('Confirmation multi-action', async () => {
@@ -95,50 +83,29 @@ describe('DialogBox', () => {
       'Message simple'
     )
 
-    expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(3)
-    expect(wrapper.find('v-card > v-card-actions > v-spacer').exists()).toBe(true)
-    expect(wrapper.find('v-card > v-card-actions > div').element.childElementCount).toBe(1)
     expect(
-      wrapper
-        .find('v-card > v-card-actions > div:nth-of-type(1) > button-action-stub')
-        .getCurrentComponent().props.action
-    ).toStrictEqual({ id: 'abc', text: 'action1', icon: 'icon1', close: '1' })
-    expect(
-      wrapper
-        .find('v-card > v-card-actions > div:nth-of-type(2) > button-action-stub')
-        .getCurrentComponent().props.action
-    ).toStrictEqual({
-      id: 'def',
-      text: 'action2',
-      icon: 'icon2',
-      close: '0',
-      params: { value: 54.65 }
-    })
+      wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
+    ).toStrictEqual([
+      { id: 'abc', text: 'action1', icon: 'icon1', close: '1' },
+      {
+        id: 'def',
+        text: 'action2',
+        icon: 'icon2',
+        close: '0',
+        params: { value: 54.65 }
+      }
+    ])
 
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
     expect(wrapper.emitted('close')).toStrictEqual(undefined)
     await wrapper
-      .find('v-card > v-card-actions > div:nth-of-type(1) > button-action-stub')
-      .trigger('click')
-    expect(wrapper.emitted('clickaction')).toStrictEqual([
+      .find('v-card > buttons-bar-stub')
+      .trigger('clickaction', { id: 'abc', text: 'action1', icon: 'icon1', close: '1' })
+    expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([
       [{ id: 'abc', text: 'action1', icon: 'icon1', close: '1', params: { id: 123, text: 'abc' } }]
     ])
     expect(wrapper.emitted('close')).toStrictEqual(undefined)
-    await wrapper
-      .find('v-card > v-card-actions > div:nth-of-type(2) > button-action-stub')
-      .trigger('click')
-    expect(wrapper.emitted('clickaction')).toStrictEqual([
-      [{ id: 'abc', text: 'action1', icon: 'icon1', close: '1', params: { id: 123, text: 'abc' } }],
-      [
-        {
-          id: 'def',
-          text: 'action2',
-          icon: 'icon2',
-          close: '0',
-          params: { id: 123, text: 'abc', value: 54.65 }
-        }
-      ]
-    ])
+    await wrapper.find('v-card > buttons-bar-stub').trigger('close')
     expect(wrapper.emitted('close')).toStrictEqual([[]])
   })
 
@@ -177,13 +144,9 @@ describe('DialogBox', () => {
       '<span>Message complexe<br>with multiline and <b>bold</b></span>'
     )
 
-    expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(2)
-    expect(wrapper.find('v-card > v-card-actions > v-spacer').exists()).toBe(true)
-    expect(wrapper.find('v-card > v-card-actions > div').element.childElementCount).toBe(1)
     expect(
-      wrapper.find('v-card > v-card-actions > div > button-action-stub').getCurrentComponent().props
-        .action
-    ).toStrictEqual({ id: '', text: 'OK', icon: 'mdi:mdi-check', close: '0' })
+      wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
+    ).toStrictEqual([])
   })
 
   it('Error', async () => {
@@ -221,21 +184,19 @@ describe('DialogBox', () => {
       'Message simple'
     )
 
-    expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(2)
-    expect(wrapper.find('v-card > v-card-actions > v-spacer').exists()).toBe(true)
-    expect(wrapper.find('v-card > v-card-actions > div').element.childElementCount).toBe(1)
     expect(
-      wrapper.find('v-card > v-card-actions > div > button-action-stub').getCurrentComponent().props
-        .action
-    ).toStrictEqual({ id: 'def', text: 'action2', icon: 'icon2', close: '0' })
+      wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
+    ).toStrictEqual([{ id: 'def', text: 'action2', icon: 'icon2', close: '0' }])
 
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
     expect(wrapper.emitted('close')).toStrictEqual(undefined)
-    await wrapper
-      .find('v-card > v-card-actions:nth-of-type(1) > div > button-action-stub')
-      .trigger('click')
-    expect(wrapper.emitted('clickaction')).toStrictEqual([
-      [{ id: 'def', text: 'action2', icon: 'icon2', close: '0', params: { id: 123, text: 'abc' } }],
+    await wrapper.find('v-card > buttons-bar-stub').trigger('clickaction', {
+      id: 'abc',
+      text: 'action1',
+      icon: 'icon1',
+      params: { value: 54.65 }
+    })
+    expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([
       [
         {
           id: 'abc',
@@ -245,6 +206,8 @@ describe('DialogBox', () => {
         }
       ]
     ])
+    expect(wrapper.emitted('close')).toStrictEqual(undefined)
+    await wrapper.find('v-card > buttons-bar-stub').trigger('close')
     expect(wrapper.emitted('close')).toStrictEqual([[]])
   })
 })

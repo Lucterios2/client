@@ -9,9 +9,15 @@ function clickaction() {
 </script>
 
 <template>
-  <v-btn class="bg-grey" :prepend-icon="props.action.icon" @click="clickaction">
-    {{ props.action.text }}</v-btn
+  <v-btn
+    class="bg-grey"
+    @click="clickaction"
+    min-width="100px"
+    :disabled="action.disabled === true"
   >
+    <v-icon>{{ action.icon }}</v-icon>
+    <span>{{ action.text }}</span>
+  </v-btn>
 </template>
 
 <style scoped></style>

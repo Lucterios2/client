@@ -5,6 +5,7 @@ import LoginBox from '../LoginBox.vue'
 import ButtonAction from '../ButtonAction.vue'
 import storage from '../../datastorage.js'
 import i18n from '../../i18n.js'
+import { convert_event_to_object } from '@/__tests__/tools'
 
 describe('LoginBox', () => {
   it('login mode 0', async () => {
@@ -36,9 +37,10 @@ describe('LoginBox', () => {
         .attributes('label')
     ).toBe('Mot de passe')
 
-    expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(2)
-    expect(wrapper.find('v-card > v-card-actions > v-spacer').exists()).toBe(true)
-    expect(wrapper.find('v-card > v-card-actions > v-btn:nth-of-type(1)').text()).toBe('OK')
+    expect(wrapper.find('v-card > buttons-bar-stub').element.childElementCount).toBe(0)
+    expect(
+      wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
+    ).toStrictEqual([{ close: 1, disabled: true, icon: 'mdi:mdi-power', id: 'ok', text: 'OK' }])
   })
 
   it('login mode 1', async () => {
@@ -70,10 +72,13 @@ describe('LoginBox', () => {
         .attributes('label')
     ).toBe('Mot de passe')
 
-    expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(3)
-    expect(wrapper.find('v-card > v-card-actions > v-spacer').exists()).toBe(true)
-    expect(wrapper.find('v-card > v-card-actions > v-btn:nth-of-type(1)').text()).toBe('Annuler')
-    expect(wrapper.find('v-card > v-card-actions > v-btn:nth-of-type(2)').text()).toBe('OK')
+    expect(wrapper.find('v-card > buttons-bar-stub').element.childElementCount).toBe(0)
+    expect(
+      wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
+    ).toStrictEqual([
+      { close: 1, icon: 'mdi:mdi-logout', id: 'cancel', text: 'Annuler' },
+      { close: 1, disabled: true, icon: 'mdi:mdi-power', id: 'ok', text: 'OK' }
+    ])
   })
 
   it('login need auth', async () => {
@@ -97,7 +102,10 @@ describe('LoginBox', () => {
       'Veuillez vous identifier'
     )
     expect(wrapper.find('v-card > v-card-text > v-container').element.childElementCount).toBe(2)
-    expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(2)
+    expect(wrapper.find('v-card > buttons-bar-stub').element.childElementCount).toBe(0)
+    expect(
+      wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
+    ).toStrictEqual([{ close: 1, disabled: true, icon: 'mdi:mdi-power', id: 'ok', text: 'OK' }])
   })
 
   it('login bad auth', async () => {
@@ -131,8 +139,10 @@ describe('LoginBox', () => {
         .find('v-card > v-card-text > v-container > v-text-field:nth-of-type(2)')
         .attributes('label')
     ).toBe('Mot de passe')
-
-    expect(wrapper1.find('v-card > v-card-actions').element.childElementCount).toBe(2)
+    expect(wrapper1.find('v-card > buttons-bar-stub').element.childElementCount).toBe(0)
+    expect(
+      wrapper1.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
+    ).toStrictEqual([{ close: 1, disabled: true, icon: 'mdi:mdi-power', id: 'ok', text: 'OK' }])
 
     storage.commit('change_server', {
       mode: 0,
@@ -184,7 +194,10 @@ describe('LoginBox', () => {
       'Seuls les administrateurs peuvent accéder !'
     )
     expect(wrapper.find('v-card > v-card-text > v-container').element.childElementCount).toBe(2)
-    expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(2)
+    expect(wrapper.find('v-card > buttons-bar-stub').element.childElementCount).toBe(0)
+    expect(
+      wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
+    ).toStrictEqual([{ close: 1, disabled: true, icon: 'mdi:mdi-power', id: 'ok', text: 'OK' }])
   })
 
   it('login with action', async () => {
@@ -231,22 +244,19 @@ describe('LoginBox', () => {
         .find('v-card > v-card-actions:nth-of-type(2) > button-action-stub')
         .getCurrentComponent().props.action
     ).toStrictEqual({ id: 'def', text: 'action2', icon: 'icon2' })
-    expect(wrapper.find('v-card > v-card-actions:nth-of-type(3)').element.childElementCount).toBe(3)
-    expect(wrapper.find('v-card > v-card-actions:nth-of-type(3) > v-spacer').exists()).toBe(true)
+    expect(wrapper.find('v-card > buttons-bar-stub').element.childElementCount).toBe(0)
     expect(
-      wrapper.find('v-card > v-card-actions:nth-of-type(3) > v-btn:nth-of-type(1)').text()
-    ).toBe('Annuler')
-    expect(
-      wrapper.find('v-card > v-card-actions:nth-of-type(3) > v-btn:nth-of-type(2)').text()
-    ).toBe('OK')
+      wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
+    ).toStrictEqual([
+      { close: 1, icon: 'mdi:mdi-logout', id: 'cancel', text: 'Annuler' },
+      { close: 1, disabled: true, icon: 'mdi:mdi-power', id: 'ok', text: 'OK' }
+    ])
 
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
     await wrapper
       .find('v-card > v-card-actions:nth-of-type(1) > button-action-stub')
       .trigger('click', { id: 'abc' })
-    expect(wrapper.emitted('clickaction').length).toStrictEqual(1)
-    expect(wrapper.emitted('clickaction')[0].length).toStrictEqual(1)
-    expect(wrapper.emitted('clickaction')[0][0].id).toStrictEqual('abc')
+    expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([[{ id: 'abc' }]])
   })
 
   it('Button', async () => {
@@ -258,13 +268,22 @@ describe('LoginBox', () => {
         plugins: [storage, i18n]
       }
     })
-    expect(wrapper.find('v-btn').element.childElementCount).toBe(0)
-    expect(wrapper.find('v-btn').attributes('prepend-icon')).toBe('icon1')
-    expect(wrapper.find('v-btn').text()).toBe('action1')
+    expect(wrapper.find('v-btn').element.childElementCount).toBe(2)
+    expect(wrapper.find('v-btn').attributes('disabled')).toBe('false')
+    expect(wrapper.find('v-btn > v-icon').text()).toBe('icon1')
+    expect(wrapper.find('v-btn > span').text()).toBe('action1')
     expect(wrapper.emitted('click')).toStrictEqual(undefined)
     await wrapper.trigger('click', { id: 'abc' })
     expect(wrapper.emitted('click')).toStrictEqual([
       [{ id: 'abc', text: 'action1', icon: 'icon1' }]
     ])
+    await wrapper.setProps({
+      action: { id: 'abc', text: 'action1', icon: 'icon1', disabled: true }
+    })
+    expect(wrapper.find('v-btn').attributes('disabled')).toBe('true')
+    await wrapper.setProps({
+      action: { id: 'abc', text: 'action1', icon: 'icon1', disabled: false }
+    })
+    expect(wrapper.find('v-btn').attributes('disabled')).toBe('false')
   })
 })

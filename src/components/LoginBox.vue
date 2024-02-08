@@ -1,7 +1,9 @@
 <script setup>
 import ButtonAction from './ButtonAction.vue'
+import ButtonsBar from './ButtonsBar.vue'
 import { useStore } from 'vuex'
 import { useI18n } from 'vue-i18n'
+import { computed } from 'vue'
 const store = useStore()
 const i18n = useI18n()
 const props = defineProps({
@@ -45,6 +47,30 @@ if (props.data === 'BADAUTH') {
 } else {
   message.value = props.data
 }
+
+const action_list = computed(() => {
+  const actions = Array()
+  if (store.state.server.mode === 1) {
+    actions.push({ id: 'cancel', text: i18n.t('cancel'), icon: 'mdi:mdi-logout', close: 1 })
+  }
+  actions.push({
+    id: 'ok',
+    text: i18n.t('ok'),
+    icon: 'mdi:mdi-power',
+    close: 1,
+    disabled: !form.value
+  })
+  return actions
+})
+
+function run_action(action) {
+  if (action.id == 'cancel') {
+    emit('logoff')
+  }
+  if (action.id == 'ok') {
+    onSubmit()
+  }
+}
 </script>
 
 <template>
@@ -76,19 +102,7 @@ if (props.data === 'BADAUTH') {
           <ButtonAction :action="action" @click="click_action" />
         </v-card-actions>
 
-        <v-card-actions class="bg-grey-lighten-3">
-          <v-spacer></v-spacer>
-          <v-btn
-            class="bg-grey"
-            @click="emit('logoff')"
-            width="100px"
-            v-if="$store.state.server.mode === 1"
-            ><v-icon icon="mdi:mdi-logout" />{{ $t('cancel') }}</v-btn
-          >
-          <v-btn class="bg-grey" type="submit" width="100px" :disabled="!form"
-            ><v-icon icon="mdi:mdi-power" />{{ $t('ok') }}</v-btn
-          >
-        </v-card-actions>
+        <ButtonsBar :actions="action_list" @clickaction="run_action" @close="run_action" />
       </v-card>
     </v-form>
   </v-dialog>
@@ -101,6 +115,6 @@ if (props.data === 'BADAUTH') {
 .logactions button {
   font-size: 10px;
   margin: 0px auto;
-  width: 80%;
+  width: 60%;
 }
 </style>

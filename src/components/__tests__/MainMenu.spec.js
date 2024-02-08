@@ -6,6 +6,7 @@ import MainMenu from '../MainMenu.vue'
 import SubMenu from '../SubMenu.vue'
 import SubMenus from '../SubMenus.vue'
 import storage from '../../datastorage.js'
+import { convert_event_to_object } from '@/__tests__/tools'
 
 describe('MainMenu', () => {
   it('Empty', async () => {
@@ -340,9 +341,9 @@ describe('MainMenu', () => {
         'v-row > v-col > v-card > v-card-text > v-window > v-window-item:nth-of-type(3) > sub-menus-stub'
       )
       .trigger('clickaction', { id: 'core.general' })
-    expect(wrapper.emitted('clickaction').length).toStrictEqual(1)
-    expect(wrapper.emitted('clickaction')[0].length).toStrictEqual(1)
-    expect(wrapper.emitted('clickaction')[0][0].id).toStrictEqual('core.general')
+    expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([
+      [{ id: 'core.general' }]
+    ])
   })
 
   it('submenu icon', async () => {
@@ -797,17 +798,16 @@ describe('MainMenu', () => {
     await wrapper
       .find('v-card > v-card-item > v-card-text > v-row > v-col:nth-of-type(7) > sub-menu-stub')
       .trigger('click', { id: 'lucterios.contacts/currentStructure' })
-    expect(wrapper.emitted('clickaction').length).toStrictEqual(1)
-    expect(wrapper.emitted('clickaction')[0].length).toStrictEqual(1)
-    expect(wrapper.emitted('clickaction')[0][0].id).toStrictEqual(
-      'lucterios.contacts/currentStructure'
-    )
+    expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([
+      [{ id: 'lucterios.contacts/currentStructure' }]
+    ])
 
     await wrapper
       .find('v-card > v-card-item > v-card-text > v-row > v-col:nth-of-type(5) > sub-menus-stub')
       .trigger('clickaction', { id: 'core.general' })
-    expect(wrapper.emitted('clickaction').length).toStrictEqual(2)
-    expect(wrapper.emitted('clickaction')[1].length).toStrictEqual(1)
-    expect(wrapper.emitted('clickaction')[1][0].id).toStrictEqual('core.general')
+    expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([
+      [{ id: 'lucterios.contacts/currentStructure' }],
+      [{ id: 'core.general' }]
+    ])
   })
 })
