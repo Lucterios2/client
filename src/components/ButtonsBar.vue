@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import ButtonAction from './ButtonAction.vue'
+import ButtonAction from '@/components/ButtonAction.vue'
 const i18n = useI18n()
 const emit = defineEmits(['clickaction', 'close'])
 const props = defineProps({

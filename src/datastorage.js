@@ -5,11 +5,9 @@ const storage = createStore({
   state: {
     show_waiting: false,
     show_status: true,
-    show_login: false,
     show_summary: true,
-    show_menu: true,
     server: {
-      title: '',
+      title: 'Lucterios',
       sub_title: '',
       applis_version: '',
       server_version: '',
@@ -38,12 +36,6 @@ const storage = createStore({
     },
     call_status(state, status) {
       state.show_status = status
-    },
-    call_login(state, login) {
-      state.show_login = login
-    },
-    call_menu(state, menu) {
-      state.show_menu = menu
     },
     call_summary(state, summary) {
       state.show_summary = summary

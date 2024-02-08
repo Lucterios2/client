@@ -82,6 +82,8 @@ export function convertLuctoriosFormatToHtml(oldText) {
   return newText
 }
 
+const component_created = new Map()
+
 export function mountComponent(component, props, emits, app) {
   let el = document.createElement('div')
 
@@ -89,6 +91,7 @@ export function mountComponent(component, props, emits, app) {
     if (el) {
       document.getElementById('comp').removeChild(el)
       Vue.render(null, el)
+      component_created.delete(el)
     }
     el = null
   }
@@ -100,11 +103,21 @@ export function mountComponent(component, props, emits, app) {
   emits.close = destroy
   new_comp.component.emitsOptions = emits
 
-  return {
+  const struct_comp = {
     new_comp,
     destroy,
     el
   }
+  component_created.set(el, struct_comp)
+  return struct_comp
+}
+
+export function clearComponent() {
+  component_created.forEach((value) => {
+    const { destroy } = value
+    destroy()
+  })
+  component_created.clear()
 }
 
 export function send_to_support(i18n, store, complement) {

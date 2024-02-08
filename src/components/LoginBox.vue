@@ -1,20 +1,23 @@
 <script setup>
-import ButtonAction from './ButtonAction.vue'
-import ButtonsBar from './ButtonsBar.vue'
+import ButtonAction from '@/components/ButtonAction.vue'
+import ButtonsBar from '@/components/ButtonsBar.vue'
 import { useStore } from 'vuex'
 import { useI18n } from 'vue-i18n'
 import { computed } from 'vue'
 const store = useStore()
 const i18n = useI18n()
 const props = defineProps({
+  connexion: Object,
   data: String,
-  actions: Array
+  actions: Array,
+  meta: Object
 })
-const emit = defineEmits(['logon', 'logoff', 'clickaction'])
+const emit = defineEmits(['clickaction', 'close'])
 const form = defineModel('form', { type: Boolean, default: false })
 const login = defineModel('login', { type: String, default: '' })
 const password = defineModel('password', { type: String, default: '' })
 const message = defineModel('message', { type: String, default: '' })
+var show_login = true
 
 function login_label() {
   if (store.state.server.login_field === 'email') {
@@ -25,29 +28,30 @@ function login_label() {
 }
 function click_action(action) {
   emit('clickaction', action)
+  emit('close')
 }
 
+function run_action(action) {
+  if (action.id == 'cancel') {
+    click_action({ id: 'CORE/exitConnection' })
+  }
+  if (action.id == 'ok') {
+    onSubmit()
+  }
+}
 function onSubmit() {
   if (!form.value) return
-  emit('logon', login.value, password.value)
+  click_action({
+    id: 'CORE/authentification',
+    method: 'POST',
+    params: { login: login.value, password: password.value }
+  })
 }
 function required(v) {
   return !!v || i18n.t('field_required')
 }
-if (props.data === 'BADAUTH') {
-  if (store.state.server.login_field === 'email') {
-    message.value = i18n.t('email_wrong')
-  } else {
-    message.value = i18n.t('username_wrong')
-  }
-} else if (props.data === 'NEEDAUTH') {
-  message.value = i18n.t('identify_you')
-} else if (props.data === 'ONLYADMIN') {
-  message.value = i18n.t('only_admin')
-} else {
-  message.value = props.data
-}
 
+show_login = true
 const action_list = computed(() => {
   const actions = Array()
   if (store.state.server.mode === 1) {
@@ -63,18 +67,33 @@ const action_list = computed(() => {
   return actions
 })
 
-function run_action(action) {
-  if (action.id == 'cancel') {
-    emit('logoff')
+store.commit('call_status', false)
+if (props.data === 'OK') {
+  store.commit('change_server', props.connexion)
+  i18n.locale.value = props.connexion.language ? props.connexion.language : 'fr'
+  document.title = store.state.server.title + ' - ' + store.state.server.sub_title
+  show_login = false
+  var refreshIntervalId = setInterval(() => {
+    click_action({ id: 'CORE/menu' })
+    clearInterval(refreshIntervalId)
+  }, 100)
+} else if (props.data === 'BADAUTH') {
+  if (store.state.server.login_field === 'email') {
+    message.value = i18n.t('email_wrong')
+  } else {
+    message.value = i18n.t('username_wrong')
   }
-  if (action.id == 'ok') {
-    onSubmit()
-  }
+} else if (props.data === 'NEEDAUTH') {
+  message.value = i18n.t('identify_you')
+} else if (props.data === 'ONLYADMIN') {
+  message.value = i18n.t('only_admin')
+} else {
+  message.value = props.data
 }
 </script>
 
 <template>
-  <v-dialog v-model="$store.state.show_login" activator="parent" persistent max-width="400px">
+  <v-dialog v-model="show_login" activator="parent" persistent max-width="400px">
     <v-form v-model="form" @submit.prevent="onSubmit">
       <v-card>
         <v-card-title class="bg-grey-lighten-3"> {{ $t('Logon') }} </v-card-title>

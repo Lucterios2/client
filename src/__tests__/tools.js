@@ -8,6 +8,7 @@ export function convert_event_to_object(value) {
   } else if (typeof value === 'object') {
     const new_object = {}
     for (var key in value) {
+      /* eslint no-prototype-builtins: 0 */
       if (value.hasOwnProperty(key) && key !== '_vts' && key !== 'isTrusted') {
         new_object[key] = value[key]
       }

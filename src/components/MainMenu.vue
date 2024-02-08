@@ -1,10 +1,10 @@
 <script setup>
 import { useStore } from 'vuex'
-import SubMenus from './SubMenus.vue'
-const emit = defineEmits(['clickaction'])
+import SubMenus from '@/components/SubMenus.vue'
+const emit = defineEmits(['clickaction', 'close'])
 const store = useStore()
 const props = defineProps({
-  data: Array
+  menus: Array
 })
 const tab = defineModel('tab')
 const summary_menu = defineModel('summary_menu', { type: Array, default: [] })
@@ -13,7 +13,7 @@ function click_action(menu) {
   emit('clickaction', menu)
 }
 
-props.data.forEach((item) => {
+props.menus.forEach((item) => {
   if (item.text === '') {
     summary_menu.value = item.menus
     if (item.menus.length > 0) {
@@ -32,13 +32,14 @@ function show_summary() {
 
 function tabs_menus() {
   const menus_of_tabs = []
-  props.data.forEach((item) => {
+  props.menus.forEach((item) => {
     if (item.text !== '') {
       menus_of_tabs.push(item)
     }
   })
   return menus_of_tabs
 }
+store.commit('call_status', true)
 </script>
 
 <template>
