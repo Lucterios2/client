@@ -1,8 +1,10 @@
 import * as Vue from 'vue'
 import LoginBox from '@/components/LoginBox.vue'
 import MainMenu from '@/components/MainMenu.vue'
+import AcknowledgeReturn from '@/components/AcknowledgeReturn.vue'
 import DialogBox from '@/components/DialogBox.vue'
 import ExceptionBox from '@/components/ExceptionBox.vue'
+import PrintReturn from '@/components/PrintReturn.vue'
 
 var current_app = null
 
@@ -44,8 +46,8 @@ export function clearComponent() {
   component_created.clear()
 }
 
-export function initialObserver() {
-  current_app = Vue.getCurrentInstance().appContext.app
+export function initialObserver(ext_app) {
+  current_app = ext_app ? ext_app : Vue.getCurrentInstance().appContext.app
 }
 
 export async function factory(result, click_action) {
@@ -58,8 +60,14 @@ export async function factory(result, click_action) {
       clearComponent()
       current_comp = MainMenu
       break
+    case 'core.acknowledge':
+      current_comp = AcknowledgeReturn
+      break
     case 'core.exception':
       current_comp = ExceptionBox
+      break
+    case 'core.print':
+      current_comp = PrintReturn
       break
     case 'core.dialogbox':
       current_comp = DialogBox

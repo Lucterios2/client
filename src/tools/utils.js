@@ -55,6 +55,40 @@ export function makeDialogsMovable() {
   }, 100)
 }
 
+export function openBlob(aBlob, aFileName) {
+  if (window.navigator.msSaveOrOpenBlob) {
+    console.log('>>> window.navigator.msSaveOrOpenBlob')
+    window.navigator.msSaveOrOpenBlob(aBlob, aFileName)
+  } else {
+    const hyperlink = document.createElement('a')
+    hyperlink.href = URL.createObjectURL(aBlob)
+    hyperlink.target = '_blank'
+    hyperlink.download = aFileName
+    const mouseEvent = new MouseEvent('click', {
+      canBubble: true,
+      cancelable: true,
+      view: window,
+      detail: 0,
+      screenX: 0,
+      screenY: 0,
+      clientX: 80,
+      clientY: 20,
+      ctrlKey: false,
+      altKey: false,
+      shiftKey: false,
+      metaKey: false,
+      button: 0,
+      relatedTarget: null
+    })
+    hyperlink.dispatchEvent(mouseEvent)
+    if (window.URL) {
+      window.URL.revokeObjectURL(hyperlink.href)
+    } else if (window.webkitURL) {
+      window.webkitURL.revokeObjectURL(hyperlink.href)
+    }
+  }
+}
+
 export function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
@@ -82,6 +116,20 @@ export function convertLuctoriosFormatToHtml(oldText) {
     newText = '&#47;' + newText.substring(1)
   }
   return newText
+}
+
+export function getFileNameWithoutForgottenChar(oldText) {
+  var newText = oldText
+  newText = newText.replace(/:/g, '_')
+  newText = newText.replace(/\//g, '_')
+  newText = newText.replace(/\\/g, '_')
+  newText = newText.replace(/</g, '_')
+  newText = newText.replace(/>/g, '_')
+  newText = newText.replace(/\|/g, '_')
+  newText = newText.replace(/ /g, '_')
+  newText = newText.replace(/"/g, '_')
+  newText = newText.replace(/'/g, '_')
+  return newText.trim()
 }
 
 export function send_to_support(i18n, store, complement) {

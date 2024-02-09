@@ -424,6 +424,129 @@ export const example_menu_data = [
     ]
   },
   {
+    text: 'Impression',
+    id: 'print',
+    icon: '',
+    short_icon: 'mdi:mdi-printer',
+    help: "Ensemble d'actions d'impression",
+    menus: [
+      {
+        text: 'Action 1a',
+        id: 'print/action1',
+        icon: '',
+        short_icon: 'mdi:mdi-printer-pos-play-outline',
+        extension: 'print',
+        action: 'action1',
+        help: 'première action',
+        modal: '0',
+        close: '1',
+        unique: '1',
+        method: 'GET',
+        params: null,
+        result: {
+          print: {
+            title: "Example d'impression",
+            extension: '.csv',
+            content:
+              'CiAgICAgICJFeGFtcGxlIgogICAgCiAgICAgIAogICAgICAibmFtZSIKICAgICAgImFhYWEiCiAgICAgICJ2YWx1ZSIKICAgICAgIjUiCiAgICAgICJwcmljZSIKICAgICAgIjEwMC4wMCIKICAgICAgImRhdGUiCiAgICAgICItLS0iCiAgICAgICJ0aW1lIgogICAgICAiMDA6MDAiCiAgICAgICJ2YWxpZCIKICAgICAgIk5vbiIKICAgICAgImNvbW1lbnQiCiAgICAgICJxcXFxIgogICAgCg=='
+          },
+          context: {},
+          meta: {
+            extension: 'example.sub1',
+            action: 'action1',
+            title: 'Action 1a',
+            observer: 'core.print'
+          },
+          close: null
+        }
+      }
+    ]
+  },
+  {
+    text: 'Acknoledge',
+    id: 'ack',
+    icon: '',
+    short_icon: 'mdi:mdi-palette-outline',
+    help: "Ensemble d'accusé de reception",
+    menus: [
+      {
+        text: 'Acknoledge 1',
+        id: 'ack/action1',
+        icon: '',
+        short_icon: 'mdi:mdi-format-paint',
+        extension: 'ack',
+        action: 'action1',
+        help: 'ack',
+        modal: '0',
+        close: '1',
+        unique: '1',
+        method: 'GET',
+        params: null,
+        result: {
+          context: {},
+          close: null,
+          action: null,
+          meta: {
+            extension: 'ack',
+            action: 'action1',
+            title: 'ACK 1',
+            observer: 'core.acknowledge'
+          }
+        }
+      },
+      {
+        text: 'Acknoledge 2',
+        id: 'ack/action2',
+        icon: '',
+        short_icon: 'mdi:mdi-invert-colors',
+        extension: 'ack',
+        action: 'action1',
+        help: 'ack',
+        modal: '0',
+        close: '1',
+        unique: '1',
+        method: 'GET',
+        params: null,
+        result: {
+          context: {},
+          close: null,
+          action: example_logon_actions[0],
+          meta: {
+            extension: 'ack',
+            action: 'action2',
+            title: 'ACK 2',
+            observer: 'core.acknowledge'
+          }
+        }
+      },
+      {
+        text: 'Acknoledge 1',
+        id: 'ack/action1',
+        icon: '',
+        short_icon: 'mdi:mdi-format-color-highlight',
+        extension: 'ack',
+        action: 'action3',
+        help: 'ack',
+        modal: '0',
+        close: '1',
+        unique: '1',
+        method: 'GET',
+        params: null,
+        result: {
+          context: {},
+          close: example_logon_actions[1],
+          action: null,
+          meta: {
+            extension: 'ack',
+            action: 'action3',
+            title: 'ACK 3',
+            observer: 'core.acknowledge'
+          }
+        }
+      }
+    ]
+  },
+  {
     text: 'Erreurs',
     id: 'error',
     icon: '',
