@@ -63,7 +63,7 @@ click_action({ id: 'CORE/authentification', method: 'POST' })
         @about="show_about = true"
       />
     </v-row>
-    <AboutFrame v-if="show_about" @close="show_about = false"/>
+    <AboutFrame v-if="show_about" @close="show_about = false" />
     <WaitingFrame v-if="$store.state.show_waiting" />
     <div id="comp"></div>
   </v-app>

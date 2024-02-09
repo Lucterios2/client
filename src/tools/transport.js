@@ -6,7 +6,7 @@ import { sleep } from './utils'
 var current_store = null
 
 export function initialTransport() {
-  current_store=useStore()
+  current_store = useStore()
 }
 
 export async function callLucteriosAction(action) {

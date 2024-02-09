@@ -60,7 +60,7 @@ describe('App', () => {
     expect(initialObserver).toHaveBeenCalledTimes(1)
     expect(initialTransport).toHaveBeenCalledTimes(1)
     expect(callLucteriosAction).toHaveBeenCalledTimes(1)
-    expect(callLucteriosAction).lastCalledWith({"id": "CORE/authentification", method: 'POST'})
+    expect(callLucteriosAction).lastCalledWith({ id: 'CORE/authentification', method: 'POST' })
     expect(factory).toHaveBeenCalledTimes(1)
     expect(factory).lastCalledWith(default_obs, wrapper.vm.click_action)
     expect(clearComponent).toHaveBeenCalledTimes(0)
@@ -80,7 +80,7 @@ describe('App', () => {
       expect(callLucteriosAction).toHaveBeenCalledTimes(1)
       expect(factory).toHaveBeenCalledTimes(1)
       expect(clearComponent).toHaveBeenCalledTimes(0)
-  
+
       expect(wrapper.element.childElementCount).toBe(2)
       expect(wrapper.find('v-row').element.childElementCount).toBe(1)
       expect(wrapper.find('v-row > status-bar-stub').text()).toBe('')
@@ -95,29 +95,33 @@ describe('App', () => {
       expect(initialObserver).toHaveBeenCalledTimes(1)
       expect(initialTransport).toHaveBeenCalledTimes(1)
       expect(callLucteriosAction).toHaveBeenCalledTimes(2)
-      expect(callLucteriosAction).lastCalledWith({"id": "CORE/authentification", method: 'POST', params: { info: true }})
+      expect(callLucteriosAction).lastCalledWith({
+        id: 'CORE/authentification',
+        method: 'POST',
+        params: { info: true }
+      })
       expect(factory).toHaveBeenCalledTimes(2)
       expect(clearComponent).toHaveBeenCalledTimes(1)
 
       await wrapper.find('v-row > status-bar-stub').trigger('logoff')
       expect(clearComponent).toHaveBeenCalledTimes(2)
       expect(callLucteriosAction).toHaveBeenCalledTimes(2)
-      await sleep(200);      
+      await sleep(200)
       expect(initialObserver).toHaveBeenCalledTimes(1)
       expect(initialTransport).toHaveBeenCalledTimes(1)
       expect(callLucteriosAction).toHaveBeenCalledTimes(3)
-      expect(callLucteriosAction).lastCalledWith({"id": "CORE/exitConnection"})
+      expect(callLucteriosAction).lastCalledWith({ id: 'CORE/exitConnection' })
       expect(factory).toHaveBeenCalledTimes(3)
       expect(clearComponent).toHaveBeenCalledTimes(2)
 
       await wrapper.find('v-row > status-bar-stub').trigger('login')
       expect(clearComponent).toHaveBeenCalledTimes(3)
       expect(callLucteriosAction).toHaveBeenCalledTimes(3)
-      await sleep(200);      
+      await sleep(200)
       expect(initialObserver).toHaveBeenCalledTimes(1)
       expect(initialTransport).toHaveBeenCalledTimes(1)
       expect(callLucteriosAction).toHaveBeenCalledTimes(4)
-      expect(callLucteriosAction).lastCalledWith({"id": "CORE/authentification", method: 'POST'})
+      expect(callLucteriosAction).lastCalledWith({ id: 'CORE/authentification', method: 'POST' })
       expect(factory).toHaveBeenCalledTimes(4)
       expect(clearComponent).toHaveBeenCalledTimes(3)
     }),
