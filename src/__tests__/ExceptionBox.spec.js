@@ -1,10 +1,14 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 
 import ExceptionBox from '@/components/ExceptionBox.vue'
 import storage from '@/datastorage.js'
 import i18n from '@/i18n.js'
 import { nextTick } from 'vue'
+
+beforeEach(() => {
+  console.warn = vi.fn()
+})
 
 describe('ExceptionBox', () => {
   it('minor', async () => {

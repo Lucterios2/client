@@ -1,11 +1,16 @@
-import { example_logon_actions, example_menu_data, example_server_data } from '@/__tests__/tools'
+import { useStore } from 'vuex'
 
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms))
+import { example_logon_actions, example_menu_data, example_server_data } from '@/__tests__/tools'
+import { sleep } from './utils'
+
+var current_store = null
+
+export function initialTransport() {
+  current_store=useStore()
 }
 
-export async function call_lucterios_action(store, action) {
-  store.commit('call_waiting', true)
+export async function callLucteriosAction(action) {
+  current_store.commit('call_waiting', true)
   var call_result = {}
   if (action.id == 'CORE/authentification' || action.id == 'CORE/exitConnection') {
     call_result = {
@@ -46,6 +51,6 @@ export async function call_lucterios_action(store, action) {
     call_result = action.result
   }
   console.log('call_lucterios_action', action, call_result)
-  store.commit('call_waiting', false)
+  current_store.commit('call_waiting', false)
   return call_result
 }

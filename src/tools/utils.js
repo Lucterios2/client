@@ -1,5 +1,3 @@
-import * as Vue from 'vue'
-
 export function makeDialogsMovable() {
   // make vuetify dialogs movable
   const dialog_box = {}
@@ -57,6 +55,10 @@ export function makeDialogsMovable() {
   }, 100)
 }
 
+export function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
 export function convertLuctoriosFormatToHtml(oldText) {
   var newText = oldText.replace('>', '&gt;')
   newText = newText.replace(/</g, '&lt;')
@@ -80,44 +82,6 @@ export function convertLuctoriosFormatToHtml(oldText) {
     newText = '&#47;' + newText.substring(1)
   }
   return newText
-}
-
-const component_created = new Map()
-
-export function mountComponent(component, props, emits, app) {
-  let el = document.createElement('div')
-
-  const destroy = () => {
-    if (el) {
-      document.getElementById('comp').removeChild(el)
-      Vue.render(null, el)
-      component_created.delete(el)
-    }
-    el = null
-  }
-
-  document.getElementById('comp').appendChild(el)
-  let new_comp = Vue.h(component, props)
-  new_comp.appContext = app._context
-  Vue.render(new_comp, el)
-  emits.close = destroy
-  new_comp.component.emitsOptions = emits
-
-  const struct_comp = {
-    new_comp,
-    destroy,
-    el
-  }
-  component_created.set(el, struct_comp)
-  return struct_comp
-}
-
-export function clearComponent() {
-  component_created.forEach((value) => {
-    const { destroy } = value
-    destroy()
-  })
-  component_created.clear()
 }
 
 export function send_to_support(i18n, store, complement) {

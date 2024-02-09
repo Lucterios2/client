@@ -1,9 +1,13 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 
 import StatusBar from '@/components/StatusBar.vue'
 import storage from '@/datastorage.js'
 import i18n from '@/i18n.js'
+
+beforeEach(() => {
+  console.warn = vi.fn()
+})
 
 describe('StatusBar', () => {
   it('menu mode 0', async () => {

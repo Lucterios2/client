@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { nextTick } from 'vue'
 import { shallowMount } from '@vue/test-utils'
 
@@ -7,6 +7,10 @@ import SubMenu from '@/components/SubMenu.vue'
 import SubMenus from '@/components/SubMenus.vue'
 import storage from '@/datastorage.js'
 import { convert_event_to_object } from '@/__tests__/tools'
+
+beforeEach(() => {
+  console.warn = vi.fn()
+})
 
 describe('MainMenu', () => {
   it('Empty', async () => {

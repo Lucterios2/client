@@ -1,8 +1,12 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 
 import ButtonsBar from '@/components/ButtonsBar.vue'
 import i18n from '@/i18n.js'
+
+beforeEach(() => {
+  console.warn = vi.fn()
+})
 
 describe('ButtonsBar', () => {
   it('No actions - No close', async () => {

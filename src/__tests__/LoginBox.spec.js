@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 
 import LoginBox from '@/components/LoginBox.vue'
@@ -6,6 +6,10 @@ import ButtonAction from '@/components/ButtonAction.vue'
 import storage from '@/datastorage.js'
 import i18n from '@/i18n.js'
 import { convert_event_to_object } from '@/__tests__/tools'
+
+beforeEach(() => {
+  console.warn = vi.fn()
+})
 
 describe('LoginBox', () => {
   it('login mode 0', async () => {

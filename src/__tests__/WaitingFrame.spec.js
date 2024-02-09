@@ -1,7 +1,11 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 
 import WaitingFrame from '@/components/WaitingFrame.vue'
+
+beforeEach(() => {
+  console.warn = vi.fn()
+})
 
 describe('LoginBox', () => {
   it('Simple', async () => {

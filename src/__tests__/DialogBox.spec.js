@@ -1,9 +1,13 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 
 import DialogBox from '@/components/DialogBox.vue'
 import i18n from '@/i18n.js'
 import { convert_event_to_object } from '@/__tests__/tools.js'
+
+beforeEach(() => {
+  console.warn = vi.fn()
+})
 
 describe('DialogBox', () => {
   it('Information', async () => {
