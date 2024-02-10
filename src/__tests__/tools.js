@@ -63,22 +63,7 @@ export const example_logon_actions = [
     close: '0',
     unique: '1',
     method: 'POST',
-    params: null,
-    result: {
-      context: {},
-      data: {
-        message: 'Mot de passe ou alias oublié?',
-        type: 1
-      },
-      meta: {
-        extension: 'CORE',
-        title: 'Mot de passe ou alias oublié?',
-        action: 'askPassword',
-        observer: 'core.dialogbox'
-      },
-      actions: [],
-      close: null
-    }
+    params: null
   },
   {
     text: 'Créer un compte',
@@ -90,22 +75,7 @@ export const example_logon_actions = [
     close: '0',
     unique: '1',
     method: 'POST',
-    params: null,
-    result: {
-      context: {},
-      data: {
-        message: 'Créer un compte',
-        type: 2
-      },
-      meta: {
-        extension: 'CORE',
-        title: 'Créer un compte',
-        action: 'createAccount',
-        observer: 'core.dialogbox'
-      },
-      actions: [],
-      close: null
-    }
+    params: null
   }
 ]
 
@@ -126,8 +96,7 @@ export const example_menu_data = [
         close: '1',
         unique: '1',
         method: 'GET',
-        params: null,
-        result: { meta: { observer: 'core.custom' } }
+        params: null
       },
       {
         text: 'Résumé 2',
@@ -141,8 +110,7 @@ export const example_menu_data = [
         close: '1',
         unique: '1',
         method: 'GET',
-        params: null,
-        result: { meta: { observer: 'core.custom' } }
+        params: null
       }
     ]
   },
@@ -165,22 +133,7 @@ export const example_menu_data = [
         close: '1',
         unique: '1',
         method: 'GET',
-        params: null,
-        result: {
-          context: {},
-          data: {
-            message: 'Votre compte',
-            type: 1
-          },
-          meta: {
-            extension: 'lucterios.contacts',
-            action: 'account',
-            title: 'Votre compte',
-            observer: 'core.dialogbox'
-          },
-          actions: [],
-          close: null
-        }
+        params: null
       }
     ]
   },
@@ -210,22 +163,7 @@ export const example_menu_data = [
             close: '1',
             unique: '1',
             method: 'GET',
-            params: null,
-            result: {
-              context: {},
-              data: {
-                message: 'Action 1a',
-                type: 1
-              },
-              meta: {
-                extension: 'example.sub1',
-                action: 'action1',
-                title: 'Action 1a',
-                observer: 'core.dialogbox'
-              },
-              actions: [],
-              close: null
-            }
+            params: null
           },
           {
             text: 'Action 1b',
@@ -239,22 +177,7 @@ export const example_menu_data = [
             close: '1',
             unique: '1',
             method: 'GET',
-            params: null,
-            result: {
-              context: {},
-              data: {
-                message: 'Action 1b',
-                type: 2
-              },
-              meta: {
-                extension: 'example.sub1',
-                action: 'action2',
-                title: 'Action 1b',
-                observer: 'core.dialogbox'
-              },
-              actions: [],
-              close: null
-            }
+            params: null
           },
           {
             text: 'Action 1c',
@@ -268,22 +191,7 @@ export const example_menu_data = [
             close: '1',
             unique: '1',
             method: 'GET',
-            params: null,
-            result: {
-              context: {},
-              data: {
-                message: 'Action 1c',
-                type: 3
-              },
-              meta: {
-                extension: 'example.sub1',
-                action: 'action1',
-                title: 'Action 1c',
-                observer: 'core.dialogbox'
-              },
-              actions: [],
-              close: null
-            }
+            params: null
           },
           {
             text: 'Action 1d',
@@ -297,22 +205,7 @@ export const example_menu_data = [
             close: '1',
             unique: '1',
             method: 'GET',
-            params: null,
-            result: {
-              context: {},
-              data: {
-                message: 'Action 1d',
-                type: 4
-              },
-              meta: {
-                extension: 'example.sub1',
-                action: 'action4',
-                title: 'Action 1d',
-                observer: 'core.dialogbox'
-              },
-              actions: [],
-              close: null
-            }
+            params: null
           }
         ]
       },
@@ -335,22 +228,7 @@ export const example_menu_data = [
             close: '1',
             unique: '1',
             method: 'GET',
-            params: null,
-            result: {
-              context: {},
-              data: {
-                message: 'Action 21a',
-                type: 2
-              },
-              meta: {
-                extension: 'example.sub2',
-                action: 'action1',
-                title: 'Action 2a',
-                observer: 'core.dialogbox'
-              },
-              actions: example_logon_actions,
-              close: null
-            }
+            params: null
           },
           {
             text: 'Action 1b',
@@ -364,22 +242,7 @@ export const example_menu_data = [
             close: '1',
             unique: '1',
             method: 'GET',
-            params: null,
-            result: {
-              context: {},
-              data: {
-                message: 'Action 1b',
-                type: 3
-              },
-              meta: {
-                extension: 'example.sub2',
-                action: 'action2',
-                title: 'Action 2b',
-                observer: 'core.dialogbox'
-              },
-              actions: example_logon_actions,
-              close: null
-            }
+            params: null
           }
         ]
       },
@@ -402,22 +265,7 @@ export const example_menu_data = [
             close: '1',
             unique: '1',
             method: 'GET',
-            params: null,
-            result: {
-              context: {},
-              data: {
-                message: 'Action 3a',
-                type: 2
-              },
-              meta: {
-                extension: 'example.sub3',
-                action: 'action1',
-                title: 'Action 3a',
-                observer: 'core.dialogbox'
-              },
-              actions: [],
-              close: example_logon_actions[0]
-            }
+            params: null
           }
         ]
       }
@@ -442,23 +290,7 @@ export const example_menu_data = [
         close: '1',
         unique: '1',
         method: 'GET',
-        params: null,
-        result: {
-          print: {
-            title: "Example d'impression",
-            extension: '.csv',
-            content:
-              'CiAgICAgICJFeGFtcGxlIgogICAgCiAgICAgIAogICAgICAibmFtZSIKICAgICAgImFhYWEiCiAgICAgICJ2YWx1ZSIKICAgICAgIjUiCiAgICAgICJwcmljZSIKICAgICAgIjEwMC4wMCIKICAgICAgImRhdGUiCiAgICAgICItLS0iCiAgICAgICJ0aW1lIgogICAgICAiMDA6MDAiCiAgICAgICJ2YWxpZCIKICAgICAgIk5vbiIKICAgICAgImNvbW1lbnQiCiAgICAgICJxcXFxIgogICAgCg=='
-          },
-          context: {},
-          meta: {
-            extension: 'example.sub1',
-            action: 'action1',
-            title: 'Action 1a',
-            observer: 'core.print'
-          },
-          close: null
-        }
+        params: null
       }
     ]
   },
@@ -481,18 +313,7 @@ export const example_menu_data = [
         close: '1',
         unique: '1',
         method: 'GET',
-        params: null,
-        result: {
-          context: {},
-          close: null,
-          action: null,
-          meta: {
-            extension: 'ack',
-            action: 'action1',
-            title: 'ACK 1',
-            observer: 'core.acknowledge'
-          }
-        }
+        params: null
       },
       {
         text: 'Acknoledge 2',
@@ -506,22 +327,11 @@ export const example_menu_data = [
         close: '1',
         unique: '1',
         method: 'GET',
-        params: null,
-        result: {
-          context: {},
-          close: null,
-          action: example_logon_actions[0],
-          meta: {
-            extension: 'ack',
-            action: 'action2',
-            title: 'ACK 2',
-            observer: 'core.acknowledge'
-          }
-        }
+        params: null
       },
       {
-        text: 'Acknoledge 1',
-        id: 'ack/action1',
+        text: 'Acknoledge 3',
+        id: 'ack/action3',
         icon: '',
         short_icon: 'mdi:mdi-format-color-highlight',
         extension: 'ack',
@@ -531,18 +341,7 @@ export const example_menu_data = [
         close: '1',
         unique: '1',
         method: 'GET',
-        params: null,
-        result: {
-          context: {},
-          close: example_logon_actions[1],
-          action: null,
-          meta: {
-            extension: 'ack',
-            action: 'action3',
-            title: 'ACK 3',
-            observer: 'core.acknowledge'
-          }
-        }
+        params: null
       }
     ]
   },
@@ -565,26 +364,7 @@ export const example_menu_data = [
         close: '1',
         unique: '1',
         method: 'GET',
-        params: null,
-        result: {
-          context: {},
-          close: null,
-          exception: {
-            type: 'LucteriosException',
-            debug:
-              "/usr/local/lib/python3.4/site-packages/django/views/generic/base.py in line 88 in dispatch: return handler(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 332 in get: return self.get_post(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferadvance.py in line 162 in get_post: self._initialize(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 260 in _initialize: self._search_model(){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 172 in _search_model: self._load_unique_record(ids[0]){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 160 in _load_unique_record: IMPORTANT, _('This record not exist!\\nRefresh your application.')){[br/]}",
-            message: 'Erreur 1',
-            code: 4,
-            request: '',
-            response: ''
-          },
-          meta: {
-            extension: 'erreur',
-            action: 'action1',
-            title: 'Erreur 1',
-            observer: 'core.exception'
-          }
-        }
+        params: null
       },
       {
         text: 'Sous-erreur',
@@ -605,26 +385,7 @@ export const example_menu_data = [
             close: '1',
             unique: '1',
             method: 'GET',
-            params: null,
-            result: {
-              context: {},
-              close: null,
-              exception: {
-                type: 'LucteriosException',
-                debug:
-                  "/usr/local/lib/python3.4/site-packages/django/views/generic/base.py in line 88 in dispatch: return handler(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 332 in get: return self.get_post(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferadvance.py in line 162 in get_post: self._initialize(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 260 in _initialize: self._search_model(){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 172 in _search_model: self._load_unique_record(ids[0]){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 160 in _load_unique_record: IMPORTANT, _('This record not exist!\\nRefresh your application.')){[br/]}",
-                message: 'Erreur 1',
-                code: 3,
-                request: '',
-                response: ''
-              },
-              meta: {
-                extension: 'erreur',
-                action: 'action1',
-                title: 'Erreur 1',
-                observer: 'core.exception'
-              }
-            }
+            params: null
           },
           {
             text: 'Erreur 2b',
@@ -638,26 +399,7 @@ export const example_menu_data = [
             close: '1',
             unique: '1',
             method: 'GET',
-            params: null,
-            result: {
-              context: {},
-              close: null,
-              exception: {
-                type: 'LucteriosException',
-                debug:
-                  "/usr/local/lib/python3.4/site-packages/django/views/generic/base.py in line 88 in dispatch: return handler(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 332 in get: return self.get_post(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferadvance.py in line 162 in get_post: self._initialize(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 260 in _initialize: self._search_model(){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 172 in _search_model: self._load_unique_record(ids[0]){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 160 in _load_unique_record: IMPORTANT, _('This record not exist!\\nRefresh your application.')){[br/]}",
-                message: 'Erreur 2b',
-                code: 2,
-                request: '',
-                response: ''
-              },
-              meta: {
-                extension: 'erreur',
-                action: 'action2',
-                title: 'Erreur 2b',
-                observer: 'core.exception'
-              }
-            }
+            params: null
           },
           {
             text: 'Erreur 2c',
@@ -671,26 +413,7 @@ export const example_menu_data = [
             close: '1',
             unique: '1',
             method: 'GET',
-            params: null,
-            result: {
-              context: {},
-              close: null,
-              exception: {
-                type: 'LucteriosException',
-                debug:
-                  "/usr/local/lib/python3.4/site-packages/django/views/generic/base.py in line 88 in dispatch: return handler(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 332 in get: return self.get_post(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferadvance.py in line 162 in get_post: self._initialize(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 260 in _initialize: self._search_model(){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 172 in _search_model: self._load_unique_record(ids[0]){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 160 in _load_unique_record: IMPORTANT, _('This record not exist!\\nRefresh your application.')){[br/]}",
-                message: 'Erreur 2c',
-                code: 1,
-                request: 'erreur.sub/action4?aa=1&bb=true',
-                response: JSON.stringify(example_logon_actions)
-              },
-              meta: {
-                extension: 'erreur',
-                action: 'action3',
-                title: 'Erreur 2c',
-                observer: 'core.exception'
-              }
-            }
+            params: null
           },
           {
             text: 'Erreur 2d',
@@ -704,29 +427,315 @@ export const example_menu_data = [
             close: '1',
             unique: '1',
             method: 'GET',
-            params: null,
-            result: {
-              context: {},
-              close: null,
-              exception: {
-                type: 'LucteriosException',
-                debug:
-                  "/usr/local/lib/python3.4/site-packages/django/views/generic/base.py in line 88 in dispatch: return handler(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 332 in get: return self.get_post(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferadvance.py in line 162 in get_post: self._initialize(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 260 in _initialize: self._search_model(){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 172 in _search_model: self._load_unique_record(ids[0]){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 160 in _load_unique_record: IMPORTANT, _('This record not exist!\\nRefresh your application.')){[br/]}",
-                message: 'Erreur 2d',
-                code: 0,
-                request: 'erreur.sub/action4?aa=1&bb=true',
-                response: JSON.stringify(example_logon_actions)
-              },
-              meta: {
-                extension: 'erreur',
-                action: 'action4',
-                title: 'Erreur 2d',
-                observer: 'core.exception'
-              }
-            }
+            params: null
           }
         ]
       }
     ]
   }
 ]
+
+export const response_to_ident = {
+  'CORE/askPassword': {
+    context: {},
+    data: {
+      message: 'Mot de passe ou alias oublié?',
+      type: 1
+    },
+    meta: {
+      extension: 'CORE',
+      title: 'Mot de passe ou alias oublié?',
+      action: 'askPassword',
+      observer: 'core.dialogbox'
+    },
+    actions: [],
+    close: null
+  },
+  'lucterios.contacts/createAccount': {
+    context: {},
+    data: {
+      message: 'Créer un compte',
+      type: 2
+    },
+    meta: {
+      extension: 'CORE',
+      title: 'Créer un compte',
+      action: 'createAccount',
+      observer: 'core.dialogbox'
+    },
+    actions: [],
+    close: null
+  },
+  'CORE/statusMenu1': {
+    meta: {
+      observer: 'core.custom'
+    }
+  },
+  'CORE/statusMenu2': {
+    meta: {
+      observer: 'core.custom'
+    }
+  },
+  'lucterios.contacts/account': {
+    context: {},
+    data: {},
+    comp: [],
+    meta: {
+      extension: 'lucterios.contacts',
+      action: 'account',
+      title: 'Votre compte',
+      observer: 'core.custom'
+    },
+    actions: [],
+    close: null
+  },
+  'dialog.sub1/action1': {
+    context: {},
+    data: {
+      message: 'Action 1a',
+      type: 1
+    },
+    meta: {
+      extension: 'example.sub1',
+      action: 'action1',
+      title: 'Action 1a',
+      observer: 'core.dialogbox'
+    },
+    actions: [],
+    close: null
+  },
+  'dialog.sub1/action2': {
+    context: {},
+    data: {
+      message: 'Action 1b',
+      type: 2
+    },
+    meta: {
+      extension: 'example.sub1',
+      action: 'action2',
+      title: 'Action 1b',
+      observer: 'core.dialogbox'
+    },
+    actions: [],
+    close: null
+  },
+  'dialog.sub1/action3': {
+    context: {},
+    data: {
+      message: 'Action 1c',
+      type: 3
+    },
+    meta: {
+      extension: 'example.sub1',
+      action: 'action1',
+      title: 'Action 1c',
+      observer: 'core.dialogbox'
+    },
+    actions: [],
+    close: null
+  },
+  'dialog.sub1/action4': {
+    context: {},
+    data: {
+      message: 'Action 1d',
+      type: 4
+    },
+    meta: {
+      extension: 'example.sub1',
+      action: 'action4',
+      title: 'Action 1d',
+      observer: 'core.dialogbox'
+    },
+    actions: [],
+    close: null
+  },
+  'dialog.sub2/action1': {
+    context: {},
+    data: {
+      message: 'Action 21a',
+      type: 2
+    },
+    meta: {
+      extension: 'example.sub2',
+      action: 'action1',
+      title: 'Action 2a',
+      observer: 'core.dialogbox'
+    },
+    actions: example_logon_actions,
+    close: null
+  },
+  'dialog.sub2/action2': {
+    context: {},
+    data: {
+      message: 'Action 1b',
+      type: 3
+    },
+    meta: {
+      extension: 'example.sub2',
+      action: 'action2',
+      title: 'Action 2b',
+      observer: 'core.dialogbox'
+    },
+    actions: example_logon_actions,
+    close: null
+  },
+  'dialog.sub3/action1': {
+    context: {},
+    data: {
+      message: 'Action 3a',
+      type: 2
+    },
+    meta: {
+      extension: 'example.sub3',
+      action: 'action1',
+      title: 'Action 3a',
+      observer: 'core.dialogbox'
+    },
+    actions: [],
+    close: example_logon_actions[0]
+  },
+  'print/action1': {
+    print: {
+      title: "Example d'impression",
+      extension: '.csv',
+      content:
+        'CiAgICAgICJFeGFtcGxlIgogICAgCiAgICAgIAogICAgICAibmFtZSIKICAgICAgImFhYWEiCiAgICAgICJ2YWx1ZSIKICAgICAgIjUiCiAgICAgICJwcmljZSIKICAgICAgIjEwMC4wMCIKICAgICAgImRhdGUiCiAgICAgICItLS0iCiAgICAgICJ0aW1lIgogICAgICAiMDA6MDAiCiAgICAgICJ2YWxpZCIKICAgICAgIk5vbiIKICAgICAgImNvbW1lbnQiCiAgICAgICJxcXFxIgogICAgCg=='
+    },
+    context: {},
+    meta: {
+      extension: 'example.sub1',
+      action: 'action1',
+      title: 'Action 1a',
+      observer: 'core.print'
+    },
+    close: null
+  },
+  'ack/action1': {
+    context: {},
+    close: null,
+    action: null,
+    meta: {
+      extension: 'ack',
+      action: 'action3',
+      title: 'ACK 3',
+      observer: 'core.acknowledge'
+    }
+  },
+  'ack/action2': {
+    context: {},
+    close: null,
+    action: example_logon_actions[0],
+    meta: {
+      extension: 'ack',
+      action: 'action2',
+      title: 'ACK 2',
+      observer: 'core.acknowledge'
+    }
+  },
+  'ack/action3': {
+    context: {},
+    close: example_logon_actions[1],
+    action: null,
+    meta: {
+      extension: 'ack',
+      action: 'action3',
+      title: 'ACK 3',
+      observer: 'core.acknowledge'
+    }
+  },
+  'erreur/action1': {
+    context: {},
+    close: null,
+    exception: {
+      type: 'LucteriosException',
+      debug:
+        '/usr/local/lib/python3.4/site-packages/django/views/generic/base.py in line 88 in dispatch: return handler(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 332 in get: return self.get_post(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferadvance.py in line 162 in get_post: self._initialize(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 260 in _initialize: self._search_model(){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 172 in _search_model: self._load_unique_record(ids[0]){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 160 in _load_unique_record: IMPORTANT, _("This record not exist!\\nRefresh your application.")){[br/]}',
+      message: 'Erreur 1',
+      code: 4,
+      request: '',
+      response: ''
+    },
+    meta: {
+      extension: 'erreur',
+      action: 'action1',
+      title: 'Erreur 1',
+      observer: 'core.exception'
+    }
+  },
+  'erreur.sub/action1': {
+    context: {},
+    close: null,
+    exception: {
+      type: 'LucteriosException',
+      debug:
+        '/usr/local/lib/python3.4/site-packages/django/views/generic/base.py in line 88 in dispatch: return handler(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 332 in get: return self.get_post(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferadvance.py in line 162 in get_post: self._initialize(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 260 in _initialize: self._search_model(){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 172 in _search_model: self._load_unique_record(ids[0]){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 160 in _load_unique_record: IMPORTANT, _("This record not exist!\\nRefresh your application.")){[br/]}',
+      message: 'Erreur 1',
+      code: 3,
+      request: '',
+      response: ''
+    },
+    meta: {
+      extension: 'erreur',
+      action: 'action1',
+      title: 'Erreur 1',
+      observer: 'core.exception'
+    }
+  },
+  'erreur.sub/action2': {
+    context: {},
+    close: null,
+    exception: {
+      type: 'LucteriosException',
+      debug:
+        '/usr/local/lib/python3.4/site-packages/django/views/generic/base.py in line 88 in dispatch: return handler(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 332 in get: return self.get_post(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferadvance.py in line 162 in get_post: self._initialize(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 260 in _initialize: self._search_model(){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 172 in _search_model: self._load_unique_record(ids[0]){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 160 in _load_unique_record: IMPORTANT, _("This record not exist!\\nRefresh your application.")){[br/]}',
+      message: 'Erreur 2b',
+      code: 2,
+      request: '',
+      response: ''
+    },
+    meta: {
+      extension: 'erreur',
+      action: 'action2',
+      title: 'Erreur 2b',
+      observer: 'core.exception'
+    }
+  },
+  'erreur.sub/action3': {
+    context: {},
+    close: null,
+    exception: {
+      type: 'LucteriosException',
+      debug:
+        '/usr/local/lib/python3.4/site-packages/django/views/generic/base.py in line 88 in dispatch: return handler(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 332 in get: return self.get_post(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferadvance.py in line 162 in get_post: self._initialize(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 260 in _initialize: self._search_model(){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 172 in _search_model: self._load_unique_record(ids[0]){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 160 in _load_unique_record: IMPORTANT, _("This record not exist!\\nRefresh your application.")){[br/]}',
+      message: 'Erreur 2c',
+      code: 1,
+      request: 'erreur.sub/action4?aa=1&bb=true',
+      response: JSON.stringify(example_logon_actions)
+    },
+    meta: {
+      extension: 'erreur',
+      action: 'action3',
+      title: 'Erreur 2c',
+      observer: 'core.exception'
+    }
+  },
+  'erreur.sub/action4': {
+    context: {},
+    close: null,
+    exception: {
+      type: 'LucteriosException',
+      debug:
+        '/usr/local/lib/python3.4/site-packages/django/views/generic/base.py in line 88 in dispatch: return handler(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 332 in get: return self.get_post(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferadvance.py in line 162 in get_post: self._initialize(request, *args, **kwargs){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 260 in _initialize: self._search_model(){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 172 in _search_model: self._load_unique_record(ids[0]){[br/]}/home/dev/Lucterios2/lct-core/lucterios/framework/xferbasic.py in line 160 in _load_unique_record: IMPORTANT, _("This record not exist!\\nRefresh your application.")){[br/]}',
+      message: 'Erreur 2d',
+      code: 0,
+      request: 'erreur.sub/action4?aa=1&bb=true',
+      response: JSON.stringify(example_logon_actions)
+    },
+    meta: {
+      extension: 'erreur',
+      action: 'action4',
+      title: 'Erreur 2d',
+      observer: 'core.exception'
+    }
+  }
+}

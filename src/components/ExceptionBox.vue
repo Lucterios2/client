@@ -101,7 +101,7 @@ const response_ex = computed(() => {
 <template>
   <v-dialog v-model="visible" activator="parent" persistent min-width="250px" max-width="600px">
     <v-card>
-      <v-card-title class="bg-grey-lighten-3"> {{ except_title }} </v-card-title>
+      <v-card-title class="bg-grey-darken-1"> {{ except_title }} </v-card-title>
       <v-card-text>
         <v-row>
           <v-col cols="2">

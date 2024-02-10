@@ -3,6 +3,7 @@ import LoginBox from '@/components/LoginBox.vue'
 import MainMenu from '@/components/MainMenu.vue'
 import AcknowledgeReturn from '@/components/AcknowledgeReturn.vue'
 import DialogBox from '@/components/DialogBox.vue'
+import CustomBox from '@/components/CustomBox.vue'
 import ExceptionBox from '@/components/ExceptionBox.vue'
 import PrintReturn from '@/components/PrintReturn.vue'
 
@@ -71,6 +72,9 @@ export async function factory(result, click_action) {
       break
     case 'core.dialogbox':
       current_comp = DialogBox
+      break
+    case 'core.custom':
+      current_comp = CustomBox
       break
     default:
       current_comp = null

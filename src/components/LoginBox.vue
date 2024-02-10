@@ -96,7 +96,7 @@ if (props.data === 'OK') {
   <v-dialog v-model="show_login" activator="parent" persistent max-width="400px">
     <v-form v-model="form" @submit.prevent="onSubmit">
       <v-card>
-        <v-card-title class="bg-grey-lighten-3"> {{ $t('Logon') }} </v-card-title>
+        <v-card-title class="bg-grey-darken-1"> {{ $t('Logon') }} </v-card-title>
         <v-card-text>
           <v-alert :text="message" v-if="props.data !== 'OK' && props.data !== ''" type="error">
           </v-alert>

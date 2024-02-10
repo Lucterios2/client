@@ -1,6 +1,11 @@
 import { useStore } from 'vuex'
 
-import { example_logon_actions, example_menu_data, example_server_data } from '@/__tests__/tools'
+import {
+  example_logon_actions,
+  example_menu_data,
+  example_server_data,
+  response_to_ident
+} from '@/__tests__/tools'
 import { sleep } from './utils'
 
 var current_store = null
@@ -47,8 +52,8 @@ export async function callLucteriosAction(action) {
         observer: 'core.menu'
       }
     }
-  } else {
-    call_result = action.result
+  } else if (response_to_ident[action.id] !== undefined) {
+    call_result = response_to_ident[action.id]
   }
   console.log('call_lucterios_action', action, call_result)
   current_store.commit('call_waiting', false)

@@ -16,7 +16,7 @@ function send_support() {
 <template>
   <v-dialog v-model="visible" persistent max-width="500px">
     <v-card>
-      <v-card-title class="bg-grey-lighten-3"> {{ $t('about') }} </v-card-title>
+      <v-card-title class="bg-grey-darken-1"> {{ $t('about') }} </v-card-title>
       <v-card-text>
         <v-row>
           <v-col cols="4">
