@@ -53,8 +53,10 @@ export async function callLucteriosAction(action) {
       }
     }
   } else if (response_to_ident[action.id] !== undefined) {
+    await sleep(500)
     call_result = response_to_ident[action.id]
   }
+  call_result.meta.ismodal = Number(action.modal) == 1
   console.log('call_lucterios_action', action, call_result)
   current_store.commit('call_waiting', false)
   return call_result

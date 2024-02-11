@@ -134,6 +134,20 @@ export const example_menu_data = [
         unique: '1',
         method: 'GET',
         params: null
+      },
+      {
+        text: 'Les comptes',
+        id: 'lucterios.contacts/accountList',
+        icon: '',
+        short_icon: 'mdi:mdi-human-queue',
+        extension: 'lucterios.contacts',
+        action: 'accountList',
+        help: 'Visualiser la liste des comptes.',
+        modal: '0',
+        close: '1',
+        unique: '1',
+        method: 'GET',
+        params: null
       }
     ]
   },
@@ -467,14 +481,30 @@ export const response_to_ident = {
     close: null
   },
   'CORE/statusMenu1': {
+    context: {},
+    data: {},
+    comp: [],
     meta: {
+      extension: 'CORE',
+      title: 'Menu 1',
+      action: 'statusMenu1',
       observer: 'core.custom'
-    }
+    },
+    actions: [],
+    close: null
   },
   'CORE/statusMenu2': {
+    context: {},
+    data: {},
+    comp: [],
     meta: {
+      extension: 'CORE',
+      title: 'Menu 2',
+      action: 'statusMenu2',
       observer: 'core.custom'
-    }
+    },
+    actions: [],
+    close: null
   },
   'lucterios.contacts/account': {
     context: {},
@@ -484,6 +514,19 @@ export const response_to_ident = {
       extension: 'lucterios.contacts',
       action: 'account',
       title: 'Votre compte',
+      observer: 'core.custom'
+    },
+    actions: [],
+    close: null
+  },
+  'lucterios.contacts/accountList': {
+    context: {},
+    data: {},
+    comp: [],
+    meta: {
+      extension: 'lucterios.contacts',
+      action: 'accountList',
+      title: 'Les comptes',
       observer: 'core.custom'
     },
     actions: [],

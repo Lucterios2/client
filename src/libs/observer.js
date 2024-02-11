@@ -1,11 +1,11 @@
 import * as Vue from 'vue'
-import LoginBox from '@/components/LoginBox.vue'
-import MainMenu from '@/components/MainMenu.vue'
-import AcknowledgeReturn from '@/components/AcknowledgeReturn.vue'
-import DialogBox from '@/components/DialogBox.vue'
-import CustomBox from '@/components/CustomBox.vue'
-import ExceptionBox from '@/components/ExceptionBox.vue'
-import PrintReturn from '@/components/PrintReturn.vue'
+import LoginBox from '@/observers/LoginBox.vue'
+import MainMenu from '@/observers/MainMenu.vue'
+import AcknowledgeReturn from '@/observers/AcknowledgeReturn.vue'
+import DialogBox from '@/observers/DialogBox.vue'
+import CustomBox from '@/observers/CustomBox.vue'
+import ExceptionBox from '@/observers/ExceptionBox.vue'
+import PrintReturn from '@/observers/PrintReturn.vue'
 
 var current_app = null
 

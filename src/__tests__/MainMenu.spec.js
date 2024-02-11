@@ -2,14 +2,38 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { nextTick } from 'vue'
 import { shallowMount } from '@vue/test-utils'
 
-import MainMenu from '@/components/MainMenu.vue'
-import SubMenu from '@/components/SubMenu.vue'
-import SubMenus from '@/components/SubMenus.vue'
+import MainMenu from '@/observers/MainMenu.vue'
+import SubMenu from '@/libs/SubMenu.vue'
+import SubMenus from '@/libs/SubMenus.vue'
 import storage from '@/datastorage.js'
 import { convert_event_to_object } from '@/__tests__/tools'
 
+const custom_obs = {
+  data: { val1: 'aaa', val2: 'aaa' },
+  comp: [{ name: 'val1' }, { name: 'val2' }],
+  context: {},
+  meta: {
+    extension: 'moke ext',
+    title: 'moke titke',
+    action: 'moke action',
+    observer: 'core.custom'
+  },
+  actions: [],
+  close: null
+}
+
 beforeEach(() => {
   console.warn = vi.fn()
+  vi.mock('@/libs/transport.js', () => {
+    return {
+      initialTransport: vi.fn(() => true),
+      callLucteriosAction: vi.fn((menu) => {
+        custom_obs.data.id = menu.id
+        return custom_obs
+      })
+    }
+  })
+  vi.clearAllMocks()
 })
 
 describe('MainMenu', () => {
@@ -98,6 +122,7 @@ describe('MainMenu', () => {
 
     storage.commit('call_summary', true)
     await nextTick()
+    await nextTick()
     expect(wrapper.element.childElementCount).toBe(1)
     expect(wrapper.find('v-row').element.childElementCount).toBe(2)
     expect(wrapper.find('v-row > div > div > span > div').html()).toBe('<div><b>Support</b></div>')
@@ -127,13 +152,28 @@ describe('MainMenu', () => {
         .text()
     ).toBe('Résumé 1')
     expect(
+      wrapper.find(
+        'v-row > div > v-expansion-panels > v-expansion-panel:nth-of-type(1) > v-expansion-panel-text'
+      ).element.childElementCount
+    ).toBe(1)
+    expect(
       wrapper
         .find(
-          'v-row > div > v-expansion-panels > v-expansion-panel:nth-of-type(1) > v-expansion-panel-text'
+          'v-row > div > v-expansion-panels > v-expansion-panel:nth-of-type(1) > v-expansion-panel-text > custom-components-stub'
         )
-        .text()
-    ).toBe('CORE - statusMenu1')
+        .getCurrentComponent().props.data
+    ).toStrictEqual({ val1: 'aaa', val2: 'aaa', id: 'CORE/statusMenu1' })
+    expect(
+      wrapper
+        .find(
+          'v-row > div > v-expansion-panels > v-expansion-panel:nth-of-type(1) > v-expansion-panel-text > custom-components-stub'
+        )
+        .getCurrentComponent().props.comp
+    ).toStrictEqual([{ name: 'val1' }, { name: 'val2' }])
 
+    await wrapper
+      .find('v-row > div > v-expansion-panels > v-expansion-panel:nth-of-type(2)')
+      .trigger('click')
     expect(
       wrapper
         .find('v-row > div > v-expansion-panels > v-expansion-panel:nth-of-type(2)')
@@ -159,12 +199,24 @@ describe('MainMenu', () => {
         .text()
     ).toBe('Résumé 2')
     expect(
+      wrapper.find(
+        'v-row > div > v-expansion-panels > v-expansion-panel:nth-of-type(1) > v-expansion-panel-text'
+      ).element.childElementCount
+    ).toBe(1)
+    expect(
       wrapper
         .find(
-          'v-row > div > v-expansion-panels > v-expansion-panel:nth-of-type(2) > v-expansion-panel-text'
+          'v-row > div > v-expansion-panels > v-expansion-panel:nth-of-type(1) > v-expansion-panel-text > custom-components-stub'
         )
-        .text()
-    ).toBe('CORE - statusMenu2')
+        .getCurrentComponent().props.data
+    ).toStrictEqual({ val1: 'aaa', val2: 'aaa', id: 'CORE/statusMenu2' })
+    expect(
+      wrapper
+        .find(
+          'v-row > div > v-expansion-panels > v-expansion-panel:nth-of-type(1) > v-expansion-panel-text > custom-components-stub'
+        )
+        .getCurrentComponent().props.comp
+    ).toStrictEqual([{ name: 'val1' }, { name: 'val2' }])
 
     expect(wrapper.find('v-row > v-col').element.childElementCount).toBe(1)
     expect(wrapper.find('v-row > v-col > v-card').element.childElementCount).toBe(2)

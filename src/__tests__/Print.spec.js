@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 
-import * as utils from '@/tools/utils'
-import PrintReturn from '@/components/PrintReturn.vue'
+import * as utils from '@/libs/utils'
+import PrintReturn from '@/observers/PrintReturn.vue'
 
 beforeEach(() => {
   console.warn = vi.fn()

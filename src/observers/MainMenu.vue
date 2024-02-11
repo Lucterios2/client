@@ -1,12 +1,17 @@
 <script setup>
 import { useStore } from 'vuex'
-import SubMenus from '@/components/SubMenus.vue'
+import SubMenus from '@/libs/SubMenus.vue'
+import CustomComponents from '@/components/CustomComponents.vue'
+import { callLucteriosAction } from '@/libs/transport'
+import { onMounted } from 'vue'
 const emit = defineEmits(['clickaction', 'close'])
 const store = useStore()
 const props = defineProps({
   menus: Array
 })
 const tab = defineModel('tab')
+const custom_data = defineModel('custom_data', { type: Object, default: {} })
+const custom_comp = defineModel('custom_comp', { type: Array, default: [] })
 const summary_menu = defineModel('summary_menu', { type: Array, default: [] })
 const summary_selected = defineModel('summary_selected', { type: Object, default: null })
 function click_action(menu) {
@@ -39,7 +44,21 @@ function tabs_menus() {
   })
   return menus_of_tabs
 }
+async function refresh_summary(summary_menu) {
+  if (summary_selected.value) {
+    const summary_return = await callLucteriosAction(summary_menu)
+    if (summary_return.meta.observer == 'core.custom') {
+      custom_data.value = summary_return.data
+      custom_comp.value = summary_return.comp
+    }
+  }
+}
 store.commit('call_status', true)
+onMounted(async () => {
+  if (summary_menu.value.length > 0) {
+    await refresh_summary(summary_menu.value[0])
+  }
+})
 </script>
 
 <template>
@@ -47,7 +66,12 @@ store.commit('call_status', true)
     <v-row>
       <div class="v-col v-col-2-xld v-col-3-ld v-col-4-md v-col-12-xsd" v-if="show_summary()">
         <v-expansion-panels variant="accordion" v-model="summary_selected">
-          <v-expansion-panel v-for="submenu in summary_menu" :key="submenu.id" :value="submenu.id">
+          <v-expansion-panel
+            v-for="submenu in summary_menu"
+            :key="submenu.id"
+            :value="submenu.id"
+            @click="refresh_summary(submenu)"
+          >
             <v-expansion-panel-title color="#888">
               <v-icon v-if="submenu.short_icon !== ''">{{ submenu.short_icon }}</v-icon>
               <div v-if="submenu.short_icon === ''">
@@ -56,7 +80,7 @@ store.commit('call_status', true)
               <span style="margin-left: 5px">{{ submenu.text }}</span>
             </v-expansion-panel-title>
             <v-expansion-panel-text>
-              {{ submenu.extension }} - {{ submenu.action }}
+              <CustomComponents :data="custom_data" :comp="custom_comp" @action="click_action" />
             </v-expansion-panel-text>
           </v-expansion-panel>
         </v-expansion-panels>

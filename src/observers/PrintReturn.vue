@@ -1,5 +1,5 @@
 <script setup>
-import { getFileNameWithoutForgottenChar, openBlob } from '@/tools/utils'
+import { getFileNameWithoutForgottenChar, openBlob } from '@/libs/utils'
 
 const props = defineProps({
   context: Object,

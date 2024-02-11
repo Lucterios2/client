@@ -3,8 +3,8 @@ import { mount } from '@vue/test-utils'
 import storage from '@/datastorage.js'
 import i18n from '@/i18n.js'
 
-import * as utils from '@/tools/utils'
-import { clearComponent, factory, initialObserver } from '@/tools/observer.js'
+import * as utils from '@/libs/utils'
+import { clearComponent, factory, initialObserver } from '@/libs/observer.js'
 import { createApp } from 'vue'
 
 beforeEach(() => {

@@ -4,7 +4,7 @@ import { useI18n } from 'vue-i18n'
 const store = useStore()
 const i18n = useI18n()
 
-import { send_to_support } from '@/tools/utils.js'
+import { send_to_support } from '@/libs/utils.js'
 const emit = defineEmits(['close'])
 const more_version = defineModel({ type: Boolean, default: false })
 const visible = true

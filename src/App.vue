@@ -6,11 +6,11 @@ export default {
 }
 </script>
 <script setup>
-import { callLucteriosAction, initialTransport } from '@/tools/transport.js'
-import { clearComponent, initialObserver, factory } from '@/tools/observer'
-import StatusBar from '@/components/StatusBar.vue'
-import WaitingFrame from '@/components/WaitingFrame.vue'
-import AboutFrame from '@/components/AboutFrame.vue'
+import { callLucteriosAction, initialTransport } from '@/libs/transport.js'
+import { clearComponent, initialObserver, factory } from '@/libs/observer'
+import StatusBar from '@/libs/StatusBar.vue'
+import WaitingFrame from '@/libs/WaitingFrame.vue'
+import AboutFrame from '@/libs/AboutFrame.vue'
 const show_about = defineModel('show_about', { type: Boolean, default: false })
 
 initialObserver()

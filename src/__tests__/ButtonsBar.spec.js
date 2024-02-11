@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 
-import ButtonsBar from '@/components/ButtonsBar.vue'
+import ButtonsBar from '@/libs/ButtonsBar.vue'
 import i18n from '@/i18n.js'
 
 beforeEach(() => {

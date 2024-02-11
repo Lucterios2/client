@@ -5,15 +5,15 @@ import App from '@/App.vue'
 import storage from '@/datastorage.js'
 import i18n from '@/i18n.js'
 import { nextTick } from 'vue'
-import { callLucteriosAction, initialTransport } from '@/tools/transport.js'
-import { clearComponent, initialObserver, factory } from '@/tools/observer'
-import { sleep } from '@/tools/utils'
+import { callLucteriosAction, initialTransport } from '@/libs/transport.js'
+import { clearComponent, initialObserver, factory } from '@/libs/observer'
+import { sleep } from '@/libs/utils'
 
 const default_obs = {
   context: {},
   meta: {
     extension: 'moke ext',
-    title: 'moke titke',
+    title: 'moke title',
     action: 'moke action',
     observer: 'moke observer'
   },
@@ -24,14 +24,14 @@ const default_obs = {
 beforeEach(() => {
   document.documentElement.innerHTML = '<html><body><div id="comp"></div></body></html>'
   console.warn = vi.fn()
-  vi.mock('@/tools/observer.js', () => {
+  vi.mock('@/libs/observer.js', () => {
     return {
       initialObserver: vi.fn(() => true),
       clearComponent: vi.fn(() => true),
       factory: vi.fn(() => true)
     }
   })
-  vi.mock('@/tools/transport.js', () => {
+  vi.mock('@/libs/transport.js', () => {
     return {
       initialTransport: vi.fn(() => true),
       callLucteriosAction: vi.fn(() => {

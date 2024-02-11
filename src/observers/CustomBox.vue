@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import ButtonsBar from '@/components/ButtonsBar.vue'
+import ButtonsBar from '@/libs/ButtonsBar.vue'
+import CustomComponents from '@/components/CustomComponents.vue'
 const props = defineProps({
   context: Object,
   actions: Array,
@@ -38,7 +39,8 @@ function active_current(current) {
       cust_card.style.zIndex = new_index--
       const cust_card_titles = cust_card.getElementsByClassName('v-card-title')
       Array.from(cust_card_titles).forEach((cust_card_title) => {
-        cust_card_title.className = 'v-card-title bg-grey-lighten-1 movecursor'
+        cust_card_title.className =
+          'v-card-title bg-grey-lighten-1' + (props.meta.ismodal ? '' : ' movecursor')
       })
     })
   })
@@ -47,7 +49,8 @@ function active_current(current) {
     current_card.style.zIndex = 100
     const current_card_titles = current_card.getElementsByClassName('v-card-title')
     Array.from(current_card_titles).forEach((current_card_title) => {
-      current_card_title.className = 'v-card-title bg-grey-darken-1 movecursor'
+      current_card_title.className =
+        'v-card-title bg-grey-darken-1' + (props.meta.ismodal ? '' : ' movecursor')
     })
   })
 }
@@ -88,7 +91,7 @@ function all_size() {
 }
 function mouse_down(event) {
   console.log('>> mouse_down', event)
-  if (event.button === 0 && !dialog_box.allsize) {
+  if (event.button === 0 && !dialog_box.allsize && !props.meta.ismodal) {
     dialog_box.move = true
     dialog_box.mouseStartX = event.clientX
     dialog_box.mouseStartY = event.clientY
@@ -120,8 +123,12 @@ function mouse_move(event) {
   }
 }
 onMounted(() => {
-  dialog_box.el = Array.from(custom.value.getElementsByClassName('v-card'))[0]
-  dialog_box.eltext = Array.from(dialog_box.el.getElementsByClassName('v-card-text'))[0]
+  Array.from(custom.value.getElementsByClassName('v-card')).forEach((card) => {
+    dialog_box.el = card
+    Array.from(dialog_box.el.getElementsByClassName('v-card-text')).forEach((cardtext) => {
+      dialog_box.eltext = cardtext
+    })
+  })
   active_current(custom.value)
 })
 </script>
@@ -134,12 +141,17 @@ onMounted(() => {
     @mouseup="mouse_up"
     @mousemove="mouse_move"
   >
+    <div class="modaldlg" v-if="meta.ismodal"></div>
     <v-card :style="custom_style">
       <v-card-title class="bg-grey-lighten-1 movecursor">
-        <span>{{ meta.title }}</span>
+        {{ meta.title }}
       </v-card-title>
-      <v-icon class="allsize" size="16" color="#ccc" @click="all_size">mdi-arrow-expand-all</v-icon>
-      <v-card-text> </v-card-text>
+      <v-icon class="allsize" size="16" color="#ccc" @click="all_size" v-if="!meta.ismodal"
+        >mdi-arrow-expand-all</v-icon
+      >
+      <v-card-text>
+        <CustomComponents :data="data" :comp="comp" @action="click_action" />
+      </v-card-text>
       <ButtonsBar
         :actions="actions"
         :close="close"
@@ -171,10 +183,16 @@ onMounted(() => {
   right: 0px;
   cursor: nesw-resize;
 }
-.resize {
-  position: absolute;
-  bottom: -2px;
-  right: -2px;
-  cursor: nwse-resize;
+.modaldlg {
+  pointer-events: auto;
+  background: rgb(var(--v-theme-on-surface));
+  border-radius: inherit;
+  bottom: 0;
+  left: 0;
+  opacity: 0.32;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 99;
 }
 </style>

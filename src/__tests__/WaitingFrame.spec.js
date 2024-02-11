@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 
-import WaitingFrame from '@/components/WaitingFrame.vue'
+import WaitingFrame from '@/libs/WaitingFrame.vue'
 
 beforeEach(() => {
   console.warn = vi.fn()

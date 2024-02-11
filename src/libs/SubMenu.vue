@@ -1,5 +1,5 @@
 <script setup>
-import { convertLuctoriosFormatToHtml } from '@/tools/utils'
+import { convertLuctoriosFormatToHtml } from '@/libs/utils'
 
 const emit = defineEmits(['click'])
 const prop = defineProps({

@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
-import ButtonsBar from '@/components/ButtonsBar.vue'
-import { convertLuctoriosFormatToHtml } from '@/tools/utils'
+import ButtonsBar from '@/libs/ButtonsBar.vue'
+import { convertLuctoriosFormatToHtml } from '@/libs/utils'
 const props = defineProps({
   context: Object,
   actions: Array,

@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 
-import AcknowledgeReturn from '@/components/AcknowledgeReturn.vue'
-import { sleep } from '@/tools/utils'
+import AcknowledgeReturn from '@/observers/AcknowledgeReturn.vue'
+import { sleep } from '@/libs/utils'
 
 beforeEach(() => {
   console.warn = vi.fn()

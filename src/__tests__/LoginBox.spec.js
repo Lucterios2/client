@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 
-import LoginBox from '@/components/LoginBox.vue'
-import ButtonAction from '@/components/ButtonAction.vue'
+import LoginBox from '@/observers/LoginBox.vue'
+import ButtonAction from '@/libs/ButtonAction.vue'
 import storage from '@/datastorage.js'
 import i18n from '@/i18n.js'
 import { convert_event_to_object } from '@/__tests__/tools'

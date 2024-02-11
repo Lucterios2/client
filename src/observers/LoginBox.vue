@@ -1,6 +1,6 @@
 <script setup>
-import ButtonAction from '@/components/ButtonAction.vue'
-import ButtonsBar from '@/components/ButtonsBar.vue'
+import ButtonAction from '@/libs/ButtonAction.vue'
+import ButtonsBar from '@/libs/ButtonsBar.vue'
 import { useStore } from 'vuex'
 import { useI18n } from 'vue-i18n'
 import { computed } from 'vue'

@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 
-import AboutFrame from '@/components/AboutFrame.vue'
+import AboutFrame from '@/libs/AboutFrame.vue'
 import storage from '@/datastorage.js'
 import i18n from '@/i18n.js'
 

@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 
-import StatusBar from '@/components/StatusBar.vue'
+import StatusBar from '@/libs/StatusBar.vue'
 import storage from '@/datastorage.js'
 import i18n from '@/i18n.js'
 

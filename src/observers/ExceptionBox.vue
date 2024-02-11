@@ -2,8 +2,8 @@
 import { useStore } from 'vuex'
 import { useI18n } from 'vue-i18n'
 import { computed } from 'vue'
-import ButtonsBar from '@/components/ButtonsBar.vue'
-import { convertLuctoriosFormatToHtml, send_to_support, part_for_email } from '@/tools/utils'
+import ButtonsBar from '@/libs/ButtonsBar.vue'
+import { convertLuctoriosFormatToHtml, send_to_support, part_for_email } from '@/libs/utils'
 const FAILURE = 0
 const CRITIC = 1
 const GRAVE = 2
