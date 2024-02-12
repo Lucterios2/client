@@ -69,7 +69,6 @@ function all_size() {
     Array.from(current_card_titles).forEach((current_card_title) => {
       current_card_title.className = 'v-card-title bg-grey-darken-1 movecursor'
     })
-    console.log('<< all_size', dialog_box.el.style, dialog_box.eltext.style, dialog_box)
   } else {
     dialog_box.allsize = true
     dialog_box.elStartXsize = dialog_box.el.getBoundingClientRect().left
@@ -86,11 +85,9 @@ function all_size() {
     Array.from(current_card_titles).forEach((current_card_title) => {
       current_card_title.className = 'v-card-title bg-grey-darken-1'
     })
-    console.log('>> all_size', dialog_box.el.style, dialog_box.eltext.style, dialog_box)
   }
 }
 function mouse_down(event) {
-  console.log('>> mouse_down', event)
   if (event.button === 0 && !dialog_box.allsize && !props.meta.ismodal) {
     dialog_box.move = true
     dialog_box.mouseStartX = event.clientX
@@ -98,13 +95,11 @@ function mouse_down(event) {
     dialog_box.elStartX = dialog_box.el.getBoundingClientRect().left
     dialog_box.elStartY = dialog_box.el.getBoundingClientRect().top
     dialog_box.el.style.zIndex = 100
-    console.log('>> move')
   }
 }
 function mouse_up() {
   if (dialog_box.move) {
     dialog_box.move = false
-    console.log('<< move')
   }
 }
 function mouse_move(event) {
@@ -119,7 +114,6 @@ function mouse_move(event) {
     )
     dialog_box.el.style.left = (100.0 * left) / window.innerWidth + '%'
     dialog_box.el.style.top = (100.0 * top) / window.innerHeight + '%'
-    console.log('move', dialog_box.el.style)
   }
 }
 onMounted(() => {

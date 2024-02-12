@@ -129,7 +129,7 @@ export const example_menu_data = [
         extension: 'lucterios.contacts',
         action: 'account',
         help: 'Visualiser la fiche de votre compte.',
-        modal: '1',
+        modal: '0',
         close: '1',
         unique: '1',
         method: 'GET',
@@ -143,7 +143,7 @@ export const example_menu_data = [
         extension: 'lucterios.contacts',
         action: 'accountList',
         help: 'Visualiser la liste des comptes.',
-        modal: '0',
+        modal: '1 ',
         close: '1',
         unique: '1',
         method: 'GET',
@@ -482,8 +482,66 @@ export const response_to_ident = {
   },
   'CORE/statusMenu1': {
     context: {},
-    data: {},
-    comp: [],
+    comp: [
+      {
+        name: 'contactstitle',
+        component: 'LABELFORM',
+        description: '',
+        tab: 0,
+        x: 0,
+        y: 0,
+        colspan: 4,
+        rowspan: 1,
+        needed: false,
+        formatstr: '{[center]}{[u]}{[b]}%s{[/b]}{[/u]}{[/center]}',
+        formatnum: null
+      },
+      {
+        name: 'lbl_nblegalentities',
+        component: 'LABELFORM',
+        description: '',
+        tab: 0,
+        x: 0,
+        y: 1,
+        colspan: 4,
+        rowspan: 1,
+        needed: false,
+        formatstr: '{[center]}%s{[/center]}',
+        formatnum: null
+      },
+      {
+        name: 'lbl_nbindividuals',
+        component: 'LABELFORM',
+        description: '',
+        tab: 0,
+        x: 0,
+        y: 2,
+        colspan: 4,
+        rowspan: 1,
+        needed: false,
+        formatstr: '{[center]}%s{[/center]}',
+        formatnum: null
+      },
+      {
+        name: 'contactsend',
+        component: 'LABELFORM',
+        description: '',
+        tab: 0,
+        x: 0,
+        y: 3,
+        colspan: 4,
+        rowspan: 1,
+        needed: false,
+        formatstr: '{[center]}%s{[/center]}',
+        formatnum: null
+      }
+    ],
+    data: {
+      contactstitle: 'Adresses et Contacts',
+      lbl_nblegalentities: 'Nombre total de structures morales : 8',
+      lbl_nbindividuals: 'Nombre total de contacts physiques : 81',
+      contactsend: '{[hr/]}'
+    },
     meta: {
       extension: 'CORE',
       title: 'Menu 1',
@@ -495,8 +553,81 @@ export const response_to_ident = {
   },
   'CORE/statusMenu2': {
     context: {},
-    data: {},
-    comp: [],
+    data: {
+      documentend: '{[hr/]}',
+      accountingtitle: 'Gestion comptable',
+      accounting_year: 'Exercice du 1 septembre 2017 au 31 août 2018 [en cours]',
+      accounting_result: [423, 934.6, -511.6, 1368.4, 1335.4],
+      accountingend: '{[hr/]}'
+    },
+    comp: [
+      {
+        name: 'documentend',
+        component: 'LABELFORM',
+        description: '',
+        tab: 0,
+        x: 0,
+        y: 6,
+        colspan: 4,
+        rowspan: 1,
+        needed: false,
+        formatstr: '{[center]}%s{[/center]}',
+        formatnum: null
+      },
+      {
+        name: 'accountingtitle',
+        component: 'LABELFORM',
+        description: '',
+        tab: 0,
+        x: 0,
+        y: 7,
+        colspan: 4,
+        rowspan: 1,
+        needed: false,
+        formatstr: '{[center]}{[u]}{[b]}%s{[/b]}{[/u]}{[/center]}',
+        formatnum: null
+      },
+      {
+        name: 'accounting_year',
+        component: 'LABELFORM',
+        description: '',
+        tab: 0,
+        x: 0,
+        y: 8,
+        colspan: 4,
+        rowspan: 1,
+        needed: false,
+        formatstr: '{[center]}%s{[/center]}',
+        formatnum: null
+      },
+      {
+        name: 'accounting_result',
+        component: 'LABELFORM',
+        description: '',
+        tab: 0,
+        x: 0,
+        y: 9,
+        colspan: 4,
+        rowspan: 1,
+        needed: false,
+        formatstr:
+          '{[center]}{[b]}Produits :{[/b]} {0} - {[b]}Charges :{[/b]} {1} = {[b]}Résultat :{[/b]} {2}{[br/]}{[b]}Trésorerie :{[/b]} {3} - {[b]}dont écritures validées :{[/b]} {4}{[/center]}',
+        formatnum: 'C2EUR'
+      },
+      {
+        name: 'accountingend',
+        component: 'LABELFORM',
+        description: '',
+        tab: 0,
+        x: 0,
+        y: 10,
+        colspan: 4,
+        rowspan: 1,
+        needed: false,
+        formatstr: '{[center]}%s{[/center]}',
+        formatnum: null
+      }
+    ],
     meta: {
       extension: 'CORE',
       title: 'Menu 2',
@@ -508,8 +639,149 @@ export const response_to_ident = {
   },
   'lucterios.contacts/account': {
     context: {},
-    data: {},
-    comp: [],
+    data: {
+      name: 'Les olympiens',
+      address: 'place de la liberté',
+      postal_code: '99000',
+      city: 'TRIFOUILLY',
+      country: '',
+      tel1: '0912457832',
+      tel2: '0732659845',
+      email: 'olympiens@gmail.com',
+      comment: '',
+      identify_number: ''
+    },
+    comp: [
+      {
+        name: 'name',
+        component: 'LABELFORM',
+        description: 'dénomination',
+        tab: 1,
+        x: 1,
+        y: 0,
+        colspan: 2,
+        rowspan: 1,
+        needed: false,
+        formatstr: '%s',
+        formatnum: null
+      },
+      {
+        name: 'address',
+        component: 'LABELFORM',
+        description: 'adresse',
+        tab: 1,
+        x: 1,
+        y: 2,
+        colspan: 2,
+        rowspan: 1,
+        needed: false,
+        formatstr: '%s',
+        formatnum: null
+      },
+      {
+        name: 'postal_code',
+        component: 'LABELFORM',
+        description: 'code postal',
+        tab: 1,
+        x: 1,
+        y: 3,
+        colspan: 1,
+        rowspan: 1,
+        needed: false,
+        formatstr: '%s',
+        formatnum: null
+      },
+      {
+        name: 'city',
+        component: 'LABELFORM',
+        description: 'ville',
+        tab: 1,
+        x: 2,
+        y: 3,
+        colspan: 1,
+        rowspan: 1,
+        needed: false,
+        formatstr: '%s',
+        formatnum: null
+      },
+      {
+        name: 'country',
+        component: 'LABELFORM',
+        description: 'pays',
+        tab: 1,
+        x: 1,
+        y: 4,
+        colspan: 2,
+        rowspan: 1,
+        needed: false,
+        formatstr: '%s',
+        formatnum: null
+      },
+      {
+        name: 'tel1',
+        component: 'LABELFORM',
+        description: 'tel1',
+        tab: 1,
+        x: 1,
+        y: 5,
+        colspan: 1,
+        rowspan: 1,
+        needed: false,
+        formatstr: '%s',
+        formatnum: null
+      },
+      {
+        name: 'tel2',
+        component: 'LABELFORM',
+        description: 'tel2',
+        tab: 1,
+        x: 2,
+        y: 5,
+        colspan: 1,
+        rowspan: 1,
+        needed: false,
+        formatstr: '%s',
+        formatnum: null
+      },
+      {
+        name: 'email',
+        component: 'LINK',
+        description: 'courriel',
+        tab: 1,
+        x: 1,
+        y: 6,
+        colspan: 2,
+        rowspan: 1,
+        needed: false,
+        link: 'mailto:olympiens@gmail.com'
+      },
+      {
+        name: 'comment',
+        component: 'LABELFORM',
+        description: 'commentaire',
+        tab: 1,
+        x: 1,
+        y: 7,
+        colspan: 2,
+        rowspan: 1,
+        needed: false,
+        formatstr: '%s',
+        formatnum: null
+      },
+      {
+        name: 'identify_number',
+        component: 'LABELFORM',
+        description: 'Informations Juridiques',
+        tab: 1,
+        x: 1,
+        y: 8,
+        colspan: 2,
+        rowspan: 1,
+        needed: false,
+        formatstr: '%s',
+        formatnum: null
+      }
+    ],
     meta: {
       extension: 'lucterios.contacts',
       action: 'account',
@@ -521,8 +793,107 @@ export const response_to_ident = {
   },
   'lucterios.contacts/accountList': {
     context: {},
-    data: {},
-    comp: [],
+    data: {
+      responsability: [
+        {
+          id: 1,
+          individual: 'ARULATEDA Paul',
+          functions: ['président'],
+          __color_ref__: null
+        },
+        {
+          id: 2,
+          individual: 'DEZACA Jacques',
+          functions: ['secrétaire'],
+          __color_ref__: null
+        },
+        {
+          id: 3,
+          individual: 'EWONATO Elodie',
+          functions: ['trésorier'],
+          __color_ref__: null
+        },
+        {
+          id: 5,
+          individual: 'HEKENU Ines',
+          functions: ['chargé de mission'],
+          __color_ref__: null
+        }
+      ]
+    },
+    comp: [
+      {
+        name: 'responsability',
+        component: 'GRID',
+        description: 'associé',
+        tab: 2,
+        x: 0,
+        y: 0,
+        colspan: 1,
+        rowspan: 1,
+        needed: false,
+        page_max: 1,
+        page_num: 0,
+        order: null,
+        headers: [
+          ['individual', 'personne physique', null, 1, '%s'],
+          ['functions', 'fonctions', null, 1, '%s']
+        ],
+        actions: [
+          {
+            text: 'Editer',
+            id: 'lucterios.contacts/individualShowResp',
+            icon: '/static/lucterios.CORE/images/show.png',
+            extension: 'lucterios.contacts',
+            action: 'individualShowResp',
+            modal: '1',
+            close: '0',
+            unique: '0',
+            method: 'GET',
+            params: null
+          },
+          {
+            text: 'Modifier',
+            id: 'lucterios.contacts/responsabilityModify',
+            icon: '/static/lucterios.CORE/images/edit.png',
+            extension: 'lucterios.contacts',
+            action: 'responsabilityModify',
+            modal: '1',
+            close: '0',
+            unique: '0',
+            method: 'POST',
+            params: null
+          },
+          {
+            text: 'Supprimer',
+            id: 'lucterios.contacts/responsabilityDel',
+            icon: '/static/lucterios.CORE/images/delete.png',
+            extension: 'lucterios.contacts',
+            action: 'responsabilityDel',
+            modal: '1',
+            close: '0',
+            unique: '2',
+            method: 'DELETE',
+            params: null
+          },
+          {
+            text: 'Ajouter',
+            id: 'lucterios.contacts/responsabilityAdd',
+            icon: '/static/lucterios.CORE/images/add.png',
+            extension: 'lucterios.contacts',
+            action: 'responsabilityAdd',
+            modal: '1',
+            close: '0',
+            unique: '1',
+            method: 'POST',
+            params: null
+          }
+        ],
+        size_by_page: 25,
+        nb_lines: 4,
+        no_pager: false
+      }
+    ],
     meta: {
       extension: 'lucterios.contacts',
       action: 'accountList',

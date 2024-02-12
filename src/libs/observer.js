@@ -11,6 +11,15 @@ var current_app = null
 
 const component_created = new Map()
 
+export function createCompnent(el, component, props, children) {
+  let new_comp = Vue.h(component, props, children)
+  new_comp.appContext = current_app._context
+  if (el != null) {
+    Vue.render(new_comp, el)
+  }
+  return new_comp
+}
+
 export function mountComponent(component, props, emits) {
   let el = document.createElement('div')
 
@@ -24,9 +33,7 @@ export function mountComponent(component, props, emits) {
   }
 
   document.getElementById('comp').appendChild(el)
-  let new_comp = Vue.h(component, props)
-  new_comp.appContext = current_app._context
-  Vue.render(new_comp, el)
+  let new_comp = createCompnent(el, component, props, [])
   emits.close = destroy
   new_comp.component.emitsOptions = emits
 
