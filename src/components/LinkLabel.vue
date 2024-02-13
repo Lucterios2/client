@@ -1,7 +1,7 @@
 <script>
 import AbstractComp from '@/components/AbstractComp.vue'
 export default {
-  name: 'LabelForm',
+  name: 'LinkLabel',
   extends: AbstractComp,
   components: { AbstractComp }
 }
@@ -9,7 +9,7 @@ export default {
 
 <template>
   <AbstractComp :value="value" :component="component">
-    <span v-html="value_formated"></span>
+    <a target="_blank" :href="component.link" v-html="value_formated"></a>
   </AbstractComp>
 </template>
 

@@ -167,7 +167,8 @@ export function formatValue(value, formatNum) {
   return value
 }
 
-export function formatToString(value, formatNum, formatStr) {
+export function formatToString(initialvalue, formatNum, formatStr) {
+  var value = initialvalue
   var valIdx
   if (formatNum === null) {
     formatNum = ''
@@ -190,8 +191,9 @@ export function formatToString(value, formatNum, formatStr) {
     }
   }
   if (Array.isArray(value)) {
-    for (valIdx = 0; valIdx < value.length; valIdx++) {
-      value[valIdx] = formatValue(value[valIdx], formatNum)
+    value = Array()
+    for (valIdx = 0; valIdx < initialvalue.length; valIdx++) {
+      value[valIdx] = formatValue(initialvalue[valIdx], formatNum)
     }
     if (formatStr.indexOf('{1}') === -1) {
       value = [value.join('{[br/]}')]

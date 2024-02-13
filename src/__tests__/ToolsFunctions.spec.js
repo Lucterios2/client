@@ -34,9 +34,11 @@ describe('TestFunction', () => {
     expect(formatToString(['abc', 'uvw', 'xyz'], null, '{0}: {1} --> {2}')).toEqual(
       'abc: uvw --> xyz'
     )
-    expect(formatToString([65.4, 456.04, 894730.124], 'N2', '{0}: {1} --> {2}')).toEqual(
+    var array_value = [65.4, 456.04, 894730.124]
+    expect(formatToString(array_value, 'N2', '{0}: {1} --> {2}')).toEqual(
       '65,40: 456,04 --> 894 730,12'
     )
+    expect(array_value).toEqual([65.4, 456.04, 894730.124])
     expect(
       formatToString(
         {

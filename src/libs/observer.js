@@ -59,7 +59,7 @@ export function initialObserver(ext_app) {
 }
 
 export async function factory(result, click_action) {
-  var current_comp = null
+  var current_comp
   switch (result.meta.observer) {
     case 'core.auth':
       current_comp = LoginBox

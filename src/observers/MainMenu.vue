@@ -46,6 +46,8 @@ function tabs_menus() {
 }
 async function refresh_summary(summary_menu) {
   if (summary_selected.value) {
+    custom_data.value = {}
+    custom_comp.value = []
     const summary_return = await callLucteriosAction(summary_menu)
     if (summary_return.meta.observer == 'core.custom') {
       custom_data.value = summary_return.data

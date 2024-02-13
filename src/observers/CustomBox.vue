@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import ButtonsBar from '@/libs/ButtonsBar.vue'
 import CustomComponents from '@/components/CustomComponents.vue'
 const props = defineProps({
@@ -19,13 +19,6 @@ function click_action(action) {
   action.params = Object.assign({}, action.params, props.context)
   emit('clickaction', action)
 }
-const custom_style = computed(() => {
-  const custom_nb = document.getElementsByClassName('custom').length
-  return 'left: %X%; top: %Y%; z-index: %Z'
-    .replace('%X', 50 - 2 * custom_nb)
-    .replace('%Y', 50 - 2 * custom_nb)
-    .replace('%Z', custom_nb)
-})
 
 function active_current(current) {
   const customs = document.getElementsByClassName('custom')
@@ -109,7 +102,7 @@ function mouse_move(event) {
       window.innerWidth - dialog_box.el.getBoundingClientRect().width
     )
     const top = Math.min(
-      Math.max(dialog_box.elStartY + event.clientY - dialog_box.mouseStartY, 0),
+      Math.max(dialog_box.elStartY + event.clientY - dialog_box.mouseStartY, 50),
       window.innerHeight - dialog_box.el.getBoundingClientRect().height
     )
     dialog_box.el.style.left = (100.0 * left) / window.innerWidth + '%'
@@ -123,6 +116,17 @@ onMounted(() => {
       dialog_box.eltext = cardtext
     })
   })
+  const custom_nb = document.getElementsByClassName('custom').length
+  if (dialog_box.el) {
+    const left =
+      ((50 - 2 * custom_nb) * window.innerWidth) / 100.0 -
+      dialog_box.el.getBoundingClientRect().width / 2
+    const top =
+      ((50 - 2 * custom_nb) * window.innerHeight) / 100.0 -
+      dialog_box.el.getBoundingClientRect().height / 2
+    dialog_box.el.style.left = '%X%'.replace('%X', (100 * left) / window.innerWidth)
+    dialog_box.el.style.top = '%Y%'.replace('%Y', (100 * top) / window.innerHeight)
+  }
   active_current(custom.value)
 })
 </script>
@@ -136,7 +140,7 @@ onMounted(() => {
     @mousemove="mouse_move"
   >
     <div class="modaldlg" v-if="meta.ismodal"></div>
-    <v-card :style="custom_style">
+    <v-card>
       <v-card-title class="bg-grey-lighten-1 movecursor">
         {{ meta.title }}
       </v-card-title>
