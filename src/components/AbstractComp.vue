@@ -3,7 +3,7 @@ import { convertLuctoriosFormatToHtml, formatToString } from '@/libs/utils'
 export default {
   name: 'AbstractComp',
   props: {
-    value: Object,
+    value: [String, Number, Array, Boolean],
     component: Object
   },
   emits: ['action'],

@@ -5,7 +5,7 @@ import { shallowMount } from '@vue/test-utils'
 import MainMenu from '@/observers/MainMenu.vue'
 import SubMenu from '@/libs/SubMenu.vue'
 import SubMenus from '@/libs/SubMenus.vue'
-import storage from '@/datastorage.js'
+import storage from '@/libs/datastorage.js'
 import { convert_event_to_object } from '@/__tests__/tools'
 
 const custom_obs = {

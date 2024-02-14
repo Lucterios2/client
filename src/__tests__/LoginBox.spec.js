@@ -3,8 +3,8 @@ import { shallowMount } from '@vue/test-utils'
 
 import LoginBox from '@/observers/LoginBox.vue'
 import ButtonAction from '@/libs/ButtonAction.vue'
-import storage from '@/datastorage.js'
-import i18n from '@/i18n.js'
+import storage from '@/libs/datastorage.js'
+import i18n from '@/libs/i18n.js'
 import { convert_event_to_object } from '@/__tests__/tools'
 
 beforeEach(() => {

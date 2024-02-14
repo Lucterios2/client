@@ -1,5 +1,5 @@
 import { createI18n } from 'vue-i18n'
-import { messages } from '@/i18n-message.js'
+import { messages } from '@/libs/i18n-message.js'
 
 const i18n = createI18n({
   locale: 'fr',

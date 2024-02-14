@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest'
 import { formatToString, formatValue } from '@/libs/utils'
-import { messages } from '@/i18n-message.js'
+import { messages } from '@/libs/i18n-message.js'
 import { useI18n } from 'vue-i18n'
 
 const locale = { value: 'fr' }

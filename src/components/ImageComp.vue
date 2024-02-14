@@ -20,7 +20,10 @@ export default {
           if (current_value.substring(0, 10) === 'data:image') {
             return current_value
           } else {
-            return Stringformat('data:image/{0};base64,{1}', this.component.type, current_value)
+            return Stringformat('data:image/{0};base64,{1}', [
+              this.component.type || '*',
+              current_value
+            ])
           }
       }
     }

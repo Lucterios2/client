@@ -12,7 +12,7 @@ var current_app = null
 const component_created = new Map()
 
 export function createCompnent(el, component, props, children) {
-  let new_comp = Vue.h(component, props, children)
+  let new_comp = Vue.h(component, props, () => children)
   new_comp.appContext = current_app._context
   if (el != null) {
     Vue.render(new_comp, el)

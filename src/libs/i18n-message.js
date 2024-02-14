@@ -35,7 +35,10 @@ export const messages = {
     Request: 'Request',
     Response: 'Response',
     Yes: 'Yes',
-    No: 'No'
+    No: 'No',
+    'Results per page': 'Results per page',
+    'No result': 'No result',
+    'See %0 to %1 about %2 results': 'See %0 to %1 about %2 results'
   },
   fr: {
     about: 'A propos...',
@@ -74,6 +77,9 @@ export const messages = {
     Request: 'Requête',
     Response: 'Reponse',
     Yes: 'Oui',
-    No: 'Non'
+    No: 'Non',
+    'Results per page': 'Résultats par page',
+    'No result': 'Aucun resultat',
+    'See %0 to %1 about %2 results': 'Voir %0 à %1 sur %2 résultats'
   }
 }

@@ -9,8 +9,8 @@ import { registerPlugins } from '@/plugins'
 
 // Components
 import App from '@/App.vue'
-import storage from '@/datastorage.js'
-import i18n from '@/i18n.js'
+import storage from '@/libs/datastorage.js'
+import i18n from '@/libs/i18n.js'
 
 // Composables
 import { createApp } from 'vue'

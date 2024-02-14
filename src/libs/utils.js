@@ -33,6 +33,14 @@ export function openBlob(aBlob, aFileName) {
   }
 }
 
+export function first_element_by_class(root_element, classname) {
+  var ret_element = null
+  Array.from(root_element.getElementsByClassName(classname)).forEach((item) => {
+    ret_element = item
+  })
+  return ret_element
+}
+
 export function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
