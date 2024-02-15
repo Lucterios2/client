@@ -8,10 +8,16 @@ export default {
   },
   mounted() {
     if (this.action) {
-      this.click_action(this.action)
+      var refreshIntervalId1 = setInterval(() => {
+        this.click_action(this.action)
+        clearInterval(refreshIntervalId1)
+      }, 100)
     }
     if (this.close) {
-      this.click_action(this.close)
+      var refreshIntervalId2 = setInterval(() => {
+        this.click_action(this.close)
+        clearInterval(refreshIntervalId2)
+      }, 100)
     }
     this.$emit('close')
   }

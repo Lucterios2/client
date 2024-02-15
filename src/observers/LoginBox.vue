@@ -2,6 +2,7 @@
 import AbstractObserver from '@/observers/AbstractObserver.vue'
 import ButtonAction from '@/libs/ButtonAction.vue'
 import ButtonsBar from '@/libs/ButtonsBar.vue'
+import { convertLuctoriosFormatToHtml } from '@/libs/utils'
 import { insertStyle } from '@/libs/utils'
 
 export default {
@@ -16,7 +17,7 @@ export default {
     login: '',
     password: '',
     message: '',
-    show_login: true
+    show_login: false
   }),
   computed: {
     action_list() {
@@ -40,6 +41,9 @@ export default {
     },
     showMessage() {
       return this.data !== 'OK' && this.data !== ''
+    },
+    message_before() {
+      return convertLuctoriosFormatToHtml(this.$store.state.server.message_before)
     }
   },
   methods: {
@@ -51,7 +55,6 @@ export default {
       }
     },
     execute_action(action) {
-      console.log('execute_action', action)
       this.$emit('clickaction', action)
     },
     run_action(action) {
@@ -77,7 +80,6 @@ export default {
     }
   },
   mounted() {
-    this.show_login = true
     this.$store.commit('call_status', false)
     this.$store.commit('change_server', this.connexion)
     document.title = this.$store.state.server.title + ' - ' + this.$store.state.server.sub_title
@@ -86,23 +88,26 @@ export default {
     }
     if (this.data === 'OK') {
       this.$i18n.locale = this.connexion.language ? this.connexion.language : 'fr'
-      this.show_login = false
       var refreshIntervalId = setInterval(() => {
         this.execute_action({ id: 'CORE/menu' })
         this.$emit('close')
         clearInterval(refreshIntervalId)
       }, 100)
     } else if (this.data === 'BADAUTH') {
+      this.show_login = true
       if (this.$store.state.server.login_field === 'email') {
         this.message = this.$t('email_wrong')
       } else {
         this.message = this.$t('username_wrong')
       }
     } else if (this.data === 'NEEDAUTH') {
+      this.show_login = true
       this.message = this.$t('identify_you')
     } else if (this.data === 'ONLYADMIN') {
+      this.show_login = true
       this.message = this.$t('only_admin')
     } else {
+      this.show_login = true
       this.message = this.data
     }
   }
@@ -110,37 +115,42 @@ export default {
 </script>
 
 <template>
-  <v-dialog v-model="show_login" activator="parent" persistent max-width="400px">
-    <v-form v-model="form" @submit.prevent="onSubmit">
-      <v-card>
-        <v-card-title class="bg-grey-darken-1"> {{ $t('Logon') }} </v-card-title>
-        <v-card-text>
-          <v-alert :text="message" v-if="showMessage" type="error"> </v-alert>
-          <v-container grid-list-md>
-            <v-text-field
-              v-model="login"
-              clearable
-              :label="login_label()"
-              :rules="[required]"
-            ></v-text-field>
-            <v-text-field
-              v-model="password"
-              clearable
-              :label="$t('password')"
-              type="password"
-              :rules="[required]"
-            ></v-text-field>
-          </v-container>
-        </v-card-text>
+  <div>
+    <div class="message_alert" v-if="show_login && $store.state.server.message_before">
+      <span v-html="message_before" />
+    </div>
+    <v-dialog v-model="show_login" activator="parent" persistent max-width="400px">
+      <v-form v-model="form" @submit.prevent="onSubmit">
+        <v-card>
+          <v-card-title class="bg-grey-darken-1"> {{ $t('Logon') }} </v-card-title>
+          <v-card-text>
+            <v-alert :text="message" v-if="showMessage" type="error"> </v-alert>
+            <v-container grid-list-md>
+              <v-text-field
+                v-model="login"
+                clearable
+                :label="login_label()"
+                :rules="[required]"
+              ></v-text-field>
+              <v-text-field
+                v-model="password"
+                clearable
+                :label="$t('password')"
+                type="password"
+                :rules="[required]"
+              ></v-text-field>
+            </v-container>
+          </v-card-text>
 
-        <v-card-actions class="logactions" v-for="action in actions" :key="action.id">
-          <ButtonAction :action="action" @click="execute_action" />
-        </v-card-actions>
+          <v-card-actions class="logactions" v-for="action in actions" :key="action.id">
+            <ButtonAction :action="action" @click="execute_action" />
+          </v-card-actions>
 
-        <ButtonsBar :actions="action_list" @clickaction="run_action" @close="run_action" />
-      </v-card>
-    </v-form>
-  </v-dialog>
+          <ButtonsBar :actions="action_list" @clickaction="run_action" @close="run_action" />
+        </v-card>
+      </v-form>
+    </v-dialog>
+  </div>
 </template>
 
 <style scoped>
@@ -151,5 +161,22 @@ export default {
   font-size: 10px;
   margin: 0px auto;
   width: 60%;
+}
+.message_alert {
+  position: absolute;
+  top: 3%;
+  background-color: #dddddd;
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+  padding: 10px;
+  text-align: center;
+  font-size: 20px;
+  border: 2px solid black;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  z-index: 2405;
 }
 </style>

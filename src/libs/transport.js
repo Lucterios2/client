@@ -16,7 +16,7 @@ export function initialTransport() {
 
 export async function callLucteriosAction(action) {
   current_store.commit('call_waiting', true)
-  var call_result = {}
+  var call_result = { meta: {} }
   if (action.id == 'CORE/authentification' || action.id == 'CORE/exitConnection') {
     call_result = {
       connexion: example_server_data,
@@ -57,7 +57,7 @@ export async function callLucteriosAction(action) {
     call_result = response_to_ident[action.id]
   }
   call_result.meta.ismodal = Number(action.modal) == FORMTYPE_NOMODAL
-  console.log('call_lucterios_action', action, call_result)
+  console.log('CALL ACTION', action, call_result)
   current_store.commit('call_waiting', false)
   return call_result
 }

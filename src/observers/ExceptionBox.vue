@@ -27,9 +27,14 @@ export default {
         this.exception.code === CRITIC ||
         this.exception.code === GRAVE
       ) {
-        actions.push({ text: this.$t('support'), id: 'send', icon: 'mdi:mdi-mail', close: '1' })
+        actions.push({
+          text: this.$t('support'),
+          id: 'send',
+          short_icon: 'mdi:mdi-mail',
+          close: '0'
+        })
       }
-      actions.push({ text: this.$t('close'), id: '', icon: 'mdi:mdi-close', close: '0' })
+      actions.push({ text: this.$t('close'), id: '', short_icon: 'mdi:mdi-close', close: '1' })
       return actions
     },
     except_icon() {
@@ -95,8 +100,8 @@ export default {
     toggle_more() {
       this.more = !this.more
     },
-    action_click(action) {
-      if (action.id === 'send') {
+    execute_click(action) {
+      if (action && action.id === 'send') {
         var complement = '\n### ' + convertLuctoriosFormatToHtml(this.exception.message) + ' ###\n'
         complement += part_for_email(this.$t('Call-stack'), this.exception.debug)
         complement += part_for_email(this.$t('Extra'), this.exception.type)
@@ -163,7 +168,7 @@ export default {
           </v-col>
         </v-row>
       </v-card-text>
-      <ButtonsBar :actions="action_list" @actionclick="action_click" @close="$emit('close')" />
+      <ButtonsBar :actions="action_list" @clickaction="execute_click" @close="$emit('close')" />
     </v-card>
   </v-dialog>
 </template>

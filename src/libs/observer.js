@@ -35,7 +35,10 @@ export function mountComponent(component, props, emits) {
 
   const destroy = () => {
     if (el) {
-      document.getElementById('comp').removeChild(el)
+      const root_comp = document.getElementById('comp')
+      if (root_comp) {
+        root_comp.removeChild(el)
+      }
       Vue.render(null, el)
       component_created.delete(el)
     }
@@ -100,6 +103,6 @@ export async function factory(result, click_action) {
       clickaction: click_action
     })
   } else {
-    console.log('no component', result)
+    console.log('NO COMPONENT', result)
   }
 }

@@ -20,7 +20,7 @@ export function convert_event_to_object(value) {
 }
 
 export const example_server_data = {
-  title: 'Lucterios',
+  title: 'Diacamma',
   sub_title: 'Nouveau client',
   applis_version: '2.6.13.23102415',
   server_version: '2.6.13.23102415',
@@ -45,7 +45,13 @@ export const example_server_data = {
   login: 'admin',
   real_name: '',
   instance_name: 'truc-muche',
-  message_before: 'Coucou les amis!',
+  message_before: `{[u]}{[b]}Bienvenue sur le test du nouveau graphisme de Diacamma.{[/b]}{[/u]}{[br]}
+- Les données présentées sont statiques, sans serveur.{[br]}
+- Pour vous connecter, saisissez le même alias et mot de passe.{[br]}
+- Les icons utilisées se trouvent ici : {[a href='https://materialdesignicons.com']}https://materialdesignicons.com{[/a]}{[br]}
+- N'hésitez pas à faire vos remarques sur l'erognomie : {[a href='mailto:support@diacamma.org']}support@diacamma.org{[/a]}.{[br]}
+{[i]}Merci de votre soutien à Diacamma{[/i]}
+`,
   mode: 1,
   login_field: 'username',
   language: 'fr',
@@ -54,7 +60,7 @@ export const example_server_data = {
 
 export const example_logon_actions = [
   {
-    text: 'Mot de passe ou alias oublié?',
+    text: 'Mot de passe oublié?',
     id: 'CORE/askPassword',
     short_icon: 'mdi:mdi-key',
     extension: 'CORE',
@@ -1045,7 +1051,10 @@ export const response_to_ident = {
       title: 'Action 2a',
       observer: 'core.dialogbox'
     },
-    actions: example_logon_actions,
+    actions: [
+      ...example_logon_actions,
+      ...[{ text: 'Fermer', id: '', short_icon: 'mdi:mdi-close', close: '1' }]
+    ],
     close: null
   },
   'dialog.sub2/action2': {
@@ -1060,7 +1069,10 @@ export const response_to_ident = {
       title: 'Action 2b',
       observer: 'core.dialogbox'
     },
-    actions: example_logon_actions,
+    actions: [
+      ...example_logon_actions,
+      ...[{ text: 'Fermer', id: '', short_icon: 'mdi:mdi-close', close: '1' }]
+    ],
     close: null
   },
   'dialog.sub3/action1': {

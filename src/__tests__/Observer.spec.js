@@ -5,7 +5,7 @@ import i18n from '@/libs/i18n.js'
 
 import * as utils from '@/libs/utils'
 import { clearComponent, factory, initialObserver } from '@/libs/observer.js'
-import { createApp } from 'vue'
+import { createApp, nextTick } from 'vue'
 
 beforeEach(() => {
   document.documentElement.innerHTML = '<html><body><div id="app"></div></body></html>'
@@ -131,8 +131,9 @@ describe('observer', () => {
         { meta: { observer: 'core.auth' }, data: { type: 1, message: 'title' } },
         action_fct
       )
-      expect(wrapper.find('div#comp > div').element.childElementCount).toBe(1)
-      expect(wrapper.find('div#comp > div > v-dialog').element.childElementCount).toBe(1)
+      await nextTick()
+      expect(wrapper.find('div#comp > div > div').element.childElementCount).toBe(1)
+      expect(wrapper.find('div#comp > div > div > v-dialog').element.childElementCount).toBe(1)
       clearComponent()
       expect(wrapper.find('div#comp').element.childElementCount).toBe(0)
     }),

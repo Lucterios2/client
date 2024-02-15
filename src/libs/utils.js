@@ -260,7 +260,6 @@ export function part_for_email(title, value) {
 }
 
 export function insertStyle(rule) {
-  console.log('insertStyle', rule)
   var css = document.createElement('style')
   css.type = 'text/css'
   css.innerHTML = rule
