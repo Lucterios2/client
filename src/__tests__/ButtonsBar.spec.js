@@ -24,7 +24,7 @@ describe('ButtonsBar', () => {
     expect(wrapper.find('div').element.childElementCount).toBe(1)
     expect(
       wrapper.find('div > button-action-stub').getCurrentComponent().props.action
-    ).toStrictEqual({ id: '', text: 'OK', icon: 'mdi:mdi-check', close: '0' })
+    ).toStrictEqual({ id: '', text: 'OK', short_icon: 'mdi:mdi-check', close: '1' })
 
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
     expect(wrapper.emitted('close')).toStrictEqual(undefined)
@@ -37,7 +37,7 @@ describe('ButtonsBar', () => {
     const wrapper = shallowMount(ButtonsBar, {
       propsData: {
         actions: [],
-        close: { id: 'xyz', text: 'actionend', icon: 'iconend' }
+        close: { id: 'xyz', text: 'actionend', short_icon: 'iconend' }
       },
       global: {
         plugins: [i18n]
@@ -48,13 +48,13 @@ describe('ButtonsBar', () => {
     expect(wrapper.find('div').element.childElementCount).toBe(1)
     expect(
       wrapper.find('div > button-action-stub').getCurrentComponent().props.action
-    ).toStrictEqual({ id: '', text: 'OK', icon: 'mdi:mdi-check', close: '0' })
+    ).toStrictEqual({ id: '', text: 'OK', short_icon: 'mdi:mdi-check', close: '1' })
 
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
     expect(wrapper.emitted('close')).toStrictEqual(undefined)
     await wrapper.find('div > button-action-stub').trigger('click')
     expect(wrapper.emitted('clickaction')).toStrictEqual([
-      [{ id: 'xyz', text: 'actionend', icon: 'iconend' }]
+      [{ id: 'xyz', text: 'actionend', short_icon: 'iconend' }]
     ])
     expect(wrapper.emitted('close')).toStrictEqual([[]])
   })
@@ -63,7 +63,7 @@ describe('ButtonsBar', () => {
     const wrapper = shallowMount(ButtonsBar, {
       propsData: {
         actions: [
-          { id: 'abc', text: 'action1', icon: 'icon1', close: '1' },
+          { id: 'abc', text: 'action1', icon: 'icon1', close: '0' },
           { id: 'def', text: 'action2', icon: 'icon2', close: '0' }
         ],
         close: null
@@ -77,44 +77,46 @@ describe('ButtonsBar', () => {
     expect(wrapper.find('div').element.childElementCount).toBe(1)
     expect(
       wrapper.find('div:nth-of-type(1) > button-action-stub').getCurrentComponent().props.action
-    ).toStrictEqual({ id: 'abc', text: 'action1', icon: 'icon1', close: '1' })
+    ).toStrictEqual({ id: 'abc', text: 'action1', icon: 'icon1', close: '0', num: 0 })
     expect(
       wrapper.find('div:nth-of-type(2) > button-action-stub').getCurrentComponent().props.action
     ).toStrictEqual({
       id: 'def',
       text: 'action2',
       icon: 'icon2',
-      close: '0'
+      close: '0',
+      num: 1
     })
 
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
     expect(wrapper.emitted('close')).toStrictEqual(undefined)
     await wrapper.find('div:nth-of-type(1) > button-action-stub').trigger('click')
     expect(wrapper.emitted('clickaction')).toStrictEqual([
-      [{ id: 'abc', text: 'action1', icon: 'icon1', close: '1' }]
+      [{ id: 'abc', text: 'action1', icon: 'icon1', close: '0', num: 0 }]
     ])
     expect(wrapper.emitted('close')).toStrictEqual(undefined)
     await wrapper.find('div:nth-of-type(2) > button-action-stub').trigger('click')
     expect(wrapper.emitted('clickaction')).toStrictEqual([
-      [{ id: 'abc', text: 'action1', icon: 'icon1', close: '1' }],
+      [{ id: 'abc', text: 'action1', icon: 'icon1', close: '0', num: 0 }],
       [
         {
           id: 'def',
           text: 'action2',
           icon: 'icon2',
-          close: '0'
+          close: '0',
+          num: 1
         }
       ]
     ])
-    expect(wrapper.emitted('close')).toStrictEqual([[]])
+    expect(wrapper.emitted('close')).toStrictEqual(undefined)
   })
 
   it('Actions - Close', async () => {
     const wrapper = shallowMount(ButtonsBar, {
       propsData: {
         actions: [
-          { id: 'abc', text: 'action1', icon: 'icon1', close: '1' },
-          { id: 'def', text: 'action2', icon: 'icon2', close: '0' }
+          { id: 'abc', text: 'action1', icon: 'icon1', close: '0' },
+          { id: 'def', text: 'action2', icon: 'icon2', close: '1' }
         ],
         close: { id: 'xyz', text: 'actionend', icon: 'iconend' }
       },
@@ -127,32 +129,34 @@ describe('ButtonsBar', () => {
     expect(wrapper.find('div').element.childElementCount).toBe(1)
     expect(
       wrapper.find('div:nth-of-type(1) > button-action-stub').getCurrentComponent().props.action
-    ).toStrictEqual({ id: 'abc', text: 'action1', icon: 'icon1', close: '1' })
+    ).toStrictEqual({ id: 'abc', text: 'action1', icon: 'icon1', close: '0', num: 0 })
     expect(
       wrapper.find('div:nth-of-type(2) > button-action-stub').getCurrentComponent().props.action
     ).toStrictEqual({
       id: 'def',
       text: 'action2',
       icon: 'icon2',
-      close: '0'
+      close: '1',
+      num: 1
     })
 
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
     expect(wrapper.emitted('close')).toStrictEqual(undefined)
     await wrapper.find('div:nth-of-type(1) > button-action-stub').trigger('click')
     expect(wrapper.emitted('clickaction')).toStrictEqual([
-      [{ id: 'abc', text: 'action1', icon: 'icon1', close: '1' }]
+      [{ id: 'abc', text: 'action1', icon: 'icon1', close: '0', num: 0 }]
     ])
     expect(wrapper.emitted('close')).toStrictEqual(undefined)
     await wrapper.find('div:nth-of-type(2) > button-action-stub').trigger('click')
     expect(wrapper.emitted('clickaction')).toStrictEqual([
-      [{ id: 'abc', text: 'action1', icon: 'icon1', close: '1' }],
+      [{ id: 'abc', text: 'action1', icon: 'icon1', close: '0', num: 0 }],
       [
         {
           id: 'def',
           text: 'action2',
           icon: 'icon2',
-          close: '0'
+          close: '1',
+          num: 1
         }
       ],
       [{ id: 'xyz', text: 'actionend', icon: 'iconend' }]

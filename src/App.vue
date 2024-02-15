@@ -44,6 +44,7 @@ function help() {
   win.focus()
 }
 async function click_action(action) {
+  console.log('click_action app', action)
   const result = await callLucteriosAction(action)
   await factory(result, click_action)
 }
@@ -69,4 +70,8 @@ click_action({ id: 'CORE/authentification', method: 'POST' })
   </v-app>
 </template>
 
-<style scoped></style>
+<style scoped>
+.v-application {
+  background: none;
+}
+</style>

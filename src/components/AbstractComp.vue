@@ -4,9 +4,10 @@ export default {
   name: 'AbstractComp',
   props: {
     value: [String, Number, Array, Boolean],
-    component: Object
+    component: Object,
+    meta: Object
   },
-  emits: ['action'],
+  emits: ['action', 'close'],
   computed: {
     value_formated() {
       const formatstr = this.component.formatstr || '{0}'

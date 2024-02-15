@@ -31,7 +31,8 @@ describe('CustomComponents', () => {
         comp: [
           { name: 'val1', component: 'AAA', x: 0, y: 0, colspan: 1, rowspan: 1, tab: 0 },
           { name: 'val2', component: 'BBB', x: 0, y: 1, colspan: 1, rowspan: 1, tab: 0 }
-        ]
+        ],
+        meta: {}
       }
     })
     expect(wrapper.element.childElementCount).toBe(1)

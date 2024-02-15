@@ -1,35 +1,21 @@
-<script setup>
-const props = defineProps({
-  context: Object,
-  action: Object,
-  close: Object,
-  data: Object, // {message: String, type: Number}
-  meta: Object // {extension: String, title: String, action: String, observer: String}
-})
-const emit = defineEmits(['clickaction', 'close'])
-
-function click_action(action) {
-  if (action.params === undefined) {
-    action.params = {}
+<script>
+import AbstractObserver from '@/observers/AbstractObserver.vue'
+export default {
+  name: 'AcknowledgeReturn',
+  extends: AbstractObserver,
+  props: {
+    action: Object
+  },
+  mounted() {
+    if (this.action) {
+      this.click_action(this.action)
+    }
+    if (this.close) {
+      this.click_action(this.close)
+    }
+    this.$emit('close')
   }
-  action.params = Object.assign({}, action.params, props.context)
-  emit('clickaction', action)
 }
-if (props.action) {
-  var refreshIntervalId1 = setInterval(() => {
-    click_action(props.action)
-    clearInterval(refreshIntervalId1)
-  }, 100)
-}
-
-if (props.close) {
-  var refreshIntervalId2 = setInterval(() => {
-    click_action(props.close)
-    clearInterval(refreshIntervalId2)
-  }, 100)
-}
-
-emit('close')
 </script>
 
 <template>

@@ -11,11 +11,21 @@ var current_app = null
 
 const component_created = new Map()
 
-export function createCompnent(el, component, props, children) {
+export function createCompnent(el, component, props, children, emits) {
   let new_comp = Vue.h(component, props, () => children)
   new_comp.appContext = current_app._context
   if (el != null) {
     Vue.render(new_comp, el)
+  }
+  if (new_comp.component) {
+    Object.keys(new_comp.component.emitsOptions).forEach((emit_name) => {
+      if (emits[emit_name] == undefined) {
+        emits[emit_name] = () => {
+          return true
+        }
+      }
+    })
+    new_comp.component.emitsOptions = emits
   }
   return new_comp
 }
@@ -30,12 +40,11 @@ export function mountComponent(component, props, emits) {
       component_created.delete(el)
     }
     el = null
+    return true
   }
-
   document.getElementById('comp').appendChild(el)
-  let new_comp = createCompnent(el, component, props, [])
   emits.close = destroy
-  new_comp.component.emitsOptions = emits
+  let new_comp = createCompnent(el, component, props, [], emits)
 
   const struct_comp = {
     new_comp,

@@ -9,7 +9,7 @@ const emit = defineEmits(['close'])
 const more_version = defineModel({ type: Boolean, default: false })
 const visible = true
 function send_support() {
-  send_to_support(i18n, store, '')
+  send_to_support(i18n.t, store, '')
 }
 </script>
 

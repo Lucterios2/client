@@ -6,6 +6,7 @@ import ButtonAction from '@/libs/ButtonAction.vue'
 import storage from '@/libs/datastorage.js'
 import i18n from '@/libs/i18n.js'
 import { convert_event_to_object } from '@/__tests__/tools'
+import { nextTick } from 'vue'
 
 beforeEach(() => {
   console.warn = vi.fn()
@@ -45,7 +46,9 @@ describe('LoginBox', () => {
     expect(wrapper.find('v-card > buttons-bar-stub').element.childElementCount).toBe(0)
     expect(
       wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
-    ).toStrictEqual([{ close: 1, disabled: true, icon: 'mdi:mdi-power', id: 'ok', text: 'OK' }])
+    ).toStrictEqual([
+      { close: 1, disabled: true, short_icon: 'mdi:mdi-power', id: 'ok', text: 'OK' }
+    ])
   })
 
   it('login mode 1', async () => {
@@ -82,8 +85,8 @@ describe('LoginBox', () => {
     expect(
       wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
     ).toStrictEqual([
-      { close: 1, icon: 'mdi:mdi-logout', id: 'cancel', text: 'Annuler' },
-      { close: 1, disabled: true, icon: 'mdi:mdi-power', id: 'ok', text: 'OK' }
+      { close: 1, short_icon: 'mdi:mdi-logout', id: 'cancel', text: 'Annuler' },
+      { close: 1, disabled: true, short_icon: 'mdi:mdi-power', id: 'ok', text: 'OK' }
     ])
   })
 
@@ -102,6 +105,7 @@ describe('LoginBox', () => {
         plugins: [storage, i18n]
       }
     })
+    await nextTick()
     expect(wrapper.find('v-card').element.childElementCount).toBe(3)
     expect(wrapper.find('v-card > v-card-title').text()).toBe('Connexion')
     expect(wrapper.find('v-card > v-card-text').element.childElementCount).toBe(2)
@@ -112,7 +116,9 @@ describe('LoginBox', () => {
     expect(wrapper.find('v-card > buttons-bar-stub').element.childElementCount).toBe(0)
     expect(
       wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
-    ).toStrictEqual([{ close: 1, disabled: true, icon: 'mdi:mdi-power', id: 'ok', text: 'OK' }])
+    ).toStrictEqual([
+      { close: 1, disabled: true, short_icon: 'mdi:mdi-power', id: 'ok', text: 'OK' }
+    ])
   })
 
   it('login bad auth', async () => {
@@ -130,6 +136,7 @@ describe('LoginBox', () => {
         plugins: [storage, i18n]
       }
     })
+    await nextTick()
     expect(wrapper1.find('v-card').element.childElementCount).toBe(3)
     expect(wrapper1.find('v-card > v-card-title').text()).toBe('Connexion')
     expect(wrapper1.find('v-card > v-card-text').element.childElementCount).toBe(2)
@@ -150,7 +157,9 @@ describe('LoginBox', () => {
     expect(wrapper1.find('v-card > buttons-bar-stub').element.childElementCount).toBe(0)
     expect(
       wrapper1.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
-    ).toStrictEqual([{ close: 1, disabled: true, icon: 'mdi:mdi-power', id: 'ok', text: 'OK' }])
+    ).toStrictEqual([
+      { close: 1, disabled: true, short_icon: 'mdi:mdi-power', id: 'ok', text: 'OK' }
+    ])
 
     storage.commit('change_server', {
       mode: 0,
@@ -166,6 +175,7 @@ describe('LoginBox', () => {
         plugins: [storage, i18n]
       }
     })
+    await nextTick()
     expect(wrapper2.find('v-card > v-card-text > v-alert').attributes('text')).toBe(
       'Courriel ou Mot de passe incorrect!'
     )
@@ -197,6 +207,7 @@ describe('LoginBox', () => {
         plugins: [storage, i18n]
       }
     })
+    await nextTick()
     expect(wrapper.find('v-card').element.childElementCount).toBe(3)
     expect(wrapper.find('v-card > v-card-title').text()).toBe('Connexion')
     expect(wrapper.find('v-card > v-card-text').element.childElementCount).toBe(2)
@@ -207,7 +218,9 @@ describe('LoginBox', () => {
     expect(wrapper.find('v-card > buttons-bar-stub').element.childElementCount).toBe(0)
     expect(
       wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
-    ).toStrictEqual([{ close: 1, disabled: true, icon: 'mdi:mdi-power', id: 'ok', text: 'OK' }])
+    ).toStrictEqual([
+      { close: 1, disabled: true, short_icon: 'mdi:mdi-power', id: 'ok', text: 'OK' }
+    ])
   })
 
   it('login with action', async () => {
@@ -220,8 +233,8 @@ describe('LoginBox', () => {
         connexion: {},
         data: '',
         actions: [
-          { id: 'abc', text: 'action1', icon: 'icon1' },
-          { id: 'def', text: 'action2', icon: 'icon2' }
+          { id: 'abc', text: 'action1', short_icon: 'icon1' },
+          { id: 'def', text: 'action2', short_icon: 'icon2' }
         ]
       },
       global: {
@@ -248,19 +261,19 @@ describe('LoginBox', () => {
       wrapper
         .find('v-card > v-card-actions:nth-of-type(1) > button-action-stub')
         .getCurrentComponent().props.action
-    ).toStrictEqual({ id: 'abc', text: 'action1', icon: 'icon1' })
+    ).toStrictEqual({ id: 'abc', text: 'action1', short_icon: 'icon1' })
     expect(wrapper.find('v-card > v-card-actions:nth-of-type(2)').element.childElementCount).toBe(1)
     expect(
       wrapper
         .find('v-card > v-card-actions:nth-of-type(2) > button-action-stub')
         .getCurrentComponent().props.action
-    ).toStrictEqual({ id: 'def', text: 'action2', icon: 'icon2' })
+    ).toStrictEqual({ id: 'def', text: 'action2', short_icon: 'icon2' })
     expect(wrapper.find('v-card > buttons-bar-stub').element.childElementCount).toBe(0)
     expect(
       wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
     ).toStrictEqual([
-      { close: 1, icon: 'mdi:mdi-logout', id: 'cancel', text: 'Annuler' },
-      { close: 1, disabled: true, icon: 'mdi:mdi-power', id: 'ok', text: 'OK' }
+      { close: 1, short_icon: 'mdi:mdi-logout', id: 'cancel', text: 'Annuler' },
+      { close: 1, disabled: true, short_icon: 'mdi:mdi-power', id: 'ok', text: 'OK' }
     ])
 
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
@@ -273,7 +286,7 @@ describe('LoginBox', () => {
   it('Button', async () => {
     const wrapper = shallowMount(ButtonAction, {
       propsData: {
-        action: { id: 'abc', text: 'action1', icon: 'icon1' }
+        action: { id: 'abc', text: 'action1', short_icon: 'icon1' }
       },
       global: {
         plugins: [storage, i18n]
@@ -286,7 +299,7 @@ describe('LoginBox', () => {
     expect(wrapper.emitted('click')).toStrictEqual(undefined)
     await wrapper.trigger('click', { id: 'abc' })
     expect(wrapper.emitted('click')).toStrictEqual([
-      [{ id: 'abc', text: 'action1', icon: 'icon1' }]
+      [{ id: 'abc', text: 'action1', short_icon: 'icon1' }]
     ])
     await wrapper.setProps({
       action: { id: 'abc', text: 'action1', icon: 'icon1', disabled: true }

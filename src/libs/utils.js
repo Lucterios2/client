@@ -216,19 +216,19 @@ export function formatToString(initialvalue, formatNum, formatStr) {
   }
 }
 
-export function send_to_support(i18n, store, complement) {
+export function send_to_support(i18n_t, store, complement) {
   if (complement === undefined) {
-    complement = i18n.t('support_body')
+    complement = i18n_t('support_body')
   } else {
-    complement = i18n.t('support_body') + complement
+    complement = i18n_t('support_body') + complement
   }
   complement += '__________________________________________\n'
   complement += '#### ' + store.state.server.title + ' ####\n'
-  complement += i18n.t('version') + ' : ' + store.state.server.applis_version + '\n'
-  complement += i18n.t('server') + ' : ' + store.state.server.applis_version + '\n'
-  complement += i18n.t('client') + ' : ' + store.state.server.version_current + '\n'
+  complement += i18n_t('version') + ' : ' + store.state.server.applis_version + '\n'
+  complement += i18n_t('server') + ' : ' + store.state.server.applis_version + '\n'
+  complement += i18n_t('client') + ' : ' + store.state.server.version_current + '\n'
   complement +=
-    i18n.t('Connection') +
+    i18n_t('Connection') +
     ' : ' +
     store.state.server.login +
     '@' +
@@ -241,7 +241,7 @@ export function send_to_support(i18n, store, complement) {
     store.state.server.info_server.join('\n').replaceAll('<i>', '').replaceAll('</i>', '') + '\n'
 
   var url = 'mailto:' + store.state.server.support_email
-  url += '?subject=' + encodeURIComponent(i18n.t('support_subject'))
+  url += '?subject=' + encodeURIComponent(i18n_t('support_subject'))
   url += '&body=' + encodeURIComponent(complement)
   window.location = url
 }
@@ -258,3 +258,20 @@ export function part_for_email(title, value) {
   }
   return ''
 }
+
+export function insertStyle(rule) {
+  console.log('insertStyle', rule)
+  var css = document.createElement('style')
+  css.type = 'text/css'
+  css.innerHTML = rule
+  document.body.appendChild(css)
+}
+
+export const CLOSE_NO = 0
+export const CLOSE_YES = 1
+export const FORMTYPE_NOMODAL = 0
+export const FORMTYPE_MODAL = 1
+export const FORMTYPE_REFRESH = 2
+export const SELECT_NONE = 1
+export const SELECT_SINGLE = 0
+export const SELECT_MULTI = 2

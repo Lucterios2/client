@@ -6,7 +6,7 @@ import {
   example_server_data,
   response_to_ident
 } from '@/__tests__/tools'
-import { sleep } from './utils'
+import { FORMTYPE_NOMODAL, sleep } from './utils'
 
 var current_store = null
 
@@ -56,7 +56,7 @@ export async function callLucteriosAction(action) {
     await sleep(500)
     call_result = response_to_ident[action.id]
   }
-  call_result.meta.ismodal = Number(action.modal) == 1
+  call_result.meta.ismodal = Number(action.modal) == FORMTYPE_NOMODAL
   console.log('call_lucterios_action', action, call_result)
   current_store.commit('call_waiting', false)
   return call_result

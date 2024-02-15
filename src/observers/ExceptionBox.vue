@@ -1,7 +1,5 @@
-<script setup>
-import { useStore } from 'vuex'
-import { useI18n } from 'vue-i18n'
-import { computed } from 'vue'
+<script>
+import AbstractObserver from '@/observers/AbstractObserver.vue'
 import ButtonsBar from '@/libs/ButtonsBar.vue'
 import { convertLuctoriosFormatToHtml, send_to_support, part_for_email } from '@/libs/utils'
 const FAILURE = 0
@@ -9,93 +7,106 @@ const CRITIC = 1
 const GRAVE = 2
 const IMPORTANT = 3
 const MINOR = 4
-const emit = defineEmits(['close'])
-const i18n = useI18n()
-const store = useStore()
-const props = defineProps({
-  context: Object,
-  close: Object,
-  exception: Object, // {type: String, debug: String, message: String, code: Number, request: String, response: String }
-  meta: Object // {extension: String, title: String, action: String, observer: String}
-})
-const tab = defineModel('tab')
-const visible = true
-const more = defineModel('more', { type: Boolean, default: false })
-
-function toggle_more() {
-  more.value = !more.value
-}
-function action_click(action) {
-  if (action.id === 'send') {
-    var complement = '\n### ' + convertLuctoriosFormatToHtml(props.exception.message) + ' ###\n'
-    complement += part_for_email(i18n.t('Call-stack'), props.exception.debug)
-    complement += part_for_email(i18n.t('Extra'), props.exception.type)
-    complement += part_for_email(i18n.t('Request'), props.exception.request)
-    complement += part_for_email(i18n.t('Response'), props.exception.response)
-    send_to_support(i18n, store, complement)
+export default {
+  name: 'ExceptionBox',
+  extends: AbstractObserver,
+  components: { ButtonsBar },
+  props: {
+    exception: Object
+  },
+  data: () => ({
+    tab: null,
+    visible: true,
+    more: false
+  }),
+  computed: {
+    action_list() {
+      const actions = Array()
+      if (
+        this.exception.code === FAILURE ||
+        this.exception.code === CRITIC ||
+        this.exception.code === GRAVE
+      ) {
+        actions.push({ text: this.$t('support'), id: 'send', icon: 'mdi:mdi-mail', close: '1' })
+      }
+      actions.push({ text: this.$t('close'), id: '', icon: 'mdi:mdi-close', close: '0' })
+      return actions
+    },
+    except_icon() {
+      switch (this.exception.code) {
+        case FAILURE:
+          return 'mdi:mdi-alert-circle'
+        case CRITIC:
+          return 'mdi:mdi-alert-box'
+        case GRAVE:
+          return 'mdi:mdi-alert'
+        case IMPORTANT:
+          return 'mdi:mdi-alert-outline'
+        case MINOR:
+          return 'mdi:mdi-help-circle-outline'
+        default:
+          return 'mdi:mdi-alert-circle'
+      }
+    },
+    except_title() {
+      switch (this.exception.code) {
+        case FAILURE:
+          return this.$t('Failure')
+        case CRITIC:
+          return this.$t('Error')
+        case GRAVE:
+        case IMPORTANT:
+          return this.$t('Warning')
+        case MINOR:
+          return this.$t('Information')
+        default:
+          return this.$t('Error')
+      }
+    },
+    callstack() {
+      var stackText = ''
+      const stackTexts = this.exception.debug.replaceAll('{[br/]}', '{[br]}').split('{[br]}')
+      for (var sIdx = 0; sIdx < stackTexts.length; sIdx++) {
+        stackText += stackTexts[sIdx]
+        stackText += '\n'
+      }
+      return stackText.trim()
+    },
+    response_ex() {
+      try {
+        const value = JSON.parse(this.exception.response)
+        return JSON.stringify(value, null, 4)
+      } catch (e) {
+        return this.exception.response
+      }
+    },
+    showAdavanced() {
+      return (
+        this.exception.code === FAILURE ||
+        this.exception.code === CRITIC ||
+        this.exception.code === GRAVE
+      )
+    },
+    message() {
+      return convertLuctoriosFormatToHtml(this.exception.message)
+    }
+  },
+  methods: {
+    toggle_more() {
+      this.more = !this.more
+    },
+    action_click(action) {
+      if (action.id === 'send') {
+        var complement = '\n### ' + convertLuctoriosFormatToHtml(this.exception.message) + ' ###\n'
+        complement += part_for_email(this.$t('Call-stack'), this.exception.debug)
+        complement += part_for_email(this.$t('Extra'), this.exception.type)
+        complement += part_for_email(this.$t('Request'), this.exception.request)
+        complement += part_for_email(this.$t('Response'), this.exception.response)
+        send_to_support(this.$t, this.$store, complement)
+      }
+    }
   }
 }
-
-const action_list = computed(() => {
-  const actions = Array()
-  if (
-    props.exception.code === FAILURE ||
-    props.exception.code === CRITIC ||
-    props.exception.code === GRAVE
-  ) {
-    actions.push({ text: i18n.t('support'), id: 'send', icon: 'mdi:mdi-mail', close: '1' })
-  }
-  actions.push({ text: i18n.t('close'), id: '', icon: 'mdi:mdi-close', close: '0' })
-  return actions
-})
-const except_icon = computed(() => {
-  switch (props.exception.code) {
-    case FAILURE:
-      return 'mdi:mdi-alert-circle'
-    case CRITIC:
-      return 'mdi:mdi-alert-box'
-    case GRAVE:
-      return 'mdi:mdi-alert'
-    case IMPORTANT:
-      return 'mdi:mdi-alert-outline'
-    case MINOR:
-      return 'mdi:mdi-help-circle-outline'
-    default:
-      return 'mdi:mdi-alert-circle'
-  }
-})
-const except_title = computed(() => {
-  switch (props.exception.code) {
-    case FAILURE:
-      return i18n.t('Failure')
-    case CRITIC:
-      return i18n.t('Error')
-    case GRAVE:
-    case IMPORTANT:
-      return i18n.t('Warning')
-    case MINOR:
-      return i18n.t('Information')
-    default:
-      return i18n.t('Error')
-  }
-})
-const callstack = computed(() => {
-  var stackText = ''
-  const stackTexts = props.exception.debug.replaceAll('{[br/]}', '{[br]}').split('{[br]}')
-  for (var sIdx = 0; sIdx < stackTexts.length; sIdx++) {
-    stackText += stackTexts[sIdx]
-    stackText += '\n'
-  }
-  return stackText.trim()
-})
-const response_ex = computed(() => {
-  try {
-    const value = JSON.parse(props.exception.response)
-    return JSON.stringify(value, null, 4)
-  } catch (e) {
-    return props.exception.response
-  }
-})
 </script>
 
 <template>
@@ -108,14 +119,9 @@ const response_ex = computed(() => {
             <v-icon size="40">{{ except_icon }}</v-icon>
           </v-col>
           <v-col cols="max">
-            <span v-html="convertLuctoriosFormatToHtml(exception.message)"></span>
+            <span v-html="message"></span>
           </v-col>
-          <v-col
-            cols="2"
-            v-if="
-              exception.code === FAILURE || exception.code === CRITIC || exception.code === GRAVE
-            "
-          >
+          <v-col cols="2" v-if="showAdavanced">
             <v-btn
               :icon="more ? 'mdi:mdi-chevron-double-left' : 'mdi:mdi-chevron-double-right'"
               @click="toggle_more()"
@@ -157,7 +163,7 @@ const response_ex = computed(() => {
           </v-col>
         </v-row>
       </v-card-text>
-      <ButtonsBar :actions="action_list" @actionclick="action_click" @close="emit('close')" />
+      <ButtonsBar :actions="action_list" @actionclick="action_click" @close="$emit('close')" />
     </v-card>
   </v-dialog>
 </template>

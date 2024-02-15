@@ -116,11 +116,13 @@ describe('MainMenu', () => {
         plugins: [storage]
       }
     })
+    await nextTick()
 
     expect(wrapper.element.childElementCount).toBe(1)
     expect(wrapper.find('v-row').element.childElementCount).toBe(1)
 
     storage.commit('call_summary', true)
+    await nextTick()
     await nextTick()
     await nextTick()
     expect(wrapper.element.childElementCount).toBe(1)
@@ -752,6 +754,7 @@ describe('MainMenu', () => {
         plugins: [storage]
       }
     })
+    await nextTick()
     expect(wrapper.element.childElementCount).toBe(1)
     expect(wrapper.find('v-card').element.childElementCount).toBe(1)
     expect(wrapper.find('v-card > v-card-item').element.childElementCount).toBe(3)

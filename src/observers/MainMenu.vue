@@ -60,6 +60,10 @@ onMounted(async () => {
   if (summary_menu.value.length > 0) {
     await refresh_summary(summary_menu.value[0])
   }
+  var refreshIntervalId = setInterval(() => {
+    store.commit('call_summary', false)
+    clearInterval(refreshIntervalId)
+  }, 10000)
 })
 </script>
 

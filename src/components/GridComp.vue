@@ -1,12 +1,20 @@
 <script>
 import AbstractComp from '@/components/AbstractComp.vue'
-import { Stringformat, convertLuctoriosFormatToHtml, formatToString } from '@/libs/utils'
+import ButtonsBar from '@/libs/ButtonsBar.vue'
+import {
+  Stringformat,
+  convertLuctoriosFormatToHtml,
+  formatToString,
+  SELECT_NONE,
+  SELECT_SINGLE,
+  SELECT_MULTI
+} from '@/libs/utils'
 import { useI18n } from 'vue-i18n'
 
 export default {
   name: 'GridComp',
   extends: AbstractComp,
-  components: { AbstractComp },
+  components: { AbstractComp, ButtonsBar },
   data: () => ({
     items_per_page_options: [
       { value: 25, title: '25' },
@@ -15,42 +23,50 @@ export default {
       { value: 250, title: '250' },
       { value: 500, title: '500' }
     ],
+    firstload: true,
+    gridcontext: {},
+    selectItems: [],
     i18n: useI18n()
   }),
   computed: {
+    buttonMode() {
+      const select_list = this.component.actions.map((action_item) => {
+        return Number(action_item.unique)
+      })
+      if (select_list.includes(SELECT_MULTI)) {
+        return SELECT_MULTI
+      } else if (select_list.includes(SELECT_SINGLE)) {
+        return SELECT_SINGLE
+      } else {
+        return SELECT_NONE
+      }
+    },
     headers() {
       return this.component.headers.map((header_item) => {
         return {
           title: header_item[1],
           align: 'start',
-          sortable: false /*header_item[3] == 1,*/,
+          sortable: header_item[3] == 1,
           key: header_item[0]
         }
       })
     },
     serverItems() {
+      var last_color_even = false
+      var last_value = null
       return this.value.map((line_item) => {
-        const new_line = { id: line_item.id }
+        if (line_item.__color_ref__ == null || line_item.__color_ref__ != last_value) {
+          last_value = line_item.__color_ref__
+          last_color_even = !last_color_even
+        }
+        const new_line = { id: line_item.id, classname: last_color_even ? 'even' : 'odd' }
         this.component.headers.forEach((header_item) => {
           new_line[header_item[0]] = convertLuctoriosFormatToHtml(
             formatToString(line_item[header_item[0]], '', header_item[4].replace('%s', '{0}'))
           )
         })
-        console.log('new_line', new_line)
         return new_line
       })
-    },
-    itemsPerPage: {
-      get: function () {
-        console.log('<< changepage', this.component.size_by_page)
-        return this.component.size_by_page
-      },
-      set: function (newpage) {
-        console.log('>> changepage', newpage)
-      }
-    },
-    totalItems() {
-      return this.component.nb_lines
     },
     page_text() {
       return Stringformat(
@@ -68,12 +84,71 @@ export default {
           this.component.nb_lines
         ]
       )
+    },
+    itemsPerPage: {
+      get: function () {
+        return this.component.size_by_page
+      },
+      set: function (newitemsPerPage) {
+        this.gridcontext['GRID_PAGE%%' + this.component.name] = 0
+        this.gridcontext['GRID_SIZE%%' + this.component.name] = newitemsPerPage
+        this.refresh()
+      }
+    },
+    actions() {
+      return this.component.actions.map((action_item) => {
+        const unique = Number(action_item.unique)
+        action_item.disabled = false
+        if (unique == SELECT_SINGLE && this.selectItems.length != 1) {
+          action_item.disabled = true
+        } else if (unique == SELECT_MULTI && this.selectItems.length == 0) {
+          action_item.disabled = true
+        }
+        return action_item
+      })
     }
   },
   methods: {
     loadItems({ page, itemsPerPage, sortBy }) {
-      console.log('>> loadItems', page, itemsPerPage, sortBy)
-      this.loading = false
+      if (this.firstload) {
+        this.firstload = false
+      } else {
+        this.gridcontext['GRID_PAGE%%' + this.component.name] = page
+        this.gridcontext['GRID_SIZE%%' + this.component.name] = itemsPerPage
+        this.gridcontext['GRID_ORDER%%' + this.component.name] = sortBy
+          .map((sort_item) => {
+            return (sort_item.order == 'asc' ? '-' : '') + sort_item.key
+          })
+          .join(',')
+        this.refresh()
+      }
+    },
+    refresh() {
+      console.log('REFRESH:', this.meta.extension, this.meta.action, this.gridcontext)
+    },
+    click_action(action) {
+      if (action.params === undefined) {
+        action.params = {}
+      }
+      action.params = Object.assign({}, action.params, this.context)
+      if (this.selectItems.length > 0 && action.unique != SELECT_NONE) {
+        action.params[this.component.name] = this.selectItems.join(';')
+      }
+      this.$emit('action', action)
+    },
+    click_row(event, row_item) {
+      if (this.buttonMode != SELECT_NONE) {
+        const exit_before = this.selectItems.includes(row_item.id)
+        if (exit_before) {
+          this.selectItems.splice(this.selectItems.indexOf(row_item.id), 1)
+        }
+        if (this.buttonMode == SELECT_SINGLE) {
+          this.selectItems = []
+        }
+        if (!exit_before) {
+          this.selectItems.push(row_item.id)
+        }
+      }
     }
   }
 }
@@ -81,11 +156,19 @@ export default {
 
 <template>
   <AbstractComp :component="component">
+    <ButtonsBar
+      :actions="actions"
+      :center="true"
+      @clickaction="click_action"
+      @close="$emit('close')"
+      v-if="actions.length > 0"
+    />
     <v-data-table-server
       v-model:items-per-page="itemsPerPage"
       :headers="headers"
-      :items-length="totalItems"
+      :items-length="component.nb_lines"
       :items="serverItems"
+      :page="component.page_num + 1"
       :multi-sort="true"
       :items-per-page-options="items_per_page_options"
       :items-per-page-text="$t('Results per page')"
@@ -94,6 +177,24 @@ export default {
       item-value="id"
       @update:options="loadItems"
     >
+      <template #item="{ item }">
+        <tr
+          :class="
+            'v-data-table__tr ' +
+            item.classname +
+            (selectItems.includes(item.id) ? ' selected' : '')
+          "
+        >
+          <td
+            class="v-data-table__td"
+            v-for="header in component.headers"
+            :key="header[0]"
+            @click="click_row($event, item)"
+          >
+            {{ item[header[0]] }}
+          </td>
+        </tr>
+      </template>
     </v-data-table-server>
   </AbstractComp>
 </template>
@@ -116,5 +217,17 @@ export default {
 .v-table > .v-table__wrapper > table .v-data-table__tbody .v-data-table__tr:hover {
   background-color: #a0a0a0;
   color: #fff;
+}
+tr.even {
+  background-color: #ffffff;
+}
+tr.odd {
+  background-color: #f0f0f0;
+}
+tr.selected {
+  background-color: #d0d0d0;
+}
+tr.selected td {
+  border-top: 1px solid #fff;
 }
 </style>

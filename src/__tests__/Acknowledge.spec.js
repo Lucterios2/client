@@ -3,6 +3,7 @@ import { shallowMount } from '@vue/test-utils'
 
 import AcknowledgeReturn from '@/observers/AcknowledgeReturn.vue'
 import { sleep } from '@/libs/utils'
+import { nextTick } from 'vue'
 
 beforeEach(() => {
   console.warn = vi.fn()
@@ -92,6 +93,7 @@ describe('Acknowledge', () => {
         }
       })
       expect(wrapper.element.childElementCount).toBe(0)
+      await nextTick()
       await sleep(200)
       expect(wrapper.emitted('clickaction')).toStrictEqual([
         [

@@ -138,7 +138,13 @@ onMounted(() => {
         >mdi-arrow-expand-all</v-icon
       >
       <v-card-text>
-        <CustomComponents :data="data" :comp="comp" @action="click_action" />
+        <CustomComponents
+          :data="data"
+          :comp="comp"
+          :meta="meta"
+          @action="click_action"
+          @close="emit('close')"
+        />
       </v-card-text>
       <ButtonsBar
         :actions="actions"

@@ -5,9 +5,10 @@ import { first_element_by_class } from '@/libs/utils'
 import { factory_components } from '@/components/tools'
 const props = defineProps({
   data: Object,
-  comp: Array
+  comp: Array,
+  meta: Object
 })
-defineEmits(['action'])
+const emit = defineEmits(['action', 'close'])
 const root = Vue.ref('root')
 const tab = defineModel('tab')
 const tablist = defineModel('tablist', { type: Array, default: [] })
@@ -45,10 +46,25 @@ function add_table(current_table, component_list) {
         }
       }
     }
-    createCompnent(current_td, factory_components(comp_item.component), {
-      value: props.data[comp_item.name],
-      component: comp_item
-    })
+    const emits = {
+      action: (action) => {
+        emit('action', action)
+      },
+      close: () => {
+        emit('close')
+      }
+    }
+    createCompnent(
+      current_td,
+      factory_components(comp_item.component),
+      {
+        value: props.data[comp_item.name],
+        component: comp_item,
+        meta: props.meta
+      },
+      [],
+      emits
+    )
     current_tr.appendChild(current_td)
     if (comp_next == null || comp_next.y != comp_item.y) {
       current_table.appendChild(current_tr)
