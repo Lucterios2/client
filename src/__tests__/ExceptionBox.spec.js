@@ -54,7 +54,7 @@ describe('ExceptionBox', () => {
 
     expect(
       wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
-    ).toStrictEqual([{ id: '', text: 'Fermer', icon: 'mdi:mdi-close', close: '0' }])
+    ).toStrictEqual([{ id: '', text: 'Fermer', short_icon: 'mdi:mdi-close', close: '1' }])
 
     expect(wrapper.emitted('close')).toStrictEqual(undefined)
     await wrapper.find('v-card > buttons-bar-stub').trigger('close')
@@ -104,7 +104,7 @@ describe('ExceptionBox', () => {
 
     expect(
       wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
-    ).toStrictEqual([{ id: '', text: 'Fermer', icon: 'mdi:mdi-close', close: '0' }])
+    ).toStrictEqual([{ id: '', text: 'Fermer', short_icon: 'mdi:mdi-close', close: '1' }])
   })
 
   it('grave', async () => {
@@ -156,8 +156,8 @@ describe('ExceptionBox', () => {
     expect(
       wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
     ).toStrictEqual([
-      { id: 'send', text: 'Support', icon: 'mdi:mdi-mail', close: '1' },
-      { id: '', text: 'Fermer', icon: 'mdi:mdi-close', close: '0' }
+      { id: 'send', text: 'Support', short_icon: 'mdi:mdi-mail', close: '0' },
+      { id: '', text: 'Fermer', short_icon: 'mdi:mdi-close', close: '1' }
     ])
 
     await wrapper
@@ -269,8 +269,8 @@ describe('ExceptionBox', () => {
     expect(
       wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
     ).toStrictEqual([
-      { id: 'send', text: 'Support', icon: 'mdi:mdi-mail', close: '1' },
-      { id: '', text: 'Fermer', icon: 'mdi:mdi-close', close: '0' }
+      { id: 'send', text: 'Support', short_icon: 'mdi:mdi-mail', close: '0' },
+      { id: '', text: 'Fermer', short_icon: 'mdi:mdi-close', close: '1' }
     ])
 
     await wrapper
@@ -450,8 +450,8 @@ describe('ExceptionBox', () => {
     expect(
       wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
     ).toStrictEqual([
-      { id: 'send', text: 'Support', icon: 'mdi:mdi-mail', close: '1' },
-      { id: '', text: 'Fermer', icon: 'mdi:mdi-close', close: '0' }
+      { id: 'send', text: 'Support', short_icon: 'mdi:mdi-mail', close: '0' },
+      { id: '', text: 'Fermer', short_icon: 'mdi:mdi-close', close: '1' }
     ])
 
     expect(window.location.href).toBe('http://localhost:3000/')
@@ -466,10 +466,10 @@ describe('ExceptionBox', () => {
     expect(wrapper.emitted('close')).toStrictEqual([[]])
     await wrapper
       .find('v-card > buttons-bar-stub')
-      .trigger('actionclick', { id: 'send', text: 'Support', icon: 'mdi:mdi-mail', close: '1' })
+      .trigger('clickaction', { id: 'send', text: 'Support', icon: 'mdi:mdi-mail', close: '1' })
     expect(wrapper.emitted('close')).toStrictEqual([[]])
     expect(window.location).toBe(
-      "mailto:support@lucterios.org?subject=Rapport%20de%20bogue&body=%0AD%C3%A9crivez%20le%20plus%20pr%C3%A9cis%C3%A9ment%20possible%2C%20comment%20vous%20avez%20obtenu%20ce%20probl%C3%A8me.%0AMerci%20de%20votre%20aide.%0A%0A%0A%23%23%23%20Failure%20message%20%23%23%23%0A**Pile%20d'appel**%0AFirst%20line%0Asecond%20line%0A...%0Alast%20line%0A%0A**Extra**%0ALucteriosException%0A%0A**Requ%C3%AAte**%0Atruc%2Fmuche%3Fid%3D1%26value%3D12%0A%0A**Reponse**%0A%7B%22name%22%3A%22aaa%22%2C%20%22list%22%3A%5B12%2C45%2C98%5D%2C%20%22value%22%3A%2036.82%2C%20%22check%22%3Atrue%7D%0A%0A__________________________________________%0A%23%23%23%23%20Lucterios%20%23%23%23%23%0AVersion%20%3A%20%0AServeur%20%3A%20%0AClient%20%3A%20%0AConnection%20%3A%20%40%0Ahttp%3A%2F%2Flocalhost%3A3000%2F%0A%0A__________________________________________%0A%0A"
+      "mailto:support@lucterios.org?subject=Rapport%20de%20bogue&body=%0AD%C3%A9crivez%20le%20plus%20pr%C3%A9cis%C3%A9ment%20possible%2C%20comment%20vous%20avez%20obtenu%20ce%20probl%C3%A8me.%0AMerci%20de%20votre%20aide.%0A%0A%0A%23%23%23%20Failure%20message%20%23%23%23%0A**Pile%20d'appel**%0AFirst%20line%0Asecond%20line%0A...%0Alast%20line%0A%0A**Extra**%0ALucteriosException%0A%0A**Requ%C3%AAte**%0Atruc%2Fmuche%3Fid%3D1%26value%3D12%0A%0A**Reponse**%0A%7B%22name%22%3A%22aaa%22%2C%20%22list%22%3A%5B12%2C45%2C98%5D%2C%20%22value%22%3A%2036.82%2C%20%22check%22%3Atrue%7D%0A%0A__________________________________________%0A%23%23%23%23%20Lucterios%20%23%23%23%23%0AVersion%20%3A%20%0AServeur%20%3A%20%0AClient%20%3A%20%0AConnexion%20%3A%20%40%0Ahttp%3A%2F%2Flocalhost%3A3000%2F%0A%0A__________________________________________%0A%0A"
     )
   })
 })
