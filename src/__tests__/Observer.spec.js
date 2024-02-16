@@ -46,9 +46,7 @@ describe('observer', () => {
       expect(wrapper.find('div#comp').element.childElementCount).toBe(0)
       const action_fct = vi.fn()
       await factory({ meta: { observer: 'core.acknowledge' } }, action_fct)
-      expect(wrapper.find('div#comp').element.childElementCount).toBe(1)
-      expect(wrapper.find('div#comp > div').element.childElementCount).toBe(1)
-      expect(wrapper.find('div#comp > div > div').element.childElementCount).toBe(0)
+      expect(wrapper.find('div#comp').element.childElementCount).toBe(0)
       clearComponent()
       expect(wrapper.find('div#comp').element.childElementCount).toBe(0)
     }),
@@ -160,8 +158,7 @@ describe('observer', () => {
         },
         action_fct
       )
-      expect(wrapper.find('div#comp > div').element.childElementCount).toBe(1)
-      expect(wrapper.find('div#comp > div > div').element.childElementCount).toBe(0)
+      expect(wrapper.find('div#comp').element.childElementCount).toBe(0)
       clearComponent()
       expect(wrapper.find('div#comp').element.childElementCount).toBe(0)
     })

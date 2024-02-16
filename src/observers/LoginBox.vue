@@ -66,6 +66,9 @@ export default {
         this.onSubmit()
       }
     },
+    run_close() {
+      this.$emit('close')
+    },
     onSubmit() {
       if (!this.form) return
       this.execute_action({
@@ -146,7 +149,7 @@ export default {
             <ButtonAction :action="action" @click="execute_action" />
           </v-card-actions>
 
-          <ButtonsBar :actions="action_list" @clickaction="run_action" @close="run_action" />
+          <ButtonsBar :actions="action_list" @clickaction="run_action" @close="run_close" />
         </v-card>
       </v-form>
     </v-dialog>

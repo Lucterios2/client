@@ -12,20 +12,16 @@ var current_app = null
 const component_created = new Map()
 
 export function createCompnent(el, component, props, children, emits) {
-  let new_comp = Vue.h(component, props, () => children)
+  const new_emits = {}
+  Object.keys(emits).forEach((key) => {
+    const new_key = 'on' + key[0].toUpperCase() + key.substring(1)
+    new_emits[new_key] = emits[key]
+  })
+  const new_props = Object.assign({}, props, new_emits)
+  let new_comp = Vue.h(component, new_props, () => children)
   new_comp.appContext = current_app._context
   if (el != null) {
     Vue.render(new_comp, el)
-  }
-  if (new_comp.component) {
-    Object.keys(new_comp.component.emitsOptions).forEach((emit_name) => {
-      if (emits[emit_name] == undefined) {
-        emits[emit_name] = () => {
-          return true
-        }
-      }
-    })
-    new_comp.component.emitsOptions = emits
   }
   return new_comp
 }

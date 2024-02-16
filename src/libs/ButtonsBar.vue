@@ -16,7 +16,7 @@ function click_action(action) {
     emit('clickaction', action)
   }
   if (Number(action.close) === CLOSE_YES) {
-    if (props.close !== null) {
+    if (props.close) {
       emit('clickaction', props.close)
     }
     emit('close')
