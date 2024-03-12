@@ -1,6 +1,9 @@
 <script>
 export default {
   name: 'AbstractObserver',
+  data: () => ({
+    forceRecompute: 0
+  }),
   props: {
     context: Object,
     actions: Array,
@@ -16,21 +19,13 @@ export default {
       }
       action.params = Object.assign({}, action.params, this.context)
       this.$emit('clickaction', action)
+    },
+    refreshObserver() {
+      this.$forceUpdate()
+      this.forceRecompute++
     }
   }
 }
 </script>
 
-<template>
-  <div :name="component.name">
-    <label v-if="component.description">{{ component.description }}</label>
-    <slot />
-  </div>
-</template>
-
-<style scoped>
-label {
-  padding-right: 5px;
-  font-weight: bold;
-}
-</style>
+<style scoped />

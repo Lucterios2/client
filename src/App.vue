@@ -11,6 +11,7 @@ import { clearComponent, initialObserver, factory } from '@/libs/observer'
 import StatusBar from '@/libs/StatusBar.vue'
 import WaitingFrame from '@/libs/WaitingFrame.vue'
 import AboutFrame from '@/libs/AboutFrame.vue'
+import { FORMTYPE_REFRESH } from '@/libs/utils'
 const show_about = defineModel('show_about', { type: Boolean, default: false })
 
 initialObserver()
@@ -19,36 +20,39 @@ initialTransport()
 function logoff() {
   clearComponent()
   var refreshIntervalId = setInterval(() => {
-    click_action({ id: 'CORE/exitConnection' })
+    click_action({ id: 'CORE/exitConnection' }, null)
     clearInterval(refreshIntervalId)
   }, 100)
 }
 function login() {
   clearComponent()
   var refreshIntervalId = setInterval(() => {
-    click_action({ id: 'CORE/authentification', method: 'POST' })
+    click_action({ id: 'CORE/authentification', method: 'POST' }, null)
     clearInterval(refreshIntervalId)
   }, 100)
 }
 
 function refresh() {
   clearComponent()
-  click_action({
-    id: 'CORE/authentification',
-    method: 'POST',
-    params: { info: true }
-  })
+  click_action(
+    {
+      id: 'CORE/authentification',
+      method: 'POST',
+      params: { info: true }
+    },
+    null
+  )
 }
 function help() {
   var win = window.open('Docs', '_blank')
   win.focus()
 }
-async function click_action(action) {
+async function click_action(action, source) {
   const result = await callLucteriosAction(action)
-  await factory(result, click_action)
+  await factory(result, click_action, source, Number(action.modal) == FORMTYPE_REFRESH)
 }
 
-click_action({ id: 'CORE/authentification', method: 'POST' })
+click_action({ id: 'CORE/authentification', method: 'POST' }, null)
 </script>
 
 <template>

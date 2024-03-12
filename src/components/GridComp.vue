@@ -7,7 +7,9 @@ import {
   formatToString,
   SELECT_NONE,
   SELECT_SINGLE,
-  SELECT_MULTI
+  SELECT_MULTI,
+  FORMTYPE_REFRESH,
+  CLOSE_NO
 } from '@/libs/utils'
 import { useI18n } from 'vue-i18n'
 
@@ -124,17 +126,26 @@ export default {
       }
     },
     refresh() {
-      console.log('REFRESH:', this.meta.extension, this.meta.action, this.gridcontext)
+      this.$emit(
+        'action',
+        this.convert_action({
+          id: this.meta.extension + '/' + this.meta.action,
+          extension: this.meta.extension,
+          action: this.meta.action,
+          modal: FORMTYPE_REFRESH,
+          close: CLOSE_NO,
+          unique: SELECT_NONE,
+          method: this.meta.method,
+          params: this.gridcontext
+        })
+      )
     },
     click_action(action) {
-      if (action.params === undefined) {
-        action.params = {}
+      var new_action = this.convert_action(action)
+      if (this.selectItems.length > 0 && new_action.unique != SELECT_NONE) {
+        new_action.params[this.component.name] = this.selectItems.join(';')
       }
-      action.params = Object.assign({}, action.params, this.context)
-      if (this.selectItems.length > 0 && action.unique != SELECT_NONE) {
-        action.params[this.component.name] = this.selectItems.join(';')
-      }
-      this.$emit('action', action)
+      this.$emit('action', new_action)
     },
     click_row(event, row_item) {
       if (this.buttonMode != SELECT_NONE) {
@@ -149,6 +160,13 @@ export default {
           this.selectItems.push(row_item.id)
         }
       }
+    }
+  },
+  mounted() {
+    if (this.component.no_pager) {
+      Array.from(this.$el.getElementsByClassName('v-data-table-footer')).forEach((footer) => {
+        footer.style.display = 'none'
+      })
     }
   }
 }

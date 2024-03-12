@@ -8,6 +8,17 @@ export default {
     meta: Object
   },
   emits: ['action', 'close'],
+  methods: {
+    convert_action(action) {
+      var new_action = Object.assign({}, action)
+      if (new_action.params === undefined) {
+        new_action.params = {}
+      }
+      new_action.params = Object.assign({}, new_action.params)
+      return new_action
+    },
+    add_parameters() {}
+  },
   computed: {
     value_formated() {
       const formatstr = this.component.formatstr || '{0}'

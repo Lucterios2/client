@@ -180,6 +180,5 @@ export default {
   border-bottom-left-radius: 10px;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
-  z-index: 2405;
 }
 </style>

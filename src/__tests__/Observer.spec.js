@@ -71,6 +71,50 @@ describe('observer', () => {
       clearComponent()
       expect(wrapper.find('div#comp').element.childElementCount).toBe(0)
     }),
+    it('core.custom', async () => {
+      clearComponent()
+      const wrapper = mount(
+        {
+          template: '<div id="comp"></div>'
+        },
+        {
+          attachTo: document.getElementById('app')
+        }
+      )
+      expect(wrapper.find('div#comp').element.childElementCount).toBe(0)
+      const action_fct = vi.fn()
+      await factory(
+        {
+          meta: { observer: 'core.custom' },
+          data: { val1: 'aaa', val2: 'bbb' },
+          comp: [
+            { name: 'val1', component: 'LABELFORM', tab: 0, x: 0, y: 1 },
+            { name: 'val2', component: 'LABELFORM', tab: 0, x: 0, y: 2 }
+          ],
+          actions: []
+        },
+        action_fct
+      )
+      expect(wrapper.find('div#comp > div').element.childElementCount).toBe(1)
+      expect(wrapper.find('div#comp > div > .custom').element.childElementCount).toBe(1)
+      expect(wrapper.find('div#comp > div > .custom > v-card').element.childElementCount).toBe(4)
+      expect(
+        wrapper
+          .find(
+            'div#comp > div > .custom > v-card > v-card-text > div > table > tr:nth-of-type(2) > td > div > span'
+          )
+          .text()
+      ).toBe('aaa')
+      expect(
+        wrapper
+          .find(
+            'div#comp > div > .custom > v-card > v-card-text > div > table > tr:nth-of-type(3) > td > div > span'
+          )
+          .text()
+      ).toBe('bbb')
+      clearComponent()
+      expect(wrapper.find('div#comp').element.childElementCount).toBe(0)
+    }),
     it('core.exception', async () => {
       clearComponent()
       const wrapper = mount(
@@ -161,5 +205,146 @@ describe('observer', () => {
       expect(wrapper.find('div#comp').element.childElementCount).toBe(0)
       clearComponent()
       expect(wrapper.find('div#comp').element.childElementCount).toBe(0)
+    }),
+    it('reload dialogbox', async () => {
+      clearComponent()
+      const wrapper = mount(
+        {
+          template: '<div id="comp"></div>'
+        },
+        {
+          attachTo: document.getElementById('app')
+        }
+      )
+      expect(wrapper.find('div#comp').element.childElementCount).toBe(0)
+      const action_fct = vi.fn()
+      const first_comp = await factory(
+        {
+          meta: { observer: 'core.dialogbox', title: 'title 1' },
+          data: { type: 1, message: 'text 1' },
+          actions: []
+        },
+        action_fct,
+        null,
+        true
+      )
+      expect(wrapper.find('div#comp > div').element.childElementCount).toBe(1)
+      expect(wrapper.find('div#comp > div > v-dialog > v-card > v-card-title').text()).toBe(
+        'title 1'
+      )
+      expect(
+        wrapper
+          .find(
+            'div#comp > div > v-dialog > v-card > v-card-text > v-row > v-col:nth-of-type(1) > v-icon'
+          )
+          .text()
+      ).toBe('mdi:mdi-information-outline')
+      expect(
+        wrapper
+          .find(
+            'div#comp > div > v-dialog > v-card > v-card-text > v-row > v-col:nth-of-type(2) > span'
+          )
+          .text()
+      ).toBe('text 1')
+      const second_comp = await factory(
+        {
+          meta: { observer: 'core.dialogbox', title: 'title 2' },
+          data: { type: 2, message: 'text 2' },
+          actions: []
+        },
+        action_fct,
+        first_comp.el,
+        true
+      )
+      await nextTick()
+      expect(second_comp).toBe(first_comp)
+      expect(wrapper.find('div#comp > div').element.childElementCount).toBe(1)
+      expect(wrapper.find('div#comp > div').element.childElementCount).toBe(1)
+      expect(wrapper.find('div#comp > div > v-dialog > v-card > v-card-title').text()).toBe(
+        'title 2'
+      )
+      expect(
+        wrapper
+          .find(
+            'div#comp > div > v-dialog > v-card > v-card-text > v-row > v-col:nth-of-type(1) > v-icon'
+          )
+          .text()
+      ).toBe('mdi:mdi-help-circle-outline')
+      expect(
+        wrapper
+          .find(
+            'div#comp > div > v-dialog > v-card > v-card-text > v-row > v-col:nth-of-type(2) > span'
+          )
+          .text()
+      ).toBe('text 2')
+    }),
+    it('reload core.custom', async () => {
+      clearComponent()
+      const wrapper = mount(
+        {
+          template: '<div id="comp"></div>'
+        },
+        {
+          attachTo: document.getElementById('app')
+        }
+      )
+      expect(wrapper.find('div#comp').element.childElementCount).toBe(0)
+      const action_fct = vi.fn()
+      const first_comp = await factory(
+        {
+          meta: { observer: 'core.custom' },
+          data: { val1: 'aaa', val2: 'bbb' },
+          comp: [
+            { name: 'val1', component: 'LABELFORM', tab: 0, x: 0, y: 1 },
+            { name: 'val2', component: 'LABELFORM', tab: 0, x: 0, y: 2 }
+          ],
+          actions: []
+        },
+        action_fct
+      )
+      expect(
+        wrapper
+          .find(
+            'div#comp > div > .custom > v-card > v-card-text > div > table > tr:nth-of-type(2) > td > div > span'
+          )
+          .text()
+      ).toBe('aaa')
+      expect(
+        wrapper
+          .find(
+            'div#comp > div > .custom > v-card > v-card-text > div > table > tr:nth-of-type(3) > td > div > span'
+          )
+          .text()
+      ).toBe('bbb')
+      const second_comp = await factory(
+        {
+          meta: { observer: 'core.custom' },
+          data: { val1: 'ccc', val2: 'ddd' },
+          comp: [
+            { name: 'val1', component: 'LABELFORM', tab: 0, x: 0, y: 1 },
+            { name: 'val2', component: 'LABELFORM', tab: 0, x: 0, y: 2 }
+          ],
+          actions: []
+        },
+        action_fct,
+        first_comp.el,
+        true
+      )
+      await nextTick()
+      expect(second_comp).toBe(first_comp)
+      expect(
+        wrapper
+          .find(
+            'div#comp > div > .custom > v-card > v-card-text > div > table > tr:nth-of-type(2) > td > div > span'
+          )
+          .text()
+      ).toBe('ccc')
+      expect(
+        wrapper
+          .find(
+            'div#comp > div > .custom > v-card > v-card-text > div > table > tr:nth-of-type(3) > td > div > span'
+          )
+          .text()
+      ).toBe('ddd')
     })
 })

@@ -57,6 +57,7 @@ export async function callLucteriosAction(action) {
     call_result = response_to_ident[action.id]
   }
   call_result.meta.ismodal = Number(action.modal) == FORMTYPE_NOMODAL
+  call_result.meta.method = action.method
   console.log('CALL ACTION', action, call_result)
   current_store.commit('call_waiting', false)
   return call_result

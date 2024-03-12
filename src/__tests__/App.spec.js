@@ -62,7 +62,7 @@ describe('App', () => {
     expect(callLucteriosAction).toHaveBeenCalledTimes(1)
     expect(callLucteriosAction).lastCalledWith({ id: 'CORE/authentification', method: 'POST' })
     expect(factory).toHaveBeenCalledTimes(1)
-    expect(factory).lastCalledWith(default_obs, wrapper.vm.click_action)
+    expect(factory).lastCalledWith(default_obs, wrapper.vm.click_action, null, false)
     expect(clearComponent).toHaveBeenCalledTimes(0)
   }),
     it('status', async () => {

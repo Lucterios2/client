@@ -11,6 +11,7 @@ export default {
   }),
   computed: {
     icon() {
+      this.forceRecompute
       /*
       XFER_DBOX_INFORMATION = 1
       XFER_DBOX_CONFIRMATION = 2
@@ -27,6 +28,7 @@ export default {
       return 'mdi:mdi-information-outline'
     },
     message() {
+      this.forceRecompute
       return convertLuctoriosFormatToHtml(this.data.message)
     }
   }

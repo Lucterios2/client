@@ -283,7 +283,7 @@ describe('LoginBox', () => {
     expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([[{ id: 'abc' }]])
   })
 
-  it('Button', async () => {
+  it('Button short icon', async () => {
     const wrapper = shallowMount(ButtonAction, {
       propsData: {
         action: { id: 'abc', text: 'action1', short_icon: 'icon1' }
@@ -300,6 +300,34 @@ describe('LoginBox', () => {
     await wrapper.trigger('click', { id: 'abc' })
     expect(wrapper.emitted('click')).toStrictEqual([
       [{ id: 'abc', text: 'action1', short_icon: 'icon1' }]
+    ])
+    await wrapper.setProps({
+      action: { id: 'abc', text: 'action1', icon: 'icon1', disabled: true }
+    })
+    expect(wrapper.find('v-btn').attributes('disabled')).toBe('true')
+    await wrapper.setProps({
+      action: { id: 'abc', text: 'action1', icon: 'icon1', disabled: false }
+    })
+    expect(wrapper.find('v-btn').attributes('disabled')).toBe('false')
+  })
+
+  it('Button long icon', async () => {
+    const wrapper = shallowMount(ButtonAction, {
+      propsData: {
+        action: { id: 'abc', text: 'action1', icon: 'icon1' }
+      },
+      global: {
+        plugins: [storage, i18n]
+      }
+    })
+    expect(wrapper.find('v-btn').element.childElementCount).toBe(2)
+    expect(wrapper.find('v-btn').attributes('disabled')).toBe('false')
+    expect(wrapper.find('v-btn > img').attributes('src')).toBe('http://localhost:3000/icon1')
+    expect(wrapper.find('v-btn > span').text()).toBe('action1')
+    expect(wrapper.emitted('click')).toStrictEqual(undefined)
+    await wrapper.trigger('click', { id: 'abc' })
+    expect(wrapper.emitted('click')).toStrictEqual([
+      [{ id: 'abc', text: 'action1', icon: 'icon1' }]
     ])
     await wrapper.setProps({
       action: { id: 'abc', text: 'action1', icon: 'icon1', disabled: true }
