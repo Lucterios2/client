@@ -20,6 +20,9 @@ export default {
     show_login: false
   }),
   computed: {
+    has_action() {
+      return this.actions != undefined && this.actions.length > 0
+    },
     action_list() {
       const actions = Array()
       if (this.$store.state.server.mode === 1) {
@@ -144,11 +147,11 @@ export default {
               ></v-text-field>
             </v-container>
           </v-card-text>
-
-          <v-card-actions class="logactions" v-for="action in actions" :key="action.id">
-            <ButtonAction :action="action" @click="execute_action" />
-          </v-card-actions>
-
+          <div class="login_actions" v-if="has_action">
+            <v-card-actions class="logactions" v-for="action in actions" :key="action.id">
+              <ButtonAction :action="action" @click="execute_action" />
+            </v-card-actions>
+          </div>
           <ButtonsBar :actions="action_list" @clickaction="run_action" @close="run_close" />
         </v-card>
       </v-form>
@@ -157,6 +160,13 @@ export default {
 </template>
 
 <style scoped>
+.v-card-text {
+  margin-top: -10px;
+}
+.login_actions {
+  margin-top: -15px;
+  padding-bottom: 5px;
+}
 .logactions {
   padding: 0px;
 }

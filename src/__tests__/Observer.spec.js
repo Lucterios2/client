@@ -101,14 +101,14 @@ describe('observer', () => {
       expect(
         wrapper
           .find(
-            'div#comp > div > .custom > v-card > v-card-text > div > table > tr:nth-of-type(2) > td > div > span'
+            'div#comp > div > .custom > v-card > v-card-text > div > table > tr:nth-of-type(2) > td > div > div > span'
           )
           .text()
       ).toBe('aaa')
       expect(
         wrapper
           .find(
-            'div#comp > div > .custom > v-card > v-card-text > div > table > tr:nth-of-type(3) > td > div > span'
+            'div#comp > div > .custom > v-card > v-card-text > div > table > tr:nth-of-type(3) > td > div > div > span'
           )
           .text()
       ).toBe('bbb')
@@ -305,14 +305,14 @@ describe('observer', () => {
       expect(
         wrapper
           .find(
-            'div#comp > div > .custom > v-card > v-card-text > div > table > tr:nth-of-type(2) > td > div > span'
+            'div#comp > div > .custom > v-card > v-card-text > div > table > tr:nth-of-type(2) > td > div > div > span'
           )
           .text()
       ).toBe('aaa')
       expect(
         wrapper
           .find(
-            'div#comp > div > .custom > v-card > v-card-text > div > table > tr:nth-of-type(3) > td > div > span'
+            'div#comp > div > .custom > v-card > v-card-text > div > table > tr:nth-of-type(3) > td > div > div > span'
           )
           .text()
       ).toBe('bbb')
@@ -335,14 +335,14 @@ describe('observer', () => {
       expect(
         wrapper
           .find(
-            'div#comp > div > .custom > v-card > v-card-text > div > table > tr:nth-of-type(2) > td > div > span'
+            'div#comp > div > .custom > v-card > v-card-text > div > table > tr:nth-of-type(2) > td > div > div > span'
           )
           .text()
       ).toBe('ccc')
       expect(
         wrapper
           .find(
-            'div#comp > div > .custom > v-card > v-card-text > div > table > tr:nth-of-type(3) > td > div > span'
+            'div#comp > div > .custom > v-card > v-card-text > div > table > tr:nth-of-type(3) > td > div > div > span'
           )
           .text()
       ).toBe('ddd')

@@ -241,7 +241,7 @@ describe('LoginBox', () => {
         plugins: [storage, i18n]
       }
     })
-    expect(wrapper.find('v-card').element.childElementCount).toBe(5)
+    expect(wrapper.find('v-card').element.childElementCount).toBe(4)
     expect(wrapper.find('v-card > v-card-title').text()).toBe('Connexion')
     expect(wrapper.find('v-card > v-card-text').element.childElementCount).toBe(1)
     expect(wrapper.find('v-card > v-card-text > v-container').element.childElementCount).toBe(2)
@@ -256,16 +256,22 @@ describe('LoginBox', () => {
         .attributes('label')
     ).toBe('Mot de passe')
 
-    expect(wrapper.find('v-card > v-card-actions:nth-of-type(1)').element.childElementCount).toBe(1)
+    expect(
+      wrapper.find('v-card > div.login_actions > v-card-actions:nth-of-type(1)').element
+        .childElementCount
+    ).toBe(1)
     expect(
       wrapper
-        .find('v-card > v-card-actions:nth-of-type(1) > button-action-stub')
+        .find('v-card > div.login_actions > v-card-actions:nth-of-type(1) > button-action-stub')
         .getCurrentComponent().props.action
     ).toStrictEqual({ id: 'abc', text: 'action1', short_icon: 'icon1' })
-    expect(wrapper.find('v-card > v-card-actions:nth-of-type(2)').element.childElementCount).toBe(1)
+    expect(
+      wrapper.find('v-card > div.login_actions > v-card-actions:nth-of-type(2)').element
+        .childElementCount
+    ).toBe(1)
     expect(
       wrapper
-        .find('v-card > v-card-actions:nth-of-type(2) > button-action-stub')
+        .find('v-card > div.login_actions > v-card-actions:nth-of-type(2) > button-action-stub')
         .getCurrentComponent().props.action
     ).toStrictEqual({ id: 'def', text: 'action2', short_icon: 'icon2' })
     expect(wrapper.find('v-card > buttons-bar-stub').element.childElementCount).toBe(0)
@@ -278,7 +284,7 @@ describe('LoginBox', () => {
 
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
     await wrapper
-      .find('v-card > v-card-actions:nth-of-type(1) > button-action-stub')
+      .find('v-card > div.login_actions > v-card-actions:nth-of-type(1) > button-action-stub')
       .trigger('click', { id: 'abc' })
     expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([[{ id: 'abc' }]])
   })

@@ -6,6 +6,11 @@ export default {
   data: () => ({
     mask: null
   }),
+  computed: {
+    check() {
+      return [this.check_no_empty, this.check_size, this.check_mask]
+    }
+  },
   methods: {
     check_size() {
       if (this.component.size > 0) {
@@ -33,7 +38,7 @@ export default {
     class="edit"
     v-model="current_value"
     :label="component.description"
-    :rules="[check_no_empty, check_size, check_mask]"
+    :rules="check"
     @focusout="actionPerformed"
   />
 </template>
@@ -41,20 +46,5 @@ export default {
 <style>
 .edit {
   min-width: 100px;
-}
-div.edit > div.v-input__control > div.v-field > div.v-field__field {
-  margin-top: -9px;
-}
-div.edit > div.v-input__control > div.v-field > div.v-field__field > .v-label {
-  margin-left: 5px;
-}
-div.edit > div.v-input__control > div.v-field > div.v-field__field > .v-field__input {
-  margin-top: -1px;
-  margin-bottom: -6px;
-}
-
-div.edit > div.v-input__details {
-  min-height: auto;
-  padding-top: 0px;
 }
 </style>

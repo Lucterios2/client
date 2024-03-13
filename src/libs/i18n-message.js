@@ -39,7 +39,10 @@ export const messages = {
     No: 'No',
     'Results per page': 'Results per page',
     'No result': 'No result',
-    'See %0 to %1 about %2 results': 'See %0 to %1 about %2 results'
+    'See %0 to %1 about %2 results': 'See %0 to %1 about %2 results',
+    'Size too long!': 'Size too long!',
+    'Invalid format!': 'Invalid format!',
+    'This field is needed!': 'This field is needed!'
   },
   fr: {
     about: 'A propos...',
@@ -82,6 +85,9 @@ export const messages = {
     No: 'Non',
     'Results per page': 'Résultats par page',
     'No result': 'Aucun resultat',
-    'See %0 to %1 about %2 results': 'Voir %0 à %1 sur %2 résultats'
+    'See %0 to %1 about %2 results': 'Voir %0 à %1 sur %2 résultats',
+    'Size too long!': 'Taille trop longue!',
+    'Invalid format!': 'Format invalide!',
+    'This field is needed!': 'Ce champ est obligatoire!'
   }
 }

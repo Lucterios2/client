@@ -252,7 +252,7 @@ describe('GridComp', () => {
     })
     wrapper.vm.firstload = false
     expect(wrapper.vm.selectItems.length).toStrictEqual(0)
-    expect(wrapper.element.childElementCount).toBe(3)
+    expect(wrapper.element.childElementCount).toBe(2)
     expect(wrapper.find('div > v-card-actions > div:nth-of-type(1) > v-btn > span').text()).toBe(
       'text none'
     )

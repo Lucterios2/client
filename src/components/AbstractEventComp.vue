@@ -10,13 +10,25 @@ export default {
   computed: {
     is_empty() {
       return this.get_value() == ''
+    },
+    check() {
+      return [this.check_no_empty]
     }
   },
   methods: {
+    is_valid() {
+      var result = true
+      this.check.forEach((fct) => {
+        const val = fct()
+        if (result == true && typeof val == 'string') {
+          result = val
+        }
+      })
+      return result
+    },
     check_no_empty() {
       if (this.component.needed) {
         let is_no_empty = !this.is_empty || this.$t('This field is needed!')
-        console.log('is_no_empty', is_no_empty)
         return is_no_empty
       }
       return true

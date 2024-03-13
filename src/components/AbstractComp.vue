@@ -35,14 +35,35 @@ export default {
 
 <template>
   <div :name="component.name">
-    <label v-if="component.description">{{ component.description }}</label>
-    <slot />
+    <label class="v-label" v-if="component.description">{{ component.description }}</label>
+    <div class="v-field_abstract">
+      <slot />
+    </div>
   </div>
 </template>
 
-<style scoped>
-label {
-  padding-right: 5px;
-  font-weight: bold;
+<style>
+label.v-label {
+  font-size: 13px;
+}
+div.v-field_abstract {
+  padding-left: 15px;
+  margin-top: -3px;
+}
+
+div.v-input__control > div.v-field > div.v-field__field {
+  margin-top: -9px;
+}
+div.v-input__control > div.v-field > div.v-field__field > .v-label {
+  margin-left: 5px;
+}
+div.v-input__control > div.v-field > div.v-field__field > .v-field__input {
+  margin-top: -1px;
+  margin-bottom: -6px;
+}
+
+div.v-input__details {
+  min-height: auto;
+  padding-top: 0px;
 }
 </style>

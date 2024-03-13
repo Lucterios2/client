@@ -16,7 +16,7 @@ useI18n.mockReturnValue({
   }
 })
 
-describe('ImageComp', () => {
+describe('LabelComp', () => {
   it('simple', async () => {
     const wrapper = mount(LabelForm, {
       propsData: {
