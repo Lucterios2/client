@@ -981,7 +981,7 @@ export const response_to_ident = {
         ],
         size_by_page: 25,
         nb_lines: 80,
-        no_pager: true
+        no_pager: false
       }
     ],
     meta: {
@@ -1037,17 +1037,17 @@ export const response_to_ident = {
       {
         name: 'edt1',
         component: 'EDIT',
-        description: '',
+        description: 'editor',
         tab: 0,
         x: 1,
         y: 1,
         colspan: 1,
         rowspan: 1,
-        needed: false,
+        needed: true,
         is_mini: false,
         is_default: false,
         javascript: '',
-        action: {
+        __action: {
           text: 'Modify',
           id: 'lucterios.dummy/testComposants',
           extension: 'lucterios.dummy',
@@ -1059,8 +1059,8 @@ export const response_to_ident = {
           params: null,
           name: 'edt1'
         },
-        size: -1,
-        reg_expr: ''
+        size: 10,
+        reg_expr: '^[a-z]*$'
       },
       {
         name: 'Lbl3',
@@ -1510,7 +1510,7 @@ export const response_to_ident = {
         colspan: 1,
         rowspan: 1,
         needed: false,
-        is_mini: false,
+        is_mini: true,
         is_default: false,
         javascript: '',
         action: {
@@ -1518,6 +1518,7 @@ export const response_to_ident = {
           id: 'lucterios.dummy/testComposants',
           extension: 'lucterios.dummy',
           action: 'testComposants',
+          short_icon: 'mdi:mdi-check',
           modal: '2',
           close: '0',
           unique: '1',

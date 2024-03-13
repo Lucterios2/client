@@ -31,8 +31,7 @@ export function createCompnent(el, component, props, children, emits) {
 
 export function clearComponent() {
   component_created.forEach((value) => {
-    const { destroy } = value
-    destroy()
+    value.close()
   })
   component_created.clear()
 }
@@ -41,68 +40,60 @@ export function initialObserver(ext_app) {
   current_app = ext_app ? ext_app : Vue.getCurrentInstance().appContext.app
 }
 
-/*class CompManager {
-  constructor(component, props, emits, owner) {
+class CompManager {
+  constructor(owner, click_action) {
     this.owner = owner
     this.el = document.createElement('div')
+    this.click_action = click_action
     document.getElementById('comp').appendChild(this.el)
-    emits.close = this.close
+  }
+
+  mount(component, props) {
+    let self = this
+    let emits = {
+      clickaction: function (action) {
+        return self.click_action(action, self.el)
+      },
+      close: function () {
+        return self.close()
+      }
+    }
     this.comp = createCompnent(this.el, component, props, [], emits)
     component_created.set(this.el, this)
   }
 
   close() {
     if (this.el) {
+      component_created.forEach((comp) => {
+        if (comp.owner == this.el) {
+          comp.owner = this.owner
+        }
+      })
       const root_comp = document.getElementById('comp')
       if (root_comp) {
         root_comp.removeChild(this.el)
       }
       Vue.render(null, this.el)
       component_created.delete(this.el)
+      if (this.owner) {
+        let old_comp = component_created.get(this.owner)
+        if (old_comp) {
+          old_comp.refresh()
+        }
+      }
     }
     this.el = null
     return true
   }
 
-  refresh(props, emits) {}
-}*/
+  update(props) {
+    this.comp.component.props = Object.assign({}, this.comp.props, props)
+    this.comp.component.ctx.updateObserver()
+  }
 
-function mountComponent(component, props, click_action, owner) {
-  const internal_click_action = (action) => {
-    click_action(action, el)
+  refresh() {
+    this.comp.component.ctx.refreshObserver()
   }
-  const destroy = () => {
-    if (el) {
-      const root_comp = document.getElementById('comp')
-      if (root_comp) {
-        root_comp.removeChild(el)
-      }
-      Vue.render(null, el)
-      component_created.delete(el)
-    }
-    el = null
-    return true
-  }
-  const refresh = (props) => {
-    new_comp.component.props = Object.assign({}, new_comp.props, props)
-    new_comp.component.ctx.refreshObserver()
-  }
-  let el = document.createElement('div')
-  let emits = {
-    clickaction: internal_click_action
-  }
-  document.getElementById('comp').appendChild(el)
-  emits.close = destroy
-  let new_comp = createCompnent(el, component, props, [], emits)
-  const struct_comp = {
-    new_comp,
-    destroy,
-    el,
-    owner,
-    refresh
-  }
-  component_created.set(el, struct_comp)
-  return struct_comp
 }
 
 export async function factory(result, click_action, source, refresh) {
@@ -135,14 +126,16 @@ export async function factory(result, click_action, source, refresh) {
         current_comp = null
     }
     if (current_comp !== null) {
-      return mountComponent(current_comp, result, click_action, source)
+      let new_comp = new CompManager(source, click_action)
+      new_comp.mount(current_comp, result)
+      return new_comp
     } else {
       console.log('NO COMPONENT', result)
     }
   } else {
     let old_comp = component_created.get(source)
     if (old_comp) {
-      old_comp.refresh(result)
+      old_comp.update(result)
       return old_comp
     } else {
       console.log('OLD NOT FOUND', source, result)

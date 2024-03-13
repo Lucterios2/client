@@ -1,70 +1,75 @@
-<script setup>
-import { useStore } from 'vuex'
+<script>
 import SubMenus from '@/libs/SubMenus.vue'
 import CustomComponents from '@/components/CustomComponents.vue'
 import { callLucteriosAction } from '@/libs/transport'
-import { onMounted } from 'vue'
-const emit = defineEmits(['clickaction', 'close'])
-const store = useStore()
-const props = defineProps({
-  menus: Array
-})
-const tab = defineModel('tab')
-const custom_data = defineModel('custom_data', { type: Object, default: {} })
-const custom_comp = defineModel('custom_comp', { type: Array, default: [] })
-const summary_menu = defineModel('summary_menu', { type: Array, default: [] })
-const summary_selected = defineModel('summary_selected', { type: Object, default: null })
-function click_action(menu) {
-  emit('clickaction', menu)
-}
+import AbstractObserver from '@/observers/AbstractObserver.vue'
 
-props.menus.forEach((item) => {
-  if (item.text === '') {
-    summary_menu.value = item.menus
-    if (item.menus.length > 0) {
-      summary_selected.value = item.menus[0].id
+export default {
+  name: 'MainMenu',
+  extends: AbstractObserver,
+  components: { SubMenus, CustomComponents },
+  data: () => ({
+    tab: null,
+    custom_data: {},
+    custom_comp: [],
+    summary_menu: [],
+    summary_selecteddefault: null
+  }),
+  props: {
+    menus: Array
+  },
+  methods: {
+    click_action(menu) {
+      this.$emit('clickaction', menu)
+    },
+    show_summary() {
+      if (this.$store.state.show_summary && this.summary_menu.length > 0) {
+        return true
+      } else {
+        return false
+      }
+    },
+    tabs_menus() {
+      const menus_of_tabs = []
+      this.menus.forEach((item) => {
+        if (item.text !== '') {
+          menus_of_tabs.push(item)
+        }
+      })
+      return menus_of_tabs
+    },
+    async refresh_summary(summary_menu) {
+      if (this.summary_selected) {
+        this.custom_data = {}
+        this.custom_comp = []
+        const summary_return = await callLucteriosAction(summary_menu)
+        if (summary_return.meta.observer == 'core.custom') {
+          this.custom_data = summary_return.data
+          this.custom_comp = summary_return.comp
+        }
+      }
+    },
+    refreshObserver() {}
+  },
+  async mounted() {
+    this.menus.forEach((item) => {
+      if (item.text === '') {
+        this.summary_menu = item.menus
+        if (item.menus.length > 0) {
+          this.summary_selected = item.menus[0].id
+        }
+      }
+    })
+    this.$store.commit('call_status', true)
+    if (this.summary_menu.length > 0) {
+      await this.refresh_summary(this.summary_menu[0])
     }
-  }
-})
-
-function show_summary() {
-  if (store.state.show_summary && summary_menu.value.length > 0) {
-    return true
-  } else {
-    return false
+    var refreshIntervalId = setInterval(() => {
+      this.$store.commit('call_summary', false)
+      clearInterval(refreshIntervalId)
+    }, 10000)
   }
 }
-
-function tabs_menus() {
-  const menus_of_tabs = []
-  props.menus.forEach((item) => {
-    if (item.text !== '') {
-      menus_of_tabs.push(item)
-    }
-  })
-  return menus_of_tabs
-}
-async function refresh_summary(summary_menu) {
-  if (summary_selected.value) {
-    custom_data.value = {}
-    custom_comp.value = []
-    const summary_return = await callLucteriosAction(summary_menu)
-    if (summary_return.meta.observer == 'core.custom') {
-      custom_data.value = summary_return.data
-      custom_comp.value = summary_return.comp
-    }
-  }
-}
-store.commit('call_status', true)
-onMounted(async () => {
-  if (summary_menu.value.length > 0) {
-    await refresh_summary(summary_menu.value[0])
-  }
-  var refreshIntervalId = setInterval(() => {
-    store.commit('call_summary', false)
-    clearInterval(refreshIntervalId)
-  }, 10000)
-})
 </script>
 
 <template>

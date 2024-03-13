@@ -7,8 +7,18 @@ export default {
   data: () => ({
     current_value: ''
   }),
+  computed: {
+    is_empty() {
+      return this.get_value() == ''
+    }
+  },
   methods: {
-    check() {
+    check_no_empty() {
+      if (this.component.needed) {
+        let is_no_empty = !this.is_empty || this.$t('This field is needed!')
+        console.log('is_no_empty', is_no_empty)
+        return is_no_empty
+      }
       return true
     },
     get_value() {

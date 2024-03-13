@@ -16,7 +16,11 @@ export default {
 
 <template>
   <AbstractEventComp :value="value" :component="component" v-if="component.action">
-    <ButtonAction :action="component.action" @click="actionPerformed()" />
+    <ButtonAction
+      :action="component.action"
+      :is_mini="component.is_mini"
+      @click="actionPerformed()"
+    />
   </AbstractEventComp>
 </template>
 
