@@ -1,105 +1,156 @@
-<script setup>
+<script>
 import { createCompnent } from '@/libs/observer'
-import * as Vue from 'vue'
-import { first_element_by_class } from '@/libs/utils'
+import { convert_action, first_element_by_class } from '@/libs/utils'
 import { factory_components } from '@/components/tools'
-const props = defineProps({
-  data: Object,
-  comp: Array,
-  meta: Object
-})
-const emit = defineEmits(['action', 'close'])
-const root = Vue.ref('root')
-const tab = defineModel('tab')
-const tablist = defineModel('tablist', { type: Array, default: [] })
 
-function add_table(current_table, component_list) {
-  current_table.innerHTML = ''
-  var current_x = 0
-  var current_y = 0
-  var current_tr = document.createElement('tr')
-  for (var comp_idx = 0; comp_idx < component_list.length; comp_idx++) {
-    const comp_item = component_list[comp_idx]
-    const comp_next = comp_idx < component_list.length - 1 ? component_list[comp_idx + 1] : null
-    for (var rowadded = current_y; rowadded < comp_item.y; rowadded++) {
-      current_table.appendChild(document.createElement('tr'))
+export default {
+  name: 'CustomComponents',
+  data: () => ({
+    tab: null,
+    componentlist: []
+  }),
+  props: {
+    data: Object,
+    comp: Array,
+    meta: Object
+  },
+  emits: ['action', 'close', 'interface'],
+  computed: {
+    tablist() {
+      return this.comp.filter((item) => item.component == 'TAB')
     }
-    if (comp_item.x - current_x > 0) {
-      const empty_cell = document.createElement('td')
-      empty_cell.setAttribute('colspan', comp_item.x - current_x)
-      empty_cell.setAttribute('class', 'customcell')
-      current_tr.appendChild(empty_cell)
-    }
-    const current_td = document.createElement('td')
-    current_td.setAttribute('rowspan', comp_item.rowspan)
-    current_td.setAttribute('colspan', comp_item.colspan)
-    current_td.setAttribute('class', 'customcell')
-    if (comp_item.rowspan > 1) {
-      for (var sub_comp_idx = comp_idx + 1; sub_comp_idx < component_list.length; sub_comp_idx++) {
-        const sub_comp_item = component_list[sub_comp_idx]
-        if (
-          sub_comp_item.x > comp_item.x &&
-          sub_comp_item.y > comp_item.y &&
-          sub_comp_item.y <= comp_item.y + comp_item.rowspan - 1
-        ) {
-          sub_comp_item.x = sub_comp_item.x - comp_item.colspan
+  },
+  methods: {
+    call_action(action) {
+      if (action == null) {
+        action = this.get_default_action()
+        console.log('call_action default_action', action)
+        if (action == null) {
+          this.$emit('action', null)
+          return
         }
       }
-    }
-    const emits = {
-      action: (action) => {
-        emit('action', action)
-      },
-      close: () => {
-        emit('close')
+      var is_valid = true
+      this.componentlist.forEach((vuecomp) => {
+        is_valid = is_valid && vuecomp.component.ctx.is_valid() == true
+      })
+      if (is_valid) {
+        var new_action = convert_action(action)
+        this.componentlist.forEach((vuecomp) => {
+          vuecomp.component.ctx.add_parameters(new_action.params)
+        })
+        this.$emit('action', new_action)
       }
+    },
+    add_table(current_table, component_list) {
+      current_table.innerHTML = ''
+      var current_x = 0
+      var current_y = 0
+      var current_tr = document.createElement('tr')
+      for (var comp_idx = 0; comp_idx < component_list.length; comp_idx++) {
+        const comp_item = component_list[comp_idx]
+        const comp_next = comp_idx < component_list.length - 1 ? component_list[comp_idx + 1] : null
+        for (var rowadded = current_y; rowadded < comp_item.y; rowadded++) {
+          current_table.appendChild(document.createElement('tr'))
+        }
+        if (comp_item.x - current_x > 0) {
+          const empty_cell = document.createElement('td')
+          empty_cell.setAttribute('colspan', comp_item.x - current_x)
+          empty_cell.setAttribute('class', 'customcell')
+          current_tr.appendChild(empty_cell)
+        }
+        const current_td = document.createElement('td')
+        current_td.setAttribute('rowspan', comp_item.rowspan)
+        current_td.setAttribute('colspan', comp_item.colspan)
+        current_td.setAttribute('class', 'customcell')
+        if (comp_item.rowspan > 1) {
+          for (
+            var sub_comp_idx = comp_idx + 1;
+            sub_comp_idx < component_list.length;
+            sub_comp_idx++
+          ) {
+            const sub_comp_item = component_list[sub_comp_idx]
+            if (
+              sub_comp_item.x > comp_item.x &&
+              sub_comp_item.y > comp_item.y &&
+              sub_comp_item.y <= comp_item.y + comp_item.rowspan - 1
+            ) {
+              sub_comp_item.x = sub_comp_item.x - comp_item.colspan
+            }
+          }
+        }
+        const emits = {
+          action: this.call_action,
+          close: () => {
+            this.$emit('close')
+          }
+        }
+        const new_vuecomp = createCompnent(
+          current_td,
+          factory_components(comp_item.component),
+          {
+            value: this.data[comp_item.name],
+            component: comp_item,
+            meta: this.meta
+          },
+          [],
+          emits
+        )
+        if (new_vuecomp.component) {
+          this.componentlist.push(new_vuecomp)
+        }
+        current_tr.appendChild(current_td)
+        if (comp_next == null || comp_next.y != comp_item.y) {
+          current_table.appendChild(current_tr)
+          current_tr = document.createElement('tr')
+          current_x = 0
+          current_y = comp_item.y + 1
+        } else {
+          current_x = comp_item.x + comp_item.colspan
+          current_y = comp_item.y
+        }
+      }
+    },
+    get_default_action() {
+      var default_action = null
+      this.componentlist.forEach((vuecomp) => {
+        const comp = vuecomp.component.ctx
+        if (comp.component.is_default && comp.component.action) {
+          default_action = comp.component.action
+        }
+      })
+      return default_action
+    },
+    refresh() {
+      this.componentlist = []
+      this.add_table(
+        first_element_by_class(this.$el, 'root-row'),
+        this.comp.filter((item) => item.tab == 0)
+      )
+      this.tablist.forEach((tab) => {
+        const subtable = first_element_by_class(this.$el, tab.name + '__row')
+        if (subtable) {
+          this.add_table(
+            subtable,
+            this.comp.filter((item) => item.tab == tab.tab && item.component != 'TAB')
+          )
+        }
+      })
+    },
+    emitInterface() {
+      this.$emit('interface', {
+        call_action: (action) => this.call_action(action)
+      })
     }
-    createCompnent(
-      current_td,
-      factory_components(comp_item.component),
-      {
-        value: props.data[comp_item.name],
-        component: comp_item,
-        meta: props.meta
-      },
-      [],
-      emits
-    )
-    current_tr.appendChild(current_td)
-    if (comp_next == null || comp_next.y != comp_item.y) {
-      current_table.appendChild(current_tr)
-      current_tr = document.createElement('tr')
-      current_x = 0
-      current_y = comp_item.y + 1
-    } else {
-      current_x = comp_item.x + comp_item.colspan
-      current_y = comp_item.y
-    }
+  },
+  mounted() {
+    this.emitInterface()
+    this.refresh()
+  },
+  updated() {
+    this.refresh()
   }
 }
-
-function refresh() {
-  add_table(
-    first_element_by_class(root.value, 'root-row'),
-    props.comp.filter((item) => item.tab == 0)
-  )
-  tablist.value.forEach((tab) => {
-    const subtable = first_element_by_class(root.value, tab.name + '__row')
-    if (subtable) {
-      add_table(
-        subtable,
-        props.comp.filter((item) => item.tab == tab.tab && item.component != 'TAB')
-      )
-    }
-  })
-}
-Vue.onMounted(() => {
-  refresh()
-})
-Vue.onUpdated(() => {
-  refresh()
-})
-tablist.value = props.comp.filter((item) => item.component == 'TAB')
 </script>
 
 <template>

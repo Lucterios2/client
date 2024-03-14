@@ -1,5 +1,6 @@
 <script>
 import AbstractComp from '@/components/AbstractComp.vue'
+import { convert_action } from '@/libs/utils'
 export default {
   name: 'AbstractEventComp',
   extends: AbstractComp,
@@ -41,10 +42,13 @@ export default {
     },
     actionPerformed() {
       if (this.component.action && this.value != this.get_value()) {
-        var new_action = this.convert_action(this.component.action)
+        var new_action = convert_action(this.component.action)
         this.add_parameters(new_action.params)
         this.$emit('action', new_action)
       }
+    },
+    onPressEnter() {
+      this.$emit('action', null)
     }
   },
   mounted() {

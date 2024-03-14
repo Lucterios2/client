@@ -45,6 +45,15 @@ export function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
+export function convert_action(action) {
+  var new_action = Object.assign({}, action)
+  if (new_action.params === undefined) {
+    new_action.params = {}
+  }
+  new_action.params = Object.assign({}, new_action.params)
+  return new_action
+}
+
 export function convertLuctoriosFormatToHtml(oldText) {
   var newText = String(oldText).replace('>', '&gt;')
   newText = newText.replace(/</g, '&lt;')

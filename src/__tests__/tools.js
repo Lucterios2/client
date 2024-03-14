@@ -1511,7 +1511,7 @@ export const response_to_ident = {
         rowspan: 1,
         needed: false,
         is_mini: true,
-        is_default: false,
+        is_default: true,
         javascript: '',
         action: {
           text: 'Modify',
@@ -1529,16 +1529,19 @@ export const response_to_ident = {
       }
     ],
     actions: [
-      {
-        text: 'Fin',
-        id: '',
-        icon: '/static/lucterios.CORE/images/close.png',
-        modal: '1',
-        close: '1',
-        unique: '1',
-        method: 'POST',
-        params: null
-      }
+      ...example_logon_actions,
+      ...[
+        {
+          text: 'Fin',
+          id: '',
+          icon: '/static/lucterios.CORE/images/close.png',
+          modal: '1',
+          close: '1',
+          unique: '1',
+          method: 'POST',
+          params: null
+        }
+      ]
     ],
     meta: {
       observer: 'core.custom',

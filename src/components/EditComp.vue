@@ -40,6 +40,7 @@ export default {
     :label="component.description"
     :rules="check"
     @focusout="actionPerformed"
+    @keyup.enter="onPressEnter"
   />
 </template>
 

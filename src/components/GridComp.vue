@@ -9,7 +9,8 @@ import {
   SELECT_SINGLE,
   SELECT_MULTI,
   FORMTYPE_REFRESH,
-  CLOSE_NO
+  CLOSE_NO,
+  convert_action
 } from '@/libs/utils'
 import { useI18n } from 'vue-i18n'
 
@@ -128,7 +129,7 @@ export default {
     refresh() {
       this.$emit(
         'action',
-        this.convert_action({
+        convert_action({
           id: this.meta.extension + '/' + this.meta.action,
           extension: this.meta.extension,
           action: this.meta.action,
@@ -141,7 +142,7 @@ export default {
       )
     },
     click_action(action) {
-      var new_action = this.convert_action(action)
+      var new_action = convert_action(action)
       if (this.selectItems.length > 0 && new_action.unique != SELECT_NONE) {
         new_action.params[this.component.name] = this.selectItems.join(';')
       }
@@ -158,6 +159,21 @@ export default {
         }
         if (!exit_before) {
           this.selectItems.push(row_item.id)
+        }
+      }
+    },
+    dblclick_row(event, row_item) {
+      if (this.buttonMode != SELECT_NONE) {
+        var dbl_action = null
+        this.selectItems = [row_item.id]
+        this.$forceUpdate()
+        this.actions.forEach((act) => {
+          if (dbl_action == null && act.unique != SELECT_NONE) {
+            dbl_action = act
+          }
+        })
+        if (dbl_action != null) {
+          this.click_action(dbl_action)
         }
       }
     }
@@ -208,6 +224,7 @@ export default {
             v-for="header in component.headers"
             :key="header[0]"
             @click="click_row($event, item)"
+            @dblclick="dblclick_row($event, item)"
           >
             {{ item[header[0]] }}
           </td>

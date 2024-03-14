@@ -9,13 +9,8 @@ export default {
   },
   emits: ['action', 'close'],
   methods: {
-    convert_action(action) {
-      var new_action = Object.assign({}, action)
-      if (new_action.params === undefined) {
-        new_action.params = {}
-      }
-      new_action.params = Object.assign({}, new_action.params)
-      return new_action
+    is_valid() {
+      return true
     },
     add_parameters() {}
   },

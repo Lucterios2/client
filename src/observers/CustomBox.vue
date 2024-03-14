@@ -17,6 +17,21 @@ export default {
     dialog_box: { el: null, eltext: null, move: false, allsize: false }
   }),
   methods: {
+    click_action(action) {
+      if (action == null) {
+        console.log('click_action', action)
+        this.actions.forEach((act) => {
+          if (action == null && act.id !== '') {
+            action = act
+          }
+        })
+        if (action != null) {
+          this.click_action_in_customcomponents(action)
+        }
+      } else {
+        AbstractObserver.methods.click_action.call(this, action)
+      }
+    },
     active_current(current) {
       Array.from(document.getElementsByClassName('custom')).forEach((custom_element) => {
         const cust_cards = Array.from(custom_element.getElementsByClassName('v-card'))
@@ -94,10 +109,16 @@ export default {
         this.dialog_box.el.style.left = (100.0 * left) / window.innerWidth + '%'
         this.dialog_box.el.style.top = (100.0 * top) / window.innerHeight + '%'
       }
+    },
+    click_action_in_customcomponents(action) {
+      this.$options.childInterface.call_action(action)
+    },
+    getChildInterface(childInterface) {
+      this.$options.childInterface = childInterface
     }
   },
   mounted() {
-    Array.from(this.custom.getElementsByClassName('v-card')).forEach((card) => {
+    Array.from(this.$el.getElementsByClassName('v-card')).forEach((card) => {
       this.dialog_box.el = card
       Array.from(this.dialog_box.el.getElementsByClassName('v-card-text')).forEach((cardtext) => {
         this.dialog_box.eltext = cardtext
@@ -114,25 +135,19 @@ export default {
       this.dialog_box.el.style.left = '%X%'.replace('%X', (100 * left) / window.innerWidth)
       this.dialog_box.el.style.top = '%Y%'.replace('%Y', (100 * top) / window.innerHeight)
     }
-    this.active_current(this.custom)
+    this.active_current(this.$el)
   },
   setup() {
-    const custom = ref(null)
+    const customcomp = ref(null)
     return {
-      custom
+      customcomp
     }
   }
 }
 </script>
 
 <template>
-  <div
-    class="custom"
-    ref="custom"
-    @mousedown="mouse_down"
-    @mouseup="mouse_up"
-    @mousemove="mouse_move"
-  >
+  <div class="custom" @mousedown="mouse_down" @mouseup="mouse_up" @mousemove="mouse_move">
     <div class="modaldlg" v-if="meta.ismodal"></div>
     <v-card>
       <v-card-title class="bg-grey-lighten-1 movecursor">
@@ -148,13 +163,14 @@ export default {
           :meta="meta"
           @action="click_action"
           @close="$emit('close')"
+          @interface="getChildInterface"
           :key="forceRecompute"
         />
       </v-card-text>
       <ButtonsBar
         :actions="actions"
         :close="close"
-        @clickaction="click_action"
+        @clickaction="click_action_in_customcomponents"
         @close="$emit('close')"
       />
     </v-card>

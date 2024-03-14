@@ -355,4 +355,96 @@ describe('GridComp', () => {
       ]
     ])
   })
+
+  it('double click', async () => {
+    const new_props = Object.assign({}, props_Data)
+    new_props.component.actions = [
+      {
+        text: 'text none',
+        id: 'ext/act_none',
+        short_icon: 'icon_none',
+        extension: 'ext',
+        action: 'act_none',
+        modal: '1',
+        close: '0',
+        unique: '1',
+        method: 'POST',
+        params: null
+      },
+      {
+        text: 'text single',
+        id: 'ext/act_single',
+        short_icon: 'icon_single',
+        extension: 'ext',
+        action: 'act_single',
+        modal: '1',
+        close: '0',
+        unique: '0',
+        method: 'POST',
+        params: null
+      },
+      {
+        text: 'text multi',
+        id: 'ext/act_multi',
+        short_icon: 'icon_multi',
+        extension: 'ext',
+        action: 'act_multi',
+        modal: '1',
+        close: '0',
+        unique: '2',
+        method: 'POST',
+        params: null
+      }
+    ]
+    const wrapper = mount(GridComp, {
+      propsData: new_props,
+      global: {
+        plugins: [i18n]
+      }
+    })
+    wrapper.vm.firstload = false
+    expect(wrapper.vm.selectItems.length).toStrictEqual(0)
+    expect(wrapper.element.childElementCount).toBe(2)
+    expect(wrapper.find('div > v-card-actions > div:nth-of-type(1) > v-btn > span').text()).toBe(
+      'text none'
+    )
+    expect(wrapper.find('div > v-card-actions > div:nth-of-type(2) > v-btn > span').text()).toBe(
+      'text single'
+    )
+    expect(wrapper.find('div > v-card-actions > div:nth-of-type(3) > v-btn > span').text()).toBe(
+      'text multi'
+    )
+    expect(
+      wrapper.find('div > v-card-actions > div:nth-of-type(1) > v-btn').attributes('disabled')
+    ).toBe('false')
+    expect(
+      wrapper.find('div > v-card-actions > div:nth-of-type(2) > v-btn').attributes('disabled')
+    ).toBe('true')
+    expect(
+      wrapper.find('div > v-card-actions > div:nth-of-type(3) > v-btn').attributes('disabled')
+    ).toBe('true')
+    expect(wrapper.emitted('action')).toStrictEqual(undefined)
+    wrapper.vm.dblclick_row(null, { id: 2 })
+    await nextTick()
+    expect(wrapper.emitted('action')).toStrictEqual([
+      [
+        {
+          action: 'act_single',
+          close: '0',
+          disabled: false,
+          extension: 'ext',
+          id: 'ext/act_single',
+          method: 'POST',
+          modal: '1',
+          num: 1,
+          params: {
+            test: '2'
+          },
+          short_icon: 'icon_single',
+          text: 'text single',
+          unique: '0'
+        }
+      ]
+    ])
+  })
 })
