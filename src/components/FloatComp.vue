@@ -59,8 +59,4 @@ export default {
   />
 </template>
 
-<style>
-.edit {
-  min-width: 100px;
-}
-</style>
+<style></style>

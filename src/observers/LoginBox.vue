@@ -136,6 +136,7 @@ export default {
                 v-model="login"
                 clearable
                 :label="login_label()"
+                @keyup.enter="onSubmit"
                 :rules="[required]"
               ></v-text-field>
               <v-text-field
@@ -143,6 +144,7 @@ export default {
                 clearable
                 :label="$t('password')"
                 type="password"
+                @keyup.enter="onSubmit"
                 :rules="[required]"
               ></v-text-field>
             </v-container>

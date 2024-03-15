@@ -45,6 +45,10 @@ export default {
 </template>
 
 <style>
+.edit {
+  min-width: 100px;
+}
+
 label.v-label {
   font-size: 13px;
 }

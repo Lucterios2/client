@@ -17,7 +17,6 @@ export default {
       }
       this.current_value =
         ['1', 'o', 'y', 't'].indexOf(this.current_value.toLowerCase().charAt(0)) >= 0
-      console.log('setValue', this.current_value, this.value)
     }
   }
 }

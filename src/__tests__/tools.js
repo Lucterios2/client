@@ -1010,7 +1010,7 @@ export const response_to_ident = {
       Lbl8: 'Coche=False',
       ck1: 0,
       Lbl9: 'Select=1',
-      slct1: '1',
+      slct1: '2',
       Lbl10: 'Integer=5',
       flt2: 5,
       Lbl11: "CheckList=['1', '2']",
@@ -1018,7 +1018,9 @@ export const response_to_ident = {
       Lbl12: "CheckList 2=['b', 'd', 'f']",
       cl2: ['b', 'd', 'f'],
       Lbl13: 'Bouton',
-      btn1: ''
+      btn1: '',
+      Lbl14: 'password',
+      pass1: ''
     },
     comp: [
       {
@@ -1323,7 +1325,7 @@ export const response_to_ident = {
       {
         name: 'slct1',
         component: 'SELECT',
-        description: '',
+        description: 'select',
         tab: 0,
         x: 1,
         y: 8,
@@ -1526,6 +1528,44 @@ export const response_to_ident = {
           params: null,
           name: 'btn1'
         }
+      },
+      {
+        name: 'Lbl14',
+        component: 'LABELFORM',
+        description: '',
+        tab: 0,
+        x: 0,
+        y: 21,
+        colspan: 1,
+        rowspan: 1,
+        needed: false,
+        formatstr: '%s',
+        formatnum: null
+      },
+      {
+        name: 'pass1',
+        component: 'PASSWD',
+        description: 'password',
+        tab: 0,
+        x: 1,
+        y: 21,
+        colspan: 1,
+        rowspan: 1,
+        needed: false,
+        java_script: ''
+        /*action: {
+          text: 'Modify',
+          id: 'lucterios.dummy/testComposants',
+          extension: 'lucterios.dummy',
+          action: 'testComposants',
+          short_icon: 'mdi:mdi-check',
+          modal: '2',
+          close: '0',
+          unique: '1',
+          method: 'POST',
+          params: null,
+          name: 'btn1'
+        }*/
       }
     ],
     actions: [

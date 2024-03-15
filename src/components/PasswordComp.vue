@@ -1,33 +1,31 @@
 <script>
 import AbstractEventComp from '@/components/AbstractEventComp.vue'
 export default {
-  name: 'EditComp',
+  name: 'PasswordComp',
   extends: AbstractEventComp,
   data: () => ({
-    mask: null
+    lowerreg: /^(?=.*[a-z]).+$/,
+    upperreg: /^(?=.*[A-Z]).+$/,
+    noalphareg: /^(?=.*[0-9_\W]).+$/
   }),
   computed: {
     check() {
-      return [this.check_no_empty, this.check_size, this.check_mask]
+      return [this.check_size, this.check_mask]
     }
   },
   methods: {
     check_size() {
-      if (this.component.size > 0) {
-        return this.getValue().length < this.component.size || this.$t('Size too long!')
-      }
-      return true
+      return this.getValue().length > 6 || this.$t('Password too short!')
     },
     check_mask() {
-      if (this.mask) {
-        return this.mask.test(this.getValue()) || this.$t('Invalid format!')
+      if (
+        !this.lowerreg.test(this.getValue()) ||
+        !this.upperreg.test(this.getValue()) ||
+        !this.noalphareg.test(this.getValue())
+      ) {
+        return this.$t('Password too simple!')
       }
       return true
-    }
-  },
-  mounted() {
-    if (this.component.reg_expr) {
-      this.mask = new RegExp(this.component.reg_expr, 'i')
     }
   }
 }
@@ -36,6 +34,7 @@ export default {
 <template>
   <v-text-field
     class="edit"
+    type="password"
     v-model="current_value"
     :label="component.description"
     :rules="check"
