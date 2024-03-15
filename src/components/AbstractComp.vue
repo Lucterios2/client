@@ -12,6 +12,13 @@ export default {
     is_valid() {
       return true
     },
+    getValue() {
+      return null
+    },
+    setValue() {},
+    setEnabled() {},
+    setVisible() {},
+    setOwner() {},
     add_parameters() {}
   },
   computed: {

@@ -1046,7 +1046,7 @@ export const response_to_ident = {
         needed: true,
         is_mini: false,
         is_default: false,
-        javascript: '',
+        java_script: '',
         __action: {
           text: 'Modify',
           id: 'lucterios.dummy/testComposants',
@@ -1077,7 +1077,7 @@ export const response_to_ident = {
       },
       {
         name: 'flt1',
-        component: 'FLOAT',
+        component: 'EDIT',
         description: '',
         tab: 0,
         x: 1,
@@ -1087,8 +1087,9 @@ export const response_to_ident = {
         needed: true,
         is_mini: false,
         is_default: false,
-        javascript: '',
-        action: {
+        java_script:
+          "var first_val=current.getValue();parent.get('edt1').setVisible(first_val!='no');",
+        /*action: {
           text: 'Modify',
           id: 'lucterios.dummy/testComposants',
           extension: 'lucterios.dummy',
@@ -1099,7 +1100,7 @@ export const response_to_ident = {
           method: 'POST',
           params: null,
           name: 'flt1'
-        },
+        },*/
         min: 0.0,
         max: 10000.0,
         prec: 2
@@ -1131,7 +1132,7 @@ export const response_to_ident = {
         needed: false,
         is_mini: false,
         is_default: false,
-        javascript: '',
+        java_script: '',
         action: {
           text: 'Modify',
           id: 'lucterios.dummy/testComposants',
@@ -1176,7 +1177,7 @@ export const response_to_ident = {
         needed: false,
         is_mini: false,
         is_default: false,
-        javascript: '',
+        java_script: '',
         action: {
           text: 'Modify',
           id: 'dt1',
@@ -1215,7 +1216,7 @@ export const response_to_ident = {
         needed: false,
         is_mini: false,
         is_default: false,
-        javascript: '',
+        java_script: '',
         action: {
           text: 'Modify',
           id: 'tm1',
@@ -1254,7 +1255,7 @@ export const response_to_ident = {
         needed: false,
         is_mini: false,
         is_default: false,
-        javascript: '',
+        java_script: '',
         action: {
           text: 'Modify',
           id: 'stm1',
@@ -1293,7 +1294,7 @@ export const response_to_ident = {
         needed: false,
         is_mini: false,
         is_default: false,
-        javascript: '',
+        java_script: '',
         action: {
           text: 'Modify',
           id: 'ck1',
@@ -1332,7 +1333,7 @@ export const response_to_ident = {
         needed: false,
         is_mini: false,
         is_default: false,
-        javascript: '',
+        java_script: '',
         action: {
           text: 'Modify',
           id: 'slct1',
@@ -1376,7 +1377,7 @@ export const response_to_ident = {
         needed: true,
         is_mini: false,
         is_default: false,
-        javascript: '',
+        java_script: '',
         action: {
           text: 'Modify',
           id: 'flt2',
@@ -1418,7 +1419,7 @@ export const response_to_ident = {
         needed: false,
         is_mini: false,
         is_default: false,
-        javascript: '',
+        java_script: '',
         action: {
           text: 'Modify',
           id: 'cl1',
@@ -1464,7 +1465,7 @@ export const response_to_ident = {
         needed: false,
         is_mini: false,
         is_default: false,
-        javascript: '',
+        java_script: '',
         action: {
           text: 'Modify',
           id: 'cl2',
@@ -1512,7 +1513,7 @@ export const response_to_ident = {
         needed: false,
         is_mini: true,
         is_default: true,
-        javascript: '',
+        java_script: '',
         action: {
           text: 'Modify',
           id: 'lucterios.dummy/testComposants',

@@ -19,7 +19,6 @@ export default {
   methods: {
     click_action(action) {
       if (action == null) {
-        console.log('click_action', action)
         this.actions.forEach((act) => {
           if (action == null && act.id !== '') {
             action = act

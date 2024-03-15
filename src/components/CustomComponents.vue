@@ -24,20 +24,19 @@ export default {
     call_action(action) {
       if (action == null) {
         action = this.get_default_action()
-        console.log('call_action default_action', action)
         if (action == null) {
           this.$emit('action', null)
           return
         }
       }
       var is_valid = true
-      this.componentlist.forEach((vuecomp) => {
-        is_valid = is_valid && vuecomp.component.ctx.is_valid() == true
+      this.componentlist.forEach((comp) => {
+        is_valid = is_valid && comp.is_valid() == true
       })
       if (is_valid) {
         var new_action = convert_action(action)
-        this.componentlist.forEach((vuecomp) => {
-          vuecomp.component.ctx.add_parameters(new_action.params)
+        this.componentlist.forEach((comp) => {
+          comp.add_parameters(new_action.params)
         })
         this.$emit('action', new_action)
       }
@@ -97,7 +96,7 @@ export default {
           emits
         )
         if (new_vuecomp.component) {
-          this.componentlist.push(new_vuecomp)
+          this.componentlist.push(new_vuecomp.component.ctx)
         }
         current_tr.appendChild(current_td)
         if (comp_next == null || comp_next.y != comp_item.y) {
@@ -113,8 +112,7 @@ export default {
     },
     get_default_action() {
       var default_action = null
-      this.componentlist.forEach((vuecomp) => {
-        const comp = vuecomp.component.ctx
+      this.componentlist.forEach((comp) => {
         if (comp.component.is_default && comp.component.action) {
           default_action = comp.component.action
         }
@@ -136,6 +134,21 @@ export default {
           )
         }
       })
+      var refreshOwnerId = setInterval(() => {
+        this.componentlist.forEach((comp) => {
+          comp.setOwner(this)
+        })
+        clearInterval(refreshOwnerId)
+      }, 100)
+    },
+    get(name) {
+      var component = null
+      this.componentlist.forEach((comp) => {
+        if (comp.component.name == name) {
+          component = comp
+        }
+      })
+      return component
     },
     emitInterface() {
       this.$emit('interface', {

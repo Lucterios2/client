@@ -283,3 +283,35 @@ export const FORMTYPE_REFRESH = 2
 export const SELECT_NONE = 1
 export const SELECT_SINGLE = 0
 export const SELECT_MULTI = 2
+
+var singletonObj = null
+
+class SingletonClass {
+  constructor() {}
+
+  close() {}
+}
+
+export function singletonClose() {
+  if (singletonObj !== null) {
+    singletonObj.close()
+  }
+  singletonObj = null
+}
+
+export function singleton() {
+  if (singletonObj === null) {
+    singletonObj = new Proxy(new SingletonClass(), {
+      get(target, name, receiver) {
+        if (!Reflect.has(target, name)) {
+          return undefined
+        }
+        return Reflect.get(target, name, receiver)
+      },
+      set(target, name, value, receiver) {
+        return Reflect.set(target, name, value, receiver)
+      }
+    })
+  }
+  return singletonObj
+}

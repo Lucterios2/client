@@ -6,7 +6,7 @@ export default {
   extends: AbstractEventComp,
   components: { AbstractEventComp, ButtonAction },
   methods: {
-    get_value() {
+    getValue() {
       return this.component.name
     },
     add_parameters() {}

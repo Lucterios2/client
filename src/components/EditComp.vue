@@ -14,13 +14,13 @@ export default {
   methods: {
     check_size() {
       if (this.component.size > 0) {
-        return this.get_value().length < this.component.size || this.$t('Size too long!')
+        return this.getValue().length < this.component.size || this.$t('Size too long!')
       }
       return true
     },
     check_mask() {
       if (this.mask) {
-        return this.mask.test(this.get_value()) || this.$t('Invalid format!')
+        return this.mask.test(this.getValue()) || this.$t('Invalid format!')
       }
       return true
     }
@@ -39,7 +39,8 @@ export default {
     v-model="current_value"
     :label="component.description"
     :rules="check"
-    @focusout="actionPerformed"
+    :disabled="is_disabled"
+    @focusout="runIfChange"
     @keyup.enter="onPressEnter"
   />
 </template>

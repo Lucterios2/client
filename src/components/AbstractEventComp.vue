@@ -1,16 +1,19 @@
 <script>
 import AbstractComp from '@/components/AbstractComp.vue'
-import { convert_action } from '@/libs/utils'
+import { convert_action, singleton } from '@/libs/utils'
 export default {
   name: 'AbstractEventComp',
   extends: AbstractComp,
   components: { AbstractComp },
   data: () => ({
-    current_value: ''
+    current_value: '',
+    script_function: null,
+    owner: null,
+    is_disabled: false
   }),
   computed: {
     is_empty() {
-      return this.get_value() == ''
+      return this.getValue() == ''
     },
     check() {
       return [this.check_no_empty]
@@ -34,17 +37,48 @@ export default {
       }
       return true
     },
-    get_value() {
+    getValue() {
       return this.current_value
     },
+    setValue(params) {
+      if (typeof params == 'object') {
+        this.current_value = params.value
+      } else {
+        this.current_value = params
+      }
+      this.$forceUpdate()
+    },
+    setEnabled(is_enabled) {
+      this.is_disabled = !is_enabled
+      this.$forceUpdate()
+    },
+    setVisible(is_visible) {
+      this.$el.style.display = is_visible ? null : 'None'
+      this.$el.style.fontSize = is_visible ? null : '0px'
+    },
+    setOwner(owner) {
+      this.owner = owner
+      this.scriptPerformed()
+    },
     add_parameters(params) {
-      params[this.component.name] = this.get_value()
+      params[this.component.name] = this.getValue()
+    },
+    scriptPerformed() {
+      if (this.script_function && this.owner) {
+        this.script_function(this, this.owner, singleton)
+      }
     },
     actionPerformed() {
-      if (this.component.action && this.value != this.get_value()) {
+      if (this.component.action) {
         var new_action = convert_action(this.component.action)
         this.add_parameters(new_action.params)
         this.$emit('action', new_action)
+      }
+    },
+    runIfChange() {
+      if (this.value != this.getValue()) {
+        this.scriptPerformed()
+        this.actionPerformed()
       }
     },
     onPressEnter() {
@@ -52,7 +86,16 @@ export default {
     }
   },
   mounted() {
-    this.current_value = this.value
+    this.setValue(this.value)
+    if (typeof this.component.java_script == 'string' && this.component.java_script !== '') {
+      this.script_function = new Function(
+        'current',
+        'parent',
+        'Singleton',
+        this.component.java_script
+      )
+      this.scriptPerformed()
+    }
   }
 }
 </script>

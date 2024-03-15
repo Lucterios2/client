@@ -37,7 +37,7 @@ describe('EditComp', () => {
     expect(wrapper.vm.is_valid()).toBe(true)
     await wrapper.find('.v-input__control > .v-field > .v-field__field > input').setValue('bbb')
     expect(wrapper.vm.is_valid()).toBe(true)
-    expect(wrapper.vm.get_value()).toBe('bbb')
+    expect(wrapper.vm.getValue()).toBe('bbb')
   })
 
   it('with description + needed', async () => {
