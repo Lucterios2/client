@@ -17,6 +17,7 @@ export default {
 <template>
   <AbstractEventComp :value="value" :component="component" v-if="component.action">
     <ButtonAction
+      class="button"
       :action="component.action"
       :is_mini="component.is_mini"
       @click="actionPerformed()"
@@ -24,4 +25,10 @@ export default {
   </AbstractEventComp>
 </template>
 
-<style scoped></style>
+<style scoped>
+.button {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+</style>

@@ -1077,8 +1077,8 @@ export const response_to_ident = {
       },
       {
         name: 'flt1',
-        component: 'EDIT',
-        description: '',
+        component: 'FLOAT',
+        description: 'real    ',
         tab: 0,
         x: 1,
         y: 2,
@@ -1087,9 +1087,8 @@ export const response_to_ident = {
         needed: true,
         is_mini: false,
         is_default: false,
-        java_script:
-          "var first_val=current.getValue();parent.get('edt1').setVisible(first_val!='no');",
-        /*action: {
+        java_script: '',
+        action: {
           text: 'Modify',
           id: 'lucterios.dummy/testComposants',
           extension: 'lucterios.dummy',
@@ -1100,7 +1099,7 @@ export const response_to_ident = {
           method: 'POST',
           params: null,
           name: 'flt1'
-        },*/
+        },
         min: 0.0,
         max: 10000.0,
         prec: 2
@@ -1285,7 +1284,7 @@ export const response_to_ident = {
       {
         name: 'ck1',
         component: 'CHECK',
-        description: '',
+        description: 'coche',
         tab: 0,
         x: 1,
         y: 7,
@@ -1294,8 +1293,8 @@ export const response_to_ident = {
         needed: false,
         is_mini: false,
         is_default: false,
-        java_script: '',
-        action: {
+        java_script: ''
+        /*action: {
           text: 'Modify',
           id: 'ck1',
           extension: 'lucterios.dummy',
@@ -1306,7 +1305,7 @@ export const response_to_ident = {
           method: 'POST',
           params: null,
           name: 'ck1'
-        }
+        }*/
       },
       {
         name: 'Lbl9',
@@ -1368,7 +1367,7 @@ export const response_to_ident = {
       {
         name: 'flt2',
         component: 'FLOAT',
-        description: '',
+        description: 'int',
         tab: 0,
         x: 1,
         y: 9,
@@ -1390,7 +1389,7 @@ export const response_to_ident = {
           params: null,
           name: 'flt2'
         },
-        min: 0.0,
+        min: -100.0,
         max: 100.0,
         prec: 0
       },
