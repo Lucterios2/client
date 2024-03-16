@@ -43,29 +43,31 @@ export default {
     },
     show_context_menu(event) {
       console.log('show', event)
-      event.preventDefault();
-      this.showMenu = false;
-      this.posx = event.clientX;
-      this.posy = event.clientY;
+      event.preventDefault()
+      this.showMenu = false
+      this.posx = event.clientX
+      this.posy = event.clientY
       this.edit_target = event.target
       this.$nextTick(() => {
-        this.showMenu = true;
-      });
+        this.showMenu = true
+      })
     },
     append_item(new_item) {
       const last_value = this.current_value
       const selectionStart = this.edit_target.selectionStart || last_value.length
-      this.current_value = last_value.substring(0, selectionStart) + new_item + last_value.substring(selectionStart)
+      this.current_value =
+        last_value.substring(0, selectionStart) + new_item + last_value.substring(selectionStart)
       this.$nextTick(() => {
-        this.showMenu = false;
-      });
+        this.showMenu = false
+      })
     }
   }
 }
 </script>
 
 <template>
-  <v-textarea v-if="!component.with_hypertext"
+  <v-textarea
+    v-if="!component.with_hypertext"
     v-model="current_value"
     :label="component.description"
     :rules="check"
@@ -74,7 +76,8 @@ export default {
     @keyup.enter="onPressEnter"
     @contextmenu="show_context_menu"
   />
-  <QuillEditor v-if="component.with_hypertext"
+  <QuillEditor
+    v-if="component.with_hypertext"
     v-model:content="current_value"
     theme="snow"
     toolbar="essential"
@@ -91,5 +94,5 @@ export default {
         <v-list-item-title @click="append_item(item[1])">{{ item[0] }}</v-list-item-title>
       </v-list-item>
     </v-list>
-  </v-menu>  
+  </v-menu>
 </template>
