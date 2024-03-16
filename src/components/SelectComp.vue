@@ -29,5 +29,3 @@ export default {
     @keyup.enter="onPressEnter"
   />
 </template>
-
-<style></style>

@@ -22,12 +22,14 @@ export default {
   methods: {
     is_valid() {
       var result = true
-      this.check.forEach((fct) => {
-        const val = fct()
-        if (result == true && typeof val == 'string') {
-          result = val
-        }
-      })
+      if (this.getVisible() && this.getEnabled()) {
+        this.check.forEach((fct) => {
+          const val = fct()
+          if (result == true && typeof val == 'string') {
+            result = val
+          }
+        })
+      }
       return result
     },
     check_no_empty() {
@@ -36,6 +38,9 @@ export default {
         return is_no_empty
       }
       return true
+    },
+    getInitialValue() {
+      return this.value
     },
     getValue() {
       return this.current_value
@@ -52,16 +57,24 @@ export default {
       this.is_disabled = !is_enabled
       this.$forceUpdate()
     },
+    getEnabled() {
+      return !this.is_disabled
+    },
     setVisible(is_visible) {
       this.$el.style.display = is_visible ? null : 'None'
       this.$el.style.fontSize = is_visible ? null : '0px'
+    },
+    getVisible() {
+      return this.$el.style.display != 'None'
     },
     setOwner(owner) {
       this.owner = owner
       this.scriptPerformed()
     },
     add_parameters(params) {
-      params[this.component.name] = this.getValue()
+      if (this.getVisible() && this.getEnabled()) {
+        params[this.component.name] = this.getValue(true)
+      }
     },
     scriptPerformed() {
       if (this.script_function && this.owner) {
@@ -76,7 +89,7 @@ export default {
       }
     },
     runIfChange() {
-      if (this.value != this.getValue()) {
+      if (this.getInitialValue() != this.getValue()) {
         this.scriptPerformed()
         this.actionPerformed()
       }

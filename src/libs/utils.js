@@ -283,6 +283,7 @@ export const FORMTYPE_REFRESH = 2
 export const SELECT_NONE = 1
 export const SELECT_SINGLE = 0
 export const SELECT_MULTI = 2
+export const NULL_VALUE = 'NULL'
 
 var singletonObj = null
 

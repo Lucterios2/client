@@ -10,13 +10,13 @@ import LinkLabel from '@/components/LinkLabel.vue'
 import SelectComp from '@/components/SelectComp.vue'
 const CheckListComp = 'span'
 import ButtonComp from '@/components/ButtonComp.vue'
-const DateComp = 'span'
-const TimeComp = 'span'
-const DateTimeComp = 'span'
+import DateComp from '@/components/DateComp.vue'
+import TimeComp from '@/components/TimeComp.vue'
+import DateTimeComp from '@/components/DateTimeComp.vue'
 import PasswordComp from '@/components/PasswordComp.vue'
 const UploadComp = 'span'
 const DownloadComp = 'span'
-const CaptchaComp = 'span'
+import CaptchaComp from '@/components/CaptchaComp.vue'
 
 export function factory_components(componentname) {
   var current_comp

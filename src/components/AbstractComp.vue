@@ -72,4 +72,12 @@ div.v-input__details {
   min-height: auto;
   padding-top: 0px;
 }
+
+.v-select > div > div > div > .v-label.v-field-label {
+  visibility: visible;
+  margin-top: -10px;
+}
+.v-select > div > div > div > .v-field__input {
+  top: 10px;
+}
 </style>

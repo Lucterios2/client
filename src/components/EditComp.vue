@@ -40,6 +40,7 @@ export default {
     :label="component.description"
     :rules="check"
     :disabled="is_disabled"
+    :clearable="!component.needed"
     @focusout="runIfChange"
     @keyup.enter="onPressEnter"
   />

@@ -17,6 +17,9 @@ export default {
     }
   },
   methods: {
+    getInitialValue() {
+      return parseFloat(this.value).toFixed(this.component.prec)
+    },
     setValue(params) {
       if (typeof params == 'object') {
         this.current_value = params.value.toString()

@@ -15,9 +15,15 @@ export default {
   },
   methods: {
     check_size() {
+      if (!this.component.needed && this.getValue().length == 0) {
+        return true
+      }
       return this.getValue().length > 6 || this.$t('Password too short!')
     },
     check_mask() {
+      if (!this.component.needed && this.getValue().length == 0) {
+        return true
+      }
       if (
         !this.lowerreg.test(this.getValue()) ||
         !this.upperreg.test(this.getValue()) ||
@@ -39,6 +45,7 @@ export default {
     :label="component.description"
     :rules="check"
     :disabled="is_disabled"
+    :clearable="!component.needed"
     @focusout="runIfChange"
     @keyup.enter="onPressEnter"
   />

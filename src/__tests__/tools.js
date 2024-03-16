@@ -1020,7 +1020,9 @@ export const response_to_ident = {
       Lbl13: 'Bouton',
       btn1: '',
       Lbl14: 'password',
-      pass1: ''
+      pass1: '',
+      Lbl15: 'captcha',
+      captcha: ''
     },
     comp: [
       {
@@ -1169,7 +1171,7 @@ export const response_to_ident = {
       {
         name: 'dt1',
         component: 'DATE',
-        description: '',
+        description: 'date',
         tab: 0,
         x: 1,
         y: 4,
@@ -1208,7 +1210,7 @@ export const response_to_ident = {
       {
         name: 'tm1',
         component: 'TIME',
-        description: '',
+        description: 'time',
         tab: 0,
         x: 1,
         y: 5,
@@ -1247,7 +1249,7 @@ export const response_to_ident = {
       {
         name: 'stm1',
         component: 'DATETIME',
-        description: '',
+        description: 'date & time',
         tab: 0,
         x: 1,
         y: 6,
@@ -1566,6 +1568,30 @@ export const response_to_ident = {
           params: null,
           name: 'btn1'
         }*/
+      },
+      {
+        name: 'Lbl15',
+        component: 'LABELFORM',
+        description: '',
+        tab: 0,
+        x: 0,
+        y: 22,
+        colspan: 1,
+        rowspan: 1,
+        needed: false,
+        formatstr: '%s',
+        formatnum: null
+      },
+      {
+        name: 'captcha',
+        component: 'CAPTCHA',
+        description: 'captcha',
+        tab: 0,
+        x: 1,
+        y: 22,
+        colspan: 1,
+        rowspan: 1,
+        needed: false
       }
     ],
     actions: [

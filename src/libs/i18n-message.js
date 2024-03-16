@@ -44,7 +44,8 @@ export const messages = {
     'See %0 to %1 about %2 results': 'See %0 to %1 about %2 results',
     'Size too long!': 'Size too long!',
     'Invalid format!': 'Invalid format!',
-    'This field is needed!': 'This field is needed!'
+    'This field is needed!': 'This field is needed!',
+    'Captcha wrong!': 'Captcha wrong!'
   },
   fr: {
     about: 'A propos...',
@@ -92,6 +93,7 @@ export const messages = {
     'See %0 to %1 about %2 results': 'Voir %0 à %1 sur %2 résultats',
     'Size too long!': 'Taille trop longue!',
     'Invalid format!': 'Format invalide!',
-    'This field is needed!': 'Ce champ est obligatoire!'
+    'This field is needed!': 'Ce champ est obligatoire!',
+    'Captcha wrong!': 'Mauvais Captcha!'
   }
 }
