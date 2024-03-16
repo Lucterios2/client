@@ -1124,7 +1124,7 @@ export const response_to_ident = {
       {
         name: 'mm1',
         component: 'MEMO',
-        description: '',
+        description: 'memo',
         tab: 0,
         x: 1,
         y: 3,
@@ -1153,7 +1153,7 @@ export const response_to_ident = {
           ['Deuxi\u00e8me valeur', 'VALUE_2'],
           ['Troisi\u00e8me valeur', 'VALUE_3']
         ],
-        with_hypertext: false
+        with_hypertext: true
       },
       {
         name: 'Lbl5',

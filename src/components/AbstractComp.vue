@@ -73,11 +73,14 @@ div.v-input__details {
   padding-top: 0px;
 }
 
-.v-select > div > div > div > .v-label.v-field-label {
+.v-select > div.v-input__control > div.v-field > div.v-field__field > .v-label.v-field-label {
   visibility: visible;
   margin-top: -10px;
 }
-.v-select > div > div > div > .v-field__input {
+.v-select > div.v-input__control > div.v-field > div.v-field__field > .v-field__input {
   top: 10px;
+}
+.v-textarea > div.v-input__control > div.v-field > div.v-field__field > .v-field__input {
+  margin-bottom: 0px;
 }
 </style>

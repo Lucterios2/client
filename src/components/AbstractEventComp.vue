@@ -61,11 +61,16 @@ export default {
       return !this.is_disabled
     },
     setVisible(is_visible) {
-      this.$el.style.display = is_visible ? null : 'None'
-      this.$el.style.fontSize = is_visible ? null : '0px'
+      if (this.$el) {
+        this.$el.style.display = is_visible ? null : 'None'
+        this.$el.style.fontSize = is_visible ? null : '0px'
+      }
     },
     getVisible() {
-      return this.$el.style.display != 'None'
+      if (this.$el && this.$el.style) {
+        return this.$el.style.display != 'None'
+      }
+      return true
     },
     setOwner(owner) {
       this.owner = owner
