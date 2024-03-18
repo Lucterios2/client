@@ -45,7 +45,8 @@ export const messages = {
     'Size too long!': 'Size too long!',
     'Invalid format!': 'Invalid format!',
     'This field is needed!': 'This field is needed!',
-    'Captcha wrong!': 'Captcha wrong!'
+    'Captcha wrong!': 'Captcha wrong!',
+    'Save as...': 'Save as...'
   },
   fr: {
     about: 'A propos...',
@@ -94,6 +95,7 @@ export const messages = {
     'Size too long!': 'Taille trop longue!',
     'Invalid format!': 'Format invalide!',
     'This field is needed!': 'Ce champ est obligatoire!',
-    'Captcha wrong!': 'Mauvais Captcha!'
+    'Captcha wrong!': 'Mauvais Captcha!',
+    'Save as...': 'Enregistrer sous...'
   }
 }

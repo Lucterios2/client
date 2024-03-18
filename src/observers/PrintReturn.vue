@@ -1,6 +1,7 @@
 <script>
 import AbstractObserver from '@/observers/AbstractObserver.vue'
 import { getFileNameWithoutForgottenChar, openBlob } from '@/libs/utils'
+import { convertToBytes } from '../libs/utils'
 
 export default {
   name: 'PrintReturn',
@@ -15,19 +16,7 @@ export default {
   }),
   methods: {
     saveFile(aContent, aFileName) {
-      const sliceSize = 512
-      const byteCharacters = window.atob(aContent)
-      var byteNumbers
-      var slice
-      const byteArrays = new [].constructor()
-      for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-        slice = byteCharacters.slice(offset, offset + sliceSize)
-        byteNumbers = new [].constructor(slice.length)
-        for (var idx = 0; idx < slice.length; idx++) {
-          byteNumbers[idx] = slice.charCodeAt(idx)
-        }
-        byteArrays.push(new Uint8Array(byteNumbers))
-      }
+      const byteArrays = convertToBytes(window.atob(aContent))
       openBlob(new Blob(byteArrays, { type: 'application/x-json' }), aFileName)
     }
   },

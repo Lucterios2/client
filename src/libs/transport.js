@@ -6,7 +6,8 @@ import {
   example_server_data,
   response_to_ident
 } from '@/__tests__/tools'
-import { FORMTYPE_NOMODAL, sleep } from './utils'
+import { FORMTYPE_NOMODAL, convertToBytes, sleep } from './utils'
+import { image_compress, image_normal } from '../__tests__/tools'
 
 var current_store = null
 
@@ -61,4 +62,17 @@ export async function callLucteriosAction(action) {
   console.log('CALL ACTION', action, call_result)
   current_store.commit('call_waiting', false)
   return call_result
+}
+
+export async function getFileContent(url) {
+  console.log('GET_FILE_CONTENT', url)
+  var stream_content = null
+  if (url.endsWith('document_1')) {
+    stream_content = convertToBytes(window.atob(image_normal.replaceAll('\n', '')))
+  } else {
+    stream_content = convertToBytes(window.atob(image_compress.replaceAll('\n', '')))
+  }
+  const new_blob = new Blob(stream_content)
+  await sleep(500)
+  return new_blob
 }

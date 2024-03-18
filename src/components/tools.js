@@ -15,7 +15,7 @@ import TimeComp from '@/components/TimeComp.vue'
 import DateTimeComp from '@/components/DateTimeComp.vue'
 import PasswordComp from '@/components/PasswordComp.vue'
 const UploadComp = 'span'
-const DownloadComp = 'span'
+import DownloadComp from '@/components/DownloadComp.vue'
 import CaptchaComp from '@/components/CaptchaComp.vue'
 
 export function factory_components(componentname) {

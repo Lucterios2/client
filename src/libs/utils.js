@@ -33,6 +33,22 @@ export function openBlob(aBlob, aFileName) {
   }
 }
 
+export function convertToBytes(byteCharacters) {
+  const sliceSize = 512
+  var byteNumbers
+  var slice
+  const byteArrays = new [].constructor()
+  for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+    slice = byteCharacters.slice(offset, offset + sliceSize)
+    byteNumbers = new [].constructor(slice.length)
+    for (var idx = 0; idx < slice.length; idx++) {
+      byteNumbers[idx] = slice.charCodeAt(idx)
+    }
+    byteArrays.push(new Uint8Array(byteNumbers))
+  }
+  return byteArrays
+}
+
 export function first_element_by_class(root_element, classname) {
   var ret_element = null
   Array.from(root_element.getElementsByClassName(classname)).forEach((item) => {
