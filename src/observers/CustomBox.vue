@@ -2,7 +2,7 @@
 import AbstractObserver from '@/observers/AbstractObserver.vue'
 import ButtonsBar from '@/libs/ButtonsBar.vue'
 import CustomComponents from '@/components/CustomComponents.vue'
-import { first_element_by_class } from '@/libs/utils'
+import { Stringformat, first_element_by_class } from '@/libs/utils'
 import { ref } from 'vue'
 
 export default {
@@ -14,8 +14,14 @@ export default {
     comp: Array
   },
   data: () => ({
-    dialog_box: { el: null, eltext: null, move: false, allsize: false }
+    dialog_box: { el: null, eltext: null, move: false, allsize: false },
+    dialog_height: 0
   }),
+  computed: {
+    content_style() {
+      return Stringformat('max-height: {0}px', [this.dialog_height - 250])
+    }
+  },
   methods: {
     click_action(action) {
       if (action == null) {
@@ -79,6 +85,7 @@ export default {
         first_element_by_class(this.dialog_box.el, 'v-card-title').className =
           'v-card-title bg-grey-darken-1'
       }
+      this.dialog_height = this.$el.getBoundingClientRect().height
     },
     mouse_down(event) {
       if (event.button === 0 && !this.dialog_box.allsize && !this.meta.ismodal) {
@@ -121,6 +128,7 @@ export default {
       this.dialog_box.el = card
       Array.from(this.dialog_box.el.getElementsByClassName('v-card-text')).forEach((cardtext) => {
         this.dialog_box.eltext = cardtext
+        this.dialog_box.eltext.style.maxHeight = '%Ypx'.replace('%Y', window.innerHeight - 200)
       })
     })
     const custom_nb = document.getElementsByClassName('custom').length
@@ -135,6 +143,7 @@ export default {
       this.dialog_box.el.style.top = '%Y%'.replace('%Y', (100 * top) / window.innerHeight)
     }
     this.active_current(this.$el)
+    this.dialog_height = this.$el.getBoundingClientRect().height
   },
   setup() {
     const customcomp = ref(null)
@@ -183,6 +192,9 @@ export default {
   position: fixed;
   margin: 0px;
   transition: none;
+}
+.custom .v-card .v-card-text {
+  overflow-y: scroll;
 }
 .custom .v-card .movecursor {
   cursor: grab;

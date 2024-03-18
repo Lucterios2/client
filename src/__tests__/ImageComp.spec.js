@@ -1,7 +1,11 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 
 import ImageComp from '@/components/ImageComp.vue'
+
+beforeEach(() => {
+  console.warn = vi.fn()
+})
 
 describe('ImageComp', () => {
   it('image no type', async () => {

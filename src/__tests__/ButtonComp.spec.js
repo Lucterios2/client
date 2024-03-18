@@ -1,9 +1,13 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 
 import ButtonComp from '@/components/ButtonComp.vue'
 import { convert_event_to_object } from '@/__tests__/tools.js'
 import { nextTick } from 'vue'
+
+beforeEach(() => {
+  console.warn = vi.fn()
+})
 
 describe('ButtonComp', () => {
   it('no action', async () => {

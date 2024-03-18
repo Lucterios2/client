@@ -1,10 +1,14 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { vuetify } from '@/plugins/vuetify'
 import { nextTick } from 'vue'
 
 import DateTimeComp from '@/components/DateTimeComp.vue'
 import i18n from '@/libs/i18n.js'
+
+beforeEach(() => {
+  console.warn = vi.fn()
+})
 
 describe('DateTimeComp', () => {
   it('simple', async () => {

@@ -1,9 +1,13 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 
 import i18n from '@/libs/i18n.js'
 import CaptchaComp from '@/components/CaptchaComp.vue'
 import { nextTick } from 'vue'
+
+beforeEach(() => {
+  console.warn = vi.fn()
+})
 
 describe('CaptchaComp', () => {
   it('simple', async () => {

@@ -94,7 +94,7 @@ export default {
       }
     },
     runIfChange() {
-      if (this.getInitialValue() != this.getValue()) {
+      if (this.getInitialValue() != this.getValue(true)) {
         this.scriptPerformed()
         this.actionPerformed()
       }

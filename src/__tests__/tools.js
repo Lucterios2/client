@@ -1153,7 +1153,7 @@ export const response_to_ident = {
           ['Deuxi\u00e8me valeur', 'VALUE_2'],
           ['Troisi\u00e8me valeur', 'VALUE_3']
         ],
-        with_hypertext: true
+        with_hypertext: false
       },
       {
         name: 'Lbl5',
@@ -1413,7 +1413,7 @@ export const response_to_ident = {
       {
         name: 'cl1',
         component: 'CHECKLIST',
-        description: '',
+        description: 'checklist simple',
         tab: 0,
         x: 1,
         y: 10,
@@ -1459,7 +1459,7 @@ export const response_to_ident = {
       {
         name: 'cl2',
         component: 'CHECKLIST',
-        description: '',
+        description: 'checklist multiple',
         tab: 0,
         x: 1,
         y: 11,

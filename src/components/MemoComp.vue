@@ -11,14 +11,28 @@ export default {
     showMenu: false,
     posx: 500,
     posy: 500,
-    edit_target: null
+    edit_target: null,
+    quill: null
   }),
   computed: {
+    has_menu() {
+      return this.component.submenu && this.component.submenu.length > 0
+    },
     menu_style() {
       return Stringformat('position: absolute; top: {0}px; left: {1}px;', [this.posy, this.posx])
     }
   },
   methods: {
+    getInitialValue() {
+      var return_value = this.value.replace(/\n/g, '{[br/]}')
+      if (this.component.with_hypertext) {
+        return_value = return_value.replaceAll('<p>', '')
+        return_value = return_value.replaceAll('</p>', '')
+        return_value = return_value.replace(/</g, '{[')
+        return_value = return_value.replace(/>/g, ']}')
+      }
+      return return_value
+    },
     setValue(params) {
       if (typeof params == 'object') {
         this.current_value = params.value
@@ -26,7 +40,9 @@ export default {
         this.current_value = params
       }
       if (this.component.with_hypertext) {
-        this.current_value = convertLuctoriosFormatToHtml(this.current_value)
+        this.current_value = convertLuctoriosFormatToHtml(this.current_value, true)
+      } else {
+        this.current_value = this.current_value.replace('{[br/]}', '\n')
       }
       this.$forceUpdate()
     },
@@ -35,6 +51,8 @@ export default {
       if (final_return) {
         return_value = return_value.replace(/\n/g, '{[br/]}')
         if (this.component.with_hypertext) {
+          return_value = return_value.replaceAll('<p>', '')
+          return_value = return_value.replaceAll('</p>', '')
           return_value = return_value.replace(/</g, '{[')
           return_value = return_value.replace(/>/g, ']}')
         }
@@ -42,15 +60,19 @@ export default {
       return return_value
     },
     show_context_menu(event) {
-      console.log('show', event)
-      event.preventDefault()
-      this.showMenu = false
-      this.posx = event.clientX
-      this.posy = event.clientY
-      this.edit_target = event.target
-      this.$nextTick(() => {
-        this.showMenu = true
-      })
+      if (this.has_menu) {
+        event.preventDefault()
+        this.showMenu = false
+        this.posx = event.clientX
+        this.posy = event.clientY
+        this.edit_target = event.target
+        this.$nextTick(() => {
+          this.showMenu = true
+        })
+        return true
+      } else {
+        return false
+      }
     },
     append_item(new_item) {
       const last_value = this.current_value
@@ -60,6 +82,9 @@ export default {
       this.$nextTick(() => {
         this.showMenu = false
       })
+    },
+    ready(quill) {
+      this.quill = quill
     }
   }
 }
@@ -85,14 +110,15 @@ export default {
     :label="component.description"
     :rules="check"
     :readOnly="is_disabled"
+    @ready="ready"
     @blur="runIfChange"
-    @contextmenu="show_context_menu"
   />
-  <v-menu v-model="showMenu" :style="menu_style">
+  <v-menu v-model="showMenu" :style="menu_style" v-if="has_menu">
     <v-list>
       <v-list-item v-for="(item, i) in component.submenu" :key="i" :value="item[1]">
         <v-list-item-title @click="append_item(item[1])">{{ item[0] }}</v-list-item-title>
       </v-list-item>
     </v-list>
   </v-menu>
+  {{ has_menu }}
 </template>

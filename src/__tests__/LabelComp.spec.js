@@ -1,10 +1,14 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 
 import LabelForm from '@/components/LabelForm.vue'
 import LinkLabel from '@/components/LinkLabel.vue'
 import { messages } from '@/libs/i18n-message.js'
 import { useI18n } from 'vue-i18n'
+
+beforeEach(() => {
+  console.warn = vi.fn()
+})
 
 const locale = { value: 'fr' }
 vi.mock('vue-i18n')
