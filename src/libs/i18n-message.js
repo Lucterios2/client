@@ -46,7 +46,11 @@ export const messages = {
     'Invalid format!': 'Invalid format!',
     'This field is needed!': 'This field is needed!',
     'Captcha wrong!': 'Captcha wrong!',
-    'Save as...': 'Save as...'
+    'Save as...': 'Save as...',
+    'Impossible: the file must be less than %0 %1': 'Impossible: the file must be less than %0 %1',
+    "May the browser didn't support or there is some errors.":
+      "May the browser didn't support or there is some errors.",
+    Picture: 'Picture'
   },
   fr: {
     about: 'A propos...',
@@ -96,6 +100,11 @@ export const messages = {
     'Invalid format!': 'Format invalide!',
     'This field is needed!': 'Ce champ est obligatoire!',
     'Captcha wrong!': 'Mauvais Captcha!',
-    'Save as...': 'Enregistrer sous...'
+    'Save as...': 'Enregistrer sous...',
+    'Impossible: the file must be less than %0 %1':
+      'Impossible: le fichier doit faire moins de %0 %1',
+    "May the browser didn't support or there is some errors.":
+      'Peut-être que le navigateur ne supporte pas ou il y a quelques erreurs.',
+    Picture: 'Photo'
   }
 }

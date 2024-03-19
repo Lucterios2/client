@@ -91,7 +91,6 @@ describe('CheckListComp', () => {
         .map((opt) => opt.element.value)
     ).toStrictEqual(['1', '3'])
     expect(wrapper.vm.is_valid()).toBe(true)
-    console.log(wrapper.find('.v-field_abstract > .v-row > .v-col:nth-of-type(2)').html())
     await wrapper
       .find('.v-field_abstract > .v-row > .v-col:nth-of-type(2) > button:nth-of-type(4)')
       .trigger('click')

@@ -68,9 +68,9 @@ export async function getFileContent(url) {
   console.log('GET_FILE_CONTENT', url)
   var stream_content = null
   if (url.endsWith('document_1')) {
-    stream_content = convertToBytes(window.atob(image_normal.replaceAll('\n', '')))
+    stream_content = convertToBytes(window.atob(image_normal))
   } else {
-    stream_content = convertToBytes(window.atob(image_compress.replaceAll('\n', '')))
+    stream_content = convertToBytes(window.atob(image_compress))
   }
   const new_blob = new Blob(stream_content)
   await sleep(500)

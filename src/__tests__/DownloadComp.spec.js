@@ -21,7 +21,6 @@ beforeEach(() => {
   download_content = null
   last_content = null
   utils.openBlob.mockImplementation((lastblob, filename) => {
-    console.log('openBlob', lastblob, filename)
     if (call_back_check) {
       call_back_check(lastblob, filename)
     }
@@ -36,7 +35,7 @@ beforeEach(() => {
 
 describe('DownloadComp', () => {
   it('simple', async () => {
-    download_content = new Blob(convertToBytes(window.atob(image_normal.replaceAll('\n', ''))))
+    download_content = new Blob(convertToBytes(window.atob(image_normal)))
     const wrapper = mount(DownloadComp, {
       global: {
         plugins: [vuetify, i18n]
@@ -71,7 +70,7 @@ describe('DownloadComp', () => {
   })
 
   it('compress - uncompress', async () => {
-    const initial_text = window.atob(image_normal.replaceAll('\n', ''))
+    const initial_text = window.atob(image_normal)
     const zip = new JSZip()
     zip.file('exemple', initial_text)
     const blob_compress = new Blob(convertToBytes(await zip.generateAsync({ type: 'string' })))
@@ -81,14 +80,13 @@ describe('DownloadComp', () => {
     const unzip_blob = await zipFileLoaded.loadAsync(blob_compress)
     unzip_blob.forEach(async function (relativePath, zipEntry) {
       uncompress_text = await zipEntry.async('string')
-      console.log('relativePath', relativePath)
       expect(uncompress_text).toBe(initial_text)
     })
   })
 
   it('compress', async () => {
     var zip = new JSZip()
-    zip.file('test', window.atob(image_normal.replaceAll('\n', '')))
+    zip.file('test', window.atob(image_normal))
     download_content = new Blob(convertToBytes(await zip.generateAsync({ type: 'string' })))
 
     const wrapper = mount(DownloadComp, {

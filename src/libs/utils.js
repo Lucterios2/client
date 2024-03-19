@@ -112,10 +112,20 @@ export function getFileNameWithoutForgottenChar(oldText) {
 export function Stringformat(value, args) {
   var formatted = value
   for (var i = 0; i < args.length; i++) {
-    var regexp = new RegExp('\\{' + i + '\\}', 'gi')
-    formatted = formatted.replace(regexp, args[i])
+    var regexp1 = new RegExp('\\{' + i + '\\}', 'gi')
+    var regexp2 = new RegExp('%' + i, 'gi')
+    formatted = formatted.replace(regexp1, args[i])
+    formatted = formatted.replace(regexp2, args[i])
   }
   return formatted
+}
+
+export function blobToData(blob) {
+  return new Promise((resolve) => {
+    const reader = new FileReader()
+    reader.onloadend = () => resolve(reader.result)
+    reader.readAsDataURL(blob)
+  })
 }
 
 export function formatValue(value, formatNum) {
