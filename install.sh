@@ -2,6 +2,7 @@
 
 root_dir="$(dirname $(readlink -f "$0"))"
 current_dir="$root_dir/web"
+demo_archive="$(dirname $root_dir)/lct-test-fct/data/archive_standard.lbk"
 mkdir -p $current_dir
 cd $current_dir
 
@@ -19,9 +20,13 @@ fi
 
 if [ ! -d  clienttest ]
 then
-    lucterios_admin.py add -n clienttest -p lucterios.standard -e '{"FORCE_SCRIPT_NAME":"lct","USE_X_FORWARDED_HOST":true}'
+    lucterios_admin.py add -n clienttest -p lucterios.standard -m lucterios.contacts,lucterios.documents,lucterios.mailing
 else
-    lucterios_admin.py modif -n clienttest -p lucterios.standard -e '{"FORCE_SCRIPT_NAME":"lct","USE_X_FORWARDED_HOST":true}'
+    lucterios_admin.py modif -n clienttest -p lucterios.standard -m lucterios.contacts,lucterios.documents,lucterios.mailing
+fi
+if [ -z "$2" -a -f "$demo_archive" ]
+then
+    lucterios_admin.py restore -n clienttest -f "$demo_archive"
 fi
 python manage_clienttest.py collectstatic --noinput -l
 
@@ -35,7 +40,7 @@ directory=$current_dir
 user=$USER
 autostart=true
 autorestart=true
-stdout_logfile=$current_dir/webmonitor.log
+stdout_logfile=$current_dir/clienttest.log
 redirect_stderr=true
 """ > $supervisorfile
 sudo ln -sf $supervisorfile /etc/supervisor/conf.d/
@@ -48,10 +53,9 @@ server {
     access_log $current_dir/clienttest.access.log;
     error_log  $current_dir/clienttest.error.log;
 
+    index index.html;
 
-    location / {
- #       alias $root_dir/;
- #       index index.html;
+    location /new/ {
         proxy_pass http://127.0.0.1:5173;
         proxy_read_timeout    300;
         proxy_connect_timeout 300;
@@ -63,7 +67,12 @@ server {
         proxy_set_header      X-Forwarded-Proto https;
     }
 
-    location /lct/ {
+    location /dist/ {
+        alias $root_dir/dist/;
+        index index.html;
+    }
+
+    location / {
         proxy_pass http://127.0.0.1:9900;
         proxy_read_timeout    300;
         proxy_connect_timeout 300;

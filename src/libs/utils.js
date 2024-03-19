@@ -3,7 +3,7 @@ import { useI18n } from 'vue-i18n'
 export function openBlob(aBlob, aFileName) {
   if (window.navigator.msSaveOrOpenBlob) {
     window.navigator.msSaveOrOpenBlob(aBlob, aFileName)
-  } else {
+  } else if (URL.createObjectURL) {
     const hyperlink = document.createElement('a')
     hyperlink.href = URL.createObjectURL(aBlob)
     hyperlink.target = '_blank'
