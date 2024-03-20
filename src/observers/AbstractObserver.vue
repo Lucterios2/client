@@ -19,7 +19,7 @@ export default {
       if (action.params === undefined) {
         action.params = {}
       }
-      action.params = Object.assign({}, action.params, this.context)
+      action.params = Object.assign({}, this.context, action.params)
       this.$emit('clickaction', action)
     },
     updateObserver() {

@@ -49,9 +49,24 @@ export default {
           title: header_item[1],
           align: 'start',
           sortable: header_item[3] == 1,
-          key: header_item[0]
+          key: header_item[0],
+          sort: true
         }
       })
+    },
+    sortby() {
+      const sort_by = []
+      const sort_text = this.context && this.context['GRID_ORDER%' + this.component.name]
+      if (sort_text) {
+        sort_text.split(',').forEach((item) => {
+          if (item[0] == '-') {
+            sort_by.push({ key: item.substring(1), order: 'asc' })
+          } else {
+            sort_by.push({ key: item, order: 'desc' })
+          }
+        })
+      }
+      return sort_by
     },
     serverItems() {
       var last_color_even = false
@@ -92,8 +107,8 @@ export default {
         return this.component.size_by_page
       },
       set: function (newitemsPerPage) {
-        this.gridcontext['GRID_PAGE%%' + this.component.name] = 0
-        this.gridcontext['GRID_SIZE%%' + this.component.name] = newitemsPerPage
+        this.gridcontext['GRID_PAGE%' + this.component.name] = 0
+        this.gridcontext['GRID_SIZE%' + this.component.name] = newitemsPerPage
         this.refresh()
       }
     },
@@ -115,9 +130,9 @@ export default {
       if (this.firstload) {
         this.firstload = false
       } else {
-        this.gridcontext['GRID_PAGE%%' + this.component.name] = page
-        this.gridcontext['GRID_SIZE%%' + this.component.name] = itemsPerPage
-        this.gridcontext['GRID_ORDER%%' + this.component.name] = sortBy
+        this.gridcontext['GRID_PAGE%' + this.component.name] = page - 1
+        this.gridcontext['GRID_SIZE%' + this.component.name] = itemsPerPage
+        this.gridcontext['GRID_ORDER%' + this.component.name] = sortBy
           .map((sort_item) => {
             return (sort_item.order == 'asc' ? '-' : '') + sort_item.key
           })
@@ -126,7 +141,15 @@ export default {
       }
     },
     refresh() {
-      this.$emit('action', convert_action(refreshAction(this.meta, this.gridcontext)))
+      this.$emit('action', refreshAction(this.meta, this.gridcontext))
+    },
+    format_cell(item, header) {
+      const formated_value = formatToString(
+        item[header[0]],
+        header[2] || '',
+        (header[4] || '{0}').replaceAll('%s', '{0}')
+      )
+      return convertLuctoriosFormatToHtml(formated_value)
     },
     click_action(action) {
       var new_action = convert_action(action)
@@ -191,6 +214,7 @@ export default {
       :items="serverItems"
       :page="component.page_num + 1"
       :multi-sort="true"
+      :sort-by="sortby"
       :items-per-page-options="items_per_page_options"
       :items-per-page-text="$t('Results per page')"
       :no-data-text="$t('No result')"
@@ -213,7 +237,8 @@ export default {
             @click="click_row($event, item)"
             @dblclick="dblclick_row($event, item)"
           >
-            {{ item[header[0]] }}
+            <span v-if="header[2] != 'icon'">{{ format_cell(item, header) }}</span>
+            <img :src="item[header[0]]" v-if="header[2] == 'icon'" />
           </td>
         </tr>
       </template>

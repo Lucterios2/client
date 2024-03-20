@@ -1,5 +1,6 @@
 <script setup>
 import { convertLuctoriosFormatToHtml } from '@/libs/utils'
+import { getUrlServer } from './transport'
 
 const emit = defineEmits(['click'])
 const prop = defineProps({
@@ -7,6 +8,9 @@ const prop = defineProps({
 })
 function click_action() {
   emit('click', prop.menu)
+}
+function get_icon_url(menu) {
+  return getUrlServer() + menu.icon
 }
 </script>
 
@@ -22,15 +26,15 @@ function click_action() {
     >
       <v-card-item>
         <v-img
-          :src="menu.icon"
+          :src="get_icon_url(menu)"
           height="32"
           width="40"
           :alt="menu.text"
-          v-if="menu.short_icon === ''"
+          v-if="!menu.short_icon"
         ></v-img>
-        <v-icon v-if="menu.short_icon !== ''">{{ menu.short_icon }}</v-icon>
+        <v-icon v-if="menu.short_icon">{{ menu.short_icon }}</v-icon>
         <v-card-title>
-          <br v-if="menu.short_icon !== ''" />
+          <br v-if="menu.short_icon" />
           {{ menu.text }}
           <v-tooltip
             :text="convertLuctoriosFormatToHtml(menu.help)"

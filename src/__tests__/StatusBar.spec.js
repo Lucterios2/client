@@ -13,8 +13,8 @@ describe('StatusBar', () => {
   it('menu mode 0', async () => {
     storage.commit('change_server', {
       login: 'toto',
-      instance_name: 'foo',
-      logo_iconname: 'logo.png',
+      instance: 'foo',
+      logoname: 'logo.png',
       mode: 0
     })
 
@@ -55,8 +55,8 @@ describe('StatusBar', () => {
     it('menu mode 1', async () => {
       storage.commit('change_server', {
         login: '',
-        instance_name: 'foo',
-        logo_iconname: 'logo.png',
+        instance: 'foo',
+        logoname: 'logo.png',
         mode: 1
       })
 
@@ -92,8 +92,8 @@ describe('StatusBar', () => {
     it('menu mode 1 logged', () => {
       storage.commit('change_server', {
         login: 'toto',
-        instance_name: 'foo',
-        logo_iconname: 'logo.png',
+        instance: 'foo',
+        logoname: 'logo.png',
         mode: 1
       })
 

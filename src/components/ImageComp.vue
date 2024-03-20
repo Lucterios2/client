@@ -1,5 +1,6 @@
 <script>
 import AbstractComp from '@/components/AbstractComp.vue'
+import { getUrlServer } from '@/libs/transport'
 import { Stringformat } from '@/libs/utils'
 export default {
   name: 'ImageComp',
@@ -15,7 +16,7 @@ export default {
         case '#':
           return current_value
         case '':
-          return window.location.href + current_value
+          return getUrlServer() + current_value
         default:
           if (current_value.substring(0, 10) === 'data:image') {
             return current_value

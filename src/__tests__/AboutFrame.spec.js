@@ -13,27 +13,26 @@ describe('AboutFrame', () => {
   it('show about', async () => {
     storage.commit('change_server', {
       title: 'Lucterios',
-      sub_title: 'sub-title',
-      applis_version: '2.x.yy.zzzzzzzz',
-      server_version: '2.u.vv.wwwwwww',
-      copy_rigth: '(c) GPL Licence',
-      version_current: '2.a.bb.cccccccc',
-      version_expected: '2.a.bb.cccccccc',
+      subtitle: 'sub-title',
+      version: '2.x.yy.zzzzzzzz',
+      serverversion: '2.u.vv.wwwwwww',
+      clientversion: '2.a.bb.cccccccc',
+      copyright: '(c) GPL Licence',
       info_server: [
         'Cœur Lucterios=2.u.vv.wwwwww1',
         'Contacts Lucterios=2.u.vv.wwwwww2',
         'Documents Lucterios=2.u.vv.wwwwww3',
         '',
-        "<i>Linux x86_64 4.xx.x-x - Python 3.10 - Django 3.2 - langage 'en'</i>"
+        "{[i]}Linux x86_64 4.xx.x-x - Python 3.10 - Django 3.2 - langage 'en'{[/i]}"
       ],
       support_email: 'support@lucterios.org',
       support_html: '<div><b>Support</b></div>',
-      logo_iconname: 'public/lucterios.png',
+      logoname: 'public/lucterios.png',
       background: '',
       style: '',
       login: 'admin',
       real_name: '',
-      instance_name: 'lucterios-test',
+      instance: 'lucterios-test',
       message_before: '',
       mode: 0,
       login_field: 'username',
@@ -83,7 +82,7 @@ describe('AboutFrame', () => {
       'Serveur'
     )
     expect(wrapper.find('v-card-text > v-row:nth-of-type(4) > v-col:nth-of-type(3)').text()).toBe(
-      '2.x.yy.zzzzzzzz'
+      '2.u.vv.wwwwwww'
     )
     expect(wrapper.find('v-card-text > v-row:nth-of-type(4) > v-col:nth-of-type(4)').text()).toBe(
       'Client'
@@ -150,7 +149,7 @@ describe('AboutFrame', () => {
 
     await wrapper.find('v-card-actions > v-btn:nth-of-type(1)').trigger('click')
     expect(window.location).toBe(
-      "mailto:support@lucterios.org?subject=Rapport%20de%20bogue&body=%0AD%C3%A9crivez%20le%20plus%20pr%C3%A9cis%C3%A9ment%20possible%2C%20comment%20vous%20avez%20obtenu%20ce%20probl%C3%A8me.%0AMerci%20de%20votre%20aide.%0A%0A__________________________________________%0A%23%23%23%23%20Lucterios%20%23%23%23%23%0AVersion%20%3A%202.x.yy.zzzzzzzz%0AServeur%20%3A%202.x.yy.zzzzzzzz%0AClient%20%3A%202.a.bb.cccccccc%0AConnexion%20%3A%20admin%40lucterios-test%0Ahttp%3A%2F%2Flocalhost%3A3000%2F%0A(c)%20GPL%20Licence%0A__________________________________________%0AC%C5%93ur%20Lucterios%3D2.u.vv.wwwwww1%0AContacts%20Lucterios%3D2.u.vv.wwwwww2%0ADocuments%20Lucterios%3D2.u.vv.wwwwww3%0A%0ALinux%20x86_64%204.xx.x-x%20-%20Python%203.10%20-%20Django%203.2%20-%20langage%20'en'%0A"
+      "mailto:support@lucterios.org?subject=Rapport%20de%20bogue&body=%0AD%C3%A9crivez%20le%20plus%20pr%C3%A9cis%C3%A9ment%20possible%2C%20comment%20vous%20avez%20obtenu%20ce%20probl%C3%A8me.%0AMerci%20de%20votre%20aide.%0A%0A__________________________________________%0A%23%23%23%23%20Lucterios%20%23%23%23%23%0AVersion%20%3A%202.x.yy.zzzzzzzz%0AServeur%20%3A%202.u.vv.wwwwwww%0AClient%20%3A%202.a.bb.cccccccc%0AConnexion%20%3A%20admin%40lucterios-test%0Ahttp%3A%2F%0A(c)%20GPL%20Licence%0A__________________________________________%0AC%C5%93ur%20Lucterios%3D2.u.vv.wwwwww1%0AContacts%20Lucterios%3D2.u.vv.wwwwww2%0ADocuments%20Lucterios%3D2.u.vv.wwwwww3%0A%0ALinux%20x86_64%204.xx.x-x%20-%20Python%203.10%20-%20Django%203.2%20-%20langage%20'en'%0A"
     )
   })
 })

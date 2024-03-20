@@ -49,6 +49,7 @@ export default {
       :data="data"
       :comp="comp"
       :meta="meta"
+      :context="context"
       @action="click_action"
       @close="$emit('close')"
       @interface="getChildInterface"

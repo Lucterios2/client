@@ -2,7 +2,7 @@
 import AbstractObserver from '@/observers/AbstractObserver.vue'
 import ButtonAction from '@/libs/ButtonAction.vue'
 import ButtonsBar from '@/libs/ButtonsBar.vue'
-import { convertLuctoriosFormatToHtml } from '@/libs/utils'
+import { convertLuctoriosFormatToHtml, convert_object_lowercase } from '@/libs/utils'
 import { insertStyle } from '@/libs/utils'
 
 export default {
@@ -87,8 +87,8 @@ export default {
   },
   mounted() {
     this.$store.commit('call_status', false)
-    this.$store.commit('change_server', this.connexion)
-    document.title = this.$store.state.server.title + ' - ' + this.$store.state.server.sub_title
+    this.$store.commit('change_server', convert_object_lowercase(this.connexion))
+    document.title = this.$store.state.server.title + ' - ' + this.$store.state.server.subtitle
     if (this.$store.state.server.style !== '') {
       insertStyle(this.$store.state.server.style)
     }

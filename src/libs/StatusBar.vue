@@ -74,7 +74,7 @@ function get_items() {
       <v-app-bar-nav-icon @click="$store.dispatch('toggle_summary')"></v-app-bar-nav-icon>
       <v-img
         id="logo"
-        :src="$store.state.server.logo_iconname"
+        :src="$store.state.server.logoname"
         alt="Logo"
         height="32px"
         width="32px"
@@ -82,7 +82,7 @@ function get_items() {
     </div>
 
     <v-app-bar-title v-if="$store.state.server.login !== ''"
-      >{{ $store.state.server.login }}@{{ $store.state.server.instance_name }}</v-app-bar-title
+      >{{ $store.state.server.login }}@{{ $store.state.server.instance }}</v-app-bar-title
     >
 
     <div class="v-toolbar__append">

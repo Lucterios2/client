@@ -66,7 +66,7 @@ export function convert_action(action) {
   if (new_action.params === undefined) {
     new_action.params = {}
   }
-  new_action.params = Object.assign({}, new_action.params)
+  new_action.params = Object.assign({}, action.params)
   return new_action
 }
 
@@ -251,7 +251,7 @@ export function formatToString(initialvalue, formatNum, formatStr) {
   }
 }
 
-export function send_to_support(i18n_t, store, complement) {
+export function send_to_support(i18n_t, store, complement, url_server) {
   if (complement === undefined) {
     complement = i18n_t('support_body')
   } else {
@@ -259,21 +259,22 @@ export function send_to_support(i18n_t, store, complement) {
   }
   complement += '__________________________________________\n'
   complement += '#### ' + store.state.server.title + ' ####\n'
-  complement += i18n_t('version') + ' : ' + store.state.server.applis_version + '\n'
-  complement += i18n_t('server') + ' : ' + store.state.server.applis_version + '\n'
-  complement += i18n_t('client') + ' : ' + store.state.server.version_current + '\n'
+  complement += i18n_t('version') + ' : ' + store.state.server.version + '\n'
+  complement += i18n_t('server') + ' : ' + store.state.server.serverversion + '\n'
+  complement += i18n_t('client') + ' : ' + store.state.server.clientversion + '\n'
   complement +=
     i18n_t('Connection') +
     ' : ' +
     store.state.server.login +
     '@' +
-    store.state.server.instance_name +
+    store.state.server.instance +
     '\n'
-  complement += window.location.href + '\n'
-  complement += store.state.server.copy_rigth + '\n'
+  complement += url_server + '\n'
+  complement += store.state.server.copyright + '\n'
   complement += '__________________________________________\n'
   complement +=
-    store.state.server.info_server.join('\n').replaceAll('<i>', '').replaceAll('</i>', '') + '\n'
+    store.state.server.info_server.join('\n').replaceAll('{[i]}', '').replaceAll('{[/i]}', '') +
+    '\n'
 
   var url = 'mailto:' + store.state.server.support_email
   url += '?subject=' + encodeURIComponent(i18n_t('support_subject'))
@@ -301,6 +302,18 @@ export function insertStyle(rule) {
   document.body.appendChild(css)
 }
 
+export function convert_object_lowercase(old_object) {
+  if (old_object) {
+    const new_object = {}
+    Object.keys(old_object).forEach((key) => {
+      new_object[key.toLowerCase()] = old_object[key]
+    })
+    return new_object
+  } else {
+    return old_object
+  }
+}
+
 export const CLOSE_NO = 0
 export const CLOSE_YES = 1
 export const FORMTYPE_NOMODAL = 0
@@ -310,6 +323,31 @@ export const SELECT_NONE = 1
 export const SELECT_SINGLE = 0
 export const SELECT_MULTI = 2
 export const NULL_VALUE = 'NULL'
+
+export const FAILURE = 0
+export const CRITIC = 1
+export const GRAVE = 2
+export const IMPORTANT = 3
+export const MINOR = 4
+
+export class LucteriosException {
+  constructor(aType, aMessage, aInfo, aExtra) {
+    this.type = aType
+    this.message = aMessage
+    this.info = aInfo
+    this.extra = aExtra
+  }
+  toString() {
+    var res = this.type + '~' + this.message
+    if (this.info) {
+      res += '#' + this.info
+      if (this.extra) {
+        res += '#' + this.extra
+      }
+    }
+    return res
+  }
+}
 
 export function refreshAction(meta, default_params) {
   return {

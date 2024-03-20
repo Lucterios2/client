@@ -26,7 +26,8 @@ describe('PasswordComp', () => {
           colspan: 1,
           rowspan: 1,
           tab: 0,
-          needed: true
+          needed: true,
+          security: 1
         }
       }
     })
@@ -63,7 +64,8 @@ describe('PasswordComp', () => {
           colspan: 1,
           rowspan: 1,
           tab: 0,
-          needed: false
+          needed: false,
+          security: 1
         }
       }
     })
@@ -101,7 +103,8 @@ describe('PasswordComp', () => {
           rowspan: 1,
           tab: 0,
           description: '',
-          needed: true
+          needed: true,
+          security: 1
         }
       }
     })
@@ -138,6 +141,7 @@ describe('PasswordComp', () => {
           tab: 0,
           description: 'password',
           needed: true,
+          security: 1,
           action: {
             text: 'Modify',
             id: 'ext/act',

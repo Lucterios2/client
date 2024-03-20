@@ -23,9 +23,9 @@ export default {
     action_list() {
       const actions = Array()
       if (
-        this.exception.code === FAILURE ||
-        this.exception.code === CRITIC ||
-        this.exception.code === GRAVE
+        Number(this.exception.code) === FAILURE ||
+        Number(this.exception.code) === CRITIC ||
+        Number(this.exception.code) === GRAVE
       ) {
         actions.push({
           text: this.$t('support'),
@@ -38,7 +38,7 @@ export default {
       return actions
     },
     except_icon() {
-      switch (this.exception.code) {
+      switch (Number(this.exception.code)) {
         case FAILURE:
           return 'mdi:mdi-alert-circle'
         case CRITIC:
@@ -54,7 +54,7 @@ export default {
       }
     },
     except_title() {
-      switch (this.exception.code) {
+      switch (Number(this.exception.code)) {
         case FAILURE:
           return this.$t('Failure')
         case CRITIC:
@@ -87,9 +87,9 @@ export default {
     },
     showAdavanced() {
       return (
-        this.exception.code === FAILURE ||
-        this.exception.code === CRITIC ||
-        this.exception.code === GRAVE
+        Number(this.exception.code) === FAILURE ||
+        Number(this.exception.code) === CRITIC ||
+        Number(this.exception.code) === GRAVE
       )
     },
     message() {

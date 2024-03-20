@@ -4,12 +4,13 @@ import { useI18n } from 'vue-i18n'
 const store = useStore()
 const i18n = useI18n()
 
-import { send_to_support } from '@/libs/utils.js'
+import { convertLuctoriosFormatToHtml, send_to_support } from '@/libs/utils.js'
+import { getUrlServer } from '@/libs/transport'
 const emit = defineEmits(['close'])
 const more_version = defineModel({ type: Boolean, default: false })
 const visible = true
 function send_support() {
-  send_to_support(i18n.t, store, '')
+  send_to_support(i18n.t, store, '', getUrlServer())
 }
 </script>
 
@@ -20,17 +21,17 @@ function send_support() {
       <v-card-text>
         <v-row>
           <v-col cols="4">
-            <v-img :src="$store.state.server.logo_iconname" alt="Logo" height="80px" />
+            <v-img :src="$store.state.server.logoname" alt="Logo" height="80px" />
           </v-col>
           <v-col cols="8">
             <h2 class="text-center">{{ $store.state.server.title }}</h2>
             <v-row>
               <v-col cols="4" class="text-center space small">{{ $t('version') }}</v-col>
               <v-col cols="8" class="text-center space small">{{
-                $store.state.server.applis_version
+                $store.state.server.version
               }}</v-col>
               <v-col cols="12" class="text-center space small">{{
-                $store.state.server.copy_rigth
+                $store.state.server.copyright
               }}</v-col>
             </v-row>
           </v-col>
@@ -44,16 +45,18 @@ function send_support() {
           </v-col>
           <v-col cols="6" class="text-center space small">{{ $t('server') }}</v-col>
           <v-col cols="6" class="text-center space small">{{
-            $store.state.server.applis_version
+            $store.state.server.serverversion
           }}</v-col>
           <v-col cols="6" class="text-center space small">{{ $t('client') }}</v-col>
           <v-col cols="6" class="text-center space small">{{
-            $store.state.server.version_current
+            $store.state.server.clientversion
           }}</v-col>
         </v-row>
         <div class="more_version" v-if="more_version">
           <v-row v-for="item in $store.state.server.info_server" :key="item">
-            <v-col cols="12" class="space"><span v-html="item"></span></v-col>
+            <v-col cols="12" class="space"
+              ><span v-html="convertLuctoriosFormatToHtml(item)"></span
+            ></v-col>
           </v-row>
         </div>
         <v-img

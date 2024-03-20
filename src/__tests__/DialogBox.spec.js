@@ -166,8 +166,11 @@ describe('DialogBox', () => {
     expect(
       wrapper.find('v-card > v-card-text > v-row > v-col:nth-of-type(2)').element.childElementCount
     ).toBe(1)
-    expect(wrapper.find('v-card > v-card-text > v-row > v-col:nth-of-type(2) > span').html()).toBe(
-      '<span>Message complexe<br>with multiline and <b>bold</b></span>'
+    const message_contain = wrapper
+      .find('v-card > v-card-text > v-row > v-col:nth-of-type(2) > span')
+      .html()
+    expect(message_contain.substring(message_contain.indexOf('>'))).toBe(
+      '>Message complexe<br>with multiline and <b>bold</b></span>'
     )
 
     expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(2)

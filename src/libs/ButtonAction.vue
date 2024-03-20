@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+import { getUrlServer } from './transport'
 
 const emit = defineEmits(['click'])
 const props = defineProps({
@@ -19,7 +20,7 @@ const image_src = computed(() => {
   if (props.action.short_icon) {
     return props.action.short_icon
   } else {
-    return window.location.href + props.action.icon
+    return getUrlServer() + props.action.icon
   }
 })
 </script>
@@ -31,7 +32,7 @@ const image_src = computed(() => {
     :min-width="is_mini ? '40px' : '120px'"
     :disabled="action_disabled"
   >
-    <img :src="image_src" :title="is_mini ? action.text : ''" v-if="!is_icon" />
+    <img :src="image_src" width="24px" :title="is_mini ? action.text : ''" v-if="!is_icon" />
     <v-icon v-if="is_icon" :title="is_mini ? action.text : ''">{{ image_src }}</v-icon>
     <span v-if="!is_mini">{{ action.text }}</span>
   </v-btn>

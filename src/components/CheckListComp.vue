@@ -10,7 +10,8 @@ export default {
   }),
   computed: {
     all_select() {
-      if (this.current_value) {
+      this.forceRecompute
+      if (Array.isArray(this.current_value)) {
         return this.component.case.map((item) => {
           return {
             value: item[0],
@@ -23,9 +24,11 @@ export default {
       }
     },
     left_select() {
+      this.forceRecompute
       return this.all_select.filter((item) => Number(this.component.simple) != 2 || !item.selected)
     },
     right_select() {
+      this.forceRecompute
       return this.all_select.filter((item) => item.selected)
     }
   },
@@ -33,14 +36,21 @@ export default {
     setValue(params) {
       if (Array.isArray(params)) {
         this.current_value = params
-      } else if (typeof params == 'object') {
-        this.current_value = params.value
       } else {
-        this.current_value = params
+        this.setValueEx(params)
+      }
+      if (!Array.isArray(this.current_value)) {
+        this.current_value = []
       }
       this.$forceUpdate()
     },
-
+    getValue(final_return) {
+      if (final_return) {
+        return this.current_value.join(';')
+      } else {
+        return this.current_value
+      }
+    },
     addall() {
       this.current_value = this.all_select.map((item) => item.value)
       this.runIfChange()

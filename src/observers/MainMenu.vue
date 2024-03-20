@@ -1,7 +1,7 @@
 <script>
 import SubMenus from '@/libs/SubMenus.vue'
 import CustomComponents from '@/components/CustomComponents.vue'
-import { callLucteriosAction } from '@/libs/transport'
+import { callLucteriosAction, getUrlServer } from '@/libs/transport'
 import AbstractObserver from '@/observers/AbstractObserver.vue'
 
 export default {
@@ -49,6 +49,9 @@ export default {
         }
       }
     },
+    get_icon_url(menu) {
+      return getUrlServer() + menu.icon
+    },
     refreshObserver() {}
   },
   async mounted() {
@@ -84,9 +87,14 @@ export default {
             @click="refresh_summary(submenu)"
           >
             <v-expansion-panel-title color="#888">
-              <v-icon v-if="submenu.short_icon !== ''">{{ submenu.short_icon }}</v-icon>
-              <div v-if="submenu.short_icon === ''">
-                <v-img :src="submenu.icon" height="20" :width="20" :alt="submenu.text"></v-img>
+              <v-icon v-if="submenu.short_icon">{{ submenu.short_icon }}</v-icon>
+              <div v-if="!submenu.short_icon">
+                <v-img
+                  :src="get_icon_url(submenu)"
+                  height="20"
+                  :width="20"
+                  :alt="submenu.text"
+                ></v-img>
               </div>
               <span style="margin-left: 5px">{{ submenu.text }}</span>
             </v-expansion-panel-title>
@@ -95,7 +103,7 @@ export default {
             </v-expansion-panel-text>
           </v-expansion-panel>
         </v-expansion-panels>
-        <div class="support_footer">
+        <div class="support_footer" v-if="$store.state.server.support_html">
           <span v-html="$store.state.server.support_html"></span>
         </div>
       </div>
@@ -104,13 +112,13 @@ export default {
           <v-tabs v-model="tab" bg-color="#888" color="#000">
             <v-tab v-for="tabmenu in tabs_menus()" :key="tabmenu.id" :value="tabmenu.id"
               ><v-img
-                :src="tabmenu.icon"
+                :src="get_icon_url(tabmenu)"
                 height="16"
                 width="22"
                 :alt="tabmenu.text"
-                v-if="tabmenu.short_icon === ''"
+                v-if="!tabmenu.short_icon"
               ></v-img
-              ><v-icon v-if="tabmenu.short_icon !== ''">{{ tabmenu.short_icon }}</v-icon
+              ><v-icon v-if="tabmenu.short_icon">{{ tabmenu.short_icon }}</v-icon
               ><span>{{ tabmenu.text }}</span></v-tab
             >
           </v-tabs>

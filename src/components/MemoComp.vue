@@ -34,11 +34,7 @@ export default {
       return return_value
     },
     setValue(params) {
-      if (typeof params == 'object') {
-        this.current_value = params.value
-      } else {
-        this.current_value = params
-      }
+      this.setValueEx(params)
       if (this.component.with_hypertext) {
         this.current_value = convertLuctoriosFormatToHtml(this.current_value, true)
       } else {

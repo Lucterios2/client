@@ -8,26 +8,28 @@ const storage = createStore({
     show_summary: true,
     server: {
       title: 'Lucterios',
-      sub_title: '',
-      applis_version: '',
-      server_version: '',
-      copy_rigth: '',
-      version_current: '',
-      version_expected: '',
-      info_server: [],
-      support_email: '',
-      support_html: '',
-      logo_iconname: '',
+      subtitle: '',
+      version: '',
+      serverversion: '',
+      clientversion: '',
+      copyright: '',
+      logoname: '',
       background: '',
       style: '',
-      login: '',
-      real_name: '',
-      instance_name: '',
+      support_email: '',
+      support_html: '',
+      info_server: [],
+      instance: '',
       message_before: '',
+      language: '',
       mode: 0,
       login_field: 'username',
-      language: '',
-      only_admin: false
+      only_admin: false,
+      login: '',
+      realname: '',
+      email: '',
+      version_current: '',
+      version_expected: ''
     }
   },
   mutations: {
@@ -41,6 +43,9 @@ const storage = createStore({
       state.show_summary = summary
     },
     change_server(state, server) {
+      if (server && server.cordovaversion) {
+        server.clientversion = server.cordovaversion
+      }
       state.server = Object.assign({}, state.server, server)
     }
   },

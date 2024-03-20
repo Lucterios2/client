@@ -1,6 +1,7 @@
 <script setup>
 import SubMenu from '@/libs/SubMenu.vue'
 import { convertLuctoriosFormatToHtml } from '@/libs/utils.js'
+import { getUrlServer } from './transport'
 const emit = defineEmits(['clickaction'])
 const props = defineProps({
   menu: Object,
@@ -27,6 +28,9 @@ function get_size(submenu) {
 function click_action(menu) {
   emit('clickaction', menu)
 }
+function get_icon_url(menu) {
+  return getUrlServer() + menu.icon
+}
 </script>
 
 <template>
@@ -34,15 +38,15 @@ function click_action(menu) {
     <v-card-item>
       <v-toolbar color="#BBB" dark v-if="with_image">
         <v-img
-          :src="menu.icon"
+          :src="get_icon_url(menu)"
           height="32"
           width="50"
           style="flex: inherit"
           :alt="menu.text"
-          v-if="menu.short_icon === ''"
+          v-if="!menu.short_icon"
         ></v-img>
         <v-icon></v-icon>
-        <v-icon v-if="menu.short_icon !== ''">{{ menu.short_icon }}</v-icon>
+        <v-icon v-if="menu.short_icon">{{ menu.short_icon }}</v-icon>
         <v-toolbar-title>{{ menu.text }}</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon @click="show_help = !show_help" v-if="menu.help !== undefined">

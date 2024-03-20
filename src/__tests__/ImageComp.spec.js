@@ -1,10 +1,15 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
+import * as transport from '@/libs/transport'
 
 import ImageComp from '@/components/ImageComp.vue'
 
 beforeEach(() => {
   console.warn = vi.fn()
+  vi.spyOn(transport, 'getUrlServer')
+  transport.getUrlServer.mockImplementation(() => {
+    return 'http://localhost'
+  })
 })
 
 describe('ImageComp', () => {
@@ -53,7 +58,7 @@ describe('ImageComp', () => {
   it('image type empty', async () => {
     const wrapper = mount(ImageComp, {
       propsData: {
-        value: 'cccccc',
+        value: '/cccccc',
         component: {
           name: 'val1',
           component: 'AAA',
@@ -67,7 +72,7 @@ describe('ImageComp', () => {
       }
     })
     expect(wrapper.element.childElementCount).toBe(1)
-    expect(wrapper.find('img').attributes().src).toBe('http://localhost:3000/cccccc')
+    expect(wrapper.find('img').attributes().src).toBe('http://localhost/cccccc')
   })
   it('icon', async () => {
     const wrapper = mount(ImageComp, {

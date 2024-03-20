@@ -1,13 +1,7 @@
 import { useStore } from 'vuex'
+import axios from 'axios'
 
-import {
-  example_logon_actions,
-  example_menu_data,
-  example_server_data,
-  response_to_ident
-} from '@/__tests__/tools'
-import { FORMTYPE_NOMODAL, convertToBytes, sleep } from './utils'
-import { image_compress, image_normal } from '../__tests__/tools'
+import { CRITIC, FORMTYPE_MODAL, GRAVE, LucteriosException } from './utils'
 
 var current_store = null
 
@@ -15,64 +9,106 @@ export function initialTransport() {
   current_store = useStore()
 }
 
-export async function callLucteriosAction(action) {
-  current_store.commit('call_waiting', true)
-  var call_result = { meta: {} }
-  if (action.id == 'CORE/authentification' || action.id == 'CORE/exitConnection') {
-    call_result = {
-      connexion: example_server_data,
-      data: '',
-      actions: example_logon_actions,
-      meta: {
-        extension: 'CORE',
-        title: 'info',
-        action: 'authentification',
-        observer: 'core.auth'
-      }
+var server_url = null
+
+export function getUrlServer() {
+  if (server_url == null) {
+    var server_url_items = window.location.href.split('/')
+    if (
+      server_url_items[server_url_items.length - 1] == 'index.html' ||
+      server_url_items[server_url_items.length - 1] == ''
+    ) {
+      server_url_items = server_url_items.slice(0, server_url_items.length - 2)
     }
-    if (action.params === undefined) {
-      action.params = {}
-    }
-    if (action.params.info === true) {
-      call_result.data = 'OK'
-    } else if (action.params.login === undefined) {
-      call_result.data = ''
-    } else if (action.params.login === action.params.password) {
-      await sleep(2 * 1000)
-      call_result.data = action.params.login == 'x' ? 'NEEDAUTH' : 'OK'
-    } else {
-      call_result.data = 'BADAUTH'
-    }
-  } else if (action.id == 'CORE/menu') {
-    call_result = {
-      menus: example_menu_data,
-      meta: {
-        extension: 'CORE',
-        title: 'menu',
-        action: 'menu',
-        observer: 'core.menu'
-      }
-    }
-  } else if (response_to_ident[action.id] !== undefined) {
-    await sleep(500)
-    call_result = response_to_ident[action.id]
+    server_url = server_url_items.join('/')
   }
-  call_result.meta.ismodal = Number(action.modal) == FORMTYPE_NOMODAL
-  call_result.meta.method = action.method
-  console.log('CALL ACTION', action, call_result)
-  current_store.commit('call_waiting', false)
-  return call_result
+  return server_url
+}
+
+export async function callLucteriosAction(action) {
+  var reponsetext = ''
+  var web_file = action.id
+  if (action.extension && action.action) {
+    web_file = action.extension + '/' + action.action
+  }
+  var fullurl = getUrlServer() + '/' + web_file
+  const formData = new FormData()
+  if (action.method === undefined) {
+    action.method = 'GET'
+  }
+  if (action.params) {
+    console.log('++ callLucteriosAction', action.method, action.params)
+    if (action.method === 'GET' || action.method === 'DELETE') {
+      var parts = []
+      Object.keys(action.params).forEach(function (key) {
+        parts.push(encodeURIComponent(key) + '=' + encodeURIComponent(action.params[key]))
+      })
+      if (parts.length > 0) {
+        fullurl += '?' + parts.join('&')
+      }
+    } else {
+      Object.keys(action.params).forEach(function (key) {
+        formData.append(key, action.params[key])
+      })
+    }
+  }
+
+  const success = function (response) {
+    reponsetext = response.data
+  }
+  const failure = function (error) {
+    reponsetext = JSON.stringify(error)
+    if (error.response !== undefined) {
+      if (error.response.status === 404) {
+        throw new LucteriosException(GRAVE, 'Command unknown!', web_file, reponsetext)
+      } else {
+        throw new LucteriosException(
+          CRITIC,
+          'Http error ' + error.response.status,
+          web_file,
+          reponsetext
+        )
+      }
+    } else {
+      throw new LucteriosException(CRITIC, 'Internal error !', web_file, reponsetext)
+    }
+  }
+  current_store.commit('call_waiting', true)
+  try {
+    console.log('>> callLucteriosAction', action, fullurl, formData)
+    if (action.method === 'GET') {
+      await axios.get(fullurl).then(success).catch(failure)
+    } else if (action.method === 'POST') {
+      await axios.post(fullurl, formData).then(success).catch(failure)
+    } else if (action.method === 'PUT') {
+      await axios.put(fullurl, formData).then(success).catch(failure)
+    } else if (action.method === 'DELETE') {
+      await axios.delete(fullurl).then(success).catch(failure)
+    } else {
+      throw new LucteriosException(GRAVE, 'method unknown!', web_file)
+    }
+  } finally {
+    current_store.commit('call_waiting', false)
+  }
+  reponsetext.meta.ismodal = action.modal == undefined || Number(action.modal) == FORMTYPE_MODAL
+  reponsetext.meta.method = action.method
+  return reponsetext
 }
 
 export async function getFileContent(url) {
-  console.log('GET_FILE_CONTENT', url)
-  var stream_content = null
-  if (url.endsWith('document_1')) {
-    stream_content = convertToBytes(window.atob(image_normal))
-  } else {
-    stream_content = convertToBytes(window.atob(image_compress))
+  var result = null
+  current_store.commit('call_waiting', true)
+  try {
+    await axios
+      .post(getUrlServer() + url, null, { responseType: 'blob' })
+      .then(function (data) {
+        result = data
+      })
+      .catch(function (error) {
+        console.log('HTTP ERROR:' + error)
+      })
+  } finally {
+    current_store.commit('call_waiting', false)
   }
-  const new_blob = new Blob(stream_content)
-  await sleep(500)
-  return new_blob
+  return result
 }

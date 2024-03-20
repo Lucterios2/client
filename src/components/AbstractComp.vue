@@ -3,6 +3,7 @@ import { convertLuctoriosFormatToHtml, formatToString } from '@/libs/utils'
 export default {
   name: 'AbstractComp',
   props: {
+    context: Object,
     value: [String, Number, Array, Boolean],
     component: Object,
     meta: Object
@@ -46,7 +47,7 @@ export default {
 
 <style>
 .edit {
-  min-width: 100px;
+  min-width: 200px;
 }
 
 label.v-label {

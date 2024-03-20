@@ -10,13 +10,10 @@ export default {
   },
   methods: {
     setValue(params) {
-      if (typeof params == 'object') {
-        this.current_value = params.value.toString()
-      } else {
-        this.current_value = params.toString()
-      }
+      this.setValueEx(params)
       this.current_value =
-        ['1', 'o', 'y', 't'].indexOf(this.current_value.toLowerCase().charAt(0)) >= 0
+        ['1', 'o', 'y', 't'].indexOf(this.current_value.toString().toLowerCase().charAt(0)) >= 0
+      this.$forceUpdate()
     }
   }
 }

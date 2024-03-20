@@ -9,11 +9,7 @@ export default {
       return this.value.substring(0, 5)
     },
     setValue(params) {
-      if (typeof params == 'object') {
-        this.current_value = params.value
-      } else {
-        this.current_value = params
-      }
+      this.setValueEx(params)
       if (this.current_value == NULL_VALUE) {
         this.current_value == ''
       }

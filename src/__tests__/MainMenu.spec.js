@@ -30,7 +30,8 @@ beforeEach(() => {
       callLucteriosAction: vi.fn((menu) => {
         custom_obs.data.id = menu.id
         return custom_obs
-      })
+      }),
+      getUrlServer: vi.fn(() => 'http://localhost')
     }
   })
   vi.clearAllMocks()
@@ -145,7 +146,7 @@ describe('MainMenu', () => {
           'v-row > div > v-expansion-panels > v-expansion-panel:nth-of-type(1) > v-expansion-panel-title > div > v-img'
         )
         .attributes('src')
-    ).toBe('/static/lucterios.CORE/images/status.png')
+    ).toBe('http://localhost/static/lucterios.CORE/images/status.png')
     expect(
       wrapper
         .find(
@@ -327,7 +328,7 @@ describe('MainMenu', () => {
       wrapper
         .find('v-row > v-col > v-card > v-tabs > v-tab:nth-of-type(3) > v-img')
         .attributes('src')
-    ).toBe('/static/lucterios.CORE/images/admin.png')
+    ).toBe('http://localhost/static/lucterios.CORE/images/admin.png')
     expect(
       wrapper.find('v-row > v-col > v-card > v-tabs > v-tab:nth-of-type(3) > span').text()
     ).toBe('Administration')
@@ -473,7 +474,7 @@ describe('MainMenu', () => {
     expect(wrapper.find('div > v-card').element.childElementCount).toBe(1)
     expect(wrapper.find('div > v-card > v-card-item').element.childElementCount).toBe(2)
     expect(wrapper.find('div > v-card > v-card-item > v-img').attributes('src')).toBe(
-      '/static/lucterios.contacts/images/ourDetails.png'
+      'http://localhost/static/lucterios.contacts/images/ourDetails.png'
     )
     expect(
       wrapper.find('div > v-card > v-card-item > v-card-title').element.childElementCount
@@ -514,7 +515,7 @@ describe('MainMenu', () => {
     expect(wrapper.find('v-card > v-card-item').element.childElementCount).toBe(4)
     expect(wrapper.find('v-card > v-card-item > v-toolbar').element.childElementCount).toBe(5)
     expect(wrapper.find('v-card > v-card-item > v-toolbar > v-img').attributes('src')).toBe(
-      '/static/lucterios.CORE/images/general.png'
+      'http://localhost/static/lucterios.CORE/images/general.png'
     )
     expect(wrapper.find('v-card > v-card-item > v-toolbar > v-icon').text()).toBe('')
     expect(wrapper.find('v-card > v-card-item > v-toolbar > v-toolbar-title').text()).toBe(

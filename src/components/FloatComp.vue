@@ -21,16 +21,12 @@ export default {
       return parseFloat(this.value).toFixed(this.component.prec)
     },
     setValue(params) {
-      if (typeof params == 'object') {
-        this.current_value = params.value.toString()
-      } else {
-        this.current_value = params.toString()
-      }
-      this.current_value = parseFloat(this.current_value.replace(',', '.')).toFixed(
+      this.setValueEx(params)
+      this.current_value = parseFloat(this.current_value.toString().replace(',', '.')).toFixed(
         this.component.prec
       )
       if (isNaN(this.current_value)) {
-        this.current_value = parseFloat(this.value).toFixed(this.component.prec)
+        this.current_value = parseFloat(this.value.toString()).toFixed(this.component.prec)
       }
       this.current_value = Math.min(
         this.component.max,
@@ -57,6 +53,7 @@ export default {
     :label="component.description"
     :rules="check"
     :disabled="is_disabled"
+    :key="forceRecompute"
     @focusout="onFocusout"
     @keyup.enter="onPressEnter"
   />

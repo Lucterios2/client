@@ -10,6 +10,7 @@ export default {
     componentlist: []
   }),
   props: {
+    context: Object,
     data: Object,
     comp: Array,
     meta: Object
@@ -90,6 +91,7 @@ export default {
           current_td,
           factory_components(comp_item.component),
           {
+            context: this.context,
             value: this.data[comp_item.name],
             component: comp_item,
             meta: this.meta

@@ -103,7 +103,8 @@ describe('GridComp', () => {
       'multi-sort': 'true',
       'no-data-text': 'Aucun resultat',
       page: '2',
-      'page-text': 'Voir 26 à 0 sur 0 résultats'
+      'page-text': 'Voir 26 à 0 sur 0 résultats',
+      'sort-by': ''
     })
   })
 
@@ -130,7 +131,8 @@ describe('GridComp', () => {
       'multi-sort': 'true',
       'no-data-text': 'Aucun resultat',
       page: '3',
-      'page-text': 'Voir 101 à 104 sur 104 résultats'
+      'page-text': 'Voir 101 à 104 sur 104 résultats',
+      'sort-by': ''
     })
     expect(wrapper.emitted('action')).toStrictEqual(undefined)
   })
@@ -150,7 +152,7 @@ describe('GridComp', () => {
       itemsPerPage: 100,
       sortBy: [
         { key: 'val1', order: 'asc' },
-        { key: 'val2', order: 'des' }
+        { key: 'val2', order: 'desc' }
       ]
     })
     expect(wrapper.emitted('action')).toStrictEqual([
@@ -163,9 +165,9 @@ describe('GridComp', () => {
           method: 'GET',
           modal: 2,
           params: {
-            'GRID_ORDER%%test': '-val1,val2',
-            'GRID_PAGE%%test': 1,
-            'GRID_SIZE%%test': 100
+            'GRID_ORDER%test': '-val1,val2',
+            'GRID_PAGE%test': 0,
+            'GRID_SIZE%test': 100
           },
           unique: 1
         }
@@ -195,8 +197,8 @@ describe('GridComp', () => {
           method: 'GET',
           modal: 2,
           params: {
-            'GRID_PAGE%%test': 0,
-            'GRID_SIZE%%test': 100
+            'GRID_PAGE%test': 0,
+            'GRID_SIZE%test': 100
           },
           unique: 1
         }

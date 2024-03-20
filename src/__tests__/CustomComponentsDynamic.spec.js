@@ -135,7 +135,7 @@ describe('CustomComponentsDynamic', () => {
             colspan: 1,
             rowspan: 1,
             tab: 0,
-            java_script:
+            javascript:
               "var first_val=current.getValue();parent.get('val2').setValue({'value':first_val});"
           },
           { name: 'val2', component: 'EDIT', x: 0, y: 1, colspan: 1, rowspan: 1, tab: 0 }
@@ -181,7 +181,7 @@ describe('CustomComponentsDynamic', () => {
             colspan: 1,
             rowspan: 1,
             tab: 0,
-            java_script:
+            javascript:
               "var first_val=current.getValue();parent.get('val2').setVisible(first_val!='no');"
           },
           { name: 'val2', component: 'EDIT', x: 0, y: 1, colspan: 1, rowspan: 1, tab: 0 }
@@ -244,7 +244,7 @@ describe('CustomComponentsDynamic', () => {
             colspan: 1,
             rowspan: 1,
             tab: 0,
-            java_script:
+            javascript:
               "var first_val=current.getValue();parent.get('val2').setEnabled(first_val!='no');"
           },
           { name: 'val2', component: 'EDIT', x: 0, y: 1, colspan: 1, rowspan: 1, tab: 0 }
@@ -308,7 +308,7 @@ describe('CustomComponentsDynamic', () => {
             colspan: 1,
             rowspan: 1,
             tab: 0,
-            java_script:
+            javascript:
               "if (typeof Singleton().action_running === 'undefined') {parent.get('val2').actionPerformed();Singleton().action_running = 1;}"
           },
           {

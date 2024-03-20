@@ -6,6 +6,7 @@ export default {
   extends: AbstractComp,
   components: { AbstractComp },
   data: () => ({
+    forceRecompute: 0,
     current_value: '',
     script_function: null,
     owner: null,
@@ -45,12 +46,21 @@ export default {
     getValue() {
       return this.current_value
     },
-    setValue(params) {
+    setValueEx(params) {
       if (typeof params == 'object') {
         this.current_value = params.value
+        Object.keys(params).forEach((key) => {
+          if (this.component[key]) {
+            this.component[key] = params[key]
+            this.forceRecompute++
+          }
+        })
       } else {
         this.current_value = params
       }
+    },
+    setValue(params) {
+      this.setValueEx(params)
       this.$forceUpdate()
     },
     setEnabled(is_enabled) {
@@ -105,12 +115,12 @@ export default {
   },
   mounted() {
     this.setValue(this.value)
-    if (typeof this.component.java_script == 'string' && this.component.java_script !== '') {
+    if (typeof this.component.javascript == 'string' && this.component.javascript !== '') {
       this.script_function = new Function(
         'current',
         'parent',
         'Singleton',
-        this.component.java_script
+        this.component.javascript
       )
       this.scriptPerformed()
     }

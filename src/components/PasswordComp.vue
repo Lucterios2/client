@@ -10,7 +10,11 @@ export default {
   }),
   computed: {
     check() {
-      return [this.check_size, this.check_mask]
+      if (Number(this.component.security) == 1) {
+        return [this.check_size, this.check_mask]
+      } else {
+        return []
+      }
     }
   },
   methods: {

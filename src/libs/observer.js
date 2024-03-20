@@ -97,6 +97,9 @@ class CompManager {
 }
 
 export async function factory(result, click_action, source, refresh) {
+  if (result.meta.observer == 'core.exception') {
+    refresh = false
+  }
   if (source == undefined || source == null || refresh != true) {
     var current_comp
     switch (result.meta.observer) {
