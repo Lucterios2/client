@@ -265,7 +265,7 @@ describe('CheckListComp', () => {
           modal: '1',
           name: 'edt1',
           params: {
-            val1: ['1', '2', '3', '4']
+            val1: '1;2;3;4'
           },
           text: 'Modify',
           unique: '1'
