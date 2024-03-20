@@ -1,6 +1,6 @@
 <script>
 import { createCompnent } from '@/libs/observer'
-import { convert_action, first_element_by_class } from '@/libs/utils'
+import { FORMTYPE_REFRESH, convert_action, first_element_by_class } from '@/libs/utils'
 import { factory_components } from '@/components/tools'
 
 export default {
@@ -30,9 +30,11 @@ export default {
         }
       }
       var is_valid = true
-      this.componentlist.forEach((comp) => {
-        is_valid = is_valid && comp.is_valid() == true
-      })
+      if (action.modal != FORMTYPE_REFRESH) {
+        this.componentlist.forEach((comp) => {
+          is_valid = is_valid && comp.is_valid() == true
+        })
+      }
       if (is_valid) {
         var new_action = convert_action(action)
         this.componentlist.forEach((comp) => {

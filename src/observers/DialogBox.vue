@@ -1,11 +1,11 @@
 <script>
 import AbstractObserver from '@/observers/AbstractObserver.vue'
-import ButtonsBar from '@/libs/ButtonsBar.vue'
+import FrameDlg from '@/libs/FrameDlg.vue'
 import { convertLuctoriosFormatToHtml } from '@/libs/utils'
 export default {
   name: 'AcknowledgeReturn',
   extends: AbstractObserver,
-  components: { ButtonsBar },
+  components: { FrameDlg },
   data: () => ({
     visible: true
   }),
@@ -36,27 +36,29 @@ export default {
 </script>
 
 <template>
-  <v-dialog v-model="visible" activator="parent" persistent min-width="250px" max-width="600px">
-    <v-card>
-      <v-card-title class="bg-grey-darken-1"> {{ meta.title }} </v-card-title>
-      <v-card-text>
-        <v-row>
-          <v-col cols="2">
-            <v-icon size="40">{{ icon }}</v-icon>
-          </v-col>
-          <v-col cols="10">
-            <span v-html="message"></span>
-          </v-col>
-        </v-row>
-      </v-card-text>
-      <ButtonsBar
-        :actions="actions"
-        :close="close"
-        @clickaction="click_action"
-        @close="$emit('close')"
-      />
-    </v-card>
-  </v-dialog>
+  <FrameDlg
+    :meta="meta"
+    :actions="actions"
+    :close="close"
+    :key="forceRecompute"
+    @action="click_action"
+    @close="$emit('close')"
+  >
+    <v-row>
+      <v-col cols="2">
+        <v-icon size="40">{{ icon }}</v-icon>
+      </v-col>
+      <v-col cols="10">
+        <span v-html="message"></span>
+      </v-col>
+    </v-row>
+  </FrameDlg>
 </template>
 
-<style scoped></style>
+<style scoped>
+.v-card-text > .v-row > .v-col-10 > span {
+  position: relative;
+  top: 10px;
+  margin-left: 15px;
+}
+</style>

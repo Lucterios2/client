@@ -67,7 +67,7 @@ describe('observer', () => {
         action_fct
       )
       expect(wrapper.find('div#comp > div').element.childElementCount).toBe(1)
-      expect(wrapper.find('div#comp > div > v-dialog').element.childElementCount).toBe(1)
+      expect(wrapper.find('div#comp > div > div').element.childElementCount).toBe(1)
       clearComponent()
       expect(wrapper.find('div#comp').element.childElementCount).toBe(0)
     }),
@@ -96,19 +96,19 @@ describe('observer', () => {
         action_fct
       )
       expect(wrapper.find('div#comp > div').element.childElementCount).toBe(1)
-      expect(wrapper.find('div#comp > div > .custom').element.childElementCount).toBe(1)
-      expect(wrapper.find('div#comp > div > .custom > v-card').element.childElementCount).toBe(4)
+      expect(wrapper.find('div#comp > div > .frameDlg').element.childElementCount).toBe(1)
+      expect(wrapper.find('div#comp > div > .frameDlg > v-card').element.childElementCount).toBe(3)
       expect(
         wrapper
           .find(
-            'div#comp > div > .custom > v-card > v-card-text > div > table > tr:nth-of-type(2) > td > div > div > span'
+            'div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr:nth-of-type(2) > td > div > div > span'
           )
           .text()
       ).toBe('aaa')
       expect(
         wrapper
           .find(
-            'div#comp > div > .custom > v-card > v-card-text > div > table > tr:nth-of-type(3) > td > div > div > span'
+            'div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr:nth-of-type(3) > td > div > div > span'
           )
           .text()
       ).toBe('bbb')
@@ -229,21 +229,17 @@ describe('observer', () => {
         true
       )
       expect(wrapper.find('div#comp > div').element.childElementCount).toBe(1)
-      expect(wrapper.find('div#comp > div > v-dialog > v-card > v-card-title').text()).toBe(
-        'title 1'
-      )
+      expect(wrapper.find('div#comp > div > div > v-card > v-card-title').text()).toBe('title 1')
       expect(
         wrapper
           .find(
-            'div#comp > div > v-dialog > v-card > v-card-text > v-row > v-col:nth-of-type(1) > v-icon'
+            'div#comp > div > div > v-card > v-card-text > v-row > v-col:nth-of-type(1) > v-icon'
           )
           .text()
       ).toBe('mdi:mdi-information-outline')
       expect(
         wrapper
-          .find(
-            'div#comp > div > v-dialog > v-card > v-card-text > v-row > v-col:nth-of-type(2) > span'
-          )
+          .find('div#comp > div > div > v-card > v-card-text > v-row > v-col:nth-of-type(2) > span')
           .text()
       ).toBe('text 1')
       const second_comp = await factory(
@@ -259,22 +255,17 @@ describe('observer', () => {
       await nextTick()
       expect(second_comp).toBe(first_comp)
       expect(wrapper.find('div#comp > div').element.childElementCount).toBe(1)
-      expect(wrapper.find('div#comp > div').element.childElementCount).toBe(1)
-      expect(wrapper.find('div#comp > div > v-dialog > v-card > v-card-title').text()).toBe(
-        'title 2'
-      )
+      expect(wrapper.find('div#comp > div > div > v-card > v-card-title').text()).toBe('title 2')
       expect(
         wrapper
           .find(
-            'div#comp > div > v-dialog > v-card > v-card-text > v-row > v-col:nth-of-type(1) > v-icon'
+            'div#comp > div > div > v-card > v-card-text > v-row > v-col:nth-of-type(1) > v-icon'
           )
           .text()
       ).toBe('mdi:mdi-help-circle-outline')
       expect(
         wrapper
-          .find(
-            'div#comp > div > v-dialog > v-card > v-card-text > v-row > v-col:nth-of-type(2) > span'
-          )
+          .find('div#comp > div > div > v-card > v-card-text > v-row > v-col:nth-of-type(2) > span')
           .text()
       ).toBe('text 2')
     }),
@@ -305,14 +296,14 @@ describe('observer', () => {
       expect(
         wrapper
           .find(
-            'div#comp > div > .custom > v-card > v-card-text > div > table > tr:nth-of-type(2) > td > div > div > span'
+            'div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr:nth-of-type(2) > td > div > div > span'
           )
           .text()
       ).toBe('aaa')
       expect(
         wrapper
           .find(
-            'div#comp > div > .custom > v-card > v-card-text > div > table > tr:nth-of-type(3) > td > div > div > span'
+            'div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr:nth-of-type(3) > td > div > div > span'
           )
           .text()
       ).toBe('bbb')
@@ -335,14 +326,14 @@ describe('observer', () => {
       expect(
         wrapper
           .find(
-            'div#comp > div > .custom > v-card > v-card-text > div > table > tr:nth-of-type(2) > td > div > div > span'
+            'div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr:nth-of-type(2) > td > div > div > span'
           )
           .text()
       ).toBe('ccc')
       expect(
         wrapper
           .find(
-            'div#comp > div > .custom > v-card > v-card-text > div > table > tr:nth-of-type(3) > td > div > div > span'
+            'div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr:nth-of-type(3) > td > div > div > span'
           )
           .text()
       ).toBe('ddd')

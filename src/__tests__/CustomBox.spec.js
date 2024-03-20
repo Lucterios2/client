@@ -7,6 +7,7 @@ import { convert_event_to_object } from '@/__tests__/tools.js'
 import { createApp } from 'vue'
 import storage from '@/libs/datastorage'
 import { initialObserver } from '@/libs/observer'
+import FrameDlg from '@/libs/FrameDlg.vue'
 
 beforeEach(() => {
   document.documentElement.innerHTML = '<html><body><div id="comp"></div></body></html>'
@@ -40,10 +41,9 @@ describe('CustomBox', () => {
       }
     })
     expect(wrapper.element.childElementCount).toBe(1)
-    expect(wrapper.find('v-card').element.childElementCount).toBe(4)
+    expect(wrapper.find('v-card').element.childElementCount).toBe(3)
     expect(wrapper.find('v-card > v-card-title').text()).toBe('Simple title')
     expect(wrapper.find('v-card > v-card-text').element.childElementCount).toBe(1)
-    //expect(wrapper.find('v-card > v-card-text').html()).toBe('')
     expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(3)
     expect(wrapper.find('v-card > v-card-actions > div:nth-of-type(1) > v-btn > span').text()).toBe(
       'action1'
@@ -55,6 +55,7 @@ describe('CustomBox', () => {
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
     expect(wrapper.emitted('close')).toStrictEqual(undefined)
     await wrapper.find('v-card > v-card-actions > div:nth-of-type(2) > v-btn').trigger('click')
+    expect(wrapper.emitted('close')).toStrictEqual(undefined)
     expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([
       [
         {
@@ -67,7 +68,6 @@ describe('CustomBox', () => {
         }
       ]
     ])
-    expect(wrapper.emitted('close')).toStrictEqual(undefined)
 
     await wrapper.find('v-card > v-card-actions > div:nth-of-type(1) > v-btn').trigger('click')
     expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([
@@ -129,63 +129,90 @@ describe('CustomBox', () => {
     expect(wrapper.emitted('close')).toStrictEqual([[]])
   })
 
-  it('No modal', async () => {
+  it('check CustomComponents', async () => {
     const wrapper = shallowMount(CustomBox, {
       propsData: {
-        data: { val1: 'aaa', val2: 'aaa' },
-        comp: [{ name: 'val1' }, { name: 'val2' }],
+        data: { val1: 'aaa', val2: 'bbb' },
+        comp: [
+          { name: 'val1', component: 'EDIT', x: 1, y: 0, tab: 0 },
+          { name: 'val2', component: 'EDIT', x: 2, y: 0, tab: 0 }
+        ],
+        meta: { extension: '', title: 'Simple title', action: '', observer: '', ismodal: false },
+        close: { id: 'xyz', text: 'action0', icon: 'icon0', close: '0' },
+        context: { id: 123, text: 'abc' },
+        actions: [
+          { id: 'abc', text: 'action1', icon: 'icon1', close: '1' },
+          { id: 'def', text: 'action2', icon: 'icon2', close: '0', params: { value: 54.65 } }
+        ]
+      }
+    })
+    expect(wrapper.element.childElementCount).toBe(0)
+    expect(wrapper.element.tagName).toBe('FRAME-DLG-STUB')
+    expect(wrapper.getCurrentComponent().props.actions.length).toBe(2)
+    expect(wrapper.getCurrentComponent().props.close).toStrictEqual({
+      id: 'xyz',
+      text: 'action0',
+      icon: 'icon0',
+      close: '0'
+    })
+    expect(wrapper.getCurrentComponent().props.meta).toStrictEqual({
+      extension: '',
+      title: 'Simple title',
+      action: '',
+      observer: '',
+      ismodal: false
+    })
+  })
+
+  it('No modal', async () => {
+    const wrapper = shallowMount(FrameDlg, {
+      propsData: {
         meta: { extension: '', title: 'Simple title', action: '', observer: '', ismodal: false },
         close: null,
-        context: { id: 123, text: 'abc' },
         actions: []
       }
     })
     expect(wrapper.element.childElementCount).toBe(1)
-    expect(wrapper.find('v-card').element.childElementCount).toBe(4)
-    expect(wrapper.find('v-card > v-card-title').element.childElementCount).toBe(0)
+    expect(wrapper.find('v-card').element.childElementCount).toBe(3)
+    expect(wrapper.find('v-card > v-card-title').element.childElementCount).toBe(1)
     expect(wrapper.find('v-card > v-card-title').text()).toBe('Simple title')
-    expect(wrapper.find('v-card > v-icon').text()).toBe('mdi-arrow-expand-all')
-    expect(wrapper.find('v-card > v-card-text').element.childElementCount).toBe(1)
+    expect(wrapper.find('v-card > v-card-title > div').element.childElementCount).toBe(3)
     expect(
-      wrapper.find('v-card > v-card-text > custom-components-stub').element.childElementCount
-    ).toBe(0)
+      wrapper.find('v-card > v-card-title > div > v-btn:nth-of-type(1)').attributes().icon
+    ).toBe('mdi-arrow-expand-all')
     expect(
-      wrapper.find('v-card > v-card-text > custom-components-stub').getCurrentComponent().props.data
-    ).toStrictEqual({ val1: 'aaa', val2: 'aaa' })
+      wrapper.find('v-card > v-card-title > div > v-btn:nth-of-type(2)').attributes().icon
+    ).toBe('mdi-refresh')
     expect(
-      wrapper.find('v-card > v-card-text > custom-components-stub').getCurrentComponent().props.comp
-    ).toStrictEqual([{ name: 'val1' }, { name: 'val2' }])
+      wrapper.find('v-card > v-card-title > div > v-btn:nth-of-type(3)').attributes().icon
+    ).toBe('mdi-close')
+    expect(wrapper.find('v-card > v-card-text').element.childElementCount).toBe(0)
     expect(
       wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
     ).toStrictEqual([])
   })
 
   it('Modal', async () => {
-    const wrapper = shallowMount(CustomBox, {
+    const wrapper = shallowMount(FrameDlg, {
       propsData: {
-        data: { val1: 'aaa', val2: 'aaa' },
-        comp: [{ name: 'val1' }, { name: 'val2' }],
         meta: { extension: '', title: 'Simple title', action: '', observer: '', ismodal: true },
         close: null,
-        context: { id: 123, text: 'abc' },
         actions: []
       }
     })
     expect(wrapper.element.childElementCount).toBe(2)
     expect(wrapper.find('div.modaldlg').element.childElementCount).toBe(0)
     expect(wrapper.find('v-card').element.childElementCount).toBe(3)
-    expect(wrapper.find('v-card > v-card-title').element.childElementCount).toBe(0)
+    expect(wrapper.find('v-card > v-card-title').element.childElementCount).toBe(1)
     expect(wrapper.find('v-card > v-card-title').text()).toBe('Simple title')
-    expect(wrapper.find('v-card > v-card-text').element.childElementCount).toBe(1)
+    expect(wrapper.find('v-card > v-card-title > div').element.childElementCount).toBe(2)
     expect(
-      wrapper.find('v-card > v-card-text > custom-components-stub').element.childElementCount
-    ).toBe(0)
+      wrapper.find('v-card > v-card-title > div > v-btn:nth-of-type(1)').attributes().icon
+    ).toBe('mdi-refresh')
     expect(
-      wrapper.find('v-card > v-card-text > custom-components-stub').getCurrentComponent().props.data
-    ).toStrictEqual({ val1: 'aaa', val2: 'aaa' })
-    expect(
-      wrapper.find('v-card > v-card-text > custom-components-stub').getCurrentComponent().props.comp
-    ).toStrictEqual([{ name: 'val1' }, { name: 'val2' }])
+      wrapper.find('v-card > v-card-title > div > v-btn:nth-of-type(2)').attributes().icon
+    ).toBe('mdi-close')
+    expect(wrapper.find('v-card > v-card-text').element.childElementCount).toBe(0)
     expect(
       wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
     ).toStrictEqual([])

@@ -311,6 +311,19 @@ export const SELECT_SINGLE = 0
 export const SELECT_MULTI = 2
 export const NULL_VALUE = 'NULL'
 
+export function refreshAction(meta, default_params) {
+  return {
+    id: meta.id || meta.extension + '/' + meta.action,
+    extension: meta.extension,
+    action: meta.action,
+    modal: FORMTYPE_REFRESH,
+    close: CLOSE_NO,
+    unique: SELECT_NONE,
+    method: meta.method,
+    params: default_params || {}
+  }
+}
+
 var singletonObj = null
 
 class SingletonClass {

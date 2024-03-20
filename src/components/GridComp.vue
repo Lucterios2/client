@@ -8,9 +8,8 @@ import {
   SELECT_NONE,
   SELECT_SINGLE,
   SELECT_MULTI,
-  FORMTYPE_REFRESH,
-  CLOSE_NO,
-  convert_action
+  convert_action,
+  refreshAction
 } from '@/libs/utils'
 import { useI18n } from 'vue-i18n'
 
@@ -127,19 +126,7 @@ export default {
       }
     },
     refresh() {
-      this.$emit(
-        'action',
-        convert_action({
-          id: this.meta.extension + '/' + this.meta.action,
-          extension: this.meta.extension,
-          action: this.meta.action,
-          modal: FORMTYPE_REFRESH,
-          close: CLOSE_NO,
-          unique: SELECT_NONE,
-          method: this.meta.method,
-          params: this.gridcontext
-        })
-      )
+      this.$emit('action', convert_action(refreshAction(this.meta, this.gridcontext)))
     },
     click_action(action) {
       var new_action = convert_action(action)
@@ -264,5 +251,13 @@ tr.selected {
 }
 tr.selected td {
   border-top: 1px solid #fff;
+}
+.v-data-table-footer__items-per-page
+  > .v-input
+  > .v-input__control
+  > .v-field
+  > .v-field__field
+  > .v-field__input {
+  top: 0px;
 }
 </style>

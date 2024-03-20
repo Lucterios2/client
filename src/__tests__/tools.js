@@ -1684,7 +1684,7 @@ export const response_to_ident = {
       type: 1
     },
     meta: {
-      extension: 'example.sub1',
+      extension: 'dialog.sub1',
       action: 'action1',
       title: 'Action 1a',
       observer: 'core.dialogbox'
@@ -1699,7 +1699,7 @@ export const response_to_ident = {
       type: 2
     },
     meta: {
-      extension: 'example.sub1',
+      extension: 'dialog.sub1',
       action: 'action2',
       title: 'Action 1b',
       observer: 'core.dialogbox'
@@ -1714,8 +1714,8 @@ export const response_to_ident = {
       type: 3
     },
     meta: {
-      extension: 'example.sub1',
-      action: 'action1',
+      extension: 'dialog.sub1',
+      action: 'action3',
       title: 'Action 1c',
       observer: 'core.dialogbox'
     },
@@ -1729,7 +1729,7 @@ export const response_to_ident = {
       type: 4
     },
     meta: {
-      extension: 'example.sub1',
+      extension: 'dialog.sub1',
       action: 'action4',
       title: 'Action 1d',
       observer: 'core.dialogbox'
@@ -1744,7 +1744,7 @@ export const response_to_ident = {
       type: 2
     },
     meta: {
-      extension: 'example.sub2',
+      extension: 'dialog.sub2',
       action: 'action1',
       title: 'Action 2a',
       observer: 'core.dialogbox'
@@ -1762,7 +1762,7 @@ export const response_to_ident = {
       type: 3
     },
     meta: {
-      extension: 'example.sub2',
+      extension: 'dialog.sub2',
       action: 'action2',
       title: 'Action 2b',
       observer: 'core.dialogbox'
@@ -1780,7 +1780,7 @@ export const response_to_ident = {
       type: 2
     },
     meta: {
-      extension: 'example.sub3',
+      extension: 'dialog.sub3',
       action: 'action1',
       title: 'Action 3a',
       observer: 'core.dialogbox'

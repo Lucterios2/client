@@ -1,5 +1,5 @@
 <script>
-import { CLOSE_NO, FORMTYPE_REFRESH, SELECT_NONE } from '@/libs/utils'
+import { refreshAction } from '@/libs/utils'
 
 export default {
   name: 'AbstractObserver',
@@ -27,16 +27,7 @@ export default {
       this.forceRecompute++
     },
     refreshObserver() {
-      this.$emit('clickaction', {
-        id: this.meta.id || this.meta.extension + '/' + this.meta.action,
-        extension: this.meta.extension,
-        action: this.meta.action,
-        modal: FORMTYPE_REFRESH,
-        close: CLOSE_NO,
-        unique: SELECT_NONE,
-        method: this.meta.method,
-        params: this.gridcontext
-      })
+      this.$emit('clickaction', refreshAction(this.meta))
     }
   }
 }
