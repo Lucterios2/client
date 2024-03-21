@@ -1,7 +1,8 @@
 import { useStore } from 'vuex'
 import axios from 'axios'
 
-import { CRITIC, FORMTYPE_MODAL, GRAVE, LucteriosException } from './utils'
+import { FORMTYPE_MODAL } from '@/libs/utils'
+import { CRITIC, GRAVE, LucteriosException } from '@/libs/error'
 
 var current_store = null
 
@@ -37,7 +38,6 @@ export async function callLucteriosAction(action) {
     action.method = 'GET'
   }
   if (action.params) {
-    console.log('++ callLucteriosAction', action.method, action.params)
     if (action.method === 'GET' || action.method === 'DELETE') {
       var parts = []
       Object.keys(action.params).forEach(function (key) {
@@ -75,7 +75,6 @@ export async function callLucteriosAction(action) {
   }
   current_store.commit('call_waiting', true)
   try {
-    console.log('>> callLucteriosAction', action, fullurl, formData)
     if (action.method === 'GET') {
       await axios.get(fullurl).then(success).catch(failure)
     } else if (action.method === 'POST') {
@@ -100,12 +99,14 @@ export async function getFileContent(url) {
   current_store.commit('call_waiting', true)
   try {
     await axios
-      .post(getUrlServer() + url, null, { responseType: 'blob' })
+      .post(getUrlServer() + (url.startsWith('/') ? url : '/' + url), null, {
+        responseType: 'blob'
+      })
       .then(function (data) {
         result = data
       })
       .catch(function (error) {
-        console.log('HTTP ERROR:' + error)
+        throw new LucteriosException(GRAVE, error)
       })
   } finally {
     current_store.commit('call_waiting', false)

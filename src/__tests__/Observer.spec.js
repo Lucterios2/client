@@ -6,6 +6,7 @@ import i18n from '@/libs/i18n.js'
 import * as utils from '@/libs/utils'
 import { clearComponent, factory, initialObserver } from '@/libs/observer.js'
 import { createApp, nextTick } from 'vue'
+import { LucteriosException } from '@/libs/error'
 
 beforeEach(() => {
   document.documentElement.innerHTML = '<html><body><div id="app"></div></body></html>'
@@ -30,7 +31,14 @@ describe('observer', () => {
     )
     expect(wrapper.find('div#comp').element.childElementCount).toBe(0)
     const action_fct = vi.fn()
-    await factory({ meta: { observer: 'unknonw' } }, action_fct)
+    try {
+      await factory({ meta: { observer: 'unknonw' } }, action_fct)
+      expect(true).toBe(false)
+    } catch (error) {
+      expect(error).toStrictEqual(
+        new LucteriosException(2, 'NO COMPONENT', { meta: { observer: 'unknonw' } })
+      )
+    }
     expect(wrapper.find('div#comp').element.childElementCount).toBe(0)
   }),
     it('core.acknowledge', async () => {

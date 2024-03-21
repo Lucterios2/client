@@ -26,7 +26,7 @@ describe('AboutFrame', () => {
         "{[i]}Linux x86_64 4.xx.x-x - Python 3.10 - Django 3.2 - langage 'en'{[/i]}"
       ],
       support_email: 'support@lucterios.org',
-      support_html: '<div><b>Support</b></div>',
+      support_html: '{[div]}{[b]}Support{[/b]}{[/div]}',
       logoname: 'public/lucterios.png',
       background: '',
       style: '',

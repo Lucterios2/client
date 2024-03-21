@@ -2,6 +2,7 @@
 import SubMenus from '@/libs/SubMenus.vue'
 import CustomComponents from '@/components/CustomComponents.vue'
 import { callLucteriosAction, getUrlServer } from '@/libs/transport'
+import { convertLuctoriosFormatToHtml } from '@/libs/convert.js'
 import AbstractObserver from '@/observers/AbstractObserver.vue'
 
 export default {
@@ -13,12 +14,30 @@ export default {
     custom_data: {},
     custom_comp: [],
     summary_menu: [],
-    summary_selecteddefault: null
+    summary_selected: [],
+    last_summary_selected: []
   }),
   props: {
     menus: Array
   },
+  computed: {
+    support_html() {
+      return convertLuctoriosFormatToHtml(this.$store.state.server.support_html)
+    }
+  },
   methods: {
+    check_summary_menu() {
+      if (this.last_summary_selected != this.summary_selected) {
+        this.last_summary_selected = this.summary_selected
+      } else {
+        this.refresh_summary(
+          this.summary_menu.filter((menu) => {
+            return menu.id == this.summary_selected
+          })[0]
+        )
+      }
+      return ''
+    },
     click_action(menu) {
       this.$emit('clickaction', menu)
     },
@@ -58,19 +77,18 @@ export default {
     this.menus.forEach((item) => {
       if (item.text === '') {
         this.summary_menu = item.menus
-        if (item.menus.length > 0) {
-          this.summary_selected = item.menus[0].id
-        }
       }
     })
-    this.$store.commit('call_status', true)
     if (this.summary_menu.length > 0) {
-      await this.refresh_summary(this.summary_menu[0])
+      const default_summary = this.summary_menu[this.summary_menu.length - 1]
+      this.summary_selected = [default_summary.id]
+      await this.refresh_summary(default_summary)
+      this.$store.commit('call_status', true)
+      var refreshIntervalId = setInterval(() => {
+        this.$store.commit('call_summary', false)
+        clearInterval(refreshIntervalId)
+      }, 10000)
     }
-    var refreshIntervalId = setInterval(() => {
-      this.$store.commit('call_summary', false)
-      clearInterval(refreshIntervalId)
-    }, 10000)
   }
 }
 </script>
@@ -79,6 +97,7 @@ export default {
   <div class="menu">
     <v-row>
       <div class="v-col v-col-2-xld v-col-3-ld v-col-4-md v-col-12-xsd" v-if="show_summary()">
+        {{ check_summary_menu() }}
         <v-expansion-panels variant="accordion" v-model="summary_selected">
           <v-expansion-panel
             v-for="submenu in summary_menu"
@@ -99,12 +118,17 @@ export default {
               <span style="margin-left: 5px">{{ submenu.text }}</span>
             </v-expansion-panel-title>
             <v-expansion-panel-text>
-              <CustomComponents :data="custom_data" :comp="custom_comp" @action="click_action" />
+              <CustomComponents
+                class="panel-custom"
+                :data="custom_data"
+                :comp="custom_comp"
+                @action="click_action"
+              />
             </v-expansion-panel-text>
           </v-expansion-panel>
         </v-expansion-panels>
         <div class="support_footer" v-if="$store.state.server.support_html">
-          <span v-html="$store.state.server.support_html"></span>
+          <span v-html="support_html"></span>
         </div>
       </div>
       <v-col cols="max">
@@ -146,11 +170,18 @@ export default {
   width: 98%;
   margin: 0px 1%;
 }
+
+.v-expansion-panels {
+  max-height: 75%;
+  overflow-y: scroll;
+}
+
 .support_footer {
-  margin-top: 100px;
+  margin-top: 30px;
   padding: 5px;
   border: 1px black solid;
   border-radius: 10px;
+  background-color: white;
 }
 
 @media only screen and (min-width: 1400px) {

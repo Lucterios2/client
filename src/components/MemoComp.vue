@@ -1,6 +1,6 @@
 <script>
 import AbstractEventComp from '@/components/AbstractEventComp.vue'
-import { Stringformat, convertLuctoriosFormatToHtml } from '@/libs/utils'
+import { Stringformat, convertLuctoriosFormatToHtml } from '@/libs/convert'
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 export default {

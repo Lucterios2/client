@@ -2,7 +2,8 @@
 import JSZip from 'jszip'
 import AbstractComp from '@/components/AbstractComp.vue'
 import { getFileContent } from '@/libs/transport'
-import { convertToBytes, openBlob } from '@/libs/utils'
+import { openBlob } from '@/libs/utils'
+import { convertToBytes } from '@/libs/convert'
 export default {
   name: 'DownloadComp',
   extends: AbstractComp,
@@ -11,15 +12,13 @@ export default {
     async openFile() {
       const file_returned = await getFileContent(this.component.filename)
       if (this.component.compress && file_returned.size !== 0) {
-        const self = this
         const zipFileLoaded = new JSZip()
-        zipFileLoaded.loadAsync(file_returned).then(function (zip) {
-          Object.keys(zip.files).forEach(function (filename) {
-            zip.files[filename]
-              .async(self.component.compresstype || 'string')
-              .then(function (fileData) {
-                openBlob(new Blob(convertToBytes(fileData)), self.value)
-              })
+        const self = this
+        await zipFileLoaded.loadAsync(file_returned.data).then(function (zip) {
+          zip.forEach(async function (relativePath, zipEntry) {
+            await zipEntry.async('base64').then(function (fileData) {
+              openBlob(new Blob(convertToBytes(window.atob(fileData))), self.value)
+            })
           })
         })
       } else {

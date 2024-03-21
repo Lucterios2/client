@@ -1,5 +1,5 @@
 <script setup>
-import { convertLuctoriosFormatToHtml } from '@/libs/utils'
+import { convertLuctoriosFormatToHtml } from '@/libs/convert'
 import { getUrlServer } from './transport'
 
 const emit = defineEmits(['click'])

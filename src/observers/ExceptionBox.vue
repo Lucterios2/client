@@ -1,7 +1,8 @@
 <script>
 import AbstractObserver from '@/observers/AbstractObserver.vue'
 import ButtonsBar from '@/libs/ButtonsBar.vue'
-import { convertLuctoriosFormatToHtml, send_to_support, part_for_email } from '@/libs/utils'
+import { convertLuctoriosFormatToHtml } from '@/libs/convert'
+import { send_to_support, part_for_email } from '@/libs/utils'
 const FAILURE = 0
 const CRITIC = 1
 const GRAVE = 2

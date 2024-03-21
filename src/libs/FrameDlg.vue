@@ -1,6 +1,7 @@
 <script>
 import ButtonsBar from '@/libs/ButtonsBar.vue'
-import { Stringformat, first_element_by_class, refreshAction } from '@/libs/utils'
+import { Stringformat } from '@/libs/convert'
+import { first_element_by_class, refreshAction } from '@/libs/utils'
 
 export default {
   name: 'FrameDlg',
@@ -31,14 +32,14 @@ export default {
         cust_cards.forEach((cust_card) => {
           cust_card.style.zIndex = new_index--
           first_element_by_class(cust_card, 'v-card-title').className =
-            'v-card-title bg-grey-lighten-1' + (this.meta.ismodal ? '' : ' movecursor')
+            'v-card-title bg-grey-lighten-1 movecursor'
         })
       })
       const current_card = first_element_by_class(current, 'v-card')
       if (current_card) {
         current_card.style.zIndex = 100
         first_element_by_class(current_card, 'v-card-title').className =
-          'v-card-title bg-grey-darken-1' + (this.meta.ismodal ? '' : ' movecursor')
+          'v-card-title bg-grey-darken-1 movecursor'
       }
     },
     all_size() {
@@ -72,7 +73,7 @@ export default {
       this.dialog_height = this.$el.getBoundingClientRect().height
     },
     mouse_down(event) {
-      if (event.button === 0 && !this.dialog_box.allsize && !this.meta.ismodal) {
+      if (event.button === 0 && !this.dialog_box.allsize) {
         this.dialog_box.move = true
         this.dialog_box.mouseStartX = event.clientX
         this.dialog_box.mouseStartY = event.clientY
@@ -111,6 +112,15 @@ export default {
         this.onClickaction(this.close)
       }
       this.$emit('close')
+    },
+    define_position() {
+      if (this.dialog_box.el) {
+        const left =
+          (50 * window.innerWidth) / 100.0 - this.dialog_box.el.getBoundingClientRect().width / 2
+        const top = (window.innerHeight - this.dialog_box.el.getBoundingClientRect().height) / 2
+        this.dialog_box.el.style.left = '%X%'.replace('%X', (100 * left) / window.innerWidth)
+        this.dialog_box.el.style.top = '%Y%'.replace('%Y', (100 * top) / window.innerHeight)
+      }
     }
   },
   mounted() {
@@ -121,19 +131,12 @@ export default {
         this.dialog_box.eltext.style.maxHeight = '%Ypx'.replace('%Y', window.innerHeight - 200)
       })
     })
-    const custom_nb = document.getElementsByClassName('custom').length
-    if (this.dialog_box.el) {
-      const left =
-        ((50 - 2 * custom_nb) * window.innerWidth) / 100.0 -
-        this.dialog_box.el.getBoundingClientRect().width / 2
-      const top =
-        ((50 - 2 * custom_nb) * window.innerHeight) / 100.0 -
-        this.dialog_box.el.getBoundingClientRect().height / 2
-      this.dialog_box.el.style.left = '%X%'.replace('%X', (100 * left) / window.innerWidth)
-      this.dialog_box.el.style.top = '%Y%'.replace('%Y', (100 * top) / window.innerHeight)
-    }
     this.active_current(this.$el)
     this.dialog_height = this.$el.getBoundingClientRect().height
+    var positionIntervalId = setInterval(() => {
+      this.define_position()
+      clearInterval(positionIntervalId)
+    }, 10)
   }
 }
 </script>

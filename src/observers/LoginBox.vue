@@ -2,7 +2,7 @@
 import AbstractObserver from '@/observers/AbstractObserver.vue'
 import ButtonAction from '@/libs/ButtonAction.vue'
 import ButtonsBar from '@/libs/ButtonsBar.vue'
-import { convertLuctoriosFormatToHtml, convert_object_lowercase } from '@/libs/utils'
+import { convertLuctoriosFormatToHtml, convert_object_lowercase } from '@/libs/convert'
 import { insertStyle } from '@/libs/utils'
 
 export default {

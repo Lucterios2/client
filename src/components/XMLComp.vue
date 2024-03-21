@@ -1,6 +1,6 @@
 <script>
 import AbstractEventComp from '@/components/AbstractEventComp.vue'
-import { Stringformat } from '@/libs/utils'
+import { Stringformat } from '@/libs/convert'
 export default {
   name: 'XMLComp',
   extends: AbstractEventComp,

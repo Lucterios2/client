@@ -2,7 +2,7 @@
 
 root_dir="$(dirname $(readlink -f "$0"))"
 current_dir="$root_dir/web"
-demo_archive="$(dirname $root_dir)/lct-test-fct/data/archive_standard.lbk"
+demo_archive="$(dirname $root_dir)/lct-test-fct/data/archive_asso.lbk"
 mkdir -p $current_dir
 cd $current_dir
 
@@ -13,16 +13,16 @@ then
         python3 -m virtualenv --python=$PYTHONVER virt 2>&1  || echo "no virtualenv"
     fi
     [ -f virt/bin/activate ] && . virt/bin/activate
-    pip install -U pip gunicorn lucterios lucterios-standard --extra-index-url https://pypi.lucterios.org/simple
+    pip install -U pip gunicorn lucterios diacamma-asso --extra-index-url https://pypi.lucterios.org/simple
 else
     [ -f virt/bin/activate ] && . virt/bin/activate
 fi
 
 if [ ! -d  clienttest ]
 then
-    lucterios_admin.py add -n clienttest -p lucterios.standard -m lucterios.contacts,lucterios.documents,lucterios.mailing
+    lucterios_admin.py add -n clienttest -p diacamma.asso -m lucterios.contacts,lucterios.documents,lucterios.mailing,diacamma.accounting,diacamma.payoff,diacamma.invoice,diacamma.member,diacamma.event
 else
-    lucterios_admin.py modif -n clienttest -p lucterios.standard -m lucterios.contacts,lucterios.documents,lucterios.mailing
+    lucterios_admin.py modif -n clienttest -p diacamma.asso -m lucterios.contacts,lucterios.documents,lucterios.mailing,diacamma.accounting,diacamma.payoff,diacamma.invoice,diacamma.member,diacamma.event
 fi
 if [ -z "$2" -a -f "$demo_archive" ]
 then

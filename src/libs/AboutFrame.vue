@@ -4,7 +4,8 @@ import { useI18n } from 'vue-i18n'
 const store = useStore()
 const i18n = useI18n()
 
-import { convertLuctoriosFormatToHtml, send_to_support } from '@/libs/utils.js'
+import { convertLuctoriosFormatToHtml } from '@/libs/convert'
+import { send_to_support } from '@/libs/utils.js'
 import { getUrlServer } from '@/libs/transport'
 const emit = defineEmits(['close'])
 const more_version = defineModel({ type: Boolean, default: false })
@@ -95,7 +96,7 @@ function send_support() {
         </v-row>
         <v-divider :thickness="3"></v-divider>
         <br />
-        <span v-html="$store.state.server.support_html"></span>
+        <span v-html="convertLuctoriosFormatToHtml($store.state.server.support_html)"></span>
       </v-card-text>
       <v-card-actions class="bg-grey-lighten-3">
         <v-spacer></v-spacer>

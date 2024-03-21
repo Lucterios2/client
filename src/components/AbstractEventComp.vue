@@ -1,6 +1,7 @@
 <script>
 import AbstractComp from '@/components/AbstractComp.vue'
-import { convert_action, singleton } from '@/libs/utils'
+import { singleton } from '@/libs/utils'
+import { convert_action } from '@/libs/convert'
 export default {
   name: 'AbstractEventComp',
   extends: AbstractComp,

@@ -1,6 +1,7 @@
 <script>
 import { createCompnent } from '@/libs/observer'
-import { FORMTYPE_REFRESH, convert_action, first_element_by_class } from '@/libs/utils'
+import { FORMTYPE_REFRESH, first_element_by_class } from '@/libs/utils'
+import { convert_action } from '@/libs/convert'
 import { factory_components } from '@/components/tools'
 
 export default {
@@ -49,11 +50,24 @@ export default {
       var current_x = 0
       var current_y = 0
       var current_tr = document.createElement('tr')
-      for (var comp_idx = 0; comp_idx < component_list.length; comp_idx++) {
-        const comp_item = component_list[comp_idx]
-        const comp_next = comp_idx < component_list.length - 1 ? component_list[comp_idx + 1] : null
+      component_list.forEach((comp_item) => {
         for (var rowadded = current_y; rowadded < comp_item.y; rowadded++) {
           current_table.appendChild(document.createElement('tr'))
+        }
+        const last_components_touched = component_list.filter((item) => {
+          return (
+            item.y < comp_item.y &&
+            item.y + item.rowspan - 1 >= comp_item.y &&
+            item.x + item.colspan - 1 <= comp_item.x
+          )
+        })
+        if (last_components_touched.length > 0) {
+          const offset = Math.max(
+            ...last_components_touched.map((item) => {
+              return item.x + item.colspan + 1
+            })
+          )
+          current_x = Math.max(current_x, offset)
         }
         if (comp_item.x - current_x > 0) {
           const empty_cell = document.createElement('td')
@@ -65,22 +79,6 @@ export default {
         current_td.setAttribute('rowspan', comp_item.rowspan)
         current_td.setAttribute('colspan', comp_item.colspan)
         current_td.setAttribute('class', 'customcell')
-        if (comp_item.rowspan > 1) {
-          for (
-            var sub_comp_idx = comp_idx + 1;
-            sub_comp_idx < component_list.length;
-            sub_comp_idx++
-          ) {
-            const sub_comp_item = component_list[sub_comp_idx]
-            if (
-              sub_comp_item.x > comp_item.x &&
-              sub_comp_item.y > comp_item.y &&
-              sub_comp_item.y <= comp_item.y + comp_item.rowspan - 1
-            ) {
-              sub_comp_item.x = sub_comp_item.x - comp_item.colspan
-            }
-          }
-        }
         const emits = {
           action: this.call_action,
           close: () => {
@@ -103,6 +101,10 @@ export default {
           this.componentlist.push(new_vuecomp.component.ctx)
         }
         current_tr.appendChild(current_td)
+        const comp_next =
+          component_list.indexOf(comp_item) < component_list.length - 1
+            ? component_list[component_list.indexOf(comp_item) + 1]
+            : null
         if (comp_next == null || comp_next.y != comp_item.y) {
           current_table.appendChild(current_tr)
           current_tr = document.createElement('tr')
@@ -112,7 +114,7 @@ export default {
           current_x = comp_item.x + comp_item.colspan
           current_y = comp_item.y
         }
-      }
+      })
     },
     get_default_action() {
       var default_action = null

@@ -1,7 +1,7 @@
 <script>
 import AbstractObserver from '@/observers/AbstractObserver.vue'
 import FrameDlg from '@/libs/FrameDlg.vue'
-import { convertLuctoriosFormatToHtml } from '@/libs/utils'
+import { convertLuctoriosFormatToHtml } from '@/libs/convert'
 export default {
   name: 'AcknowledgeReturn',
   extends: AbstractObserver,

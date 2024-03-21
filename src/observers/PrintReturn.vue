@@ -1,7 +1,7 @@
 <script>
 import AbstractObserver from '@/observers/AbstractObserver.vue'
-import { getFileNameWithoutForgottenChar, openBlob } from '@/libs/utils'
-import { convertToBytes } from '../libs/utils'
+import { openBlob } from '@/libs/utils'
+import { getFileNameWithoutForgottenChar, convertToBytes } from '@/libs/convert'
 
 export default {
   name: 'PrintReturn',
@@ -21,7 +21,9 @@ export default {
     }
   },
   mounted() {
-    const filename = getFileNameWithoutForgottenChar(this.print.title) + this.print.extension
+    const filename =
+      getFileNameWithoutForgottenChar(this.print.title) +
+      (this.print.extension.startsWith('.') ? this.print.extension : '.' + this.print.extension)
     this.saveFile(this.print.content, filename)
     this.$emit('close')
   }

@@ -1,7 +1,7 @@
 <script>
 import AbstractComp from '@/components/AbstractComp.vue'
 import { getUrlServer } from '@/libs/transport'
-import { Stringformat } from '@/libs/utils'
+import { Stringformat } from '@/libs/convert'
 export default {
   name: 'ImageComp',
   extends: AbstractComp,

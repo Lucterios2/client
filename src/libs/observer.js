@@ -6,6 +6,7 @@ import DialogBox from '@/observers/DialogBox.vue'
 import CustomBox from '@/observers/CustomBox.vue'
 import ExceptionBox from '@/observers/ExceptionBox.vue'
 import PrintReturn from '@/observers/PrintReturn.vue'
+import { LucteriosException, GRAVE } from '@/libs/error'
 
 var current_app = null
 
@@ -133,7 +134,7 @@ export async function factory(result, click_action, source, refresh) {
       new_comp.mount(current_comp, result)
       return new_comp
     } else {
-      console.log('NO COMPONENT', result)
+      throw new LucteriosException(GRAVE, 'NO COMPONENT', result)
     }
   } else {
     let old_comp = component_created.get(source)
@@ -141,7 +142,7 @@ export async function factory(result, click_action, source, refresh) {
       old_comp.update(result)
       return old_comp
     } else {
-      console.log('OLD NOT FOUND', source, result)
+      throw new LucteriosException(GRAVE, 'OLD NOT FOUND', source, result)
     }
   }
 }

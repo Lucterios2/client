@@ -5,7 +5,7 @@ import i18n from '@/libs/i18n.js'
 
 import UploadComp from '@/components/UploadComp.vue'
 import { image_normal, image_compress, logo_normal } from '@/__tests__/tools'
-import { convertToBytes } from '@/libs/utils'
+import { convertToBytes } from '@/libs/convert'
 import { nextTick } from 'vue'
 
 const test_example_blob = new Blob(convertToBytes(window.atob(image_normal)))
@@ -38,7 +38,7 @@ describe('UploadComp', () => {
           withcam: true,
           maxsize: 16777216,
           compress: false,
-          httpFile: false
+          http_file: false
         }
       }
     })
@@ -78,7 +78,7 @@ describe('UploadComp', () => {
           withcam: true,
           maxsize: 16777216,
           compress: false,
-          httpFile: true
+          http_file: true
         }
       }
     })
@@ -117,7 +117,7 @@ describe('UploadComp', () => {
           withcam: false,
           maxsize: 16777216,
           compress: true,
-          httpFile: false
+          http_file: false
         }
       }
     })
@@ -158,7 +158,7 @@ describe('UploadComp', () => {
           withcam: false,
           maxsize: 16777216,
           compress: true,
-          httpFile: true
+          http_file: true
         }
       }
     })
@@ -200,7 +200,7 @@ describe('UploadComp', () => {
           withcam: false,
           maxsize: 2048,
           compress: false,
-          httpFile: true
+          http_file: true
         }
       }
     })
@@ -241,7 +241,7 @@ describe('UploadComp', () => {
           withcam: true,
           maxsize: 2048,
           compress: false,
-          httpFile: true
+          http_file: true
         }
       }
     })

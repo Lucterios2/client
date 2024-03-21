@@ -1,5 +1,5 @@
 <script>
-import { convertLuctoriosFormatToHtml, formatToString } from '@/libs/utils'
+import { convertLuctoriosFormatToHtml, formatToString } from '@/libs/convert'
 export default {
   name: 'AbstractComp',
   props: {

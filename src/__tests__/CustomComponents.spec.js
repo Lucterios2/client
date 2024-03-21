@@ -7,6 +7,7 @@ import { initialObserver } from '@/libs/observer'
 import { factory_components } from '@/components/tools'
 import storage from '@/libs/datastorage.js'
 import i18n from '@/libs/i18n.js'
+import { Stringformat } from '@/libs/convert'
 
 beforeEach(() => {
   document.documentElement.innerHTML = '<html><body><div id="app"></div></body></html>'
@@ -174,5 +175,190 @@ describe('CustomComponents', () => {
         .find('div > v-window > v-window-item:nth-of-type(3) > table > tr > td > div')
         .attributes().value
     ).toBe('ddd')
+  })
+  it('components multi-line', async () => {
+    const wrapper = shallowMount(CustomComponents, {
+      propsData: {
+        data: {
+          val1: 'aaa',
+          val2: 'bbb',
+          val3: 'ccc',
+          val4: 'ddd',
+          val5: 'eee',
+          val6: 'fff',
+          val7: 'ggg',
+          val8: 'hhh',
+          val9: 'iii',
+          val10: 'jjj',
+          val11: 'kkk',
+          val12: 'lll'
+        },
+        comp: [
+          {
+            name: 'val1',
+            component: 'AAA',
+            description: '',
+            tab: 0,
+            x: 0,
+            y: 0,
+            colspan: 1,
+            rowspan: 7
+          },
+          {
+            name: 'val2',
+            component: 'AAA',
+            description: '',
+            tab: 0,
+            x: 1,
+            y: 0,
+            colspan: 1,
+            rowspan: 7,
+            VMin: 20,
+            HMin: 200
+          },
+          {
+            name: 'val3',
+            component: 'AAA',
+            description: '',
+            tab: 0,
+            x: 2,
+            y: 0,
+            colspan: 1,
+            rowspan: 7,
+            VMin: 20,
+            HMin: 200
+          },
+          {
+            name: 'val4',
+            component: 'AAA',
+            description: '',
+            tab: 0,
+            x: 4,
+            y: 0,
+            colspan: 1,
+            rowspan: 7
+          },
+          {
+            name: 'val5',
+            component: 'AAA',
+            description: '',
+            tab: 0,
+            x: 3,
+            y: 1,
+            colspan: 1,
+            rowspan: 1,
+            VMin: 20,
+            HMin: 200
+          },
+          {
+            name: 'val6',
+            component: 'AAA',
+            description: '',
+            tab: 0,
+            x: 3,
+            y: 2,
+            colspan: 1,
+            rowspan: 1,
+            VMin: 20,
+            HMin: 200
+          },
+          {
+            name: 'val7',
+            component: 'AAA',
+            description: '',
+            tab: 0,
+            x: 3,
+            y: 3,
+            colspan: 1,
+            rowspan: 1,
+            VMin: 20,
+            HMin: 200
+          },
+          {
+            name: 'val8',
+            component: 'AAA',
+            description: '',
+            tab: 0,
+            x: 3,
+            y: 4,
+            colspan: 1,
+            rowspan: 1,
+            VMin: 80,
+            HMin: 200
+          },
+          {
+            name: 'val9',
+            component: 'AAA',
+            description: '',
+            tab: 0,
+            x: 3,
+            y: 5,
+            colspan: 1,
+            rowspan: 1,
+            VMin: 20,
+            HMin: 200
+          },
+          {
+            name: 'val10',
+            component: 'AAA',
+            description: '',
+            tab: 0,
+            x: 3,
+            y: 6,
+            colspan: 1,
+            rowspan: 1,
+            VMin: 20,
+            HMin: 200
+          },
+          {
+            name: 'val11',
+            component: 'AAA',
+            description: '',
+            tab: 0,
+            x: 0,
+            y: 7,
+            colspan: 4,
+            rowspan: 1
+          },
+          {
+            name: 'val12',
+            component: 'AAA',
+            description: '',
+            tab: 0,
+            x: 3,
+            y: 7,
+            colspan: 1,
+            rowspan: 1
+          }
+        ]
+      }
+    })
+    function get_value(posY, posX) {
+      const tditem = wrapper.find(
+        Stringformat('table > tr:nth-of-type({0}) > td:nth-of-type({1})', [posY, posX])
+      )
+      return [
+        Number(tditem.attributes().colspan),
+        Number(tditem.attributes().rowspan),
+        tditem.element.childElementCount > 0 ? tditem.find('div').attributes().value : null
+      ]
+    }
+    expect(wrapper.element.childElementCount).toBe(1)
+    expect(wrapper.find('table').element.childElementCount).toBe(8)
+    expect(get_value(1, 1)).toStrictEqual([1, 7, 'aaa']) //val1 (x:0,y:0)
+    expect(get_value(1, 2)).toStrictEqual([1, 7, 'bbb']) //val2 (x:1,y:0)
+    expect(get_value(1, 3)).toStrictEqual([1, 7, 'ccc']) //val3 (x:2,y:0)
+    expect(get_value(1, 4)).toStrictEqual([1, NaN, null])
+    expect(get_value(1, 5)).toStrictEqual([1, 7, 'ddd']) //val4 (x:4,y:0)
+
+    expect(get_value(2, 1)).toStrictEqual([1, 1, 'eee']) //val5 (x:3,y:1)
+    expect(get_value(3, 1)).toStrictEqual([1, 1, 'fff']) //val6 (x:3,y:2)
+    expect(get_value(4, 1)).toStrictEqual([1, 1, 'ggg']) //val7 (x:3,y:3)
+    expect(get_value(5, 1)).toStrictEqual([1, 1, 'hhh']) //val8 (x:3,y:4)
+    expect(get_value(6, 1)).toStrictEqual([1, 1, 'iii']) //val9 (x:3,y:5)
+    expect(get_value(7, 1)).toStrictEqual([1, 1, 'jjj']) //val10 (x:3,y:6)
+
+    expect(get_value(8, 1)).toStrictEqual([4, 1, 'kkk']) //val11 (x:0,y:7)
+    expect(get_value(8, 2)).toStrictEqual([1, 1, 'lll']) //val12 (x:3,y:7)
   })
 })

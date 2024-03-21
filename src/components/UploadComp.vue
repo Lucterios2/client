@@ -1,7 +1,7 @@
 <script>
 import AbstractEventComp from '@/components/AbstractEventComp.vue'
 import ButtonsBar from '@/libs/ButtonsBar.vue'
-import { Stringformat, blobToData, convertToBytes } from '../libs/utils'
+import { Stringformat, blobToData, convertToBytes } from '@/libs/convert'
 import JSZip from 'jszip'
 export default {
   name: 'UploadComp',
@@ -60,7 +60,7 @@ export default {
       }
     },
     async getEncodeFile(fileToSend) {
-      if (this.component.httpFile) {
+      if (this.component.http_file) {
         return fileToSend
       } else {
         return await blobToData(fileToSend)

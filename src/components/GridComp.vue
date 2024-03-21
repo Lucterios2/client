@@ -1,16 +1,13 @@
 <script>
 import AbstractComp from '@/components/AbstractComp.vue'
 import ButtonsBar from '@/libs/ButtonsBar.vue'
+import { SELECT_SINGLE, SELECT_MULTI, SELECT_NONE, refreshAction } from '@/libs/utils'
 import {
   Stringformat,
   convertLuctoriosFormatToHtml,
   formatToString,
-  SELECT_NONE,
-  SELECT_SINGLE,
-  SELECT_MULTI,
-  convert_action,
-  refreshAction
-} from '@/libs/utils'
+  convert_action
+} from '@/libs/convert'
 import { useI18n } from 'vue-i18n'
 
 export default {
@@ -79,7 +76,11 @@ export default {
         const new_line = { id: line_item.id, classname: last_color_even ? 'even' : 'odd' }
         this.component.headers.forEach((header_item) => {
           new_line[header_item[0]] = convertLuctoriosFormatToHtml(
-            formatToString(line_item[header_item[0]], '', header_item[4].replace('%s', '{0}'))
+            formatToString(
+              line_item[header_item[0]],
+              header_item[2] || '',
+              header_item[4].replace(/%s/g, '{0}')
+            )
           )
         })
         return new_line
@@ -142,14 +143,6 @@ export default {
     },
     refresh() {
       this.$emit('action', refreshAction(this.meta, this.gridcontext))
-    },
-    format_cell(item, header) {
-      const formated_value = formatToString(
-        item[header[0]],
-        header[2] || '',
-        (header[4] || '{0}').replaceAll('%s', '{0}')
-      )
-      return convertLuctoriosFormatToHtml(formated_value)
     },
     click_action(action) {
       var new_action = convert_action(action)
@@ -235,10 +228,17 @@ export default {
             v-for="header in component.headers"
             :key="header[0]"
             @click="click_row($event, item)"
-            @dblclick="dblclick_row($event, item)"
           >
-            <span v-if="header[2] != 'icon'">{{ format_cell(item, header) }}</span>
-            <img :src="item[header[0]]" v-if="header[2] == 'icon'" />
+            <span
+              v-if="header[2] != 'icon'"
+              v-html="item[header[0]]"
+              @dblclick="dblclick_row($event, item)"
+            ></span>
+            <img
+              :src="item[header[0]]"
+              v-if="header[2] == 'icon'"
+              @dblclick="dblclick_row($event, item)"
+            />
           </td>
         </tr>
       </template>

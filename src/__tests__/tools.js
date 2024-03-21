@@ -1,5 +1,6 @@
 import { useStore } from 'vuex'
-import { FORMTYPE_NOMODAL, convertToBytes, sleep } from '../libs/utils'
+import { FORMTYPE_NOMODAL, sleep } from '@/libs/utils'
+import { convertToBytes } from '@/libs/convert'
 
 export function convert_event_to_object(value) {
   if (Array.isArray(value)) {
