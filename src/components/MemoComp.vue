@@ -116,5 +116,4 @@ export default {
       </v-list-item>
     </v-list>
   </v-menu>
-  {{ has_menu }}
 </template>
