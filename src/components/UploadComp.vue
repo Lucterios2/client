@@ -167,7 +167,7 @@ export default {
 </script>
 
 <template>
-  <v-row>
+  <v-row :style="style_size">
     <v-col cols="max">
       <v-file-input
         clearable

@@ -91,6 +91,9 @@ export async function callLucteriosAction(action) {
   }
   reponsetext.meta.ismodal = action.modal == undefined || Number(action.modal) == FORMTYPE_MODAL
   reponsetext.meta.method = action.method
+  if (reponsetext.meta.id == undefined && reponsetext.meta.extension) {
+    reponsetext.meta.id = reponsetext.meta.extension + '/' + reponsetext.meta.action
+  }
   return reponsetext
 }
 

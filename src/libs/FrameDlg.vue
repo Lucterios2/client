@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     active_current(current) {
-      Array.from(document.getElementsByClassName('custom')).forEach((custom_element) => {
+      Array.from(document.getElementsByClassName('frameDlg')).forEach((custom_element) => {
         const cust_cards = Array.from(custom_element.getElementsByClassName('v-card'))
         cust_cards.sort((card1, card2) => {
           return card2.style.zIndex - card1.style.zIndex
@@ -73,6 +73,7 @@ export default {
       this.dialog_height = this.$el.getBoundingClientRect().height
     },
     mouse_down(event) {
+      this.active_current(this.$el)
       if (event.button === 0 && !this.dialog_box.allsize) {
         this.dialog_box.move = true
         this.dialog_box.mouseStartX = event.clientX
@@ -115,9 +116,13 @@ export default {
     },
     define_position() {
       if (this.dialog_box.el) {
+        const nb_frame = document.getElementsByClassName('frameDlg').length
         const left =
-          (50 * window.innerWidth) / 100.0 - this.dialog_box.el.getBoundingClientRect().width / 2
-        const top = (window.innerHeight - this.dialog_box.el.getBoundingClientRect().height) / 2
+          ((50 - 2 * nb_frame) * window.innerWidth) / 100.0 -
+          this.dialog_box.el.getBoundingClientRect().width / 2
+        const top =
+          (window.innerHeight - this.dialog_box.el.getBoundingClientRect().height) / 2 +
+          5 * nb_frame
         this.dialog_box.el.style.left = '%X%'.replace('%X', (100 * left) / window.innerWidth)
         this.dialog_box.el.style.top = '%Y%'.replace('%Y', (100 * top) / window.innerHeight)
       }
@@ -137,6 +142,14 @@ export default {
       this.define_position()
       clearInterval(positionIntervalId)
     }, 10)
+    document.addEventListener('keydown', (event) => {
+      if (event.key == 'Escape') {
+        const current_card = first_element_by_class(this.$el, 'v-card')
+        if (current_card && current_card.style.zIndex > 10) {
+          this.$emit('close')
+        }
+      }
+    })
   }
 }
 </script>

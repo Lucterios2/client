@@ -37,7 +37,7 @@ describe('CustomBox', () => {
         ]
       },
       global: {
-        plugins: [i18n]
+        plugins: [i18n, storage]
       }
     })
     expect(wrapper.element.childElementCount).toBe(1)
@@ -65,7 +65,8 @@ describe('CustomBox', () => {
           close: '0',
           params: { value: 54.65, id: 123, text: 'abc', val1: 'aaa', val2: 'bbb' },
           num: 1
-        }
+        },
+        undefined
       ]
     ])
 
@@ -79,7 +80,8 @@ describe('CustomBox', () => {
           close: '0',
           params: { value: 54.65, id: 123, text: 'abc', val1: 'aaa', val2: 'bbb' },
           num: 1
-        }
+        },
+        undefined
       ],
       [
         {
@@ -89,7 +91,8 @@ describe('CustomBox', () => {
           close: '1',
           params: { id: 123, text: 'abc', val1: 'aaa', val2: 'bbb' },
           num: 0
-        }
+        },
+        undefined
       ]
     ])
     expect(wrapper.emitted('close')).toStrictEqual([[]])
@@ -103,7 +106,8 @@ describe('CustomBox', () => {
           close: '0',
           params: { value: 54.65, id: 123, text: 'abc', val1: 'aaa', val2: 'bbb' },
           num: 1
-        }
+        },
+        undefined
       ],
       [
         {
@@ -113,7 +117,8 @@ describe('CustomBox', () => {
           close: '1',
           params: { id: 123, text: 'abc', val1: 'aaa', val2: 'bbb' },
           num: 0
-        }
+        },
+        undefined
       ],
       [
         {
@@ -123,7 +128,8 @@ describe('CustomBox', () => {
           close: '1',
           params: { id: 123, text: 'abc', val1: 'aaa', val2: 'bbb' },
           num: 0
-        }
+        },
+        undefined
       ]
     ])
     expect(wrapper.emitted('close')).toStrictEqual([[]])
@@ -144,6 +150,9 @@ describe('CustomBox', () => {
           { id: 'abc', text: 'action1', icon: 'icon1', close: '1' },
           { id: 'def', text: 'action2', icon: 'icon2', close: '0', params: { value: 54.65 } }
         ]
+      },
+      global: {
+        plugins: [i18n, storage]
       }
     })
     expect(wrapper.element.childElementCount).toBe(0)

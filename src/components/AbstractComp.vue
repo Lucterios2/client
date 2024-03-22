@@ -1,5 +1,5 @@
 <script>
-import { convertLuctoriosFormatToHtml, formatToString } from '@/libs/convert'
+import { convertLuctoriosFormatToHtml, formatToString, Stringformat } from '@/libs/convert'
 export default {
   name: 'AbstractComp',
   props: {
@@ -31,6 +31,16 @@ export default {
         formatstr.replaceAll('%s', '{0}')
       )
       return convertLuctoriosFormatToHtml(int_label)
+    },
+    style_size() {
+      var style_txt = ''
+      if (this.component.VMin) {
+        style_txt = style_txt + Stringformat('min-height:{0}px;', [this.component.VMin])
+      }
+      if (this.component.HMin) {
+        style_txt = style_txt + Stringformat('min-width:{0}px;', [this.component.HMin])
+      }
+      return style_txt
     }
   }
 }
@@ -39,7 +49,7 @@ export default {
 <template>
   <div :name="component.name">
     <label class="v-label" v-if="component.description">{{ component.description }}</label>
-    <div class="v-field_abstract">
+    <div class="v-field_abstract" :style="style_size">
       <slot />
     </div>
   </div>
@@ -83,5 +93,25 @@ div.v-input__details {
 }
 .v-textarea > div.v-input__control > div.v-field > div.v-field__field > .v-field__input {
   margin-bottom: 0px;
+}
+
+.checklist {
+  border-bottom: 1px solid grey;
+  background-color: #eee;
+}
+.checklist > div.v-field_abstract > .v-row {
+  min-height: 100px;
+}
+.checklist > div.v-field_abstract > .v-row > .v-col > select {
+  width: 98%;
+  height: 98%;
+  vertical-align: middle;
+  overflow-x: scroll;
+}
+
+.v-checkbox.v-input {
+  height: 25px;
+  margin-bottom: 15px;
+  margin-top: -10px;
 }
 </style>

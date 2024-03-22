@@ -228,17 +228,10 @@ export default {
             v-for="header in component.headers"
             :key="header[0]"
             @click="click_row($event, item)"
+            @dblclick="dblclick_row($event, item)"
           >
-            <span
-              v-if="header[2] != 'icon'"
-              v-html="item[header[0]]"
-              @dblclick="dblclick_row($event, item)"
-            ></span>
-            <img
-              :src="item[header[0]]"
-              v-if="header[2] == 'icon'"
-              @dblclick="dblclick_row($event, item)"
-            />
+            <span v-if="header[2] != 'icon'" v-html="item[header[0]]"></span>
+            <img :src="item[header[0]]" v-if="header[2] == 'icon'" />
           </td>
         </tr>
       </template>

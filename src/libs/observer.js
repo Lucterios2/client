@@ -45,6 +45,7 @@ class CompManager {
   constructor(owner, click_action) {
     this.owner = owner
     this.el = document.createElement('div')
+    this.el.id = new Date().valueOf()
     this.click_action = click_action
     document.getElementById('comp').appendChild(this.el)
   }
@@ -52,21 +53,30 @@ class CompManager {
   mount(component, props) {
     let self = this
     let emits = {
-      clickaction: function (action) {
-        return self.click_action(action, self.el)
+      clickaction: function (action, with_owner) {
+        return self.click_action(action, with_owner ? self.owner : self.el)
       },
-      close: function () {
-        return self.close()
+      close: function (no_refresh) {
+        return self.close(no_refresh)
       }
+    }
+    if (props.id == undefined) {
+      props.id = this.el.id
     }
     this.comp = createCompnent(this.el, component, props, [], emits)
     component_created.set(this.el, this)
   }
 
-  close() {
+  close(no_refresh) {
     if (this.el) {
+      if (this.owner && !no_refresh) {
+        let old_comp = component_created.get(this.owner)
+        if (old_comp) {
+          old_comp.refresh()
+        }
+      }
       component_created.forEach((comp) => {
-        if (comp.owner == this.el) {
+        if (comp.owner && this.el.id == comp.owner.id) {
           comp.owner = this.owner
         }
       })
@@ -75,13 +85,10 @@ class CompManager {
         root_comp.removeChild(this.el)
       }
       Vue.render(null, this.el)
-      component_created.delete(this.el)
-      if (this.owner) {
-        let old_comp = component_created.get(this.owner)
-        if (old_comp) {
-          old_comp.refresh()
-        }
+      if (this.comp) {
+        this.comp.component.ctx.clean_observer()
       }
+      component_created.delete(this.el)
     }
     this.el = null
     return true

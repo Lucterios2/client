@@ -38,6 +38,7 @@ export default {
     item-value="value"
     :disabled="is_disabled"
     :key="forceRecompute"
+    :style="style_size"
     single-line
     @update:modelValue="runIfChange"
     @keyup.enter="onPressEnter"

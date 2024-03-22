@@ -54,6 +54,7 @@ export default {
     :rules="check"
     :disabled="is_disabled"
     :key="forceRecompute"
+    :style="style_size"
     @focusout="onFocusout"
     @keyup.enter="onPressEnter"
   />

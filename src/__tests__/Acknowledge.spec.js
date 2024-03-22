@@ -21,7 +21,7 @@ describe('Acknowledge', () => {
     })
     expect(wrapper.element.childElementCount).toBe(0)
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
-    expect(wrapper.emitted('close')).toStrictEqual([[]])
+    expect(wrapper.emitted('close')).toStrictEqual([[false]])
   }),
     it('with action', async () => {
       const wrapper = shallowMount(AcknowledgeReturn, {
@@ -48,10 +48,11 @@ describe('Acknowledge', () => {
             icon: 'icon2',
             close: '0',
             params: { value: 54.65, id: 123, text: 'abc' }
-          }
+          },
+          true
         ]
       ])
-      expect(wrapper.emitted('close')).toStrictEqual([[]])
+      expect(wrapper.emitted('close')).toStrictEqual([[true]])
     }),
     it('with close', async () => {
       const wrapper = shallowMount(AcknowledgeReturn, {
@@ -72,10 +73,11 @@ describe('Acknowledge', () => {
             icon: 'icon1',
             close: '1',
             params: { truc: true, id: 123, text: 'abc' }
-          }
+          },
+          true
         ]
       ])
-      expect(wrapper.emitted('close')).toStrictEqual([[]])
+      expect(wrapper.emitted('close')).toStrictEqual([[false]])
     }),
     it('both action & close', async () => {
       const wrapper = shallowMount(AcknowledgeReturn, {
@@ -94,7 +96,7 @@ describe('Acknowledge', () => {
       })
       expect(wrapper.element.childElementCount).toBe(0)
       await nextTick()
-      await sleep(200)
+      await sleep(300)
       expect(wrapper.emitted('clickaction')).toStrictEqual([
         [
           {
@@ -103,7 +105,8 @@ describe('Acknowledge', () => {
             icon: 'icon2',
             close: '0',
             params: { value: 54.65, id: 123, text: 'abc' }
-          }
+          },
+          true
         ],
         [
           {
@@ -112,9 +115,10 @@ describe('Acknowledge', () => {
             icon: 'icon1',
             close: '1',
             params: { truc: true, id: 123, text: 'abc' }
-          }
+          },
+          true
         ]
       ])
-      expect(wrapper.emitted('close')).toStrictEqual([[]])
+      expect(wrapper.emitted('close')).toStrictEqual([[true]])
     })
 })

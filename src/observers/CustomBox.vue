@@ -7,6 +7,9 @@ export default {
   name: 'CustomBox',
   extends: AbstractObserver,
   components: { FrameDlg, CustomComponents },
+  data: () => ({
+    currentinfo: null
+  }),
   props: {
     data: Object,
     comp: Array
@@ -23,6 +26,8 @@ export default {
           this.click_action_in_customcomponents(action)
         }
       } else {
+        this.currentinfo = this.$options.childInterface.get_info()
+        this.$store.commit('save_observer_info', this.id, this.currentinfo)
         AbstractObserver.methods.click_action.call(this, action)
       }
     },
@@ -32,6 +37,9 @@ export default {
     getChildInterface(childInterface) {
       this.$options.childInterface = childInterface
     }
+  },
+  mounted() {
+    this.currentinfo = this.$store.state.observer_info[this.id]
   }
 }
 </script>
@@ -50,6 +58,7 @@ export default {
       :comp="comp"
       :meta="meta"
       :context="context"
+      :initialInfo="currentinfo"
       @action="click_action"
       @close="$emit('close')"
       @interface="getChildInterface"

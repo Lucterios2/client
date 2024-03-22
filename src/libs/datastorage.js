@@ -30,7 +30,8 @@ const storage = createStore({
       email: '',
       version_current: '',
       version_expected: ''
-    }
+    },
+    observer_info: {}
   },
   mutations: {
     call_waiting(state, waiting) {
@@ -47,6 +48,12 @@ const storage = createStore({
         server.clientversion = server.cordovaversion
       }
       state.server = Object.assign({}, state.server, server)
+    },
+    save_observer_info(state, observerId, info) {
+      state.observer_info[observerId] = info
+    },
+    clean_observer(state, observerId) {
+      delete state.observer_info[observerId]
     }
   },
   actions: {

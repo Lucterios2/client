@@ -7,14 +7,15 @@ import { factory_components } from '@/components/tools'
 export default {
   name: 'CustomComponents',
   data: () => ({
-    tab: null,
+    internalInfo: {},
     componentlist: []
   }),
   props: {
     context: Object,
     data: Object,
     comp: Array,
-    meta: Object
+    meta: Object,
+    initialInfo: Object
   },
   emits: ['action', 'close', 'interface'],
   computed: {
@@ -64,7 +65,7 @@ export default {
         if (last_components_touched.length > 0) {
           const offset = Math.max(
             ...last_components_touched.map((item) => {
-              return item.x + item.colspan + 1
+              return item.x + item.colspan
             })
           )
           current_x = Math.max(current_x, offset)
@@ -158,13 +159,20 @@ export default {
     },
     emitInterface() {
       this.$emit('interface', {
-        call_action: (action) => this.call_action(action)
+        call_action: (action) => this.call_action(action),
+        get_info: () => this.internalInfo
       })
     }
   },
   mounted() {
     this.emitInterface()
     this.refresh()
+    this.internalInfo = this.initialInfo
+    if (this.internalInfo == undefined) {
+      this.internalInfo = {
+        tab: this.tablist.length > 0 ? this.tablist[0].name : null
+      }
+    }
   },
   updated() {
     this.refresh()
@@ -176,12 +184,12 @@ export default {
   <div ref="root">
     <table class="root-row" width="100%"></table>
     <div class="tabroot" v-if="tablist.length > 0">
-      <v-tabs v-model="tab" bg-color="#888" color="#000">
+      <v-tabs v-model="internalInfo.tab" bg-color="#888" color="#000">
         <v-tab v-for="tab in tablist" :value="tab.name" :key="tab.tab" class="tabheader">{{
           data[tab.name]
         }}</v-tab>
       </v-tabs>
-      <v-window v-model="tab">
+      <v-window v-model="internalInfo.tab">
         <v-window-item v-for="tab in tablist" :value="tab.name" :key="tab.tab" class="tabcontent">
           <table :class="tab.name + '__row'" width="100%"></table>
         </v-window-item>

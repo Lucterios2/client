@@ -166,9 +166,11 @@ export default {
 <style scoped>
 .menu {
   position: fixed;
-  top: 75px;
+  top: 60px;
   width: 98%;
   margin: 0px 1%;
+  overflow-y: scroll;
+  height: 95%;
 }
 
 .v-expansion-panels {
@@ -184,13 +186,13 @@ export default {
   background-color: white;
 }
 
-@media only screen and (min-width: 1400px) {
+@media only screen and (min-width: 1200px) {
   .v-col-2-xld {
     flex: 0 0 16.6666666667%;
     max-width: 16.6666666667%;
   }
 }
-@media only screen and (min-width: 1000px) and (max-width: 1400px) {
+@media only screen and (min-width: 1000px) and (max-width: 1200px) {
   .v-col-3-ld {
     flex: 0 0 25%;
     max-width: 25%;

@@ -99,7 +99,7 @@ export default {
 <template>
   <AbstractEventComp class="checklist" :value="value" :component="component">
     <v-row>
-      <v-col :cols="Number(component.simple) ? 5 : 12">
+      <v-col :cols="Number(component.simple) ? 6 : 12">
         <select multiple @change="onleftChange($event)" @focusout="runIfChange">
           <option
             :value="item.value"
@@ -111,7 +111,7 @@ export default {
           </option>
         </select>
       </v-col>
-      <v-col cols="2" v-if="Number(component.simple) == 2" style="padding-bottom: 20px">
+      <v-col cols="1" v-if="Number(component.simple) == 2" style="padding-bottom: 20px">
         <v-btn size="x-small" icon="mdi mdi-chevron-double-right" @click="addall"></v-btn>
         <v-btn size="x-small" icon="mdi mdi-chevron-right" @click="addone"></v-btn>
         <v-btn size="x-small" icon="mdi mdi-chevron-left" @click="delone"></v-btn>
@@ -127,15 +127,3 @@ export default {
     </v-row>
   </AbstractEventComp>
 </template>
-
-<style scoped>
-.checklist {
-  border-bottom: 1px solid grey;
-  background-color: #eee;
-}
-.checklist > .v-field_abstract > .row > .col > select {
-  width: 95%;
-  max-height: 200px;
-  vertical-align: middle;
-}
-</style>

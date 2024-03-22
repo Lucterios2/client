@@ -24,6 +24,7 @@ export default {
     v-model="current_value"
     :label="component.description"
     :disabled="is_disabled"
+    :style="style_size"
     @change="runIfChange"
     @keyup.enter="onPressEnter"
   />

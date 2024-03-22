@@ -50,6 +50,7 @@ export default {
     :rules="check"
     :disabled="is_disabled"
     :clearable="!component.needed"
+    :style="style_size"
     @focusout="runIfChange"
     @keyup.enter="onPressEnter"
   />

@@ -93,6 +93,7 @@ export default {
     :label="component.description"
     :rules="check"
     :disabled="is_disabled"
+    :style="style_size"
     @focusout="runIfChange"
     @keyup.enter="onPressEnter"
     @contextmenu="show_context_menu"
@@ -106,6 +107,7 @@ export default {
     :label="component.description"
     :rules="check"
     :readOnly="is_disabled"
+    :style="style_size"
     @ready="ready"
     @blur="runIfChange"
   />
