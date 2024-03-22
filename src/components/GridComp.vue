@@ -152,6 +152,7 @@ export default {
       this.$emit('action', new_action)
     },
     click_row(event, row_item) {
+      this.savefocusin()
       if (this.buttonMode != SELECT_NONE) {
         const exit_before = this.selectItems.includes(row_item.id)
         if (exit_before) {
@@ -213,6 +214,8 @@ export default {
       :no-data-text="$t('No result')"
       :page-text="page_text"
       item-value="id"
+      ref="tofocus"
+      @focusin="savefocusin"
       @update:options="loadItems"
     >
       <template #item="{ item }">

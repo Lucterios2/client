@@ -83,12 +83,20 @@ export default {
     },
     required(v) {
       return !!v || this.$t('field_required')
+    },
+    refresh_document() {
+      document.title = this.$store.state.server.title + ' - ' + this.$store.state.server.subtitle
+      var link = document.querySelector("link[rel*='icon']") || document.createElement('link')
+      link.type = 'image/x-icon'
+      link.rel = 'shortcut icon'
+      link.href = this.$store.state.server.logoname
+      document.getElementsByTagName('head')[0].appendChild(link)
     }
   },
   mounted() {
     this.$store.commit('call_status', false)
     this.$store.commit('change_server', convert_object_lowercase(this.connexion))
-    document.title = this.$store.state.server.title + ' - ' + this.$store.state.server.subtitle
+    this.refresh_document()
     if (this.$store.state.server.style !== '') {
       insertStyle(this.$store.state.server.style)
     }

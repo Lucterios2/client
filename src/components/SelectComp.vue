@@ -32,6 +32,7 @@ export default {
 <template>
   <v-select
     v-model="current_value"
+    ref="tofocus"
     :label="component.description"
     :items="items"
     item-title="title"
@@ -40,6 +41,7 @@ export default {
     :key="forceRecompute"
     :style="style_size"
     single-line
+    @focusin="savefocusin"
     @update:modelValue="runIfChange"
     @keyup.enter="onPressEnter"
   />

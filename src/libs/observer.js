@@ -141,7 +141,7 @@ export async function factory(result, click_action, source, refresh) {
       new_comp.mount(current_comp, result)
       return new_comp
     } else {
-      throw new LucteriosException(GRAVE, 'NO COMPONENT', result)
+      throw new LucteriosException(GRAVE, 'NO COMPONENT', '', JSON.stringify(result))
     }
   } else {
     let old_comp = component_created.get(source)
@@ -149,7 +149,7 @@ export async function factory(result, click_action, source, refresh) {
       old_comp.update(result)
       return old_comp
     } else {
-      throw new LucteriosException(GRAVE, 'OLD NOT FOUND', source, result)
+      throw new LucteriosException(GRAVE, 'OLD NOT FOUND', '', JSON.stringify(result))
     }
   }
 }

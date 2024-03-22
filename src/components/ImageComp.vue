@@ -34,7 +34,7 @@ export default {
 
 <template>
   <AbstractComp :component="component">
-    <img :src="image_src" v-if="!is_icon" />
+    <img ref="tofocus" :src="image_src" v-if="!is_icon" />
     <v-icon size="48px" v-if="is_icon">{{ image_src }}</v-icon>
   </AbstractComp>
 </template>

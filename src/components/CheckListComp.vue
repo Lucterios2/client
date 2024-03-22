@@ -100,7 +100,13 @@ export default {
   <AbstractEventComp class="checklist" :value="value" :component="component">
     <v-row>
       <v-col :cols="Number(component.simple) ? 6 : 12">
-        <select multiple @change="onleftChange($event)" @focusout="runIfChange">
+        <select
+          multiple
+          @change="onleftChange($event)"
+          @focusin="savefocusin"
+          @focusout="runIfChange"
+          ref="tofocus"
+        >
           <option
             :value="item.value"
             :selected="item.selected"
@@ -112,13 +118,33 @@ export default {
         </select>
       </v-col>
       <v-col cols="1" v-if="Number(component.simple) == 2" style="padding-bottom: 20px">
-        <v-btn size="x-small" icon="mdi mdi-chevron-double-right" @click="addall"></v-btn>
-        <v-btn size="x-small" icon="mdi mdi-chevron-right" @click="addone"></v-btn>
-        <v-btn size="x-small" icon="mdi mdi-chevron-left" @click="delone"></v-btn>
-        <v-btn size="x-small" icon="mdi mdi-chevron-double-left" @click="delall"></v-btn>
+        <v-btn
+          size="x-small"
+          icon="mdi mdi-chevron-double-right"
+          @focusin="savefocusin"
+          @click="addall"
+        ></v-btn>
+        <v-btn
+          size="x-small"
+          icon="mdi mdi-chevron-right"
+          @focusin="savefocusin"
+          @click="addone"
+        ></v-btn>
+        <v-btn
+          size="x-small"
+          icon="mdi mdi-chevron-left"
+          @focusin="savefocusin"
+          @click="delone"
+        ></v-btn>
+        <v-btn
+          size="x-small"
+          icon="mdi mdi-chevron-double-left"
+          @focusin="savefocusin"
+          @click="delall"
+        ></v-btn>
       </v-col>
       <v-col cols="5" v-if="Number(component.simple) == 2">
-        <select multiple @change="onrightChange($event)">
+        <select multiple @change="onrightChange($event)" @focusin="savefocusin">
           <option :value="item.value" :key="idx" v-for="(item, idx) in right_select">
             {{ item.title }}
           </option>

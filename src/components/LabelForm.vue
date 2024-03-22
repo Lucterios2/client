@@ -9,7 +9,7 @@ export default {
 
 <template>
   <AbstractComp :value="value" :component="component">
-    <span v-html="value_formated"></span>
+    <span ref="tofocus" v-html="value_formated"></span>
   </AbstractComp>
 </template>
 

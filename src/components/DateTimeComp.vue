@@ -31,11 +31,13 @@ export default {
     class="edit"
     type="datetime-local"
     v-model="current_value"
+    ref="tofocus"
     :label="component.description"
     :rules="check"
     :disabled="is_disabled"
     :clearable="!component.needed"
     :style="style_size"
+    @focusin="savefocusin"
     @focusout="runIfChange"
     @keyup.enter="onPressEnter"
   />

@@ -32,7 +32,13 @@ export default {
 <template>
   <AbstractComp :value="value" :component="component">
     <span> {{ value }} </span>
-    <v-btn prepend-icon="mdi:mdi-content-save" @click="openFile">{{ $t('Save as...') }}</v-btn>
+    <v-btn
+      prepend-icon="mdi:mdi-content-save"
+      ref="tofocus"
+      @focusin="savefocusin"
+      @click="openFile"
+      >{{ $t('Save as...') }}</v-btn
+    >
   </AbstractComp>
 </template>
 

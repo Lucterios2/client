@@ -17,6 +17,7 @@ export default {
 <template>
   <AbstractEventComp :value="value" :component="component" v-if="component.action">
     <ButtonAction
+      ref="tofocus"
       class="button"
       :action="component.action"
       :is_mini="component.is_mini"

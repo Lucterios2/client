@@ -9,7 +9,13 @@ export default {
 
 <template>
   <AbstractComp :value="value" :component="component">
-    <a target="_blank" :href="component.link" v-html="value_formated"></a>
+    <a
+      target="_blank"
+      ref="tofocus"
+      @focusin="savefocusin"
+      :href="component.link"
+      v-html="value_formated"
+    ></a>
   </AbstractComp>
 </template>
 

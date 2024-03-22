@@ -1,8 +1,9 @@
 <script>
 import AbstractObserver from '@/observers/AbstractObserver.vue'
 import ButtonsBar from '@/libs/ButtonsBar.vue'
-import { convertLuctoriosFormatToHtml } from '@/libs/convert'
+import { convertLuctoriosFormatToHtml, Stringformat } from '@/libs/convert'
 import { send_to_support, part_for_email } from '@/libs/utils'
+import { getUrlServer } from '@/libs/transport'
 const FAILURE = 0
 const CRITIC = 1
 const GRAVE = 2
@@ -71,9 +72,31 @@ export default {
     },
     callstack() {
       var stackText = ''
-      const stackTexts = this.exception.debug.replaceAll('{[br/]}', '{[br]}').split('{[br]}')
+      const stackTexts = this.exception.debug
+        .replaceAll('{[br/]}', '{[br]}')
+        .replaceAll('{[br]}', '\n')
+        .split('\n')
       for (var sIdx = 0; sIdx < stackTexts.length; sIdx++) {
-        stackText += stackTexts[sIdx]
+        const start_url_pos = stackTexts[sIdx].indexOf(getUrlServer())
+        if (start_url_pos != -1) {
+          var stack_line_begin = stackTexts[sIdx].substring(0, start_url_pos).trim().split('/')
+          stack_line_begin = stack_line_begin[stack_line_begin.length - 1]
+          while (stack_line_begin.length < 45) {
+            stack_line_begin = stack_line_begin + ' '
+          }
+          const stack_line_files = stackTexts[sIdx]
+            .substring(start_url_pos + getUrlServer().length)
+            .split(':')
+          const stack_line_filename = stack_line_files[0].split('?')[0].split('/')
+          stackText += Stringformat('{0} | {1} [{2}:{3}]', [
+            stack_line_begin,
+            stack_line_filename[stack_line_filename.length - 1],
+            stack_line_files[1],
+            stack_line_files[2]
+          ])
+        } else {
+          stackText += stackTexts[sIdx]
+        }
         stackText += '\n'
       }
       return stackText.trim()
@@ -138,16 +161,8 @@ export default {
               <v-tabs v-model="tab">
                 <v-tab value="callstack">{{ $t('Call-stack') }}</v-tab>
                 <v-tab value="extra">{{ $t('Extra') }}</v-tab>
-                <v-tab
-                  value="request"
-                  v-if="exception.request !== '' && exception.request !== undefined"
-                  >{{ $t('Request') }}</v-tab
-                >
-                <v-tab
-                  value="response"
-                  v-if="exception.response !== '' && exception.response !== undefined"
-                  >{{ $t('Response') }}</v-tab
-                >
+                <v-tab value="request" v-if="exception.request">{{ $t('Request') }}</v-tab>
+                <v-tab value="response" v-if="exception.response">{{ $t('Response') }}</v-tab>
               </v-tabs>
               <v-card-text>
                 <v-window v-model="tab">

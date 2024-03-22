@@ -45,8 +45,10 @@ export default {
     <span>{{ num1 }}</span> <span>{{ operationTxt }}</span>
     <input
       class="result-captcha"
+      ref="tofocus"
       type="text"
       v-model="result"
+      @focusin="savefocusin"
       @keyup.enter="$emit('action', null)"
     />
     = <span>{{ total }}</span>

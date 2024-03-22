@@ -84,12 +84,15 @@ export default {
           action: this.call_action,
           close: () => {
             this.$emit('close')
-          }
+          },
+          focusin: this.receive_focus
         }
+        current_td.id = new Date().valueOf()
         const new_vuecomp = createCompnent(
           current_td,
           factory_components(comp_item.component),
           {
+            id: current_td.id,
             context: this.context,
             value: this.data[comp_item.name],
             component: comp_item,
@@ -157,6 +160,9 @@ export default {
       })
       return component
     },
+    receive_focus(component_name) {
+      this.internalInfo.focus_name = component_name
+    },
     emitInterface() {
       this.$emit('interface', {
         call_action: (action) => this.call_action(action),
@@ -170,9 +176,18 @@ export default {
     this.internalInfo = this.initialInfo
     if (this.internalInfo == undefined) {
       this.internalInfo = {
-        tab: this.tablist.length > 0 ? this.tablist[0].name : null
+        tab: this.tablist.length > 0 ? this.tablist[0].name : null,
+        focus_name:
+          this.componentlist.length > 0
+            ? this.componentlist[this.componentlist.length - 1].component.name
+            : null
       }
     }
+    this.componentlist.forEach((comp) => {
+      if (this.internalInfo.focus_name == comp.component.name) {
+        comp.setfocus()
+      }
+    })
   },
   updated() {
     this.refresh()

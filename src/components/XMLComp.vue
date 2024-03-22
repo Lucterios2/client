@@ -50,10 +50,12 @@ export default {
 <template>
   <v-textarea
     v-model="current_value"
+    ref="tofocus"
     :label="component.description"
     :rules="check"
     :disabled="is_disabled"
     :style="style_size"
+    @focusin="savefocusin"
     @focusout="runIfChange"
     @keyup.enter="onPressEnter"
     @contextmenu="show_context_menu"

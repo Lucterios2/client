@@ -47,6 +47,7 @@ export default {
     class="edit"
     type="number"
     v-model="current_value"
+    ref="tofocus"
     :min="component.min"
     :max="component.max"
     :step="step"
@@ -55,6 +56,7 @@ export default {
     :disabled="is_disabled"
     :key="forceRecompute"
     :style="style_size"
+    @focusin="savefocusin"
     @focusout="onFocusout"
     @keyup.enter="onPressEnter"
   />

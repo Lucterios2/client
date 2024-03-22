@@ -172,10 +172,12 @@ export default {
       <v-file-input
         clearable
         show-size
+        ref="tofocus"
         :rules="check"
         :accept="files_accepted"
         :label="component.description"
         :model-value="selected_files"
+        @focusin="savefocusin"
         @change="selectFile"
         @click:clear="selectFile"
       />

@@ -68,38 +68,62 @@ describe('CustomComponents', () => {
     expect(wrapper.element.childElementCount).toBe(1)
     expect(wrapper.find('table').element.childElementCount).toBe(4)
     expect(
-      wrapper.find('table > tr:nth-of-type(1) > td:nth-of-type(1)').attributes()
-    ).toStrictEqual({ class: 'customcell', colspan: '1', rowspan: '3' })
+      Object.assign(
+        {},
+        wrapper.find('table > tr:nth-of-type(1) > td:nth-of-type(1)').attributes(),
+        { id: 0 }
+      )
+    ).toStrictEqual({ class: 'customcell', colspan: '1', rowspan: '3', id: 0 })
     expect(
       wrapper.find('table > tr:nth-of-type(1) > td:nth-of-type(1) > div').attributes().value
     ).toStrictEqual('aaa')
     expect(
-      wrapper.find('table > tr:nth-of-type(1) > td:nth-of-type(2)').attributes()
-    ).toStrictEqual({ class: 'customcell', colspan: '1', rowspan: '1' })
+      Object.assign(
+        {},
+        wrapper.find('table > tr:nth-of-type(1) > td:nth-of-type(2)').attributes(),
+        { id: 0 }
+      )
+    ).toStrictEqual({ class: 'customcell', colspan: '1', rowspan: '1', id: 0 })
     expect(
       wrapper.find('table > tr:nth-of-type(1) > td:nth-of-type(2) > div').attributes().value
     ).toStrictEqual('bbb')
     expect(
-      wrapper.find('table > tr:nth-of-type(2) > td:nth-of-type(1)').attributes()
-    ).toStrictEqual({ class: 'customcell', colspan: '1', rowspan: '1' })
+      Object.assign(
+        {},
+        wrapper.find('table > tr:nth-of-type(2) > td:nth-of-type(1)').attributes(),
+        { id: 0 }
+      )
+    ).toStrictEqual({ class: 'customcell', colspan: '1', rowspan: '1', id: 0 })
     expect(
       wrapper.find('table > tr:nth-of-type(2) > td:nth-of-type(1) > div').attributes().value
     ).toStrictEqual('ccc')
     expect(
-      wrapper.find('table > tr:nth-of-type(3) > td:nth-of-type(1)').attributes()
-    ).toStrictEqual({ class: 'customcell', colspan: '1', rowspan: '1' })
+      Object.assign(
+        {},
+        wrapper.find('table > tr:nth-of-type(3) > td:nth-of-type(1)').attributes(),
+        { id: 0 }
+      )
+    ).toStrictEqual({ class: 'customcell', colspan: '1', rowspan: '1', id: 0 })
     expect(
       wrapper.find('table > tr:nth-of-type(3) > td:nth-of-type(1) > div').attributes().value
     ).toStrictEqual('ddd')
     expect(
-      wrapper.find('table > tr:nth-of-type(4) > td:nth-of-type(1)').attributes()
-    ).toStrictEqual({ class: 'customcell', colspan: '1' })
+      Object.assign(
+        {},
+        wrapper.find('table > tr:nth-of-type(4) > td:nth-of-type(1)').attributes(),
+        { id: 0 }
+      )
+    ).toStrictEqual({ class: 'customcell', colspan: '1', id: 0 })
     expect(
       wrapper.find('table > tr:nth-of-type(4) > td:nth-of-type(1)').element.childElementCount
     ).toBe(0)
     expect(
-      wrapper.find('table > tr:nth-of-type(4) > td:nth-of-type(2)').attributes()
-    ).toStrictEqual({ class: 'customcell', colspan: '1', rowspan: '1' })
+      Object.assign(
+        {},
+        wrapper.find('table > tr:nth-of-type(4) > td:nth-of-type(2)').attributes(),
+        { id: 0 }
+      )
+    ).toStrictEqual({ class: 'customcell', colspan: '1', rowspan: '1', id: 0 })
     expect(
       wrapper.find('table > tr:nth-of-type(4) > td:nth-of-type(2) > div').attributes().value
     ).toStrictEqual('eee')

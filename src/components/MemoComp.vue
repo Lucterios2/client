@@ -94,6 +94,8 @@ export default {
     :rules="check"
     :disabled="is_disabled"
     :style="style_size"
+    ref="tofocus"
+    @focusin="savefocusin"
     @focusout="runIfChange"
     @keyup.enter="onPressEnter"
     @contextmenu="show_context_menu"
@@ -101,6 +103,7 @@ export default {
   <QuillEditor
     v-if="component.with_hypertext"
     v-model:content="current_value"
+    ref="tofocus"
     theme="snow"
     toolbar="essential"
     contentType="html"
@@ -108,6 +111,7 @@ export default {
     :rules="check"
     :readOnly="is_disabled"
     :style="style_size"
+    @focus="savefocusin"
     @ready="ready"
     @blur="runIfChange"
   />

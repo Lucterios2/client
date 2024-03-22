@@ -3,18 +3,32 @@ import { convertLuctoriosFormatToHtml, formatToString, Stringformat } from '@/li
 export default {
   name: 'AbstractComp',
   props: {
+    id: String,
     context: Object,
     value: [String, Number, Array, Boolean],
     component: Object,
     meta: Object
   },
-  emits: ['action', 'close'],
+  emits: ['action', 'close', 'focusin'],
   methods: {
     is_valid() {
       return true
     },
     getValue() {
       return null
+    },
+    savefocusin() {
+      this.$emit('focusin', this.component.name)
+    },
+    setfocus() {
+      this.$nextTick(() => {
+        try {
+          const editRef = this.$refs.tofocus
+          editRef.focus()
+        } catch (err) {
+          console.log('setfocus', this.component.name, err)
+        }
+      })
     },
     setValue() {},
     setEnabled() {},

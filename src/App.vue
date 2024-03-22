@@ -1,6 +1,9 @@
 <script>
+import { runErrorCaptured, initial_error } from '@/libs/error'
 export default {
+  errorCaptured: runErrorCaptured,
   mounted() {
+    initial_error()
     document.title = this.$store.state.server.title + ' - ' + this.$store.state.server.sub_title
   }
 }
@@ -12,6 +15,7 @@ import StatusBar from '@/libs/StatusBar.vue'
 import WaitingFrame from '@/libs/WaitingFrame.vue'
 import AboutFrame from '@/libs/AboutFrame.vue'
 import { FORMTYPE_REFRESH } from '@/libs/utils'
+
 const show_about = defineModel('show_about', { type: Boolean, default: false })
 
 initialObserver()
@@ -48,8 +52,12 @@ function help() {
   win.focus()
 }
 async function click_action(action, source) {
-  const result = await callLucteriosAction(action)
-  await factory(result, click_action, source, Number(action.modal) == FORMTYPE_REFRESH)
+  try {
+    const result = await callLucteriosAction(action)
+    await factory(result, click_action, source, Number(action.modal) == FORMTYPE_REFRESH)
+  } catch (err) {
+    await runErrorCaptured(err)
+  }
 }
 
 click_action({ id: 'CORE/authentification', method: 'POST' }, null)
