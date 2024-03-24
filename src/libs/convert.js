@@ -16,12 +16,15 @@ export function convertToBytes(byteCharacters) {
   return byteArrays
 }
 
-export function convert_action(action) {
+export function convert_action(action, no_check) {
   var new_action = Object.assign({}, action)
   if (new_action.params === undefined) {
     new_action.params = {}
   }
   new_action.params = Object.assign({}, action.params)
+  if (no_check) {
+    new_action.no_check = true
+  }
   return new_action
 }
 

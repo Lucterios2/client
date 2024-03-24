@@ -1,13 +1,15 @@
-import { useStore } from 'vuex'
 import axios from 'axios'
 
 import { FORMTYPE_MODAL } from '@/libs/utils'
+import { Stringformat } from '@/libs/convert'
 import { CRITIC, GRAVE, LucteriosException } from '@/libs/error'
 
 var current_store = null
+var current_translate = null
 
-export function initialTransport() {
-  current_store = useStore()
+export function initialTransport(store, translate) {
+  current_store = store
+  current_translate = translate
 }
 
 var server_url = null
@@ -60,17 +62,27 @@ export async function callLucteriosAction(action) {
     reponsetext = JSON.stringify(error)
     if (error.response !== undefined) {
       if (error.response.status === 404) {
-        throw new LucteriosException(GRAVE, 'Command unknown!', web_file, reponsetext)
+        throw new LucteriosException(
+          GRAVE,
+          current_translate.t('Command unknown!'),
+          web_file,
+          reponsetext
+        )
       } else {
         throw new LucteriosException(
           CRITIC,
-          'Http error ' + error.response.status,
+          Stringformat(current_translate.t('Http error {0}'), [error.response.status]),
           web_file,
           reponsetext
         )
       }
     } else {
-      throw new LucteriosException(CRITIC, 'Internal error !', web_file, reponsetext)
+      throw new LucteriosException(
+        CRITIC,
+        current_translate.t('Internal error !'),
+        web_file,
+        reponsetext
+      )
     }
   }
   current_store.commit('call_waiting', true)
@@ -84,7 +96,11 @@ export async function callLucteriosAction(action) {
     } else if (action.method === 'DELETE') {
       await axios.delete(fullurl).then(success).catch(failure)
     } else {
-      throw new LucteriosException(GRAVE, 'method unknown!', web_file)
+      throw new LucteriosException(
+        GRAVE,
+        Stringformat(current_translate.t('Method "{0}" unknown !'), [action.method]),
+        web_file
+      )
     }
   } finally {
     current_store.commit('call_waiting', false)

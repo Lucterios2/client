@@ -50,6 +50,11 @@ export const messages = {
     'Impossible: the file must be less than %0 %1': 'Impossible: the file must be less than %0 %1',
     "May the browser didn't support or there is some errors.":
       "May the browser didn't support or there is some errors.",
+    'At least one field is not valid!': 'At least one field is not valid!',
+    'Method "{0}" unknown !': 'Method "{0}" unknown !',
+    'Http error {0}': 'Http error {0}',
+    'Command unknown!': 'Command unknown!',
+    'Internal error !': 'Internal error !',
     Picture: 'Picture'
   },
   fr: {
@@ -105,6 +110,11 @@ export const messages = {
       'Impossible: le fichier doit faire moins de %0 %1',
     "May the browser didn't support or there is some errors.":
       'Peut-être que le navigateur ne supporte pas ou il y a quelques erreurs.',
+    'At least one field is not valid!': "Au moins un champ n'est pas valid !",
+    'Method "{0}" unknown !': 'Methode "{0}" inconnue !',
+    'Http error {0}': 'Erreur Http {0}',
+    'Command unknown!': 'Commande inconnue !',
+    'Internal error !': 'Erreur interne !',
     Picture: 'Photo'
   }
 }

@@ -3,6 +3,7 @@ import { createCompnent } from '@/libs/observer'
 import { FORMTYPE_REFRESH, first_element_by_class } from '@/libs/utils'
 import { convert_action } from '@/libs/convert'
 import { factory_components } from '@/components/tools'
+import { LucteriosException, IMPORTANT } from '@/libs/error'
 
 export default {
   name: 'CustomComponents',
@@ -33,7 +34,7 @@ export default {
         }
       }
       var is_valid = true
-      if (action.modal != FORMTYPE_REFRESH) {
+      if (action.modal != FORMTYPE_REFRESH && !action.no_check) {
         this.componentlist.forEach((comp) => {
           is_valid = is_valid && comp.is_valid() == true
         })
@@ -44,6 +45,8 @@ export default {
           comp.add_parameters(new_action.params)
         })
         this.$emit('action', new_action)
+      } else {
+        throw new LucteriosException(IMPORTANT, this.$t('At least one field is not valid!'))
       }
     },
     add_table(current_table, component_list) {

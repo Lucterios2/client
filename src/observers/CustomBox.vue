@@ -2,6 +2,7 @@
 import AbstractObserver from '@/observers/AbstractObserver.vue'
 import FrameDlg from '@/libs/FrameDlg.vue'
 import CustomComponents from '@/components/CustomComponents.vue'
+import { convert_action } from '@/libs/convert'
 
 export default {
   name: 'CustomBox',
@@ -13,6 +14,11 @@ export default {
   props: {
     data: Object,
     comp: Array
+  },
+  computed: {
+    close_act() {
+      return this.close ? convert_action(this.close, true) : null
+    }
   },
   methods: {
     click_action(action) {
@@ -48,7 +54,7 @@ export default {
   <FrameDlg
     :meta="meta"
     :actions="actions"
-    :close="close"
+    :close="close_act"
     :key="forceRecompute"
     @action="click_action_in_customcomponents"
     @close="$emit('close')"

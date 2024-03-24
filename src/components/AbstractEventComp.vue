@@ -62,6 +62,7 @@ export default {
     },
     setValue(params) {
       this.setValueEx(params)
+      this.checkvalidate()
       this.$forceUpdate()
     },
     setEnabled(is_enabled) {

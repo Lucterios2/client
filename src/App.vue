@@ -15,11 +15,15 @@ import StatusBar from '@/libs/StatusBar.vue'
 import WaitingFrame from '@/libs/WaitingFrame.vue'
 import AboutFrame from '@/libs/AboutFrame.vue'
 import { FORMTYPE_REFRESH } from '@/libs/utils'
+import { useStore } from 'vuex'
+import { useI18n } from 'vue-i18n'
+const store = useStore()
+const i18n = useI18n()
 
 const show_about = defineModel('show_about', { type: Boolean, default: false })
 
 initialObserver()
-initialTransport()
+initialTransport(store, i18n)
 
 function logoff() {
   clearComponent()

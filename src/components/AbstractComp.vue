@@ -30,6 +30,11 @@ export default {
         }
       })
     },
+    checkvalidate() {
+      if (this.$refs.tofocus && this.$refs.tofocus.validate) {
+        this.$refs.tofocus.validate()
+      }
+    },
     setValue() {},
     setEnabled() {},
     setVisible() {},
