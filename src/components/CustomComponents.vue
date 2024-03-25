@@ -126,8 +126,8 @@ export default {
     get_default_action() {
       var default_action = null
       this.componentlist.forEach((comp) => {
-        if (comp.component.is_default && comp.component.action) {
-          default_action = comp.component.action
+        if (comp.get_component().is_default && comp.get_component().action) {
+          default_action = comp.get_component().action
         }
       })
       return default_action
@@ -157,7 +157,7 @@ export default {
     get(name) {
       var component = null
       this.componentlist.forEach((comp) => {
-        if (comp.component.name == name) {
+        if (comp.get_component().name == name) {
           component = comp
         }
       })
@@ -182,12 +182,12 @@ export default {
         tab: this.tablist.length > 0 ? this.tablist[0].name : null,
         focus_name:
           this.componentlist.length > 0
-            ? this.componentlist[this.componentlist.length - 1].component.name
+            ? this.componentlist[this.componentlist.length - 1].get_component().name
             : null
       }
     }
     this.componentlist.forEach((comp) => {
-      if (this.internalInfo.focus_name == comp.component.name) {
+      if (this.internalInfo.focus_name == comp.get_component().name) {
         comp.setfocus()
       }
     })

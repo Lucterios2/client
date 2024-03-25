@@ -11,6 +11,9 @@ export default {
   },
   emits: ['action', 'close', 'focusin'],
   methods: {
+    get_component() {
+      return this.component
+    },
     is_valid() {
       return true
     },
@@ -22,11 +25,13 @@ export default {
     },
     setfocus() {
       this.$nextTick(() => {
-        try {
-          const editRef = this.$refs.tofocus
-          editRef.focus()
-        } catch (err) {
-          console.log('setfocus', this.component.name, err)
+        if (this.$refs.tofocus && this.$refs.tofocus.focus) {
+          try {
+            const editRef = this.$refs.tofocus
+            editRef.focus()
+          } catch (err) {
+            console.log('setfocus', this.component.name, err)
+          }
         }
       })
     },

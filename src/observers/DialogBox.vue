@@ -2,9 +2,11 @@
 import AbstractObserver from '@/observers/AbstractObserver.vue'
 import FrameDlg from '@/libs/FrameDlg.vue'
 import { convertLuctoriosFormatToHtml } from '@/libs/convert'
+import { runErrorCaptured } from '@/libs/error'
 export default {
   name: 'AcknowledgeReturn',
   extends: AbstractObserver,
+  errorCaptured: runErrorCaptured,
   components: { FrameDlg },
   data: () => ({
     visible: true

@@ -346,6 +346,7 @@ describe('GridComp', () => {
           id: 'ext/act_multi',
           method: 'POST',
           modal: '1',
+          no_check: true,
           num: 17,
           params: {
             test: '1;3'
@@ -438,6 +439,7 @@ describe('GridComp', () => {
           id: 'ext/act_single',
           method: 'POST',
           modal: '1',
+          no_check: true,
           num: 1,
           params: {
             test: '2'

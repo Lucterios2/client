@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import ButtonAction from '@/libs/ButtonAction.vue'
-import { CLOSE_YES } from './utils'
+import { CLOSE_YES } from '@/libs/utils'
 const i18n = useI18n()
 const emit = defineEmits(['clickaction', 'close'])
 const props = defineProps({

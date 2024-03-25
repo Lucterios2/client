@@ -1,7 +1,7 @@
 <script setup>
 import SubMenu from '@/libs/SubMenu.vue'
 import { convertLuctoriosFormatToHtml } from '@/libs/convert'
-import { getUrlServer } from './transport'
+import { getUrlServer } from '@/libs/transport'
 const emit = defineEmits(['clickaction'])
 const props = defineProps({
   menu: Object,

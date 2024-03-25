@@ -122,6 +122,7 @@ export default {
         } else if (unique == SELECT_MULTI && this.selectItems.length == 0) {
           action_item.disabled = true
         }
+        action_item.no_check = true
         return action_item
       })
     }

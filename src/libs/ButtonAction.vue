@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue'
-import { getUrlServer } from './transport'
+import { getUrlServer } from '@/libs/transport'
 
 const emit = defineEmits(['click'])
 const props = defineProps({
