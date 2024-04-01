@@ -27,7 +27,7 @@ const image_src = computed(() => {
 
 <template>
   <v-btn
-    class="bg-grey"
+    class="bg-act"
     @click="clickaction"
     :min-width="is_mini ? '40px' : '120px'"
     :disabled="action_disabled"
@@ -38,4 +38,9 @@ const image_src = computed(() => {
   </v-btn>
 </template>
 
-<style scoped></style>
+<style>
+.bg-act {
+  background-color: #bebebe;
+  color: #000;
+}
+</style>

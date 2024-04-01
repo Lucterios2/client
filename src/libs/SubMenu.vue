@@ -20,28 +20,28 @@ function get_icon_url(menu) {
       class="mx-auto submenu"
       color="#888"
       cvariant="tonal"
-      width="200px"
-      height="75px"
+      width="275px"
+      height="50px"
       @click="click_action()"
     >
       <v-card-item>
-        <v-img
-          :src="get_icon_url(menu)"
-          height="32"
-          width="40"
-          :alt="menu.text"
-          v-if="!menu.short_icon"
-        ></v-img>
-        <v-icon v-if="menu.short_icon">{{ menu.short_icon }}</v-icon>
-        <v-card-title>
-          <br v-if="menu.short_icon" />
-          {{ menu.text }}
+        <v-toolbar color="#888" height="30">
+          <v-img
+            :src="get_icon_url(menu)"
+            height="32"
+            width="32"
+            style="flex: inherit"            
+            :alt="menu.text"
+            v-if="!menu.short_icon"
+          ></v-img>
+          <v-icon class="bg-menu" v-if="menu.short_icon">{{ menu.short_icon }}</v-icon>
+          <v-toolbar-title class="menutext">{{ menu.text }}</v-toolbar-title>
           <v-tooltip
-            :text="convertLuctoriosFormatToHtml(menu.help)"
-            activator="parent"
-            location="bottom"
-          ></v-tooltip>
-        </v-card-title>
+              :text="convertLuctoriosFormatToHtml(menu.help)"
+              activator="parent"
+              location="bottom"
+            ></v-tooltip>        
+        </v-toolbar>
       </v-card-item>
     </v-card>
   </div>
@@ -51,10 +51,15 @@ function get_icon_url(menu) {
 .submenu {
   border: 1px black solid;
 }
-.submenu .v-card-title {
+.menutext {
   font-size: 12px;
   white-space: normal;
   color: black;
   line-height: 13px;
+  margin-left: 3px;
+}
+.bg-menu {
+  background-color: #bebebe;
+  color: #000;
 }
 </style>

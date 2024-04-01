@@ -36,7 +36,7 @@ function get_icon_url(menu) {
 <template>
   <v-card :class="card_class()">
     <v-card-item>
-      <v-toolbar color="#BBB" dark v-if="with_image">
+      <v-toolbar color="#BBB" height="40" dark v-if="with_image">
         <v-img
           :src="get_icon_url(menu)"
           height="32"
