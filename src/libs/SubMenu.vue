@@ -30,17 +30,17 @@ function get_icon_url(menu) {
             :src="get_icon_url(menu)"
             height="32"
             width="32"
-            style="flex: inherit"            
+            style="flex: inherit"
             :alt="menu.text"
             v-if="!menu.short_icon"
           ></v-img>
           <v-icon class="bg-menu" v-if="menu.short_icon">{{ menu.short_icon }}</v-icon>
           <v-toolbar-title class="menutext">{{ menu.text }}</v-toolbar-title>
           <v-tooltip
-              :text="convertLuctoriosFormatToHtml(menu.help)"
-              activator="parent"
-              location="bottom"
-            ></v-tooltip>        
+            :text="convertLuctoriosFormatToHtml(menu.help)"
+            activator="parent"
+            location="bottom"
+          ></v-tooltip>
         </v-toolbar>
       </v-card-item>
     </v-card>

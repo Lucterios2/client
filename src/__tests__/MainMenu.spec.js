@@ -433,15 +433,20 @@ describe('MainMenu', () => {
     expect(wrapper.element.childElementCount).toBe(1)
     expect(wrapper.find('div').element.childElementCount).toBe(1)
     expect(wrapper.find('div > v-card').element.childElementCount).toBe(1)
-    expect(wrapper.find('div > v-card > v-card-item').element.childElementCount).toBe(2)
-    expect(wrapper.find('div > v-card > v-card-item > v-icon').text()).toBe('mdi:mdi-account')
+    expect(wrapper.find('div > v-card > v-card-item').element.childElementCount).toBe(1)
+    expect(wrapper.find('div > v-card > v-card-item > v-toolbar').element.childElementCount).toBe(3)
+    expect(wrapper.find('div > v-card > v-card-item > v-toolbar > v-icon').text()).toBe(
+      'mdi:mdi-account'
+    )
     expect(
-      wrapper.find('div > v-card > v-card-item > v-card-title').element.childElementCount
-    ).toBe(2)
-    expect(wrapper.find('div > v-card > v-card-item > v-card-title').text()).toBe('Nos coordonnées')
-    expect(wrapper.find('div > v-card > v-card-item > v-card-title > br').text()).toBe('')
+      wrapper.find('div > v-card > v-card-item >  v-toolbar > v-toolbar-title').element
+        .childElementCount
+    ).toBe(0)
+    expect(wrapper.find('div > v-card > v-card-item > v-toolbar > v-toolbar-title').text()).toBe(
+      'Nos coordonnées'
+    )
     expect(
-      wrapper.find('div > v-card > v-card-item > v-card-title > v-tooltip').attributes('text')
+      wrapper.find('div > v-card > v-card-item > v-toolbar > v-tooltip').attributes('text')
     ).toBe('Fiche de notre structure et de ses responsables')
     expect(wrapper.emitted('click')).toStrictEqual(undefined)
     await wrapper.find('div > v-card').trigger('click')
@@ -474,16 +479,20 @@ describe('MainMenu', () => {
     expect(wrapper.element.childElementCount).toBe(1)
     expect(wrapper.find('div').element.childElementCount).toBe(1)
     expect(wrapper.find('div > v-card').element.childElementCount).toBe(1)
-    expect(wrapper.find('div > v-card > v-card-item').element.childElementCount).toBe(2)
-    expect(wrapper.find('div > v-card > v-card-item > v-img').attributes('src')).toBe(
+    expect(wrapper.find('div > v-card > v-card-item').element.childElementCount).toBe(1)
+    expect(wrapper.find('div > v-card > v-card-item > v-toolbar').element.childElementCount).toBe(3)
+    expect(wrapper.find('div > v-card > v-card-item > v-toolbar > v-img').attributes('src')).toBe(
       'http://localhost/static/lucterios.contacts/images/ourDetails.png'
     )
     expect(
-      wrapper.find('div > v-card > v-card-item > v-card-title').element.childElementCount
-    ).toBe(1)
-    expect(wrapper.find('div > v-card > v-card-item > v-card-title').text()).toBe('Nos coordonnées')
+      wrapper.find('div > v-card > v-card-item >  v-toolbar > v-toolbar-title').element
+        .childElementCount
+    ).toBe(0)
+    expect(wrapper.find('div > v-card > v-card-item > v-toolbar > v-toolbar-title').text()).toBe(
+      'Nos coordonnées'
+    )
     expect(
-      wrapper.find('div > v-card > v-card-item > v-card-title > v-tooltip').attributes('text')
+      wrapper.find('div > v-card > v-card-item > v-toolbar > v-tooltip').attributes('text')
     ).toBe('Fiche de notre structure et de ses responsables')
     expect(wrapper.emitted('click')).toStrictEqual(undefined)
     await wrapper.find('div > v-card').trigger('click')
