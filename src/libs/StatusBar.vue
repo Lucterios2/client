@@ -4,7 +4,6 @@ import { useI18n } from 'vue-i18n'
 const store = useStore()
 const i18n = useI18n()
 const emit = defineEmits(['login', 'logoff', 'refresh', 'help', 'about'])
-const color = '#888'
 const items = [
   {
     title: i18n.t('refresh'),
@@ -69,7 +68,7 @@ function get_items() {
 </script>
 
 <template>
-  <v-app-bar :color="color" density="compact">
+  <v-app-bar color="#555" density="compact">
     <div class="v-toolbar__prepend">
       <v-app-bar-nav-icon @click="$store.dispatch('toggle_summary')"></v-app-bar-nav-icon>
       <v-img

@@ -25,7 +25,7 @@ function get_icon_url(menu) {
       @click="click_action()"
     >
       <v-card-item>
-        <v-toolbar color="#888" height="30">
+        <v-toolbar class="bg-menu" height="30">
           <v-img
             :src="get_icon_url(menu)"
             height="32"
@@ -54,12 +54,12 @@ function get_icon_url(menu) {
 .menutext {
   font-size: 12px;
   white-space: normal;
-  color: black;
+  color: #000;
   line-height: 13px;
   margin-left: 3px;
 }
 .bg-menu {
-  background-color: #bebebe;
+  background-color: #888;
   color: #000;
 }
 </style>
