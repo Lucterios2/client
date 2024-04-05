@@ -48,7 +48,7 @@ export default {
       return this.current_value
     },
     setValueEx(params) {
-      if (typeof params == 'object') {
+      if (params != null && typeof params == 'object') {
         this.current_value = params.value
         Object.keys(params).forEach((key) => {
           if (this.component[key]) {

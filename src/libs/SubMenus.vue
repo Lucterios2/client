@@ -50,7 +50,7 @@ function get_icon_url(menu) {
         <v-toolbar-title>{{ menu.text }}</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon @click="show_help = !show_help" v-if="menu.help !== undefined">
-          <v-icon>mdi:mdi-help</v-icon>
+          <v-icon size="x-small">mdi:mdi-help</v-icon>
         </v-btn>
       </v-toolbar>
       <v-card-title>
@@ -94,25 +94,5 @@ function get_icon_url(menu) {
   margin-top: 5px;
   background-color: #eee;
   border: 1px solid black;
-}
-.card_size {
-  @media only screen and (min-height: 1200px) {
-    height: 1000px;
-  }
-  @media only screen and (min-height: 1000px) and (max-height: 1200px) {
-    height: 800px;
-  }
-  @media only screen and (min-height: 800px) and (max-height: 1000px) {
-    height: 650px;
-  }
-  @media only screen and (min-height: 600px) and (max-height: 800px) {
-    height: 425px;
-  }
-  @media only screen and (min-height: 400px) and (max-height: 600px) {
-    height: 225px;
-  }
-  @media only screen and (max-height: 400px) {
-    height: 100px;
-  }
 }
 </style>

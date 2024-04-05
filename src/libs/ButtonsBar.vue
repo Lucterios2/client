@@ -40,6 +40,7 @@ const action_list = computed(() => {
     <div v-for="action in action_list" :key="action.num" style="margin: 0px 3px">
       <ButtonAction :action="action" @click="click_action(action)" />
     </div>
+    <slot />
     <v-spacer v-if="center"></v-spacer>
   </v-card-actions>
 </template>

@@ -13,12 +13,21 @@ export default {
   },
   emits: ['action', 'close'],
   data: () => ({
-    dialog_box: { el: null, eltext: null, move: false, allsize: false },
+    dialog_box: {
+      el: null,
+      eltext: null,
+      move: false,
+      allsize: false,
+      resize: false
+    },
     dialog_height: 0
   }),
   computed: {
     content_style() {
       return Stringformat('max-height: {0}px', [this.dialog_height - 250])
+    },
+    active_modal_frame() {
+      return this.meta.ismodal || this.dialog_box.resize
     }
   },
   methods: {
@@ -75,17 +84,26 @@ export default {
     mouse_down(event) {
       this.active_current(this.$el)
       if (event.button === 0 && !this.dialog_box.allsize) {
-        this.dialog_box.move = true
+        this.dialog_box.resize = event.target.classList.contains('move_spot')
+        this.dialog_box.move = !this.dialog_box.resize
         this.dialog_box.mouseStartX = event.clientX
         this.dialog_box.mouseStartY = event.clientY
         this.dialog_box.elStartX = this.dialog_box.el.getBoundingClientRect().left
         this.dialog_box.elStartY = this.dialog_box.el.getBoundingClientRect().top
+        this.dialog_box.elStartW = this.dialog_box.el.getBoundingClientRect().width
+        this.dialog_box.elStartH = this.dialog_box.el.getBoundingClientRect().height
+        this.dialog_box.elStartDiffH =
+          this.dialog_box.el.getBoundingClientRect().height -
+          this.dialog_box.eltext.getBoundingClientRect().height
         this.dialog_box.el.style.zIndex = 100
       }
     },
     mouse_up() {
       if (this.dialog_box.move) {
         this.dialog_box.move = false
+      }
+      if (this.dialog_box.resize) {
+        this.dialog_box.resize = false
       }
     },
     mouse_move(event) {
@@ -100,6 +118,20 @@ export default {
         )
         this.dialog_box.el.style.left = (100.0 * left) / window.innerWidth + '%'
         this.dialog_box.el.style.top = (100.0 * top) / window.innerHeight + '%'
+      }
+      if (this.dialog_box.resize) {
+        const width = Math.min(
+          Math.max(this.dialog_box.elStartW + event.clientX - this.dialog_box.mouseStartX, 350),
+          window.innerWidth
+        )
+        const height = Math.min(
+          Math.max(this.dialog_box.elStartH + event.clientY - this.dialog_box.mouseStartY, 200),
+          window.innerHeight - 110
+        )
+        this.dialog_box.el.style.width = width + 'px'
+        this.dialog_box.el.style.height = height + 'px'
+        this.dialog_box.eltext.style.width = width + 'px'
+        this.dialog_box.eltext.style.height = height - this.dialog_box.elStartDiffH + 'px'
       }
     },
     onClickaction(act) {
@@ -117,9 +149,11 @@ export default {
     define_position() {
       if (this.dialog_box.el) {
         const nb_frame = document.getElementsByClassName('frameDlg').length
-        const left =
+        const left = Math.max(
+          0,
           ((50 - 2 * nb_frame) * window.innerWidth) / 100.0 -
-          this.dialog_box.el.getBoundingClientRect().width / 2
+            this.dialog_box.el.getBoundingClientRect().width / 2
+        )
         const top =
           (window.innerHeight - this.dialog_box.el.getBoundingClientRect().height) / 2 +
           5 * nb_frame
@@ -156,7 +190,7 @@ export default {
 
 <template>
   <div class="frameDlg" @mousedown="mouse_down" @mouseup="mouse_up" @mousemove="mouse_move">
-    <div class="modaldlg" v-if="meta.ismodal"></div>
+    <div class="modaldlg" v-if="active_modal_frame"></div>
     <v-card>
       <v-card-title class="bg-grey-lighten-1 movecursor">
         {{ meta.title }}
@@ -181,7 +215,9 @@ export default {
         :close="close"
         @clickaction="onClickaction"
         @close="$emit('close')"
-      />
+      >
+        <v-icon class="move_spot">mdi</v-icon>
+      </ButtonsBar>
     </v-card>
   </div>
 </template>
@@ -231,5 +267,12 @@ export default {
   right: 0;
   top: 0;
   z-index: 99;
+}
+.move_spot {
+  cursor: se-resize;
+  position: relative;
+  top: 18px;
+  margin-left: -10px;
+  margin-right: -10px;
 }
 </style>

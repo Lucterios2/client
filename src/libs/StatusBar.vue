@@ -70,7 +70,10 @@ function get_items() {
 <template>
   <v-app-bar color="#555" density="compact">
     <div class="v-toolbar__prepend">
-      <v-app-bar-nav-icon @click="$store.dispatch('toggle_summary')"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon
+        icon="mdi:mdi-information-slab-box-outline"
+        @click="$store.dispatch('toggle_summary')"
+      ></v-app-bar-nav-icon>
       <v-img
         id="logo"
         :src="$store.state.server.logoname"

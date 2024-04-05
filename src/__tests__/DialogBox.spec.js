@@ -51,7 +51,7 @@ describe('DialogBox', () => {
     expect(wrapper.find('v-card > v-card-text > v-row > v-col:nth-of-type(2) > span').text()).toBe(
       'Message simple'
     )
-    expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(2)
+    expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(3)
     expect(wrapper.find('v-card > v-card-actions > div:nth-of-type(1) > v-btn > span').text()).toBe(
       'OK'
     )
@@ -102,7 +102,7 @@ describe('DialogBox', () => {
       'Message simple'
     )
 
-    expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(3)
+    expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(4)
     expect(wrapper.find('v-card > v-card-actions > div:nth-of-type(1) > v-btn > span').text()).toBe(
       'action1'
     )
@@ -174,7 +174,7 @@ describe('DialogBox', () => {
       '>Message complexe<br>with multiline and <b>bold</b></span>'
     )
 
-    expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(2)
+    expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(3)
     expect(wrapper.find('v-card > v-card-actions > div:nth-of-type(1) > v-btn > span').text()).toBe(
       'OK'
     )
@@ -222,7 +222,7 @@ describe('DialogBox', () => {
       'Message simple'
     )
 
-    expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(2)
+    expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(3)
     expect(wrapper.find('v-card > v-card-actions > div:nth-of-type(1) > v-btn > span').text()).toBe(
       'action2'
     )

@@ -4,6 +4,7 @@ import CustomComponents from '@/components/CustomComponents.vue'
 import { callLucteriosAction, getUrlServer } from '@/libs/transport'
 import { convertLuctoriosFormatToHtml } from '@/libs/convert.js'
 import AbstractObserver from '@/observers/AbstractObserver.vue'
+import { first_element_by_class } from '@/libs/utils'
 
 export default {
   name: 'MainMenu',
@@ -71,6 +72,9 @@ export default {
     get_icon_url(menu) {
       return getUrlServer() + menu.icon
     },
+    close_summary() {
+      this.$store.commit('call_summary', false)
+    },
     refreshObserver() {}
   },
   async mounted() {
@@ -79,6 +83,11 @@ export default {
         this.summary_menu = item.menus
       }
     })
+    var new_height = window.innerHeight - 50
+    const row_el = first_element_by_class(this.$el, 'v-row')
+    if (row_el) {
+      row_el.style.height = new_height + 'px'
+    }
     if (this.summary_menu.length > 0) {
       const default_summary = this.summary_menu[this.summary_menu.length - 1]
       this.summary_selected = [default_summary.id]
@@ -96,41 +105,6 @@ export default {
 <template>
   <div class="menu">
     <v-row>
-      <div class="v-col v-col-2-xld v-col-3-ld v-col-4-md v-col-12-xsd" v-if="show_summary()">
-        {{ check_summary_menu() }}
-        <v-expansion-panels variant="accordion" v-model="summary_selected">
-          <v-expansion-panel
-            v-for="submenu in summary_menu"
-            :key="submenu.id"
-            :value="submenu.id"
-            @click="refresh_summary(submenu)"
-          >
-            <v-expansion-panel-title color="#888">
-              <v-icon v-if="submenu.short_icon">{{ submenu.short_icon }}</v-icon>
-              <div v-if="!submenu.short_icon">
-                <v-img
-                  :src="get_icon_url(submenu)"
-                  height="20"
-                  :width="20"
-                  :alt="submenu.text"
-                ></v-img>
-              </div>
-              <span style="margin-left: 5px">{{ submenu.text }}</span>
-            </v-expansion-panel-title>
-            <v-expansion-panel-text>
-              <CustomComponents
-                class="panel-custom"
-                :data="custom_data"
-                :comp="custom_comp"
-                @action="click_action"
-              />
-            </v-expansion-panel-text>
-          </v-expansion-panel>
-        </v-expansion-panels>
-        <div class="support_footer" v-if="$store.state.server.support_html">
-          <span v-html="support_html"></span>
-        </div>
-      </div>
       <v-col cols="max">
         <v-card>
           <v-tabs v-model="tab" bg-color="#888" color="#000">
@@ -148,7 +122,12 @@ export default {
           </v-tabs>
           <v-card-text>
             <v-window v-model="tab">
-              <v-window-item v-for="tabmenu in tabs_menus()" :key="tabmenu.id" :value="tabmenu.id">
+              <v-window-item
+                class="item-submenus"
+                v-for="tabmenu in tabs_menus()"
+                :key="tabmenu.id"
+                :value="tabmenu.id"
+              >
                 <SubMenus
                   :menu="tabmenu"
                   :with_image="false"
@@ -160,6 +139,41 @@ export default {
         </v-card>
       </v-col>
     </v-row>
+    <div class="summary_menu" v-if="show_summary()" @dblclick="close_summary">
+      {{ check_summary_menu() }}
+      <v-expansion-panels variant="accordion" v-model="summary_selected">
+        <v-expansion-panel
+          v-for="submenu in summary_menu"
+          :key="submenu.id"
+          :value="submenu.id"
+          @click="refresh_summary(submenu)"
+        >
+          <v-expansion-panel-title color="#555">
+            <v-icon v-if="submenu.short_icon">{{ submenu.short_icon }}</v-icon>
+            <div v-if="!submenu.short_icon">
+              <v-img
+                :src="get_icon_url(submenu)"
+                height="20"
+                :width="20"
+                :alt="submenu.text"
+              ></v-img>
+            </div>
+            <span style="margin-left: 5px">{{ submenu.text }}</span>
+          </v-expansion-panel-title>
+          <v-expansion-panel-text>
+            <CustomComponents
+              class="panel-custom"
+              :data="custom_data"
+              :comp="custom_comp"
+              @action="click_action"
+            />
+          </v-expansion-panel-text>
+        </v-expansion-panel>
+      </v-expansion-panels>
+      <div class="support_footer" v-if="$store.state.server.support_html">
+        <span v-html="support_html"></span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -167,10 +181,17 @@ export default {
 .menu {
   position: fixed;
   top: 60px;
-  width: 98%;
+  width: 97%;
   margin: 0px 1%;
   overflow-y: scroll;
-  height: 95%;
+}
+
+.menu > .v-row > .v-col > .v-card {
+  height: 100%;
+}
+
+.item-submenus {
+  height: 100%;
 }
 
 .v-expansion-panels {
@@ -178,36 +199,24 @@ export default {
   overflow-y: scroll;
 }
 
-.support_footer {
-  margin-top: 30px;
-  padding: 5px;
-  border: 1px black solid;
-  border-radius: 10px;
+.summary_menu {
   background-color: white;
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  border: 3px outset black;
 }
 
-@media only screen and (min-width: 1200px) {
-  .v-col-2-xld {
-    flex: 0 0 16.6666666667%;
-    max-width: 16.6666666667%;
-  }
+.summary_menu > .v-expansion-panels > .v-expansion-panel > .v-expansion-panel-title {
+  margin-top: -10px;
 }
-@media only screen and (min-width: 1000px) and (max-width: 1200px) {
-  .v-col-3-ld {
-    flex: 0 0 25%;
-    max-width: 25%;
-  }
-}
-@media only screen and (min-width: 800px) and (max-width: 1000px) {
-  .v-col-4-md {
-    flex: 0 0 33.333333%;
-    max-width: 33.333333%;
-  }
-}
-@media only screen and (max-width: 800px) {
-  .v-col-12-xsd {
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
+
+.support_footer {
+  padding: 2px;
+  border: 1px black solid;
+  border-radius: 10px;
+  background-color: #eee;
+  width: 70%;
+  margin: 0px auto 10px auto;
 }
 </style>

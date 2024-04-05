@@ -44,7 +44,7 @@ describe('CustomBox', () => {
     expect(wrapper.find('v-card').element.childElementCount).toBe(3)
     expect(wrapper.find('v-card > v-card-title').text()).toBe('Simple title')
     expect(wrapper.find('v-card > v-card-text').element.childElementCount).toBe(1)
-    expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(3)
+    expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(4)
     expect(wrapper.find('v-card > v-card-actions > div:nth-of-type(1) > v-btn > span').text()).toBe(
       'action1'
     )

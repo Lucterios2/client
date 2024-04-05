@@ -168,6 +168,14 @@ export default {
       })
       return component
     },
+    adapt_size() {
+      const tabroot_el = first_element_by_class(this.$el, 'tabroot')
+      if (tabroot_el) {
+        const root_row_h = first_element_by_class(this.$el, 'root-row').getBoundingClientRect()
+          .height
+        tabroot_el.style.height = 'calc(100% - ' + root_row_h + 'px)'
+      }
+    },
     receive_focus(component_name) {
       this.internalInfo.focus_name = component_name
     },
@@ -196,6 +204,10 @@ export default {
         comp.setfocus()
       }
     })
+    var refreshSizeId = setInterval(() => {
+      this.adapt_size()
+      clearInterval(refreshSizeId)
+    }, 100)
   },
   updated() {
     this.refresh()
@@ -204,10 +216,10 @@ export default {
 </script>
 
 <template>
-  <div ref="root">
+  <div ref="root" class="custom-comp">
     <table class="root-row" width="100%"></table>
     <div class="tabroot" v-if="tablist.length > 0">
-      <v-tabs v-model="internalInfo.tab" bg-color="#888" color="#000">
+      <v-tabs v-model="internalInfo.tab" bg-color="#888" color="#000" height="35">
         <v-tab v-for="tab in tablist" :value="tab.name" :key="tab.tab" class="tabheader">{{
           data[tab.name]
         }}</v-tab>
@@ -222,11 +234,17 @@ export default {
 </template>
 
 <style>
+.custom-comp {
+  height: 100%;
+}
 .tabroot {
   border: 1px solid #888;
 }
 .tabheader {
   border: 1px solid #888;
+  font-size: smaller;
+  text-transform: capitalize;
+  margin-top: 0px;
 }
 .tabcontent {
   padding: 4px;
@@ -234,5 +252,6 @@ export default {
 
 .customcell {
   padding: 1px 3px;
+  vertical-align: baseline;
 }
 </style>
