@@ -3,13 +3,11 @@ import AbstractObserver from '@/observers/AbstractObserver.vue'
 import FrameDlg from '@/libs/FrameDlg.vue'
 import CustomComponents from '@/components/CustomComponents.vue'
 import { convert_action } from '@/libs/convert'
-import { runErrorCaptured } from '@/libs/error'
 
 export default {
   name: 'CustomBox',
   extends: AbstractObserver,
   components: { FrameDlg, CustomComponents },
-  errorCaptured: runErrorCaptured,
   data: () => ({
     currentinfo: null
   }),

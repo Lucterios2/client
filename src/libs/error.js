@@ -87,5 +87,5 @@ export function initial_error() {
 export async function runErrorCaptured(err) {
   const obs_exception = errorHandler(err.message, null, err)
   await factory(obs_exception, () => {}, null, false)
-  return true
+  return false
 }

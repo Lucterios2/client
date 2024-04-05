@@ -34,9 +34,13 @@ export default {
         }
       }
       var is_valid = true
+      const invalid_name = []
       if (action.modal != FORMTYPE_REFRESH && !action.no_check) {
         this.componentlist.forEach((comp) => {
-          is_valid = is_valid && comp.is_valid() == true
+          if (comp.is_valid() != true) {
+            is_valid = false
+            invalid_name.push(comp.component.name)
+          }
         })
       }
       if (is_valid) {
@@ -46,6 +50,7 @@ export default {
         })
         this.$emit('action', new_action)
       } else {
+        console.log('invalid names', invalid_name)
         throw new LucteriosException(IMPORTANT, this.$t('At least one field is not valid!'))
       }
     },

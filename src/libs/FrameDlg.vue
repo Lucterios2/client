@@ -194,10 +194,16 @@ export default {
   margin: 0px;
   transition: none;
 }
+.frameDlg .v-card .v-card-title {
+  font-size: large;
+  height: 40px;
+  margin-top: -3px;
+}
 .frameDlg .v-card .v-card-title .tools {
   display: inline;
   position: absolute;
   right: 5px;
+  top: 2px;
 }
 .frameDlg .v-card .v-card-text {
   overflow-y: scroll;

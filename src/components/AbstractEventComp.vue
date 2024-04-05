@@ -73,14 +73,14 @@ export default {
       return !this.is_disabled
     },
     setVisible(is_visible) {
-      if (this.$el) {
-        this.$el.style.display = is_visible ? null : 'None'
+      if (this.$el != undefined) {
+        this.$el.style.display = is_visible ? null : 'none'
         this.$el.style.fontSize = is_visible ? null : '0px'
       }
     },
     getVisible() {
-      if (this.$el && this.$el.style) {
-        return this.$el.style.display != 'None'
+      if (this.$el != undefined && this.$el.style != undefined) {
+        return this.$el.style.display != 'none'
       }
       return true
     },

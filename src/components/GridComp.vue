@@ -256,7 +256,9 @@ export default {
 }
 .v-table > .v-table__wrapper > table .v-data-table__tbody .v-data-table__tr .v-data-table__td {
   border: 1px solid #cfcfcf;
-  height: calc(var(--v-table-row-height, 52px) - 15px);
+  height: calc(var(--v-table-row-height, 52px) - 25px);
+  font-size: smaller;
+  padding-left: 5px;
 }
 .v-table > .v-table__wrapper > table .v-data-table__tbody .v-data-table__tr:hover {
   background-color: #a0a0a0;

@@ -1,10 +1,8 @@
 <script>
-import { runErrorCaptured } from '@/libs/error'
 import AbstractObserver from '@/observers/AbstractObserver.vue'
 export default {
   name: 'AcknowledgeReturn',
   extends: AbstractObserver,
-  errorCaptured: runErrorCaptured,
   props: {
     action: Object
   },

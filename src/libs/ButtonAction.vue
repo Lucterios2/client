@@ -29,7 +29,8 @@ const image_src = computed(() => {
   <v-btn
     class="bg-act"
     @click="clickaction"
-    :min-width="is_mini ? '40px' : '120px'"
+    :min-width="is_mini ? '40px' : '135px'"
+    height="32"
     :disabled="action_disabled"
   >
     <img :src="image_src" width="24px" :title="is_mini ? action.text : ''" v-if="!is_icon" />
@@ -42,5 +43,10 @@ const image_src = computed(() => {
 .bg-act {
   background-color: #bebebe;
   color: #000;
+  font-size: smaller;
+}
+.bg-act > span > span {
+  margin-left: 3px;
+  text-transform: capitalize;
 }
 </style>
