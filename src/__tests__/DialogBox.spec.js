@@ -13,7 +13,7 @@ describe('DialogBox', () => {
   it('Information', async () => {
     const wrapper = mount(DialogBox, {
       propsData: {
-        data: { message: 'Message simple', type: 1 },
+        data: { text: 'Message simple', type: 1 },
         meta: { extension: '', title: 'Simple title', action: '', observer: '', ismodal: true },
         close: null,
         context: { id: 123, text: 'abc' },
@@ -60,7 +60,7 @@ describe('DialogBox', () => {
   it('Confirmation multi-action', async () => {
     const wrapper = mount(DialogBox, {
       propsData: {
-        data: { message: 'Message simple', type: 2 },
+        data: { text: 'Message simple', type: 2 },
         meta: { extension: '', title: 'Simple title', action: '', observer: '', ismodal: true },
         close: null,
         context: { id: 123, text: 'abc' },
@@ -126,13 +126,13 @@ describe('DialogBox', () => {
         undefined
       ]
     ])
-    expect(wrapper.emitted('close')).toStrictEqual([[]])
+    expect(wrapper.emitted('close')).toStrictEqual([[true]])
   })
 
   it('Warning', async () => {
     const wrapper = mount(DialogBox, {
       propsData: {
-        data: { message: 'Message complexe{[br]}with multiline and {[b]}bold{[/b]}', type: 3 },
+        data: { text: 'Message complexe{[br]}with multiline and {[b]}bold{[/b]}', type: 3 },
         meta: { extension: '', title: 'Simple title', action: '', observer: '', ismodal: true },
         close: null,
         context: { id: 123, text: 'abc' },
@@ -183,7 +183,7 @@ describe('DialogBox', () => {
   it('Error', async () => {
     const wrapper = mount(DialogBox, {
       propsData: {
-        data: { message: 'Message simple', type: 4 },
+        data: { text: 'Message simple', type: 4 },
         meta: { extension: '', title: 'Simple title', action: '', observer: '', ismodal: true },
         close: { id: 'abc', text: 'action1', icon: 'icon1', params: { value: 54.65 } },
         context: { id: 123, text: 'abc' },
@@ -244,7 +244,7 @@ describe('DialogBox', () => {
     ])
     expect(wrapper.emitted('close')).toStrictEqual(undefined)
     await wrapper.find('v-card > v-card-title > div > v-btn:nth-of-type(2)').trigger('click')
-    expect(wrapper.emitted('close')).toStrictEqual([[]])
+    expect(wrapper.emitted('close')).toStrictEqual([[undefined]])
     expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([
       [
         {

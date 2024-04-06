@@ -8,7 +8,9 @@ export default {
     setValue(params) {
       this.setValueEx(params)
       if (this.current_value == NULL_VALUE) {
-        this.current_value == ''
+        this.current_value = ''
+      } else if (this.current_value == '') {
+        this.current_value = new Date().toISOString().substring(0, 10)
       }
       this.$forceUpdate()
     },

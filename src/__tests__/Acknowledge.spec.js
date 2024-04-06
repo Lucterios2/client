@@ -19,6 +19,7 @@ describe('Acknowledge', () => {
         context: { id: 123, text: 'abc' }
       }
     })
+    await nextTick()
     expect(wrapper.element.childElementCount).toBe(0)
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
     expect(wrapper.emitted('close')).toStrictEqual([[false]])

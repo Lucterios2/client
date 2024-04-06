@@ -30,7 +30,7 @@ describe('ButtonsBar', () => {
     expect(wrapper.emitted('close')).toStrictEqual(undefined)
     await wrapper.find('div > button-action-stub').trigger('click')
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
-    expect(wrapper.emitted('close')).toStrictEqual([[]])
+    expect(wrapper.emitted('close')).toStrictEqual([[false]])
   })
 
   it('No actions - Close', async () => {
@@ -54,9 +54,9 @@ describe('ButtonsBar', () => {
     expect(wrapper.emitted('close')).toStrictEqual(undefined)
     await wrapper.find('div > button-action-stub').trigger('click')
     expect(wrapper.emitted('clickaction')).toStrictEqual([
-      [{ id: 'xyz', text: 'actionend', short_icon: 'iconend' }]
+      [{ id: 'xyz', text: 'actionend', short_icon: 'iconend' }, true]
     ])
-    expect(wrapper.emitted('close')).toStrictEqual([[]])
+    expect(wrapper.emitted('close')).toStrictEqual([[false]])
   })
 
   it('Actions - No close', async () => {
@@ -159,8 +159,8 @@ describe('ButtonsBar', () => {
           num: 1
         }
       ],
-      [{ id: 'xyz', text: 'actionend', icon: 'iconend' }]
+      [{ id: 'xyz', text: 'actionend', icon: 'iconend' }, true]
     ])
-    expect(wrapper.emitted('close')).toStrictEqual([[]])
+    expect(wrapper.emitted('close')).toStrictEqual([[true]])
   })
 })

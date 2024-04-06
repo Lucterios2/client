@@ -11,6 +11,7 @@ import { LucteriosException, GRAVE } from '@/libs/error'
 var current_app = null
 
 const component_created = new Map()
+const ident_linked = new Map()
 
 function convert_props(props, emits) {
   const new_emits = {}
@@ -41,11 +42,30 @@ export function initialObserver(ext_app) {
   current_app = ext_app ? ext_app : Vue.getCurrentInstance().appContext.app
 }
 
+function clean_components() {
+  component_created.forEach((comp) => {
+    if (!comp.el) {
+      component_created.delete(comp.id)
+    } else {
+      comp.ownerid = getOwnerId(comp.id)
+    }
+  })
+}
+
+function getOwnerId(ident) {
+  var owenerid = ident_linked.get(ident)
+  if (owenerid && !component_created.get(owenerid)) {
+    owenerid = getOwnerId(owenerid)
+  }
+  return owenerid
+}
+
 class CompManager {
-  constructor(owner, click_action) {
-    this.owner = owner
+  constructor(ownerid, click_action) {
+    this.ownerid = ownerid
+    this.id = new Date().valueOf().toString()
     this.el = document.createElement('div')
-    this.el.id = new Date().valueOf()
+    this.el.id = this.id
     this.click_action = click_action
     document.getElementById('comp').appendChild(this.el)
   }
@@ -53,31 +73,33 @@ class CompManager {
   mount(component, props) {
     let self = this
     let emits = {
-      clickaction: function (action, with_owner) {
-        return self.click_action(action, with_owner ? self.owner : self.el)
+      clickaction: function (action, no_owner) {
+        return self.click_action(action, no_owner ? null : self.el.id)
       },
       close: function (no_refresh) {
         return self.close(no_refresh)
       }
     }
     if (props.id == undefined) {
-      props.id = this.el.id
+      props.id = this.id
     }
     this.comp = createCompnent(this.el, component, props, [], emits)
-    component_created.set(this.el, this)
+    component_created.set(this.id, this)
+    ident_linked.set(this.id, this.ownerid)
+    this.ownerid = getOwnerId(this.id)
   }
 
   close(no_refresh) {
     if (this.el) {
-      if (this.owner && !no_refresh) {
-        let old_comp = component_created.get(this.owner)
+      if (this.ownerid && no_refresh != true) {
+        let old_comp = component_created.get(this.ownerid)
         if (old_comp) {
           old_comp.refresh()
         }
       }
       component_created.forEach((comp) => {
-        if (comp.owner && this.el.id == comp.owner.id) {
-          comp.owner = this.owner
+        if (comp.owner && this.id == comp.ownerid) {
+          comp.ownerid = this.ownerid
         }
       })
       const root_comp = document.getElementById('comp')
@@ -88,9 +110,10 @@ class CompManager {
       if (this.comp) {
         this.comp.component.ctx.clean_observer()
       }
-      component_created.delete(this.el)
+      component_created.delete(this.id)
     }
     this.el = null
+    clean_components()
     return true
   }
 
@@ -100,6 +123,7 @@ class CompManager {
   }
 
   refresh() {
+    clean_components()
     this.comp.component.ctx.refreshObserver()
   }
 }

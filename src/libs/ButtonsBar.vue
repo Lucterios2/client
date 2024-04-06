@@ -17,9 +17,9 @@ function click_action(action) {
   }
   if (Number(action.close) === CLOSE_YES) {
     if (props.close) {
-      emit('clickaction', props.close)
+      emit('clickaction', props.close, true)
     }
-    emit('close')
+    emit('close', action.id != '')
   }
 }
 const action_list = computed(() => {

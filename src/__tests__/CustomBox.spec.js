@@ -95,7 +95,7 @@ describe('CustomBox', () => {
         undefined
       ]
     ])
-    expect(wrapper.emitted('close')).toStrictEqual([[]])
+    expect(wrapper.emitted('close')).toStrictEqual([[true]])
     wrapper.vm.click_action(null)
     expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([
       [
@@ -132,7 +132,7 @@ describe('CustomBox', () => {
         undefined
       ]
     ])
-    expect(wrapper.emitted('close')).toStrictEqual([[]])
+    expect(wrapper.emitted('close')).toStrictEqual([[true]])
   })
 
   it('check CustomComponents', async () => {

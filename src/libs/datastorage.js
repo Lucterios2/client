@@ -3,6 +3,7 @@ import { createStore } from 'vuex'
 // Create a new store instance.
 const storage = createStore({
   state: {
+    nb_login: 0,
     show_waiting: false,
     show_status: true,
     show_summary: true,
@@ -34,6 +35,9 @@ const storage = createStore({
     observer_info: {}
   },
   mutations: {
+    check_login(state) {
+      state.nb_login = state.nb_login + 1
+    },
     call_waiting(state, waiting) {
       state.show_waiting = waiting
     },

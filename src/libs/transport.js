@@ -105,7 +105,9 @@ export async function callLucteriosAction(action) {
   } finally {
     current_store.commit('call_waiting', false)
   }
-  reponsetext.meta.ismodal = action.modal == undefined || Number(action.modal) == FORMTYPE_MODAL
+  reponsetext.meta.ismodal =
+    ['core.dialogbox', 'core.custom'].includes(reponsetext.meta.observer) &&
+    (action.modal == undefined || Number(action.modal) == FORMTYPE_MODAL)
   reponsetext.meta.method = action.method
   if (reponsetext.meta.id == undefined && reponsetext.meta.extension) {
     reponsetext.meta.id = reponsetext.meta.extension + '/' + reponsetext.meta.action

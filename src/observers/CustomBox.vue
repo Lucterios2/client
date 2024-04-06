@@ -57,7 +57,7 @@ export default {
     :close="close_act"
     :key="forceRecompute"
     @action="click_action_in_customcomponents"
-    @close="$emit('close')"
+    @close="onClose"
   >
     <CustomComponents
       :data="data"

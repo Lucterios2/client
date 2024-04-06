@@ -43,7 +43,7 @@ export default {
       return actions
     },
     showMessage() {
-      return this.data !== 'OK' && this.data !== ''
+      return this.data !== 'OK' && this.data !== '' && this.$store.state.nb_login > 1
     },
     message_before() {
       return convertLuctoriosFormatToHtml(this.$store.state.server.message_before)
@@ -100,6 +100,7 @@ export default {
     if (this.$store.state.server.style !== '') {
       insertStyle(this.$store.state.server.style)
     }
+    this.$store.commit('check_login')
     if (this.data === 'OK') {
       this.$i18n.locale = this.connexion.language ? this.connexion.language : 'fr'
       var refreshIntervalId = setInterval(() => {

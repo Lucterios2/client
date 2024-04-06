@@ -125,7 +125,7 @@ export default {
           window.innerWidth
         )
         const height = Math.min(
-          Math.max(this.dialog_box.elStartH + event.clientY - this.dialog_box.mouseStartY, 200),
+          Math.max(this.dialog_box.elStartH + event.clientY - this.dialog_box.mouseStartY, 150),
           window.innerHeight - 110
         )
         this.dialog_box.el.style.width = width + 'px'
@@ -136,6 +136,9 @@ export default {
     },
     onClickaction(act) {
       this.$emit('action', act)
+    },
+    onClose(no_refresh) {
+      this.$emit('close', no_refresh)
     },
     refreshDlg() {
       this.onClickaction(refreshAction(this.meta))
@@ -210,12 +213,7 @@ export default {
       <v-card-text>
         <slot />
       </v-card-text>
-      <ButtonsBar
-        :actions="actions"
-        :close="close"
-        @clickaction="onClickaction"
-        @close="$emit('close')"
-      >
+      <ButtonsBar :actions="actions" :close="close" @clickaction="onClickaction" @close="onClose">
         <v-icon class="move_spot">mdi</v-icon>
       </ButtonsBar>
     </v-card>

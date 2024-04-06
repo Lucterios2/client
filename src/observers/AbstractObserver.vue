@@ -16,12 +16,15 @@ export default {
   },
   emits: ['clickaction', 'close'],
   methods: {
-    click_action(action, with_owner) {
+    onClose(no_refresh) {
+      this.$emit('close', no_refresh)
+    },
+    click_action(action, no_owner) {
       if (action.params === undefined) {
         action.params = {}
       }
       action.params = Object.assign({}, this.context, action.params)
-      this.$emit('clickaction', action, with_owner)
+      this.$emit('clickaction', action, no_owner)
     },
     updateObserver() {
       this.$forceUpdate()

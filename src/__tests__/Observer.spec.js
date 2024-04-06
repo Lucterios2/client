@@ -54,6 +54,7 @@ describe('observer', () => {
       expect(wrapper.find('div#comp').element.childElementCount).toBe(0)
       const action_fct = vi.fn()
       await factory({ meta: { observer: 'core.acknowledge' } }, action_fct)
+      await nextTick()
       expect(wrapper.find('div#comp').element.childElementCount).toBe(0)
       clearComponent()
       expect(wrapper.find('div#comp').element.childElementCount).toBe(0)
@@ -229,7 +230,7 @@ describe('observer', () => {
       const first_comp = await factory(
         {
           meta: { observer: 'core.dialogbox', title: 'title 1' },
-          data: { type: 1, message: 'text 1' },
+          data: { type: 1, text: 'text 1' },
           actions: []
         },
         action_fct,
@@ -253,11 +254,11 @@ describe('observer', () => {
       const second_comp = await factory(
         {
           meta: { observer: 'core.dialogbox', title: 'title 2' },
-          data: { type: 2, message: 'text 2' },
+          data: { type: 2, text: 'text 2' },
           actions: []
         },
         action_fct,
-        first_comp.el,
+        first_comp.id,
         true
       )
       await nextTick()
@@ -326,7 +327,7 @@ describe('observer', () => {
           actions: []
         },
         action_fct,
-        first_comp.el,
+        first_comp.id,
         true
       )
       await nextTick()

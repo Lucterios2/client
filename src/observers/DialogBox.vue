@@ -29,7 +29,7 @@ export default {
     },
     message() {
       this.forceRecompute
-      return convertLuctoriosFormatToHtml(this.data.message)
+      return convertLuctoriosFormatToHtml(this.data.text)
     }
   }
 }
@@ -42,11 +42,11 @@ export default {
     :close="close"
     :key="forceRecompute"
     @action="click_action"
-    @close="$emit('close')"
+    @close="onClose"
   >
     <v-row>
       <v-col cols="2">
-        <v-icon size="40">{{ icon }}</v-icon>
+        <v-icon size="64">{{ icon }}</v-icon>
       </v-col>
       <v-col cols="10">
         <span v-html="message"></span>
@@ -59,6 +59,6 @@ export default {
 .v-card-text > .v-row > .v-col-10 > span {
   position: relative;
   top: 10px;
-  margin-left: 15px;
+  font-weight: bold;
 }
 </style>

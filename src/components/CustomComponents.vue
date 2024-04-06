@@ -252,6 +252,6 @@ export default {
 
 .customcell {
   padding: 1px 3px;
-  vertical-align: baseline;
+  vertical-align: middle;
 }
 </style>

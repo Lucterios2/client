@@ -20,15 +20,14 @@ export default {
     }
   },
   mounted() {
-    if (this.action) {
-      var refreshIntervalId1 = setInterval(() => {
+    this.$nextTick(() => {
+      if (this.action) {
         this.click_action(this.action, true)
         this.call_close()
-        clearInterval(refreshIntervalId1)
-      }, 100)
-    } else {
-      this.call_close()
-    }
+      } else {
+        this.call_close()
+      }
+    })
   }
 }
 </script>
