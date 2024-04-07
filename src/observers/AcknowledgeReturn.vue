@@ -8,15 +8,14 @@ export default {
   },
   methods: {
     call_close() {
-      if (this.close) {
-        var refreshIntervalId2 = setInterval(() => {
+      this.$nextTick(() => {
+        if (this.close) {
           this.click_action(this.close, true)
-          this.$emit('close', this.action != null)
-          clearInterval(refreshIntervalId2)
-        }, 100)
-      } else {
-        this.$emit('close', this.action != null)
-      }
+          this.onClose(this.action == null)
+        } else {
+          this.onClose(this.action == null)
+        }
+      })
     }
   },
   mounted() {

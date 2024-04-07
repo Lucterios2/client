@@ -29,7 +29,7 @@ describe('Print', () => {
       }
     })
     expect(wrapper.element.childElementCount).toBe(0)
-    expect(wrapper.emitted('close')).toStrictEqual([[]])
+    expect(wrapper.emitted('close')).toStrictEqual([[true]])
     expect(utils.openBlob).toHaveBeenCalledTimes(1)
     expect(utils.openBlob).lastCalledWith(new Blob(), 'Example_d_impression.csv')
   })

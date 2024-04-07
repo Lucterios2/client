@@ -90,8 +90,8 @@ export default {
         current_td.setAttribute('class', 'customcell')
         const emits = {
           action: this.call_action,
-          close: () => {
-            this.$emit('close')
+          close: (refresh_parent) => {
+            this.$emit('close', refresh_parent)
           },
           focusin: this.receive_focus
         }

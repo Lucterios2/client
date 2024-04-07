@@ -66,7 +66,7 @@ export default {
       :context="context"
       :initialInfo="currentinfo"
       @action="click_action"
-      @close="$emit('close')"
+      @close="onClose"
       @interface="getChildInterface"
       :key="forceRecompute"
     />

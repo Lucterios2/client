@@ -16,8 +16,8 @@ export default {
   },
   emits: ['clickaction', 'close'],
   methods: {
-    onClose(no_refresh) {
-      this.$emit('close', no_refresh)
+    onClose(refresh_parent) {
+      this.$emit('close', refresh_parent)
     },
     click_action(action, no_owner) {
       if (action.params === undefined) {

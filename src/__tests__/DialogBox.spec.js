@@ -126,7 +126,7 @@ describe('DialogBox', () => {
         undefined
       ]
     ])
-    expect(wrapper.emitted('close')).toStrictEqual([[true]])
+    expect(wrapper.emitted('close')).toStrictEqual([[false]])
   })
 
   it('Warning', async () => {
@@ -244,7 +244,7 @@ describe('DialogBox', () => {
     ])
     expect(wrapper.emitted('close')).toStrictEqual(undefined)
     await wrapper.find('v-card > v-card-title > div > v-btn:nth-of-type(2)').trigger('click')
-    expect(wrapper.emitted('close')).toStrictEqual([[undefined]])
+    expect(wrapper.emitted('close')).toStrictEqual([[true]])
     expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([
       [
         {

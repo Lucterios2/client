@@ -145,6 +145,9 @@ export default {
     refresh() {
       this.$emit('action', refreshAction(this.meta, this.gridcontext))
     },
+    onclose(refresh_parent) {
+      this.$emit('close', refresh_parent)
+    },
     click_action(action) {
       var new_action = convert_action(action)
       if (this.selectItems.length > 0 && new_action.unique != SELECT_NONE) {
@@ -199,7 +202,7 @@ export default {
       :actions="actions"
       :center="true"
       @clickaction="click_action"
-      @close="$emit('close')"
+      @close="onclose"
       v-if="actions.length > 0"
     />
     <v-data-table-server

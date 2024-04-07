@@ -20,9 +20,10 @@ describe('Acknowledge', () => {
       }
     })
     await nextTick()
+    await nextTick()
     expect(wrapper.element.childElementCount).toBe(0)
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
-    expect(wrapper.emitted('close')).toStrictEqual([[false]])
+    expect(wrapper.emitted('close')).toStrictEqual([[true]])
   }),
     it('with action', async () => {
       const wrapper = shallowMount(AcknowledgeReturn, {
@@ -53,7 +54,7 @@ describe('Acknowledge', () => {
           true
         ]
       ])
-      expect(wrapper.emitted('close')).toStrictEqual([[true]])
+      expect(wrapper.emitted('close')).toStrictEqual([[false]])
     }),
     it('with close', async () => {
       const wrapper = shallowMount(AcknowledgeReturn, {
@@ -78,7 +79,7 @@ describe('Acknowledge', () => {
           true
         ]
       ])
-      expect(wrapper.emitted('close')).toStrictEqual([[false]])
+      expect(wrapper.emitted('close')).toStrictEqual([[true]])
     }),
     it('both action & close', async () => {
       const wrapper = shallowMount(AcknowledgeReturn, {
@@ -120,6 +121,6 @@ describe('Acknowledge', () => {
           true
         ]
       ])
-      expect(wrapper.emitted('close')).toStrictEqual([[true]])
+      expect(wrapper.emitted('close')).toStrictEqual([[false]])
     })
 })

@@ -76,8 +76,8 @@ class CompManager {
       clickaction: function (action, no_owner) {
         return self.click_action(action, no_owner ? null : self.el.id)
       },
-      close: function (no_refresh) {
-        return self.close(no_refresh)
+      close: function (refresh_parent) {
+        return self.close(refresh_parent)
       }
     }
     if (props.id == undefined) {
@@ -89,9 +89,9 @@ class CompManager {
     this.ownerid = getOwnerId(this.id)
   }
 
-  close(no_refresh) {
+  close(refresh_parent) {
     if (this.el) {
-      if (this.ownerid && no_refresh != true) {
+      if (this.ownerid && refresh_parent) {
         let old_comp = component_created.get(this.ownerid)
         if (old_comp) {
           old_comp.refresh()

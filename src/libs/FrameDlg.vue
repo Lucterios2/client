@@ -137,8 +137,8 @@ export default {
     onClickaction(act) {
       this.$emit('action', act)
     },
-    onClose(no_refresh) {
-      this.$emit('close', no_refresh)
+    onClose(refresh_parent) {
+      this.$emit('close', refresh_parent)
     },
     refreshDlg() {
       this.onClickaction(refreshAction(this.meta))
@@ -147,7 +147,7 @@ export default {
       if (this.close) {
         this.onClickaction(this.close)
       }
-      this.$emit('close')
+      this.onClose(true)
     },
     define_position() {
       if (this.dialog_box.el) {
@@ -183,7 +183,7 @@ export default {
       if (event.key == 'Escape') {
         const current_card = first_element_by_class(this.$el, 'v-card')
         if (current_card && current_card.style.zIndex > 10) {
-          this.$emit('close')
+          this.closeDlg()
         }
       }
     })

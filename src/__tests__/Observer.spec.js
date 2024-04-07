@@ -55,6 +55,7 @@ describe('observer', () => {
       const action_fct = vi.fn()
       await factory({ meta: { observer: 'core.acknowledge' } }, action_fct)
       await nextTick()
+      await nextTick()
       expect(wrapper.find('div#comp').element.childElementCount).toBe(0)
       clearComponent()
       expect(wrapper.find('div#comp').element.childElementCount).toBe(0)

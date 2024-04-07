@@ -19,7 +19,7 @@ function click_action(action) {
     if (props.close) {
       emit('clickaction', props.close, true)
     }
-    emit('close', action.id != '')
+    emit('close', action.id == '')
   }
 }
 const action_list = computed(() => {

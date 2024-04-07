@@ -25,7 +25,7 @@ export default {
       getFileNameWithoutForgottenChar(this.print.title) +
       (this.print.extension.startsWith('.') ? this.print.extension : '.' + this.print.extension)
     this.saveFile(this.print.content, filename)
-    this.$emit('close')
+    this.$emit('close', true)
   }
 }
 </script>
