@@ -21,8 +21,9 @@ export default {
   mounted() {
     this.$nextTick(() => {
       if (this.action) {
-        this.click_action(this.action, false)
-        this.call_close()
+        if (this.click_action(this.action, false) != false) {
+          this.call_close()
+        }
       } else {
         this.call_close()
       }

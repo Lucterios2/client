@@ -3,7 +3,7 @@ import { createCompnent } from '@/libs/observer'
 import { FORMTYPE_REFRESH, first_element_by_class } from '@/libs/utils'
 import { convert_action } from '@/libs/convert'
 import { factory_components } from '@/components/tools'
-import { LucteriosException, IMPORTANT } from '@/libs/error'
+import { LucteriosException, IMPORTANT, runErrorCaptured } from '@/libs/error'
 
 export default {
   name: 'CustomComponents',
@@ -25,12 +25,11 @@ export default {
     }
   },
   methods: {
-    call_action(action, no_owner) {
+    async call_action(action, no_owner) {
       if (action == null) {
         action = this.get_default_action()
         if (action == null) {
-          this.$emit('action', null, no_owner)
-          return
+          return this.$emit('action', null, no_owner)
         }
       }
       var is_valid = true
@@ -39,7 +38,7 @@ export default {
         this.componentlist.forEach((comp) => {
           if (comp.is_valid() != true) {
             is_valid = false
-            invalid_name.push(comp.component.name)
+            invalid_name.push(comp.get_component().name)
           }
         })
       }
@@ -48,10 +47,13 @@ export default {
         this.componentlist.forEach((comp) => {
           comp.add_parameters(new_action.params)
         })
-        this.$emit('action', new_action, no_owner)
+        return this.$emit('action', new_action, no_owner)
       } else {
         console.log('invalid names', invalid_name)
-        throw new LucteriosException(IMPORTANT, this.$t('At least one field is not valid!'))
+        await runErrorCaptured(
+          new LucteriosException(IMPORTANT, this.$t('At least one field is not valid!'))
+        )
+        return false
       }
     },
     add_table(current_table, component_list) {
@@ -181,7 +183,9 @@ export default {
     },
     emitInterface() {
       this.$emit('interface', {
-        call_action: (action, no_owner) => this.call_action(action, no_owner),
+        call_action: (action, no_owner) => {
+          return this.call_action(action, no_owner)
+        },
         get_info: () => this.internalInfo
       })
     }

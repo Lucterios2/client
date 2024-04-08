@@ -58,7 +58,7 @@ export default {
       }
     },
     execute_action(action) {
-      this.$emit('clickaction', action)
+      return this.$emit('clickaction', action)
     },
     run_action(action) {
       if (action.id == 'cancel') {

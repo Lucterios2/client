@@ -59,8 +59,10 @@ async function click_action(action, source) {
   try {
     const result = await callLucteriosAction(action)
     await factory(result, click_action, source, Number(action.modal) == FORMTYPE_REFRESH)
+    return true
   } catch (err) {
     await runErrorCaptured(err)
+    return false
   }
 }
 

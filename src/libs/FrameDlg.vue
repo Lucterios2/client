@@ -135,7 +135,7 @@ export default {
       }
     },
     onClickaction(act, no_owner) {
-      this.$emit('action', act, no_owner)
+      return this.$emit('action', act, no_owner)
     },
     onClose(refresh_parent) {
       this.$emit('close', refresh_parent)

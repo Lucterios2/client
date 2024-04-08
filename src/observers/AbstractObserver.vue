@@ -24,14 +24,14 @@ export default {
         action.params = {}
       }
       action.params = Object.assign({}, this.context, action.params)
-      this.$emit('clickaction', action, no_owner)
+      return this.$emit('clickaction', action, no_owner)
     },
     updateObserver() {
       this.$forceUpdate()
       this.forceRecompute++
     },
     refreshObserver() {
-      this.$emit('clickaction', refreshAction(this.meta, this.context))
+      return this.$emit('clickaction', refreshAction(this.meta, this.context))
     },
     clean_observer() {
       this.$store.commit('clean_observer', this.id)

@@ -29,16 +29,17 @@ export default {
           }
         })
         if (action != null) {
-          this.click_action_in_customcomponents(action, no_owner)
+          return this.click_action_in_customcomponents(action, no_owner)
         }
+        return false
       } else {
         this.currentinfo = this.$options.childInterface.get_info()
         this.$store.commit('save_observer_info', this.id, this.currentinfo)
-        AbstractObserver.methods.click_action.call(this, action, no_owner)
+        return AbstractObserver.methods.click_action.call(this, action, no_owner)
       }
     },
     click_action_in_customcomponents(action, no_owner) {
-      this.$options.childInterface.call_action(action, no_owner)
+      return this.$options.childInterface.call_action(action, no_owner)
     },
     getChildInterface(childInterface) {
       this.$options.childInterface = childInterface

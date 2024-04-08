@@ -12,10 +12,11 @@ const props = defineProps({
 })
 var increment_action = 0
 function click_action(action) {
+  var act_ret = true
   if (action.id !== '') {
-    emit('clickaction', action, false)
+    act_ret = emit('clickaction', action, false) != false
   }
-  if (Number(action.close) === CLOSE_YES) {
+  if (act_ret && Number(action.close) === CLOSE_YES) {
     if (props.close) {
       emit('clickaction', props.close, true)
     }
