@@ -123,7 +123,7 @@ describe('DialogBox', () => {
           close: '1',
           params: { id: 123, text: 'abc' }
         },
-        undefined
+        false
       ]
     ])
     expect(wrapper.emitted('close')).toStrictEqual([[false]])
@@ -239,7 +239,7 @@ describe('DialogBox', () => {
           num: 0,
           params: { id: 123, text: 'abc' }
         },
-        undefined
+        false
       ]
     ])
     expect(wrapper.emitted('close')).toStrictEqual(undefined)
@@ -255,7 +255,7 @@ describe('DialogBox', () => {
           num: 0,
           params: { id: 123, text: 'abc' }
         },
-        undefined
+        false
       ],
       [
         {
@@ -264,7 +264,7 @@ describe('DialogBox', () => {
           icon: 'icon1',
           params: { id: 123, text: 'abc', value: 54.65 }
         },
-        undefined
+        true
       ]
     ])
   })

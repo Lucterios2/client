@@ -108,7 +108,7 @@ describe('TimeComp', () => {
     await wrapper
       .find('.v-input__control > .v-field > .v-field__field > input')
       .trigger('keyup.enter')
-    expect(wrapper.emitted('action')).toStrictEqual([[null]])
+    expect(wrapper.emitted('action')).toStrictEqual([[null, false]])
   })
 
   it('action', async () => {
@@ -171,7 +171,8 @@ describe('TimeComp', () => {
           },
           text: 'Modify',
           unique: '1'
-        }
+        },
+        false
       ]
     ])
   })

@@ -163,7 +163,7 @@ export default {
       if (this.selectItems.length > 0 && new_action.unique != SELECT_NONE) {
         new_action.params[this.component.name] = this.selectItems.join(';')
       }
-      this.$emit('action', new_action)
+      this.$emit('action', new_action, false)
     },
     click_row(event, row_item) {
       this.savefocusin()
@@ -190,7 +190,6 @@ export default {
               this.selectItems.push(new_rowid)
             }
           }
-          console.log('multi', this.lastselectid, current_index, minRow, maxRow)
           exit_before = true
         }
         if (!exit_before) {

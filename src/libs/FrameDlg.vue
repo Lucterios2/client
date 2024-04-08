@@ -134,8 +134,8 @@ export default {
         this.dialog_box.eltext.style.height = height - this.dialog_box.elStartDiffH + 'px'
       }
     },
-    onClickaction(act) {
-      this.$emit('action', act)
+    onClickaction(act, no_owner) {
+      this.$emit('action', act, no_owner)
     },
     onClose(refresh_parent) {
       this.$emit('close', refresh_parent)
@@ -145,7 +145,7 @@ export default {
     },
     closeDlg() {
       if (this.close) {
-        this.onClickaction(this.close)
+        this.onClickaction(this.close, true)
       }
       this.onClose(true)
     },

@@ -66,7 +66,7 @@ describe('CustomBox', () => {
           params: { value: 54.65, id: 123, text: 'abc', val1: 'aaa', val2: 'bbb' },
           num: 1
         },
-        undefined
+        false
       ]
     ])
 
@@ -81,7 +81,7 @@ describe('CustomBox', () => {
           params: { value: 54.65, id: 123, text: 'abc', val1: 'aaa', val2: 'bbb' },
           num: 1
         },
-        undefined
+        false
       ],
       [
         {
@@ -92,7 +92,7 @@ describe('CustomBox', () => {
           params: { id: 123, text: 'abc', val1: 'aaa', val2: 'bbb' },
           num: 0
         },
-        undefined
+        false
       ]
     ])
     expect(wrapper.emitted('close')).toStrictEqual([[false]])
@@ -107,7 +107,7 @@ describe('CustomBox', () => {
           params: { value: 54.65, id: 123, text: 'abc', val1: 'aaa', val2: 'bbb' },
           num: 1
         },
-        undefined
+        false
       ],
       [
         {
@@ -118,7 +118,7 @@ describe('CustomBox', () => {
           params: { id: 123, text: 'abc', val1: 'aaa', val2: 'bbb' },
           num: 0
         },
-        undefined
+        false
       ],
       [
         {

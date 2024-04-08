@@ -92,12 +92,12 @@ describe('ButtonsBar', () => {
     expect(wrapper.emitted('close')).toStrictEqual(undefined)
     await wrapper.find('div:nth-of-type(1) > button-action-stub').trigger('click')
     expect(wrapper.emitted('clickaction')).toStrictEqual([
-      [{ id: 'abc', text: 'action1', icon: 'icon1', close: '0', num: 0 }]
+      [{ id: 'abc', text: 'action1', icon: 'icon1', close: '0', num: 0 }, false]
     ])
     expect(wrapper.emitted('close')).toStrictEqual(undefined)
     await wrapper.find('div:nth-of-type(2) > button-action-stub').trigger('click')
     expect(wrapper.emitted('clickaction')).toStrictEqual([
-      [{ id: 'abc', text: 'action1', icon: 'icon1', close: '0', num: 0 }],
+      [{ id: 'abc', text: 'action1', icon: 'icon1', close: '0', num: 0 }, false],
       [
         {
           id: 'def',
@@ -105,7 +105,8 @@ describe('ButtonsBar', () => {
           icon: 'icon2',
           close: '0',
           num: 1
-        }
+        },
+        false
       ]
     ])
     expect(wrapper.emitted('close')).toStrictEqual(undefined)
@@ -144,12 +145,12 @@ describe('ButtonsBar', () => {
     expect(wrapper.emitted('close')).toStrictEqual(undefined)
     await wrapper.find('div:nth-of-type(1) > button-action-stub').trigger('click')
     expect(wrapper.emitted('clickaction')).toStrictEqual([
-      [{ id: 'abc', text: 'action1', icon: 'icon1', close: '0', num: 0 }]
+      [{ id: 'abc', text: 'action1', icon: 'icon1', close: '0', num: 0 }, false]
     ])
     expect(wrapper.emitted('close')).toStrictEqual(undefined)
     await wrapper.find('div:nth-of-type(2) > button-action-stub').trigger('click')
     expect(wrapper.emitted('clickaction')).toStrictEqual([
-      [{ id: 'abc', text: 'action1', icon: 'icon1', close: '0', num: 0 }],
+      [{ id: 'abc', text: 'action1', icon: 'icon1', close: '0', num: 0 }, false],
       [
         {
           id: 'def',
@@ -157,7 +158,8 @@ describe('ButtonsBar', () => {
           icon: 'icon2',
           close: '1',
           num: 1
-        }
+        },
+        false
       ],
       [{ id: 'xyz', text: 'actionend', icon: 'iconend' }, true]
     ])

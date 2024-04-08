@@ -21,7 +21,7 @@ export default {
     }
   },
   methods: {
-    click_action(action) {
+    click_action(action, no_owner) {
       if (action == null) {
         this.actions.forEach((act) => {
           if (action == null && act.id !== '') {
@@ -29,16 +29,16 @@ export default {
           }
         })
         if (action != null) {
-          this.click_action_in_customcomponents(action)
+          this.click_action_in_customcomponents(action, no_owner)
         }
       } else {
         this.currentinfo = this.$options.childInterface.get_info()
         this.$store.commit('save_observer_info', this.id, this.currentinfo)
-        AbstractObserver.methods.click_action.call(this, action)
+        AbstractObserver.methods.click_action.call(this, action, no_owner)
       }
     },
-    click_action_in_customcomponents(action) {
-      this.$options.childInterface.call_action(action)
+    click_action_in_customcomponents(action, no_owner) {
+      this.$options.childInterface.call_action(action, no_owner)
     },
     getChildInterface(childInterface) {
       this.$options.childInterface = childInterface

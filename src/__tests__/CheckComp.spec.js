@@ -122,7 +122,8 @@ describe('CheckComp', () => {
           },
           text: 'Modify',
           unique: '1'
-        }
+        },
+        false
       ]
     ])
   })

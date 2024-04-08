@@ -13,7 +13,7 @@ const props = defineProps({
 var increment_action = 0
 function click_action(action) {
   if (action.id !== '') {
-    emit('clickaction', action)
+    emit('clickaction', action, false)
   }
   if (Number(action.close) === CLOSE_YES) {
     if (props.close) {

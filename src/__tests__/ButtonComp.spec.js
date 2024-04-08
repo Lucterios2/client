@@ -63,7 +63,8 @@ describe('ButtonComp', () => {
           icon: '/icon',
           close: '0',
           params: { value: 54.65 }
-        }
+        },
+        false
       ]
     ])
   })
@@ -106,7 +107,8 @@ describe('ButtonComp', () => {
           icon: '/icon',
           close: '0',
           params: { value: 54.65 }
-        }
+        },
+        false
       ]
     ])
   })
@@ -149,7 +151,8 @@ describe('ButtonComp', () => {
           short_icon: 'icon',
           close: '0',
           params: { value: 54.65 }
-        }
+        },
+        false
       ]
     ])
   })

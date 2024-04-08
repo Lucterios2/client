@@ -112,7 +112,8 @@ describe('XMLComp', () => {
           },
           text: 'Modify',
           unique: '1'
-        }
+        },
+        false
       ]
     ])
   })

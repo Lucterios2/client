@@ -102,7 +102,7 @@ export default {
       if (this.component.action) {
         var new_action = convert_action(this.component.action)
         this.add_parameters(new_action.params)
-        this.$emit('action', new_action)
+        this.$emit('action', new_action, false)
       }
     },
     runIfChange() {
@@ -112,7 +112,7 @@ export default {
       }
     },
     onPressEnter() {
-      this.$emit('action', null)
+      this.$emit('action', null, false)
     }
   },
   mounted() {

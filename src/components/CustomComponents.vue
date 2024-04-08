@@ -25,11 +25,11 @@ export default {
     }
   },
   methods: {
-    call_action(action) {
+    call_action(action, no_owner) {
       if (action == null) {
         action = this.get_default_action()
         if (action == null) {
-          this.$emit('action', null)
+          this.$emit('action', null, no_owner)
           return
         }
       }
@@ -48,7 +48,7 @@ export default {
         this.componentlist.forEach((comp) => {
           comp.add_parameters(new_action.params)
         })
-        this.$emit('action', new_action)
+        this.$emit('action', new_action, no_owner)
       } else {
         console.log('invalid names', invalid_name)
         throw new LucteriosException(IMPORTANT, this.$t('At least one field is not valid!'))
@@ -181,7 +181,7 @@ export default {
     },
     emitInterface() {
       this.$emit('interface', {
-        call_action: (action) => this.call_action(action),
+        call_action: (action, no_owner) => this.call_action(action, no_owner),
         get_info: () => this.internalInfo
       })
     }

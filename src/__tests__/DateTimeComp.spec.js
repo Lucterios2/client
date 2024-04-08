@@ -112,7 +112,7 @@ describe('DateTimeComp', () => {
     await wrapper
       .find('.v-input__control > .v-field > .v-field__field > input')
       .trigger('keyup.enter')
-    expect(wrapper.emitted('action')).toStrictEqual([[null]])
+    expect(wrapper.emitted('action')).toStrictEqual([[null, false]])
   })
 
   it('action', async () => {
@@ -179,7 +179,8 @@ describe('DateTimeComp', () => {
           },
           text: 'Modify',
           unique: '1'
-        }
+        },
+        false
       ]
     ])
   })

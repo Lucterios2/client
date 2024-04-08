@@ -51,7 +51,7 @@ describe('Acknowledge', () => {
             close: '0',
             params: { value: 54.65, id: 123, text: 'abc' }
           },
-          true
+          false
         ]
       ])
       expect(wrapper.emitted('close')).toStrictEqual([[false]])
@@ -108,7 +108,7 @@ describe('Acknowledge', () => {
             close: '0',
             params: { value: 54.65, id: 123, text: 'abc' }
           },
-          true
+          false
         ],
         [
           {

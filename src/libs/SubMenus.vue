@@ -25,8 +25,8 @@ function get_size(submenu) {
     return 12
   }
 }
-function click_action(menu) {
-  emit('clickaction', menu)
+function click_action(menu, no_owner) {
+  emit('clickaction', menu, no_owner)
 }
 function get_icon_url(menu) {
   return getUrlServer() + menu.icon

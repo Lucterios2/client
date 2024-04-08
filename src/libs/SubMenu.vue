@@ -7,7 +7,7 @@ const prop = defineProps({
   menu: Object
 })
 function click_action() {
-  emit('click', prop.menu)
+  emit('click', prop.menu, true)
 }
 function get_icon_url(menu) {
   return getUrlServer() + menu.icon

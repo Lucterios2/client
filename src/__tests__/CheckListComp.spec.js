@@ -269,7 +269,8 @@ describe('CheckListComp', () => {
           },
           text: 'Modify',
           unique: '1'
-        }
+        },
+        false
       ]
     ])
   })

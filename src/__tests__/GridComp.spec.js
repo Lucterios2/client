@@ -354,7 +354,8 @@ describe('GridComp', () => {
           short_icon: 'icon_multi',
           text: 'text multi',
           unique: '2'
-        }
+        },
+        false
       ]
     ])
   })
@@ -447,7 +448,8 @@ describe('GridComp', () => {
           short_icon: 'icon_single',
           text: 'text single',
           unique: '0'
-        }
+        },
+        false
       ]
     ])
   })
