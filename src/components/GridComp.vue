@@ -25,6 +25,7 @@ export default {
     firstload: true,
     gridcontext: {},
     selectItems: [],
+    lastselectid: null,
     i18n: useI18n()
   }),
   computed: {
@@ -128,6 +129,15 @@ export default {
     }
   },
   methods: {
+    indexOfValue(rowid) {
+      var row_index = null
+      this.value.forEach((item, item_index) => {
+        if (item.id == rowid) {
+          row_index = item_index
+        }
+      })
+      return row_index
+    },
     loadItems({ page, itemsPerPage, sortBy }) {
       if (this.firstload) {
         this.firstload = false
@@ -158,16 +168,35 @@ export default {
     click_row(event, row_item) {
       this.savefocusin()
       if (this.buttonMode != SELECT_NONE) {
-        const exit_before = this.selectItems.includes(row_item.id)
+        var exit_before = this.selectItems.includes(row_item.id)
         if (exit_before) {
           this.selectItems.splice(this.selectItems.indexOf(row_item.id), 1)
         }
         if (this.buttonMode == SELECT_SINGLE) {
           this.selectItems = []
+        } else if (
+          event.shiftKey &&
+          this.lastselectid != null &&
+          this.lastselectid != row_item.id
+        ) {
+          const current_index = this.indexOfValue(row_item.id)
+          var minRow = Math.min(this.indexOfValue(this.lastselectid) + 1, current_index)
+          var maxRow = Math.max(this.indexOfValue(this.lastselectid) - 1, current_index)
+          for (var rowIdx = minRow; rowIdx <= maxRow; rowIdx++) {
+            var new_rowid = this.value[rowIdx].id
+            if (this.selectItems.includes(new_rowid)) {
+              this.selectItems.splice(this.selectItems.indexOf(new_rowid), 1)
+            } else {
+              this.selectItems.push(new_rowid)
+            }
+          }
+          console.log('multi', this.lastselectid, current_index, minRow, maxRow)
+          exit_before = true
         }
         if (!exit_before) {
           this.selectItems.push(row_item.id)
         }
+        this.lastselectid = row_item.id
       }
     },
     dblclick_row(event, row_item) {

@@ -273,7 +273,7 @@ describe('GridComp', () => {
     expect(
       wrapper.find('div > v-card-actions > div:nth-of-type(3) > v-btn').attributes('disabled')
     ).toBe('true')
-    wrapper.vm.click_row(null, { id: 2 })
+    wrapper.vm.click_row({ shiftkey: false }, { id: 2 })
     await nextTick()
     expect(wrapper.vm.selectItems.length).toStrictEqual(1)
     expect(
@@ -285,7 +285,7 @@ describe('GridComp', () => {
     expect(
       wrapper.find('div > v-card-actions > div:nth-of-type(3) > v-btn').attributes('disabled')
     ).toBe('false')
-    wrapper.vm.click_row(null, { id: 4 })
+    wrapper.vm.click_row({ shiftkey: false }, { id: 4 })
     await nextTick()
     expect(wrapper.vm.selectItems.length).toStrictEqual(2)
     expect(
@@ -297,7 +297,7 @@ describe('GridComp', () => {
     expect(
       wrapper.find('div > v-card-actions > div:nth-of-type(3) > v-btn').attributes('disabled')
     ).toBe('false')
-    wrapper.vm.click_row(null, { id: 2 })
+    wrapper.vm.click_row({ shiftkey: false }, { id: 2 })
     await nextTick()
     expect(wrapper.vm.selectItems.length).toStrictEqual(1)
     expect(
@@ -309,7 +309,7 @@ describe('GridComp', () => {
     expect(
       wrapper.find('div > v-card-actions > div:nth-of-type(3) > v-btn').attributes('disabled')
     ).toBe('false')
-    wrapper.vm.click_row(null, { id: 4 })
+    wrapper.vm.click_row({ shiftkey: false }, { id: 4 })
     await nextTick()
     expect(wrapper.vm.selectItems.length).toStrictEqual(0)
     expect(
@@ -321,8 +321,8 @@ describe('GridComp', () => {
     expect(
       wrapper.find('div > v-card-actions > div:nth-of-type(3) > v-btn').attributes('disabled')
     ).toBe('true')
-    wrapper.vm.click_row(null, { id: 1 })
-    wrapper.vm.click_row(null, { id: 3 })
+    wrapper.vm.click_row({ shiftkey: false }, { id: 1 })
+    wrapper.vm.click_row({ shiftkey: false }, { id: 3 })
     await nextTick()
     expect(
       wrapper.find('div > v-card-actions > div:nth-of-type(1) > v-btn').attributes('disabled')
