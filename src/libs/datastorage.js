@@ -32,6 +32,9 @@ const storage = createStore({
       version_current: '',
       version_expected: ''
     },
+    client: {
+      jsversion: '2.0.1.24040816'
+    },
     observer_info: {}
   },
   mutations: {
@@ -53,6 +56,9 @@ const storage = createStore({
       }
       state.server = Object.assign({}, state.server, server)
     },
+    change_client(state, client) {
+      state.client = Object.assign({}, state.client, client)
+    },
     save_observer_info(state, observerId, info) {
       state.observer_info[observerId] = info
     },
@@ -63,6 +69,20 @@ const storage = createStore({
   actions: {
     toggle_summary(context) {
       context.commit('call_summary', !context.state.show_summary)
+    }
+  },
+  getters: {
+    isVersionOk(state) {
+      var result = true
+      if (state.server.clientversion !== undefined) {
+        const versionExpected = state.server.clientversion.split('.')
+        const versionCurrent = state.client.jsversion.split('.')
+        result =
+          parseInt(versionExpected[0], 10) === parseInt(versionCurrent[0], 10) &&
+          parseInt(versionExpected[1], 10) === parseInt(versionCurrent[1], 10) &&
+          parseInt(versionExpected[2], 10) <= parseInt(versionCurrent[2], 10)
+      }
+      return result
     }
   }
 })

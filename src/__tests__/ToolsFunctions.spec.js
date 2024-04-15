@@ -143,6 +143,9 @@ describe('TestFunction', () => {
         "{[font color='green']}{0}{[/font]};{[font color='blue']}{0}{[/font]}"
       )
     ).toEqual("{[font color='green']}1 234,56 €{[/font]}")
+    expect(formatToString('', 'C2EUR', "{[p align='right']}{0}{[/p]}")).toEqual(
+      "{[p align='right']}0,00 €{[/p]}"
+    )
 
     expect(formatToString(-1234.56, 'C2EUR', '{0};')).toEqual('-1 234,56 €')
     expect(formatToString(-1234.56, 'C2EUR', 'Crédit {0};Débit {0}')).toEqual('Débit 1 234,56 €')

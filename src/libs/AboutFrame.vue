@@ -7,12 +7,20 @@ const i18n = useI18n()
 import { convertLuctoriosFormatToHtml } from '@/libs/convert'
 import { send_to_support } from '@/libs/utils.js'
 import { getUrlServer } from '@/libs/transport'
+import { computed } from 'vue'
 const emit = defineEmits(['close'])
 const more_version = defineModel({ type: Boolean, default: false })
 const visible = true
 function send_support() {
   send_to_support(i18n.t, store, '', getUrlServer())
 }
+const clienVersionChecked = computed(() => {
+  var result = store.state.server.clientversion
+  if (!store.getters.isVersionOk) {
+    result += ' (' + i18n.t('Client obselete').replace('<br/>', ':') + ')'
+  }
+  return result
+})
 </script>
 
 <template>
@@ -49,9 +57,7 @@ function send_support() {
             $store.state.server.serverversion
           }}</v-col>
           <v-col cols="6" class="text-center space small">{{ $t('client') }}</v-col>
-          <v-col cols="6" class="text-center space small">{{
-            $store.state.server.clientversion
-          }}</v-col>
+          <v-col cols="6" class="text-center space small">{{ clienVersionChecked }}</v-col>
         </v-row>
         <div class="more_version" v-if="more_version">
           <v-row v-for="item in $store.state.server.info_server" :key="item">

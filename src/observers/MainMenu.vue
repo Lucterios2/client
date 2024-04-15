@@ -170,6 +170,9 @@ export default {
           </v-expansion-panel-text>
         </v-expansion-panel>
       </v-expansion-panels>
+      <div class="versionclient_footer" v-if="!$store.getters.isVersionOk">
+        <span v-html="$t('Client obselete')"></span>
+      </div>
       <div class="support_footer" v-if="$store.state.server.support_html">
         <span v-html="support_html"></span>
       </div>
@@ -209,6 +212,19 @@ export default {
 
 .summary_menu > .v-expansion-panels > .v-expansion-panel > .v-expansion-panel-title {
   margin-top: -10px;
+}
+
+.versionclient_footer {
+  padding: 2px;
+  border: 1px black solid;
+  border-radius: 10px;
+  background-color: #eee;
+  width: 70%;
+  margin: 0px auto 10px auto;
+  color: red;
+  text-align: center;
+  font-style: italic;
+  font-weight: bold;
 }
 
 .support_footer {

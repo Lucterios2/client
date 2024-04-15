@@ -29,6 +29,7 @@ build:
   stage: build
   script:
     - npm install
+    - ./version_build.sh
     - npm run build
   artifacts:
     expire_in: 1 week

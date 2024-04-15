@@ -76,13 +76,17 @@ export default {
         }
         const new_line = { id: line_item.id, classname: last_color_even ? 'even' : 'odd' }
         this.component.headers.forEach((header_item) => {
-          new_line[header_item[0]] = convertLuctoriosFormatToHtml(
-            formatToString(
-              line_item[header_item[0]],
-              header_item[2] || '',
-              header_item[4].replace(/%s/g, '{0}')
+          if (line_item[header_item[0]] == '') {
+            new_line[header_item[0]] = ''
+          } else {
+            new_line[header_item[0]] = convertLuctoriosFormatToHtml(
+              formatToString(
+                line_item[header_item[0]],
+                header_item[2] || '',
+                header_item[4].replace(/%s/g, '{0}')
+              )
             )
-          )
+          }
         })
         return new_line
       })

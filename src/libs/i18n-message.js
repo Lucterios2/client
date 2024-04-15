@@ -55,7 +55,8 @@ export const messages = {
     'Http error {0}': 'Http error {0}',
     'Command unknown!': 'Command unknown!',
     'Internal error !': 'Internal error !',
-    Picture: 'Picture'
+    Picture: 'Picture',
+    'Client obselete': 'Obsolete client <br/> Perform an update'
   },
   fr: {
     about: 'A propos...',
@@ -115,6 +116,7 @@ export const messages = {
     'Http error {0}': 'Erreur Http {0}',
     'Command unknown!': 'Commande inconnue !',
     'Internal error !': 'Erreur interne !',
-    Picture: 'Photo'
+    Picture: 'Photo',
+    'Client obselete': 'Client obsolète <br/> Effectuer une mise à jour'
   }
 }
