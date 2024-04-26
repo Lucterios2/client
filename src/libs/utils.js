@@ -1,3 +1,5 @@
+import { Stringformat } from "./convert"
+
 export function openBlob(aBlob, aFileName) {
   if (window.navigator.msSaveOrOpenBlob) {
     window.navigator.msSaveOrOpenBlob(aBlob, aFileName)
@@ -75,14 +77,8 @@ export function send_to_support(i18n_t, store, complement, url_server) {
 }
 
 export function part_for_email(title, value) {
-  if (value !== '') {
-    return (
-      '**' +
-      title +
-      '**\n' +
-      value.replaceAll('{[br/]}', '\n').replaceAll('{[br]}', '\n').trim() +
-      '\n\n'
-    )
+  if (value !== '' && value !== undefined) {
+    return Stringformat('**{0}**\n{1}\n\n',[title, value.replaceAll('{[br/]}', '\n').replaceAll('{[br]}', '\n').trim()])
   }
   return ''
 }
