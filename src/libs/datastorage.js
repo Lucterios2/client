@@ -51,9 +51,6 @@ const storage = createStore({
       state.show_summary = summary
     },
     change_server(state, server) {
-      if (server && server.cordovaversion) {
-        server.clientversion = server.cordovaversion
-      }
       state.server = Object.assign({}, state.server, server)
     },
     change_client(state, client) {
