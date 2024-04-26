@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import ButtonAction from '@/libs/ButtonAction.vue'
 import { CLOSE_YES } from '@/libs/utils'
@@ -17,10 +17,12 @@ function click_action(action) {
     act_ret = emit('clickaction', action, false) != false
   }
   if (act_ret && Number(action.close) === CLOSE_YES) {
-    if (props.close) {
-      emit('clickaction', props.close, true)
-    }
-    emit('close', action.id == '')
+    nextTick(() => {
+      if (props.close) {
+        emit('clickaction', props.close, true)
+      }
+      emit('close', action.id == '')
+    })
   }
 }
 const action_list = computed(() => {
