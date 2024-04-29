@@ -43,7 +43,7 @@ publish:
   image: node:latest
   stage: publish
   needs: [build]
- before_script:
+  before_script:
     - apt-get update -y && apt-get install -yqqf openssh-client git unzip sshpass rsync --fix-missing
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
     - eval $(ssh-agent -s)
