@@ -54,7 +54,7 @@ publish:
   script:
     - git config --global user.email "${GITLAB_USER_EMAIL}"
     - git config --global user.name "${GITLAB_USER_NAME}"
-    - REPO_URL="git@$GITLAB_URL:lucterios2/lucterios.git"
+    - REPO_URL="git@gitlab.sleto.fr:lucterios2/lucterios.git"
     - REPO_DIR=lucterios
     - rm -fr $REPO_DIR
     - git clone $REPO_URL $REPO_DIR
