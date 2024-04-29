@@ -29,7 +29,7 @@ build:
   image: node:latest
   stage: build
   script:
-    - apt install python3
+    - apt-get install python3
     - npm install
     - ./version_build.sh
     - npm run build
@@ -51,4 +51,8 @@ publish:
     - git clone $REPO_URL $REPO_DIR
     - cp public/conf/build $REPO_DIR/client/build_client
     - cd $REPO_DIR
+    - git status
+    - git add client/build_client
+    - git status
+    - git commit -a -m 'GUI change'
     - git status
