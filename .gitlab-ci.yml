@@ -44,8 +44,8 @@ publish:
   stage: publish
   needs: [build]
   script:
-    - git config user.email "build@sleto.net"
-    - git config user.name "CI Build"
+    - git config --global user.email "build@sleto.net"
+    - git config --global user.name "CI Build"
     - BASE_URL=`echo $CI_REPOSITORY_URL | sed "s;\/*$CI_PROJECT_PATH.*;;"`
     - REPO_URL="$BASE_URL/lucterios2/lucterios.git"
     - REPO_DIR=lucterios
