@@ -44,8 +44,8 @@ publish:
   stage: publish
   needs: [build]
   script:
-    - git config --global user.email "build@sleto.net"
-    - git config --global user.name "CI Build"
+    - git config --global user.email "${GITLAB_USER_EMAIL}"
+    - git config --global user.name "${GITLAB_USER_NAME}"
     - BASE_URL=`echo $CI_REPOSITORY_URL | sed "s;\/*$CI_PROJECT_PATH.*;;"`
     - REPO_URL="$BASE_URL/lucterios2/lucterios.git"
     - REPO_DIR=lucterios
@@ -54,6 +54,8 @@ publish:
     - cp public/conf/build $REPO_DIR/client/build_client
     - cd $REPO_DIR
     - git status
+    - git remote remove origin
+    - git remote add origin https://oauth2:$OAUTH_TOKEN@gitlab.sleto.fr/lucterios2/lucterios.git
     - git remote -vvv
     - git add client/build_client
     - git status
