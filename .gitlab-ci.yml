@@ -61,5 +61,5 @@ publish:
     - git status
     - git commit -a -m 'GUI change'
     - git status
-    - git push
+    - git push --set-upstream origin master
     - git status        
