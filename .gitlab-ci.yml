@@ -43,19 +43,25 @@ publish:
   image: node:latest
   stage: publish
   needs: [build]
+ before_script:
+    - apt-get update -y && apt-get install -yqqf openssh-client git unzip sshpass rsync --fix-missing
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client git -y )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY_TOOLKIT" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan $GITLAB_URL >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts  
   script:
     - git config --global user.email "${GITLAB_USER_EMAIL}"
     - git config --global user.name "${GITLAB_USER_NAME}"
-    - BASE_URL=`echo $CI_REPOSITORY_URL | sed "s;\/*$CI_PROJECT_PATH.*;;"`
-    - REPO_URL="$BASE_URL/lucterios2/lucterios.git"
+    - REPO_URL="git@$GITLAB_URL:lucterios2/lucterios.git"
     - REPO_DIR=lucterios
     - rm -fr $REPO_DIR
     - git clone $REPO_URL $REPO_DIR
     - cp public/conf/build $REPO_DIR/client/build_client
     - cd $REPO_DIR
     - git status
-    - git remote remove origin
-    - git remote add origin https://oauth2:$OAUTH_TOKEN@gitlab.sleto.fr/lucterios2/lucterios.git
     - git remote -vvv
     - git add client/build_client
     - git status
