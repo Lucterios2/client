@@ -43,7 +43,7 @@ function errorHandler(errorMsg, stack, error) {
         stack = error.stack.replaceAll('@http', '\thttp').replaceAll('@', '{[br]}')
       } else if (error.fileName !== undefined) {
         stack = error.fileName + ':' + error.lineNumber + ':' + error.columnNumber
-      } else if (stack == null) {
+      } else if (stack === null) {
         stack = ''
       }
     } else {

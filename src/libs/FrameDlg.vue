@@ -180,7 +180,7 @@ export default {
       clearInterval(positionIntervalId)
     }, 10)
     document.addEventListener('keydown', (event) => {
-      if (event.key == 'Escape') {
+      if (event.key === 'Escape') {
         const current_card = first_element_by_class(this.$el, 'v-card')
         if (current_card && current_card.style.zIndex > 10) {
           this.closeDlg()

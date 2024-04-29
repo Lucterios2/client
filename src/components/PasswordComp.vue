@@ -10,7 +10,7 @@ export default {
   }),
   computed: {
     check() {
-      if (Number(this.component.security) == 1) {
+      if (Number(this.component.security) === 1) {
         return [this.check_size, this.check_mask]
       } else {
         return []
@@ -19,13 +19,13 @@ export default {
   },
   methods: {
     check_size() {
-      if (!this.component.needed && this.getValue().length == 0) {
+      if (!this.component.needed && this.getValue().length === 0) {
         return true
       }
       return this.getValue().length > 6 || this.$t('Password too short!')
     },
     check_mask() {
-      if (!this.component.needed && this.getValue().length == 0) {
+      if (!this.component.needed && this.getValue().length === 0) {
         return true
       }
       if (

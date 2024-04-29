@@ -46,7 +46,7 @@ export default {
         return {
           title: header_item[1],
           align: 'start',
-          sortable: header_item[3] == 1,
+          sortable: Number(header_item[3]) === 1,
           key: header_item[0],
           sort: true
         }
@@ -57,7 +57,8 @@ export default {
       const sort_text = this.context && this.context['GRID_ORDER%' + this.component.name]
       if (sort_text) {
         sort_text.split(',').forEach((item) => {
-          if (item[0] == '-') {
+          item = item.replace('__', '.')
+          if (item[0] === '-') {
             sort_by.push({ key: item.substring(1), order: 'asc' })
           } else {
             sort_by.push({ key: item, order: 'desc' })
@@ -70,13 +71,13 @@ export default {
       var last_color_even = false
       var last_value = null
       return this.value.map((line_item) => {
-        if (line_item.__color_ref__ == null || line_item.__color_ref__ != last_value) {
+        if (line_item.__color_ref__ === null || line_item.__color_ref__ !== last_value) {
           last_value = line_item.__color_ref__
           last_color_even = !last_color_even
         }
         const new_line = { id: line_item.id, classname: last_color_even ? 'even' : 'odd' }
         this.component.headers.forEach((header_item) => {
-          if (line_item[header_item[0]] == '') {
+          if (line_item[header_item[0]] === '') {
             new_line[header_item[0]] = ''
           } else {
             new_line[header_item[0]] = convertLuctoriosFormatToHtml(
@@ -122,9 +123,9 @@ export default {
       return this.component.actions.map((action_item) => {
         const unique = Number(action_item.unique)
         action_item.disabled = false
-        if (unique == SELECT_SINGLE && this.selectItems.length != 1) {
+        if (unique === SELECT_SINGLE && this.selectItems.length !== 1) {
           action_item.disabled = true
-        } else if (unique == SELECT_MULTI && this.selectItems.length == 0) {
+        } else if (unique === SELECT_MULTI && this.selectItems.length === 0) {
           action_item.disabled = true
         }
         action_item.no_check = true
@@ -136,7 +137,7 @@ export default {
     indexOfValue(rowid) {
       var row_index = null
       this.value.forEach((item, item_index) => {
-        if (item.id == rowid) {
+        if (item.id === rowid) {
           row_index = item_index
         }
       })
@@ -150,7 +151,7 @@ export default {
         this.gridcontext['GRID_SIZE%' + this.component.name] = itemsPerPage
         this.gridcontext['GRID_ORDER%' + this.component.name] = sortBy
           .map((sort_item) => {
-            return (sort_item.order == 'asc' ? '-' : '') + sort_item.key
+            return (sort_item.order === 'asc' ? '-' : '') + sort_item.key.replace('.', '__')
           })
           .join(',')
         this.refresh()
@@ -164,24 +165,24 @@ export default {
     },
     click_action(action) {
       var new_action = convert_action(action)
-      if (this.selectItems.length > 0 && new_action.unique != SELECT_NONE) {
+      if (this.selectItems.length > 0 && Number(new_action.unique) !== SELECT_NONE) {
         new_action.params[this.component.name] = this.selectItems.join(';')
       }
       this.$emit('action', new_action, false)
     },
     click_row(event, row_item) {
       this.savefocusin()
-      if (this.buttonMode != SELECT_NONE) {
+      if (this.buttonMode !== SELECT_NONE) {
         var exit_before = this.selectItems.includes(row_item.id)
         if (exit_before) {
           this.selectItems.splice(this.selectItems.indexOf(row_item.id), 1)
         }
-        if (this.buttonMode == SELECT_SINGLE) {
+        if (this.buttonMode === SELECT_SINGLE) {
           this.selectItems = []
         } else if (
           event.shiftKey &&
-          this.lastselectid != null &&
-          this.lastselectid != row_item.id
+          this.lastselectid !== null &&
+          this.lastselectid !== row_item.id
         ) {
           const current_index = this.indexOfValue(row_item.id)
           var minRow = Math.min(this.indexOfValue(this.lastselectid) + 1, current_index)
@@ -203,16 +204,16 @@ export default {
       }
     },
     dblclick_row(event, row_item) {
-      if (this.buttonMode != SELECT_NONE) {
+      if (this.buttonMode !== SELECT_NONE) {
         var dbl_action = null
         this.selectItems = [row_item.id]
         this.$forceUpdate()
         this.actions.forEach((act) => {
-          if (dbl_action == null && act.unique != SELECT_NONE) {
+          if (dbl_action === null && Number(act.unique) !== SELECT_NONE) {
             dbl_action = act
           }
         })
-        if (dbl_action != null) {
+        if (dbl_action !== null) {
           this.click_action(dbl_action)
         }
       }
@@ -269,8 +270,8 @@ export default {
             @click="click_row($event, item)"
             @dblclick="dblclick_row($event, item)"
           >
-            <span v-if="header[2] != 'icon'" v-html="item[header[0]]"></span>
-            <img :src="item[header[0]]" v-if="header[2] == 'icon'" />
+            <span v-if="header[2] !== 'icon'" v-html="item[header[0]]"></span>
+            <img :src="item[header[0]]" v-if="header[2] === 'icon'" />
           </td>
         </tr>
       </template>

@@ -7,15 +7,15 @@ export default {
   methods: {
     setValue(params) {
       this.setValueEx(params)
-      if (this.current_value == NULL_VALUE) {
+      if (this.current_value === NULL_VALUE) {
         this.current_value = ''
-      } else if (this.current_value == '') {
+      } else if (this.current_value === '') {
         this.current_value = new Date().toISOString().substring(0, 10)
       }
       this.$forceUpdate()
     },
     getValue(final_return) {
-      if (final_return && this.current_value == '') {
+      if (final_return && this.current_value === '') {
         return NULL_VALUE
       }
       return this.current_value

@@ -16,7 +16,7 @@ export default {
           return {
             value: item[0],
             title: item[1],
-            selected: this.current_value.indexOf(item[0]) != -1
+            selected: this.current_value.indexOf(item[0]) !== -1
           }
         })
       } else {
@@ -25,7 +25,7 @@ export default {
     },
     left_select() {
       this.forceRecompute
-      return this.all_select.filter((item) => Number(this.component.simple) != 2 || !item.selected)
+      return this.all_select.filter((item) => Number(this.component.simple) !== 2 || !item.selected)
     },
     right_select() {
       this.forceRecompute
@@ -79,7 +79,7 @@ export default {
       for (var idxopt = 0; idxopt < event.target.options.length; idxopt++) {
         selected_items.push(event.target.options[idxopt])
       }
-      if (Number(this.component.simple) == 2) {
+      if (Number(this.component.simple) === 2) {
         this.left_data = selected_items.filter((opt) => opt.selected).map((opt) => opt.value)
       } else {
         this.current_value = selected_items.filter((opt) => opt.selected).map((opt) => opt.value)
@@ -117,7 +117,7 @@ export default {
           </option>
         </select>
       </v-col>
-      <v-col cols="1" v-if="Number(component.simple) == 2" style="padding-bottom: 20px">
+      <v-col cols="1" v-if="Number(component.simple) === 2" style="padding-bottom: 20px">
         <v-btn
           size="x-small"
           icon="mdi mdi-chevron-double-right"
@@ -143,7 +143,7 @@ export default {
           @click="delall"
         ></v-btn>
       </v-col>
-      <v-col cols="5" v-if="Number(component.simple) == 2">
+      <v-col cols="5" v-if="Number(component.simple) === 2">
         <select multiple @change="onrightChange($event)" @focusin="savefocusin">
           <option :value="item.value" :key="idx" v-for="(item, idx) in right_select">
             {{ item.title }}

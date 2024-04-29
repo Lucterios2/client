@@ -2035,7 +2035,7 @@ export async function callLucteriosAction_mock(action) {
   }
   current_store.commit('call_waiting', true)
   var call_result = { meta: {} }
-  if (action.id == 'CORE/authentification' || action.id == 'CORE/exitConnection') {
+  if (action.id === 'CORE/authentification' || action.id === 'CORE/exitConnection') {
     call_result = {
       connexion: example_server_data,
       data: '',
@@ -2056,11 +2056,11 @@ export async function callLucteriosAction_mock(action) {
       call_result.data = ''
     } else if (action.params.login === action.params.password) {
       await sleep(2 * 1000)
-      call_result.data = action.params.login == 'x' ? 'NEEDAUTH' : 'OK'
+      call_result.data = action.params.login === 'x' ? 'NEEDAUTH' : 'OK'
     } else {
       call_result.data = 'BADAUTH'
     }
-  } else if (action.id == 'CORE/menu') {
+  } else if (action.id === 'CORE/menu') {
     call_result = {
       menus: example_menu_data,
       meta: {
@@ -2074,7 +2074,7 @@ export async function callLucteriosAction_mock(action) {
     await sleep(500)
     call_result = response_to_ident[action.id]
   }
-  call_result.meta.ismodal = Number(action.modal) == FORMTYPE_NOMODAL
+  call_result.meta.ismodal = Number(action.modal) === FORMTYPE_NOMODAL
   call_result.meta.method = action.method
   console.log('CALL ACTION', action, call_result)
   current_store.commit('call_waiting', false)

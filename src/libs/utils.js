@@ -1,4 +1,4 @@
-import { Stringformat } from "./convert"
+import { Stringformat } from './convert'
 
 export function openBlob(aBlob, aFileName) {
   if (window.navigator.msSaveOrOpenBlob) {
@@ -78,7 +78,10 @@ export function send_to_support(i18n_t, store, complement, url_server) {
 
 export function part_for_email(title, value) {
   if (value !== '' && value !== undefined) {
-    return Stringformat('**{0}**\n{1}\n\n',[title, value.replaceAll('{[br/]}', '\n').replaceAll('{[br]}', '\n').trim()])
+    return Stringformat('**{0}**\n{1}\n\n', [
+      title,
+      value.replaceAll('{[br/]}', '\n').replaceAll('{[br]}', '\n').trim()
+    ])
   }
   return ''
 }
@@ -90,14 +93,22 @@ export function insertStyle(rule) {
   document.body.appendChild(css)
 }
 
+export const XFER_DBOX_INFORMATION = 1
+export const XFER_DBOX_CONFIRMATION = 2
+export const XFER_DBOX_WARNING = 3
+export const XFER_DBOX_ERROR = 4
+
 export const CLOSE_NO = 0
 export const CLOSE_YES = 1
+
 export const FORMTYPE_NOMODAL = 0
 export const FORMTYPE_MODAL = 1
 export const FORMTYPE_REFRESH = 2
+
 export const SELECT_NONE = 1
 export const SELECT_SINGLE = 0
 export const SELECT_MULTI = 2
+
 export const NULL_VALUE = 'NULL'
 
 export function refreshAction(meta, default_params) {

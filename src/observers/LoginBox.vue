@@ -21,7 +21,7 @@ export default {
   }),
   computed: {
     has_action() {
-      return this.actions != undefined && this.actions.length > 0
+      return this.actions !== undefined && this.actions.length > 0
     },
     action_list() {
       const actions = Array()
@@ -61,11 +61,11 @@ export default {
       return this.$emit('clickaction', action)
     },
     run_action(action) {
-      if (action.id == 'cancel') {
+      if (action.id === 'cancel') {
         this.execute_action({ id: 'CORE/exitConnection' })
         this.$emit('close')
       }
-      if (action.id == 'ok') {
+      if (action.id === 'ok') {
         this.onSubmit()
       }
     },

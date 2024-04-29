@@ -15,7 +15,7 @@ export default {
   }),
   computed: {
     is_empty() {
-      return this.getValue() == ''
+      return this.getValue() === ''
     },
     check() {
       return [this.check_no_empty]
@@ -27,7 +27,7 @@ export default {
       if (this.getVisible() && this.getEnabled()) {
         this.check.forEach((fct) => {
           const val = fct()
-          if (result == true && typeof val == 'string') {
+          if (result === true && typeof val === 'string') {
             result = val
           }
         })
@@ -48,7 +48,7 @@ export default {
       return this.current_value
     },
     setValueEx(params) {
-      if (params != null && typeof params == 'object') {
+      if (params !== null && typeof params === 'object') {
         this.current_value = params.value
         Object.keys(params).forEach((key) => {
           if (this.component[key]) {
@@ -73,14 +73,14 @@ export default {
       return !this.is_disabled
     },
     setVisible(is_visible) {
-      if (this.$el != undefined) {
+      if (this.$el !== undefined) {
         this.$el.style.display = is_visible ? null : 'none'
         this.$el.style.fontSize = is_visible ? null : '0px'
       }
     },
     getVisible() {
-      if (this.$el != undefined && this.$el.style != undefined) {
-        return this.$el.style.display != 'none'
+      if (this.$el !== undefined && this.$el.style !== undefined) {
+        return this.$el.style.display !== 'none'
       }
       return true
     },
@@ -89,7 +89,7 @@ export default {
       this.scriptPerformed()
     },
     add_parameters(params) {
-      if (this.getVisible() && this.getEnabled()) {
+      if (this.getInitialValue() !== null) {
         params[this.component.name] = this.getValue(true)
       }
     },
@@ -117,7 +117,7 @@ export default {
   },
   mounted() {
     this.setValue(this.value)
-    if (typeof this.component.javascript == 'string' && this.component.javascript !== '') {
+    if (typeof this.component.javascript === 'string' && this.component.javascript !== '') {
       this.script_function = new Function(
         'current',
         'parent',

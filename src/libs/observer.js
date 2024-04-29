@@ -25,7 +25,7 @@ function convert_props(props, emits) {
 export function createCompnent(el, component, props, children, emits) {
   let new_comp = Vue.h(component, convert_props(props, emits), () => children)
   new_comp.appContext = current_app._context
-  if (el != null) {
+  if (el !== null) {
     Vue.render(new_comp, el)
   }
   return new_comp
@@ -80,7 +80,7 @@ class CompManager {
         return self.close(refresh_parent)
       }
     }
-    if (props.id == undefined) {
+    if (props.id === undefined) {
       props.id = this.id
     }
     this.comp = createCompnent(this.el, component, props, [], emits)
@@ -98,7 +98,7 @@ class CompManager {
         }
       }
       component_created.forEach((comp) => {
-        if (comp.owner && this.id == comp.ownerid) {
+        if (comp.owner && this.id === comp.ownerid) {
           comp.ownerid = this.ownerid
         }
       })
@@ -129,10 +129,10 @@ class CompManager {
 }
 
 export async function factory(result, click_action, source, refresh) {
-  if (result.meta.observer == 'core.exception') {
+  if (result.meta.observer === 'core.exception') {
     refresh = false
   }
-  if (source == undefined || source == null || refresh != true) {
+  if (source === undefined || source === null || refresh !== true) {
     var current_comp
     switch (result.meta.observer) {
       case 'core.auth':

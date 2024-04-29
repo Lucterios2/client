@@ -10,14 +10,14 @@ export default {
     },
     setValue(params) {
       this.setValueEx(params)
-      if (this.current_value == NULL_VALUE) {
-        this.current_value == ''
+      if (this.current_value === NULL_VALUE) {
+        this.current_value === ''
       }
       this.current_value = this.current_value.substring(0, 16)
       this.$forceUpdate()
     },
     getValue(final_return) {
-      if (final_return && this.current_value == '') {
+      if (final_return && this.current_value === '') {
         return NULL_VALUE
       }
       return this.current_value.replace('T', ' ')

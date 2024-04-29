@@ -15,11 +15,11 @@ export function initialTransport(store, translate) {
 var server_url = null
 
 export function getUrlServer() {
-  if (server_url == null) {
+  if (server_url === null) {
     var server_url_items = window.location.href.split('/')
     if (
-      server_url_items[server_url_items.length - 1] == 'index.html' ||
-      server_url_items[server_url_items.length - 1] == ''
+      server_url_items[server_url_items.length - 1] === 'index.html' ||
+      server_url_items[server_url_items.length - 1] === ''
     ) {
       server_url_items = server_url_items.slice(0, server_url_items.length - 2)
     }
@@ -107,9 +107,9 @@ export async function callLucteriosAction(action) {
   }
   reponsetext.meta.ismodal =
     ['core.dialogbox', 'core.custom'].includes(reponsetext.meta.observer) &&
-    (action.modal == undefined || Number(action.modal) == FORMTYPE_MODAL)
+    (action.modal === undefined || Number(action.modal) === FORMTYPE_MODAL)
   reponsetext.meta.method = action.method
-  if (reponsetext.meta.id == undefined && reponsetext.meta.extension) {
+  if (reponsetext.meta.id === undefined && reponsetext.meta.extension) {
     reponsetext.meta.id = reponsetext.meta.extension + '/' + reponsetext.meta.action
   }
   return reponsetext

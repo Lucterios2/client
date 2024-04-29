@@ -20,7 +20,7 @@ export default {
       if (
         this.component.case &&
         this.component.case.length > 0 &&
-        this.component.case.map((case_item) => case_item[0]).indexOf(this.current_value) == -1
+        this.component.case.map((case_item) => case_item[0]).indexOf(this.current_value) === -1
       ) {
         this.current_value = this.component.case[0][0]
       }
@@ -40,6 +40,7 @@ export default {
     :disabled="is_disabled"
     :key="forceRecompute"
     :style="style_size"
+    :no-data-text="$t('No data available')"
     single-line
     @focusin="savefocusin"
     @update:modelValue="runIfChange"

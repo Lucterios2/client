@@ -48,7 +48,7 @@ export default {
   methods: {
     async getFileContentBase64() {
       this.current_value = null
-      if (this.selectedFile != null) {
+      if (this.selectedFile !== null) {
         if (this.component.compress) {
           var zip = new JSZip()
           zip.file(this.name, this.selectedFile)
@@ -139,7 +139,7 @@ export default {
       })
     },
     action_camera(act) {
-      if (act.id == 'ok') {
+      if (act.id === 'ok') {
         this.isPhotoTaken = !this.isPhotoTaken
         const context = this.$refs.canvas.getContext('2d')
         context.drawImage(this.$refs.camera, 0, 0, 400, 337.5)

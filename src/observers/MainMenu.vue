@@ -63,7 +63,7 @@ export default {
         this.custom_data = {}
         this.custom_comp = []
         const summary_return = await callLucteriosAction(summary_menu)
-        if (summary_return.meta.observer == 'core.custom') {
+        if (summary_return.meta.observer === 'core.custom') {
           this.custom_data = summary_return.data
           this.custom_comp = summary_return.comp
         }

@@ -22,13 +22,13 @@ export default {
   },
   methods: {
     click_action(action, no_owner) {
-      if (action == null) {
+      if (action === null) {
         this.actions.forEach((act) => {
-          if (action == null && act.id !== '') {
+          if (action === null && act.id !== '') {
             action = act
           }
         })
-        if (action != null) {
+        if (action !== null) {
           return this.click_action_in_customcomponents(action, no_owner)
         }
         return false

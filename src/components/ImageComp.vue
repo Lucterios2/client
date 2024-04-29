@@ -8,7 +8,7 @@ export default {
   components: { AbstractComp },
   computed: {
     is_icon() {
-      return this.component.type == '#' || this.component.short_icon
+      return this.component.type === '#' || this.component.short_icon
     },
     image_src() {
       const current_value = this.value || ''

@@ -2,6 +2,7 @@
 import AbstractObserver from '@/observers/AbstractObserver.vue'
 import FrameDlg from '@/libs/FrameDlg.vue'
 import { convertLuctoriosFormatToHtml } from '@/libs/convert'
+import { XFER_DBOX_CONFIRMATION, XFER_DBOX_ERROR, XFER_DBOX_WARNING } from '@/libs/utils'
 export default {
   name: 'AcknowledgeReturn',
   extends: AbstractObserver,
@@ -12,17 +13,11 @@ export default {
   computed: {
     icon() {
       this.forceRecompute
-      /*
-      XFER_DBOX_INFORMATION = 1
-      XFER_DBOX_CONFIRMATION = 2
-      XFER_DBOX_WARNING = 3
-      XFER_DBOX_ERROR = 4
-      */
-      if (this.data.type == 2) {
+      if (this.data.type === XFER_DBOX_CONFIRMATION) {
         return 'mdi:mdi-help-circle-outline'
-      } else if (this.data.type == 3) {
+      } else if (this.data.type === XFER_DBOX_WARNING) {
         return 'mdi:mdi-alert'
-      } else if (this.data.type == 4) {
+      } else if (this.data.type === XFER_DBOX_ERROR) {
         return 'mdi:mdi-alert-circle'
       }
       return 'mdi:mdi-information-outline'

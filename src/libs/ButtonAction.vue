@@ -11,10 +11,10 @@ function clickaction() {
   emit('click', props.action)
 }
 const action_disabled = computed(() => {
-  return props.action.disabled == true
+  return props.action.disabled === true
 })
 const is_icon = computed(() => {
-  return props.action.short_icon != undefined && props.action.short_icon != ''
+  return props.action.short_icon !== undefined && props.action.short_icon !== ''
 })
 const image_src = computed(() => {
   if (props.action.short_icon) {

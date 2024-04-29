@@ -78,7 +78,7 @@ export default {
         .split('\n')
       for (var sIdx = 0; sIdx < stackTexts.length; sIdx++) {
         const start_url_pos = stackTexts[sIdx].indexOf(getUrlServer())
-        if (start_url_pos != -1) {
+        if (start_url_pos !== -1) {
           var stack_line_begin = stackTexts[sIdx].substring(0, start_url_pos).trim().split('/')
           stack_line_begin = stack_line_begin[stack_line_begin.length - 1]
           while (stack_line_begin.length < 45) {

@@ -19,17 +19,17 @@ export default {
   },
   methods: {
     is_valid() {
-      return this.num2 == this.result
+      return this.num2 === Number(this.result)
     }
   },
   mounted() {
     this.num1 = Math.floor(Math.random() * 10 + 1)
     this.num2 = Math.floor(Math.random() * 10 + 1)
     this.operation = Math.floor(Math.random() * 3)
-    if (this.operation == 0) {
+    if (this.operation === 0) {
       this.total = this.num1 + this.num2
       this.operationTxt = '+'
-    } else if (this.operation == 1 && this.num2 < this.num1) {
+    } else if (this.operation === 1 && this.num2 < this.num1) {
       this.total = this.num1 - this.num2
       this.operationTxt = '-'
     } else {

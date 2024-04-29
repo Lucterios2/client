@@ -44,9 +44,9 @@ describe('CaptchaComp', () => {
     expect(wrapper.vm.is_valid()).toBe(false)
     expect(wrapper.find('.error-captcha').exists()).toBe(true)
     expect(wrapper.find('.error-captcha').text()).toBe('Mauvais Captcha!')
-    if (operationTxt == '+') {
+    if (operationTxt === '+') {
       wrapper.find('.v-field_abstract > input').setValue(String(total - num1))
-    } else if (operationTxt == '-') {
+    } else if (operationTxt === '-') {
       wrapper.find('.v-field_abstract > input').setValue(String(num1 - total))
     } else {
       wrapper.find('.v-field_abstract > input').setValue(String(total / num1))

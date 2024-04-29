@@ -21,22 +21,22 @@ export default {
   emits: ['action', 'close', 'interface'],
   computed: {
     tablist() {
-      return this.comp.filter((item) => item.component == 'TAB')
+      return this.comp.filter((item) => item.component === 'TAB')
     }
   },
   methods: {
     async call_action(action, no_owner) {
-      if (action == null) {
+      if (action === null) {
         action = this.get_default_action()
-        if (action == null) {
+        if (action === null) {
           return this.$emit('action', null, no_owner)
         }
       }
       var is_valid = true
       const invalid_name = []
-      if (action.modal != FORMTYPE_REFRESH && !action.no_check) {
+      if (action.modal !== FORMTYPE_REFRESH && !action.no_check) {
         this.componentlist.forEach((comp) => {
-          if (comp.is_valid() != true) {
+          if (comp.is_valid() !== true) {
             is_valid = false
             invalid_name.push(comp.get_component().name)
           }
@@ -119,7 +119,7 @@ export default {
           component_list.indexOf(comp_item) < component_list.length - 1
             ? component_list[component_list.indexOf(comp_item) + 1]
             : null
-        if (comp_next == null || comp_next.y != comp_item.y) {
+        if (comp_next === null || comp_next.y !== comp_item.y) {
           current_table.appendChild(current_tr)
           current_tr = document.createElement('tr')
           current_x = 0
@@ -143,14 +143,14 @@ export default {
       this.componentlist = []
       this.add_table(
         first_element_by_class(this.$el, 'root-row'),
-        this.comp.filter((item) => item.tab == 0)
+        this.comp.filter((item) => item.tab === 0)
       )
       this.tablist.forEach((tab) => {
         const subtable = first_element_by_class(this.$el, tab.name + '__row')
         if (subtable) {
           this.add_table(
             subtable,
-            this.comp.filter((item) => item.tab == tab.tab && item.component != 'TAB')
+            this.comp.filter((item) => item.tab === tab.tab && item.component !== 'TAB')
           )
         }
       })
@@ -164,7 +164,7 @@ export default {
     get(name) {
       var component = null
       this.componentlist.forEach((comp) => {
-        if (comp.get_component().name == name) {
+        if (comp.get_component().name === name) {
           component = comp
         }
       })
@@ -204,7 +204,7 @@ export default {
       }
     }
     this.componentlist.forEach((comp) => {
-      if (this.internalInfo.focus_name == comp.get_component().name) {
+      if (this.internalInfo.focus_name === comp.get_component().name) {
         comp.setfocus()
       }
     })
