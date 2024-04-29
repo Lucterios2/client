@@ -1,6 +1,7 @@
 stages:
   - test
   - build
+  - publish
 
 unit-test:
   image: node:latest
@@ -28,6 +29,7 @@ build:
   image: node:latest
   stage: build
   script:
+    - apt install python3
     - npm install
     - ./version_build.sh
     - npm run build
@@ -35,3 +37,18 @@ build:
     expire_in: 1 week
     paths:
       - dist
+      - public/conf/build
+
+publish:
+  image: node:latest
+  stage: publish
+  needs: [build]
+  script:
+    - BASE_URL=`echo $CI_REPOSITORY_URL | sed "s;\/*$CI_PROJECT_PATH.*;;"`
+    - REPO_URL="$BASE_URL/lucterios2/lucterios.git"
+    - REPO_DIR=lucterios
+    - rm -fr $REPO_DIR
+    - git clone $REPO_URL $REPO_DIR
+    - cp public/conf/build $REPO_DIR/client/build_client
+    - cd $REPO_DIR
+    - git status
