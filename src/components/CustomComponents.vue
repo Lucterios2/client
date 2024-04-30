@@ -26,17 +26,17 @@ export default {
   },
   methods: {
     async call_action(action, no_owner) {
-      if (action === null) {
+      if (action == null) {
         action = this.get_default_action()
-        if (action === null) {
+        if (action == null) {
           return this.$emit('action', null, no_owner)
         }
       }
       var is_valid = true
       const invalid_name = []
-      if (action.modal !== FORMTYPE_REFRESH && !action.no_check) {
+      if (Number(action.modal) !== FORMTYPE_REFRESH && !action.no_check) {
         this.componentlist.forEach((comp) => {
-          if (comp.is_valid() !== true) {
+          if (comp.is_valid() != true) {
             is_valid = false
             invalid_name.push(comp.get_component().name)
           }

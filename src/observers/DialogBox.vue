@@ -13,11 +13,11 @@ export default {
   computed: {
     icon() {
       this.forceRecompute
-      if (this.data.type === XFER_DBOX_CONFIRMATION) {
+      if (Number(this.data.type) === XFER_DBOX_CONFIRMATION) {
         return 'mdi:mdi-help-circle-outline'
-      } else if (this.data.type === XFER_DBOX_WARNING) {
+      } else if (Number(this.data.type) === XFER_DBOX_WARNING) {
         return 'mdi:mdi-alert'
-      } else if (this.data.type === XFER_DBOX_ERROR) {
+      } else if (Number(this.data.type) === XFER_DBOX_ERROR) {
         return 'mdi:mdi-alert-circle'
       }
       return 'mdi:mdi-information-outline'

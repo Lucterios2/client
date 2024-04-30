@@ -11,9 +11,9 @@ export default {
       this.$nextTick(() => {
         if (this.close) {
           this.click_action(this.close, true)
-          this.onClose(this.action === null)
+          this.onClose(this.action == null)
         } else {
-          this.onClose(this.action === null)
+          this.onClose(this.action == null)
         }
       })
     }
@@ -21,7 +21,7 @@ export default {
   mounted() {
     this.$nextTick(() => {
       if (this.action) {
-        if (this.click_action(this.action, false) !== false) {
+        if (this.click_action(this.action, false) != false) {
           this.call_close()
         }
       } else {

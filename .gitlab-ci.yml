@@ -43,18 +43,10 @@ publish:
   image: node:latest
   stage: publish
   needs: [build]
-  before_script:
-    - apt-get update -y && apt-get install -yqqf openssh-client git unzip sshpass rsync --fix-missing
-    - 'which ssh-agent || ( apt-get update -qy && apt-get install openssh-client -qqy )'
-    - eval `ssh-agent -s`
-    - echo "${SSH_PRIVATE_KEY}" | tr -d '\r' | ssh-add - > /dev/null
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - echo "$SSH_PUBLIC_KEY" >> ~/.ssh/id_rsa.pub
   script:
     - git config --global user.email "${GITLAB_USER_EMAIL}"
     - git config --global user.name "${GITLAB_USER_NAME}"
-    - REPO_URL="git@gitlab.sleto.fr:lucterios2/lucterios.git"
+    - REPO_URL="https://oauth2:$GITLAB_TOKEN@gitlab.sleto.fr/lucterios2/lucterios.git"
     - REPO_DIR=lucterios
     - rm -fr $REPO_DIR
     - git clone $REPO_URL $REPO_DIR

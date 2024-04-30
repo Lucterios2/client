@@ -48,7 +48,7 @@ export default {
       return this.current_value
     },
     setValueEx(params) {
-      if (params !== null && typeof params === 'object') {
+      if (params != null && typeof params === 'object') {
         this.current_value = params.value
         Object.keys(params).forEach((key) => {
           if (this.component[key]) {
@@ -89,7 +89,7 @@ export default {
       this.scriptPerformed()
     },
     add_parameters(params) {
-      if (this.getInitialValue() !== null) {
+      if (this.getInitialValue() != null) {
         params[this.component.name] = this.getValue(true)
       }
     },

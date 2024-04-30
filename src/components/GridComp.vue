@@ -209,11 +209,11 @@ export default {
         this.selectItems = [row_item.id]
         this.$forceUpdate()
         this.actions.forEach((act) => {
-          if (dbl_action === null && Number(act.unique) !== SELECT_NONE) {
+          if (dbl_action == null && Number(act.unique) !== SELECT_NONE) {
             dbl_action = act
           }
         })
-        if (dbl_action !== null) {
+        if (dbl_action != null) {
           this.click_action(dbl_action)
         }
       }

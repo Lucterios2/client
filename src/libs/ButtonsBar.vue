@@ -14,14 +14,14 @@ var increment_action = 0
 function click_action(action) {
   var act_ret = true
   if (action.id !== '') {
-    act_ret = emit('clickaction', action, false) !== false
+    act_ret = emit('clickaction', action, false) != false
   }
   if (act_ret && Number(action.close) === CLOSE_YES) {
     nextTick(() => {
       if (props.close) {
         emit('clickaction', props.close, true)
       }
-      emit('close', action.id === '')
+      emit('close', action.id == '')
     })
   }
 }

@@ -184,7 +184,11 @@ export default {
           </v-col>
         </v-row>
       </v-card-text>
-      <ButtonsBar :actions="action_list" @clickaction="execute_click" @close="$emit('close')" />
+      <ButtonsBar
+        :actions="action_list"
+        @clickaction="execute_click"
+        @close="$emit('close', true)"
+      />
     </v-card>
   </v-dialog>
 </template>
