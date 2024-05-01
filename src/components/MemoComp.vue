@@ -15,6 +15,9 @@ export default {
     quill: null
   }),
   computed: {
+    is_empty() {
+      return this.getValue(true) === ''
+    },
     has_menu() {
       return this.component.submenu && this.component.submenu.length > 0
     },
@@ -23,6 +26,13 @@ export default {
     }
   },
   methods: {
+    is_bad_empty() {
+      const val = this.check_no_empty()
+      if (typeof val === 'string') {
+        return true
+      }
+      return false
+    },
     getInitialValue() {
       var return_value = this.value.replace(/\n/g, '{[br/]}')
       if (this.component.with_hypertext) {
@@ -82,6 +92,16 @@ export default {
     ready(quill) {
       this.quill = quill
     }
+  },
+  mounted() {
+    if (!this.component.with_hypertext && this.is_bad_empty()) {
+      this.$nextTick(() => {
+        this.current_value = ' '
+        this.$nextTick(() => {
+          this.current_value = ''
+        })
+      })
+    }
   }
 }
 </script>
@@ -100,21 +120,23 @@ export default {
     @keyup.enter="onPressEnter"
     @contextmenu="show_context_menu"
   />
-  <QuillEditor
-    v-if="component.with_hypertext"
-    v-model:content="current_value"
-    ref="tofocus"
-    theme="snow"
-    toolbar="essential"
-    contentType="html"
-    :label="component.description"
-    :rules="check"
-    :readOnly="is_disabled"
-    :style="style_size"
-    @focus="savefocusin"
-    @ready="ready"
-    @blur="runIfChange"
-  />
+  <div :class="is_bad_empty() ? 'memo_need' : ''" v-if="component.with_hypertext">
+    <QuillEditor
+      v-model:content="current_value"
+      ref="tofocus"
+      theme="snow"
+      toolbar="essential"
+      contentType="html"
+      :label="component.description"
+      :rules="check"
+      :readOnly="is_disabled"
+      :style="style_size"
+      @focus="savefocusin"
+      @ready="ready"
+      @blur="runIfChange"
+    />
+    <span v-if="is_bad_empty()" class="msgerror">{{ $t('This field is needed!') }}</span>
+  </div>
   <v-menu v-model="showMenu" :style="menu_style" v-if="has_menu">
     <v-list>
       <v-list-item v-for="(item, i) in component.submenu" :key="i" :value="item[1]">
@@ -123,3 +145,18 @@ export default {
     </v-list>
   </v-menu>
 </template>
+
+<style>
+td.customcell > div.memo_need {
+  color: red;
+}
+td.customcell > div.memo_need > .ql-toolbar {
+  background-color: red;
+}
+td.customcell > div.memo_need > .msgerror {
+  border-top: solid red 1px;
+  padding-inline: 16px;
+  width: 100%;
+  display: block;
+}
+</style>

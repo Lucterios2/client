@@ -10,7 +10,10 @@ export default {
     items() {
       this.forceRecompute
       return this.component.case.map((case_item) => {
-        return { value: case_item[0], title: case_item[1] }
+        return {
+          value: case_item[0],
+          title: case_item[1] == null ? '---' : case_item[1]
+        }
       })
     }
   },
