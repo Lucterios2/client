@@ -91,8 +91,8 @@ export default {
       }
       this.active_current(this.$el)
       if (event.button === 0 && !this.dialog_box.allsize) {
-        this.dialog_box.resize = event.target.classList.contains('move_spot')
-        this.dialog_box.move = !this.dialog_box.resize
+        this.dialog_box.resize = event.target.classList.contains('resize_spot')
+        this.dialog_box.move = event.target.classList.contains('movecursor')
         this.dialog_box.mouseStartX = event.clientX
         this.dialog_box.mouseStartY = event.clientY
         this.dialog_box.elStartX = this.dialog_box.el.getBoundingClientRect().left
@@ -221,7 +221,7 @@ export default {
         <slot />
       </v-card-text>
       <ButtonsBar :actions="actions" :close="close" @clickaction="onClickaction" @close="onClose">
-        <v-icon class="move_spot" v-if="!noaction">mdi</v-icon>
+        <v-icon class="resize_spot" v-if="!noaction">mdi</v-icon>
       </ButtonsBar>
     </v-card>
   </div>
@@ -250,16 +250,21 @@ export default {
   overflow-y: scroll;
   min-width: 200px;
   min-height: 60px;
+  padding: 5px;
+  font-size: 0.875rem;
 }
+@media (min-width: 1600px) {
+  .frameDlg .v-card .v-card-text {
+    font-size: 1.1rem;
+  }
+}
+
 .frameDlg .v-card .movecursor {
   cursor: grab;
 }
 
 .frameDlg .v-card .movecursor:active {
   cursor: grabbing;
-}
-.frameDlg .v-card .v-card-text {
-  padding: 5px;
 }
 .modaldlg {
   pointer-events: auto;
@@ -273,7 +278,7 @@ export default {
   top: 0;
   z-index: 99;
 }
-.move_spot {
+.resize_spot {
   cursor: se-resize;
   position: relative;
   top: 18px;

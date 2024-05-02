@@ -87,21 +87,17 @@ function get_items() {
       >{{ $store.state.server.login }}@{{ $store.state.server.instance }}</v-app-bar-title
     >
 
-    <div class="v-toolbar__append">
-      <v-menu>
-        <template v-slot:activator="{ props }">
-          <v-btn icon="mdi-dots-vertical" v-bind="props"></v-btn>
-        </template>
-        <v-list>
-          <v-list-item v-for="(item, index) in get_items()" :key="index" :value="index">
-            <v-list-item-title @click="item.action">
-              <v-icon :icon="item.icon"></v-icon>
-              {{ item.title }}
-            </v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </div>
+    <v-btn
+      icon
+      v-for="(item, index) in get_items()"
+      :key="index"
+      :value="index"
+      @click="item.action"
+      :title="item.title"
+    >
+      <v-tooltip activator="parent" location="bottom">{{ item.title }}</v-tooltip>
+      <v-icon :icon="item.icon"></v-icon>
+    </v-btn>
   </v-app-bar>
 </template>
 

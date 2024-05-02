@@ -52,7 +52,7 @@ function refresh() {
   )
 }
 function help() {
-  var win = window.open('Docs', '_blank')
+  var win = window.open('../Docs', '_blank')
   win.focus()
 }
 async function click_action(action, source) {

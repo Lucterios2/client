@@ -16,14 +16,7 @@ function get_icon_url(menu) {
 
 <template>
   <div>
-    <v-card
-      class="mx-auto submenu"
-      color="#888"
-      cvariant="tonal"
-      width="275px"
-      height="50px"
-      @click="click_action()"
-    >
+    <v-card class="mx-auto submenu" color="#888" cvariant="tonal" @click="click_action()">
       <v-card-item>
         <v-toolbar class="bg-menu" height="30">
           <v-img
@@ -50,6 +43,8 @@ function get_icon_url(menu) {
 <style scoped>
 .submenu {
   border: 1px black solid;
+  width: 275px;
+  height: 50px;
 }
 .menutext {
   font-size: 12px;
@@ -61,5 +56,15 @@ function get_icon_url(menu) {
 .bg-menu {
   background-color: #888;
   color: #000;
+}
+
+@media (min-width: 1600px) {
+  .submenu {
+    width: 320px;
+  }
+  .menutext {
+    font-size: 15px;
+    line-height: 16px;
+  }
 }
 </style>

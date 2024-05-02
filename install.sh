@@ -13,7 +13,7 @@ then
         python3 -m virtualenv --python=$PYTHONVER virt 2>&1  || echo "no virtualenv"
     fi
     [ -f virt/bin/activate ] && . virt/bin/activate
-    pip install -U pip gunicorn lucterios diacamma-asso --extra-index-url https://pypi.lucterios.org/simple
+    pip install -U pip gunicorn lucterios lucterios-documents lucterios-contacts diacamma-financial diacamma-asso --extra-index-url https://pypi.lucterios.org/simple
 else
     [ -f virt/bin/activate ] && . virt/bin/activate
 fi

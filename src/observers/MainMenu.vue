@@ -107,7 +107,7 @@ export default {
     <v-row>
       <v-col cols="max">
         <v-card>
-          <v-tabs v-model="tab" bg-color="#888" color="#000">
+          <v-tabs v-model="tab" bg-color="#888" color="#000" class="mainmenu">
             <v-tab v-for="tabmenu in tabs_menus()" :key="tabmenu.id" :value="tabmenu.id"
               ><v-img
                 :src="get_icon_url(tabmenu)"
@@ -191,6 +191,15 @@ export default {
 
 .menu > .v-row > .v-col > .v-card {
   height: 100%;
+}
+
+.mainmenu button {
+  font-size: 14px;
+}
+@media (min-width: 1600px) {
+  .mainmenu button {
+    font-size: 16px;
+  }
 }
 
 .item-submenus {
