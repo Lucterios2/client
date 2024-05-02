@@ -9,7 +9,8 @@ export default {
   props: {
     meta: Object,
     actions: Array,
-    close: Object
+    close: Object,
+    noaction: Boolean
   },
   emits: ['action', 'close'],
   data: () => ({
@@ -40,15 +41,17 @@ export default {
         var new_index = 0
         cust_cards.forEach((cust_card) => {
           cust_card.style.zIndex = new_index--
-          first_element_by_class(cust_card, 'v-card-title').className =
-            'v-card-title bg-grey-lighten-1 movecursor'
+          first_element_by_class(cust_card, 'v-card-title').className = !this.noaction
+            ? 'v-card-title bg-grey-lighten-1 movecursor'
+            : 'v-card-title bg-grey-lighten-1'
         })
       })
       const current_card = first_element_by_class(current, 'v-card')
       if (current_card) {
-        current_card.style.zIndex = 100
-        first_element_by_class(current_card, 'v-card-title').className =
-          'v-card-title bg-grey-darken-1 movecursor'
+        current_card.style.zIndex = 10000
+        first_element_by_class(current_card, 'v-card-title').className = !this.noaction
+          ? 'v-card-title bg-grey-darken-1 movecursor'
+          : 'v-card-title bg-grey-darken-1'
       }
     },
     all_size() {
@@ -62,8 +65,9 @@ export default {
         this.dialog_box.el.style.height = ''
         this.dialog_box.eltext.style.width = ''
         this.dialog_box.eltext.style.height = ''
-        first_element_by_class(this.dialog_box.el, 'v-card-title').className =
-          'v-card-title bg-grey-darken-1 movecursor'
+        first_element_by_class(this.dialog_box.el, 'v-card-title').className = !this.noaction
+          ? 'v-card-title bg-grey-darken-1 movecursor'
+          : 'v-card-title bg-grey-darken-1'
       } else {
         this.dialog_box.allsize = true
         this.dialog_box.elStartXsize = this.dialog_box.el.getBoundingClientRect().left
@@ -82,6 +86,9 @@ export default {
       this.dialog_height = this.$el.getBoundingClientRect().height
     },
     mouse_down(event) {
+      if (this.noaction) {
+        return
+      }
       this.active_current(this.$el)
       if (event.button === 0 && !this.dialog_box.allsize) {
         this.dialog_box.resize = event.target.classList.contains('move_spot')
@@ -180,7 +187,7 @@ export default {
       clearInterval(positionIntervalId)
     }, 10)
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') {
+      if (event.key === 'Escape' && !this.noaction) {
         const current_card = first_element_by_class(this.$el, 'v-card')
         if (current_card && current_card.style.zIndex > 10) {
           this.closeDlg()
@@ -195,9 +202,9 @@ export default {
   <div class="frameDlg" @mousedown="mouse_down" @mouseup="mouse_up" @mousemove="mouse_move">
     <div class="modaldlg" v-if="active_modal_frame"></div>
     <v-card>
-      <v-card-title class="bg-grey-lighten-1 movecursor">
+      <v-card-title :class="!noaction ? 'bg-grey-lighten-1 movecursor' : 'bg-grey-lighten-1'">
         {{ meta.title }}
-        <div class="tools">
+        <div class="tools" v-if="!noaction">
           <v-btn
             variant="text"
             size="x-small"
@@ -214,7 +221,7 @@ export default {
         <slot />
       </v-card-text>
       <ButtonsBar :actions="actions" :close="close" @clickaction="onClickaction" @close="onClose">
-        <v-icon class="move_spot">mdi</v-icon>
+        <v-icon class="move_spot" v-if="!noaction">mdi</v-icon>
       </ButtonsBar>
     </v-card>
   </div>

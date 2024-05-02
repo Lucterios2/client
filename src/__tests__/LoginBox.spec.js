@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { shallowMount } from '@vue/test-utils'
+import { mount, shallowMount } from '@vue/test-utils'
 import * as transport from '@/libs/transport'
 
 import LoginBox from '@/observers/LoginBox.vue'
@@ -23,7 +23,7 @@ describe('LoginBox', () => {
       mode: 0,
       login_field: 'email'
     })
-    const wrapper = shallowMount(LoginBox, {
+    const wrapper = mount(LoginBox, {
       propsData: {
         connexion: {},
         data: '',
@@ -36,24 +36,24 @@ describe('LoginBox', () => {
     expect(wrapper.find('v-card').element.childElementCount).toBe(3)
     expect(wrapper.find('v-card > v-card-title').text()).toBe('Connexion')
     expect(wrapper.find('v-card > v-card-text').element.childElementCount).toBe(1)
-    expect(wrapper.find('v-card > v-card-text > v-container').element.childElementCount).toBe(2)
+    expect(
+      wrapper.find('v-card > v-card-text > v-form > v-container').element.childElementCount
+    ).toBe(2)
     expect(
       wrapper
-        .find('v-card > v-card-text > v-container > v-text-field:nth-of-type(1)')
+        .find('v-card > v-card-text > v-form > v-container > v-text-field:nth-of-type(1)')
         .attributes('label')
     ).toBe('Courriel')
     expect(
       wrapper
-        .find('v-card > v-card-text > v-container > v-text-field:nth-of-type(2)')
+        .find('v-card > v-card-text > v-form > v-container > v-text-field:nth-of-type(2)')
         .attributes('label')
     ).toBe('Mot de passe')
 
-    expect(wrapper.find('v-card > buttons-bar-stub').element.childElementCount).toBe(0)
+    expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(2)
     expect(
-      wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
-    ).toStrictEqual([
-      { close: 1, disabled: true, short_icon: 'mdi:mdi-power', id: 'ok', text: 'OK' }
-    ])
+      wrapper.find('v-card > v-card-actions > div:nth-of-type(1) > v-btn > v-icon').text()
+    ).toStrictEqual('mdi:mdi-power')
   })
 
   it('login mode 1', async () => {
@@ -61,7 +61,7 @@ describe('LoginBox', () => {
       mode: 1,
       login_field: 'email'
     })
-    const wrapper = shallowMount(LoginBox, {
+    const wrapper = mount(LoginBox, {
       propsData: {
         connexion: {},
         data: 'OK',
@@ -74,25 +74,27 @@ describe('LoginBox', () => {
     expect(wrapper.find('v-card').element.childElementCount).toBe(3)
     expect(wrapper.find('v-card > v-card-title').text()).toBe('Connexion')
     expect(wrapper.find('v-card > v-card-text').element.childElementCount).toBe(1)
-    expect(wrapper.find('v-card > v-card-text > v-container').element.childElementCount).toBe(2)
+    expect(
+      wrapper.find('v-card > v-card-text > v-form > v-container').element.childElementCount
+    ).toBe(2)
     expect(
       wrapper
-        .find('v-card > v-card-text > v-container > v-text-field:nth-of-type(1)')
+        .find('v-card > v-card-text > v-form > v-container > v-text-field:nth-of-type(1)')
         .attributes('label')
     ).toBe('Courriel')
     expect(
       wrapper
-        .find('v-card > v-card-text > v-container > v-text-field:nth-of-type(2)')
+        .find('v-card > v-card-text > v-form > v-container > v-text-field:nth-of-type(2)')
         .attributes('label')
     ).toBe('Mot de passe')
 
-    expect(wrapper.find('v-card > buttons-bar-stub').element.childElementCount).toBe(0)
+    expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(3)
     expect(
-      wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
-    ).toStrictEqual([
-      { close: 1, short_icon: 'mdi:mdi-logout', id: 'cancel', text: 'Annuler' },
-      { close: 1, disabled: true, short_icon: 'mdi:mdi-power', id: 'ok', text: 'OK' }
-    ])
+      wrapper.find('v-card > v-card-actions > div:nth-of-type(1) > v-btn > v-icon').text()
+    ).toStrictEqual('mdi:mdi-logout')
+    expect(
+      wrapper.find('v-card > v-card-actions > div:nth-of-type(2) > v-btn > v-icon').text()
+    ).toStrictEqual('mdi:mdi-power')
   })
 
   it('login need auth', async () => {
@@ -100,7 +102,7 @@ describe('LoginBox', () => {
       mode: 0,
       login_field: 'email'
     })
-    const wrapper = shallowMount(LoginBox, {
+    const wrapper = mount(LoginBox, {
       propsData: {
         connexion: {},
         data: 'NEEDAUTH',
@@ -117,13 +119,13 @@ describe('LoginBox', () => {
     expect(wrapper.find('v-card > v-card-text > v-alert').attributes('text')).toBe(
       'Veuillez vous identifier'
     )
-    expect(wrapper.find('v-card > v-card-text > v-container').element.childElementCount).toBe(2)
-    expect(wrapper.find('v-card > buttons-bar-stub').element.childElementCount).toBe(0)
     expect(
-      wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
-    ).toStrictEqual([
-      { close: 1, disabled: true, short_icon: 'mdi:mdi-power', id: 'ok', text: 'OK' }
-    ])
+      wrapper.find('v-card > v-card-text > v-form > v-container').element.childElementCount
+    ).toBe(2)
+    expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(2)
+    expect(
+      wrapper.find('v-card > v-card-actions > div:nth-of-type(1) > v-btn > v-icon').text()
+    ).toStrictEqual('mdi:mdi-power')
   })
 
   it('login bad auth', async () => {
@@ -131,7 +133,7 @@ describe('LoginBox', () => {
       mode: 0,
       login_field: 'username'
     })
-    const wrapper1 = shallowMount(LoginBox, {
+    const wrapper1 = mount(LoginBox, {
       propsData: {
         connexion: {},
         data: 'BADAUTH',
@@ -148,29 +150,29 @@ describe('LoginBox', () => {
     expect(wrapper1.find('v-card > v-card-text > v-alert').attributes('text')).toBe(
       'Alias ou Mot de passe incorrect!'
     )
-    expect(wrapper1.find('v-card > v-card-text > v-container').element.childElementCount).toBe(2)
+    expect(
+      wrapper1.find('v-card > v-card-text > v-form > v-container').element.childElementCount
+    ).toBe(2)
     expect(
       wrapper1
-        .find('v-card > v-card-text > v-container > v-text-field:nth-of-type(1)')
+        .find('v-card > v-card-text > v-form > v-container > v-text-field:nth-of-type(1)')
         .attributes('label')
     ).toBe('Alias')
     expect(
       wrapper1
-        .find('v-card > v-card-text > v-container > v-text-field:nth-of-type(2)')
+        .find('v-card > v-card-text > v-form > v-container > v-text-field:nth-of-type(2)')
         .attributes('label')
     ).toBe('Mot de passe')
-    expect(wrapper1.find('v-card > buttons-bar-stub').element.childElementCount).toBe(0)
+    expect(wrapper1.find('v-card > v-card-actions').element.childElementCount).toBe(2)
     expect(
-      wrapper1.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
-    ).toStrictEqual([
-      { close: 1, disabled: true, short_icon: 'mdi:mdi-power', id: 'ok', text: 'OK' }
-    ])
+      wrapper1.find('v-card > v-card-actions > div:nth-of-type(1) > v-btn > v-icon').text()
+    ).toStrictEqual('mdi:mdi-power')
 
     storage.commit('change_server', {
       mode: 0,
       login_field: 'email'
     })
-    const wrapper2 = shallowMount(LoginBox, {
+    const wrapper2 = mount(LoginBox, {
       propsData: {
         connexion: {},
         data: 'BADAUTH',
@@ -184,15 +186,17 @@ describe('LoginBox', () => {
     expect(wrapper2.find('v-card > v-card-text > v-alert').attributes('text')).toBe(
       'Courriel ou Mot de passe incorrect!'
     )
-    expect(wrapper2.find('v-card > v-card-text > v-container').element.childElementCount).toBe(2)
+    expect(
+      wrapper2.find('v-card > v-card-text > v-form > v-container').element.childElementCount
+    ).toBe(2)
     expect(
       wrapper2
-        .find('v-card > v-card-text > v-container > v-text-field:nth-of-type(1)')
+        .find('v-card > v-card-text > v-form > v-container > v-text-field:nth-of-type(1)')
         .attributes('label')
     ).toBe('Courriel')
     expect(
       wrapper2
-        .find('v-card > v-card-text > v-container > v-text-field:nth-of-type(2)')
+        .find('v-card > v-card-text > v-form > v-container > v-text-field:nth-of-type(2)')
         .attributes('label')
     ).toBe('Mot de passe')
   })
@@ -202,7 +206,7 @@ describe('LoginBox', () => {
       mode: 0,
       login_field: 'email'
     })
-    const wrapper = shallowMount(LoginBox, {
+    const wrapper = mount(LoginBox, {
       propsData: {
         connexion: {},
         data: 'ONLYADMIN',
@@ -219,13 +223,13 @@ describe('LoginBox', () => {
     expect(wrapper.find('v-card > v-card-text > v-alert').attributes('text')).toBe(
       'Seuls les administrateurs peuvent accéder !'
     )
-    expect(wrapper.find('v-card > v-card-text > v-container').element.childElementCount).toBe(2)
-    expect(wrapper.find('v-card > buttons-bar-stub').element.childElementCount).toBe(0)
     expect(
-      wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
-    ).toStrictEqual([
-      { close: 1, disabled: true, short_icon: 'mdi:mdi-power', id: 'ok', text: 'OK' }
-    ])
+      wrapper.find('v-card > v-card-text > v-form > v-container').element.childElementCount
+    ).toBe(2)
+    expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(2)
+    expect(
+      wrapper.find('v-card > v-card-actions > div:nth-of-type(1) > v-btn > v-icon').text()
+    ).toStrictEqual('mdi:mdi-power')
   })
 
   it('login with action', async () => {
@@ -233,7 +237,7 @@ describe('LoginBox', () => {
       mode: 1,
       login_field: 'email'
     })
-    const wrapper = shallowMount(LoginBox, {
+    const wrapper = mount(LoginBox, {
       propsData: {
         connexion: {},
         data: '',
@@ -246,52 +250,60 @@ describe('LoginBox', () => {
         plugins: [storage, i18n]
       }
     })
-    expect(wrapper.find('v-card').element.childElementCount).toBe(4)
+    expect(wrapper.find('v-card').element.childElementCount).toBe(3)
     expect(wrapper.find('v-card > v-card-title').text()).toBe('Connexion')
-    expect(wrapper.find('v-card > v-card-text').element.childElementCount).toBe(1)
-    expect(wrapper.find('v-card > v-card-text > v-container').element.childElementCount).toBe(2)
+    expect(wrapper.find('v-card > v-card-text').element.childElementCount).toBe(2)
+    expect(
+      wrapper.find('v-card > v-card-text > v-form > v-container').element.childElementCount
+    ).toBe(2)
     expect(
       wrapper
-        .find('v-card > v-card-text > v-container > v-text-field:nth-of-type(1)')
+        .find('v-card > v-card-text > v-form > v-container > v-text-field:nth-of-type(1)')
         .attributes('label')
     ).toBe('Courriel')
     expect(
       wrapper
-        .find('v-card > v-card-text > v-container > v-text-field:nth-of-type(2)')
+        .find('v-card > v-card-text > v-form > v-container > v-text-field:nth-of-type(2)')
         .attributes('label')
     ).toBe('Mot de passe')
 
     expect(
-      wrapper.find('v-card > div.login_actions > v-card-actions:nth-of-type(1)').element
-        .childElementCount
+      wrapper.find('v-card > v-card-text > div.login_actions > v-card-actions:nth-of-type(1)')
+        .element.childElementCount
     ).toBe(1)
     expect(
       wrapper
-        .find('v-card > div.login_actions > v-card-actions:nth-of-type(1) > button-action-stub')
-        .getCurrentComponent().props.action
-    ).toStrictEqual({ id: 'abc', text: 'action1', short_icon: 'icon1' })
+        .find(
+          'v-card > v-card-text > div.login_actions > v-card-actions:nth-of-type(1) > v-btn > v-icon'
+        )
+        .text()
+    ).toStrictEqual('icon1')
     expect(
-      wrapper.find('v-card > div.login_actions > v-card-actions:nth-of-type(2)').element
-        .childElementCount
+      wrapper.find('v-card > v-card-text > div.login_actions > v-card-actions:nth-of-type(2)')
+        .element.childElementCount
     ).toBe(1)
     expect(
       wrapper
-        .find('v-card > div.login_actions > v-card-actions:nth-of-type(2) > button-action-stub')
-        .getCurrentComponent().props.action
-    ).toStrictEqual({ id: 'def', text: 'action2', short_icon: 'icon2' })
-    expect(wrapper.find('v-card > buttons-bar-stub').element.childElementCount).toBe(0)
+        .find(
+          'v-card > v-card-text > div.login_actions > v-card-actions:nth-of-type(2) > v-btn > v-icon'
+        )
+        .text()
+    ).toStrictEqual('icon2')
+    expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(3)
     expect(
-      wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
-    ).toStrictEqual([
-      { close: 1, short_icon: 'mdi:mdi-logout', id: 'cancel', text: 'Annuler' },
-      { close: 1, disabled: true, short_icon: 'mdi:mdi-power', id: 'ok', text: 'OK' }
-    ])
+      wrapper.find('v-card > v-card-actions > div:nth-of-type(1) > v-btn > v-icon').text()
+    ).toStrictEqual('mdi:mdi-logout')
+    expect(
+      wrapper.find('v-card > v-card-actions > div:nth-of-type(2) > v-btn > v-icon').text()
+    ).toStrictEqual('mdi:mdi-power')
 
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
     await wrapper
-      .find('v-card > div.login_actions > v-card-actions:nth-of-type(1) > button-action-stub')
-      .trigger('click', { id: 'abc' })
-    expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([[{ id: 'abc' }]])
+      .find('v-card > v-card-text > div.login_actions > v-card-actions:nth-of-type(1) > v-btn')
+      .trigger('click')
+    expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([
+      [{ id: 'abc', text: 'action1', short_icon: 'icon1' }]
+    ])
   })
 
   it('Button short icon', async () => {

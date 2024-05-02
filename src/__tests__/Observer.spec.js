@@ -185,7 +185,7 @@ describe('observer', () => {
       )
       await nextTick()
       expect(wrapper.find('div#comp > div > div').element.childElementCount).toBe(1)
-      expect(wrapper.find('div#comp > div > div > v-dialog').element.childElementCount).toBe(1)
+      expect(wrapper.find('div#comp > div > div > div.frameDlg').element.childElementCount).toBe(2)
       clearComponent()
       expect(wrapper.find('div#comp').element.childElementCount).toBe(0)
     }),

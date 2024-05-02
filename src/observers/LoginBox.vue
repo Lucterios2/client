@@ -1,16 +1,17 @@
 <script>
 import AbstractObserver from '@/observers/AbstractObserver.vue'
 import ButtonAction from '@/libs/ButtonAction.vue'
-import ButtonsBar from '@/libs/ButtonsBar.vue'
+import FrameDlg from '@/libs/FrameDlg.vue'
 import { convertLuctoriosFormatToHtml, convert_object_lowercase } from '@/libs/convert'
 import { insertStyle } from '@/libs/utils'
 
 export default {
   name: 'LoginBox',
   extends: AbstractObserver,
-  components: { ButtonsBar, ButtonAction },
+  components: { FrameDlg, ButtonAction },
   props: {
-    connexion: Object
+    connexion: Object,
+    meta: Object
   },
   data: () => ({
     form: false,
@@ -20,6 +21,9 @@ export default {
     show_login: false
   }),
   computed: {
+    newmeta() {
+      return Object.assign(this.meta || {}, { ismodal: true, title: this.$t('Logon') })
+    },
     has_action() {
       return this.actions !== undefined && this.actions.length > 0
     },
@@ -130,63 +134,65 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="login">
     <div class="message_alert" v-if="show_login && $store.state.server.message_before">
       <span v-html="message_before" />
     </div>
-    <v-dialog v-model="show_login" activator="parent" persistent max-width="400px">
+    <FrameDlg
+      :meta="newmeta"
+      :actions="action_list"
+      :close="null"
+      :noaction="true"
+      :key="forceRecompute"
+      @action="run_action"
+      @close="run_close"
+    >
+      <v-alert :text="message" v-if="showMessage" type="error"> </v-alert>
       <v-form v-model="form" @submit.prevent="onSubmit">
-        <v-card>
-          <v-card-title class="bg-grey-darken-1"> {{ $t('Logon') }} </v-card-title>
-          <v-card-text>
-            <v-alert :text="message" v-if="showMessage" type="error"> </v-alert>
-            <v-container grid-list-md>
-              <v-text-field
-                v-model="login"
-                clearable
-                :label="login_label()"
-                @keyup.enter="onSubmit"
-                :rules="[required]"
-              ></v-text-field>
-              <v-text-field
-                v-model="password"
-                clearable
-                :label="$t('password')"
-                type="password"
-                @keyup.enter="onSubmit"
-                :rules="[required]"
-              ></v-text-field>
-            </v-container>
-          </v-card-text>
-          <div class="login_actions" v-if="has_action">
-            <v-card-actions class="logactions" v-for="action in actions" :key="action.id">
-              <ButtonAction :action="action" @click="execute_action" />
-            </v-card-actions>
-          </div>
-          <ButtonsBar :actions="action_list" @clickaction="run_action" @close="run_close" />
-        </v-card>
+        <v-container grid-list-md>
+          <v-text-field
+            v-model="login"
+            clearable
+            :label="login_label()"
+            @keyup.enter="onSubmit"
+            :rules="[required]"
+          ></v-text-field>
+          <v-text-field
+            v-model="password"
+            clearable
+            :label="$t('password')"
+            type="password"
+            @keyup.enter="onSubmit"
+            :rules="[required]"
+          ></v-text-field>
+        </v-container>
       </v-form>
-    </v-dialog>
+      <div class="login_actions" v-if="has_action">
+        <v-card-actions class="logactions" v-for="action in actions" :key="action.id">
+          <ButtonAction :action="action" @click="execute_action" />
+        </v-card-actions>
+      </div>
+    </FrameDlg>
   </div>
 </template>
 
-<style scoped>
-.v-card-text {
-  margin-top: -10px;
+<style>
+div.login > div.frameDlg > div.v-card {
+  width: 375px;
 }
-.login_actions {
+div.login > div.frameDlg > div.v-card > .v-card-text > .login_actions {
   margin-top: -15px;
   padding-bottom: 5px;
 }
-.logactions {
+div.login > div.frameDlg > div.v-card > .v-card-text > .login_actions > .logactions {
   padding: 0px;
 }
-.logactions button {
+div.login > div.frameDlg > div.v-card > .v-card-text > .login_actions > .logactions button {
   font-size: 10px;
   margin: 0px auto;
   width: 60%;
 }
-.message_alert {
+div.login > .message_alert {
   position: absolute;
   top: 3%;
   background-color: #dddddd;
