@@ -9,6 +9,17 @@ export default {
     }
   },
   methods: {
+    getValue(final_return) {
+      var return_value = this.current_value
+      if (final_return) {
+        if (return_value) {
+          return_value = 'o'
+        } else {
+          return_value = 'n'
+        }
+      }
+      return return_value
+    },
     setValue(params) {
       this.setValueEx(params)
       this.current_value =

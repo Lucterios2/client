@@ -67,6 +67,18 @@ async function click_action(action, source) {
 }
 
 click_action({ id: 'CORE/authentification', method: 'POST' }, null)
+
+setInterval(
+  () => {
+    if (store.state.server.login !== '') {
+      click_action(
+        { id: 'CORE/authentification', method: 'POST', params: { info: true, norefresh: true } },
+        null
+      )
+    }
+  },
+  5 * 60 * 1000
+) // Watchdog 5 min
 </script>
 
 <template>

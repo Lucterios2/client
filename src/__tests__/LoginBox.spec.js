@@ -27,7 +27,8 @@ describe('LoginBox', () => {
       propsData: {
         connexion: {},
         data: '',
-        actions: []
+        actions: [],
+        context: {}
       },
       global: {
         plugins: [storage, i18n]
@@ -65,7 +66,8 @@ describe('LoginBox', () => {
       propsData: {
         connexion: {},
         data: 'OK',
-        actions: []
+        actions: [],
+        context: {}
       },
       global: {
         plugins: [storage, i18n]

@@ -11,7 +11,9 @@ export default {
   components: { FrameDlg, ButtonAction },
   props: {
     connexion: Object,
-    meta: Object
+    meta: Object,
+    data: String,
+    context: Object
   },
   data: () => ({
     form: false,
@@ -107,11 +109,15 @@ export default {
     this.$store.commit('check_login')
     if (this.data === 'OK') {
       this.$i18n.locale = this.connexion.language ? this.connexion.language : 'fr'
-      var refreshIntervalId = setInterval(() => {
-        this.execute_action({ id: 'CORE/menu' })
+      if (!this.context.norefresh) {
+        var refreshIntervalId = setInterval(() => {
+          this.execute_action({ id: 'CORE/menu' })
+          this.$emit('close')
+          clearInterval(refreshIntervalId)
+        }, 100)
+      } else {
         this.$emit('close')
-        clearInterval(refreshIntervalId)
-      }, 100)
+      }
     } else if (this.data === 'BADAUTH') {
       this.show_login = true
       if (this.$store.state.server.login_field === 'email') {

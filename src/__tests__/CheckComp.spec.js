@@ -118,7 +118,7 @@ describe('CheckComp', () => {
           modal: '1',
           name: 'edt1',
           params: {
-            val1: true
+            val1: 'o'
           },
           text: 'Modify',
           unique: '1'

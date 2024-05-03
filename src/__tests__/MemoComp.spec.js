@@ -80,7 +80,7 @@ describe('MemoComp', () => {
     wrapper.find('.ql-container > .ql-editor').element.innerHTML = 'Hello word!<br>Kiss'
     await nextTick()
     expect(wrapper.vm.is_valid()).toBe(true)
-    expect(wrapper.vm.getValue(true)).toBe('Hello word!{[br]}Kiss')
+    expect(wrapper.vm.getValue(true)).toBe('Hello word!{[br/]}{[br/]}Kiss{[br/]}')
   })
 
   it('action text', async () => {

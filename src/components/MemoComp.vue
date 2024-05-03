@@ -57,8 +57,9 @@ export default {
       if (final_return) {
         return_value = return_value.replace(/\n/g, '{[br/]}')
         if (this.component.with_hypertext) {
+          return_value = return_value.replaceAll('<br>', '')
           return_value = return_value.replaceAll('<p>', '')
-          return_value = return_value.replaceAll('</p>', '')
+          return_value = return_value.replaceAll('</p>', '{[br/]}')
           return_value = return_value.replace(/</g, '{[')
           return_value = return_value.replace(/>/g, ']}')
         }
@@ -130,6 +131,7 @@ export default {
       :label="component.description"
       :rules="check"
       :readOnly="is_disabled"
+      :enabled="!is_disabled"
       :style="style_size"
       @focus="savefocusin"
       @ready="ready"
