@@ -116,6 +116,7 @@ export default {
           clearInterval(refreshIntervalId)
         }, 100)
       } else {
+        this.$store.commit('call_status', true)
         this.$emit('close')
       }
     } else if (this.data === 'BADAUTH') {
