@@ -14,7 +14,8 @@ export default {
   extends: AbstractObserver,
   components: { ButtonsBar },
   props: {
-    exception: Object
+    exception: Object,
+    close: Object
   },
   data: () => ({
     tab: null,
@@ -121,6 +122,16 @@ export default {
     }
   },
   methods: {
+    call_close() {
+      this.$nextTick(() => {
+        if (this.close) {
+          this.click_action(this.close, true)
+          this.onClose(false)
+        } else {
+          this.onClose(true)
+        }
+      })
+    },
     toggle_more() {
       this.more = !this.more
     },
@@ -184,11 +195,7 @@ export default {
           </v-col>
         </v-row>
       </v-card-text>
-      <ButtonsBar
-        :actions="action_list"
-        @clickaction="execute_click"
-        @close="$emit('close', true)"
-      />
+      <ButtonsBar :actions="action_list" @clickaction="execute_click" @close="call_close" />
     </v-card>
   </v-dialog>
 </template>

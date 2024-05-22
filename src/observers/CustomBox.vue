@@ -38,11 +38,22 @@ export default {
         return AbstractObserver.methods.click_action.call(this, action, no_owner)
       }
     },
+    updateObserver() {
+      const info = this.$options.FrameInterface.get_info()
+      this.$forceUpdate()
+      this.forceRecompute++
+      this.$nextTick(() => {
+        this.$options.FrameInterface.set_info(info)
+      })
+    },
     click_action_in_customcomponents(action, no_owner) {
       return this.$options.childInterface.call_action(action, no_owner)
     },
     getChildInterface(childInterface) {
       this.$options.childInterface = childInterface
+    },
+    getFrameInterface(FrameInterface) {
+      this.$options.FrameInterface = FrameInterface
     }
   },
   mounted() {
@@ -59,6 +70,7 @@ export default {
     :key="forceRecompute"
     @action="click_action_in_customcomponents"
     @close="onClose"
+    @interface="getFrameInterface"
   >
     <CustomComponents
       :data="data"

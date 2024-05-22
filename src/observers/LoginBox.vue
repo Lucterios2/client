@@ -4,6 +4,7 @@ import ButtonAction from '@/libs/ButtonAction.vue'
 import FrameDlg from '@/libs/FrameDlg.vue'
 import { convertLuctoriosFormatToHtml, convert_object_lowercase } from '@/libs/convert'
 import { insertStyle } from '@/libs/utils'
+import { clearComponent } from '@/libs/observer'
 
 export default {
   name: 'LoginBox',
@@ -127,6 +128,7 @@ export default {
         this.message = this.$t('username_wrong')
       }
     } else if (this.data === 'NEEDAUTH') {
+      clearComponent()
       this.show_login = true
       this.message = this.$t('identify_you')
     } else if (this.data === 'ONLYADMIN') {

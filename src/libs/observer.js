@@ -118,6 +118,9 @@ class CompManager {
   }
 
   update(props) {
+    if (this.comp.props.meta) {
+      props.meta = Object.assign({}, props.meta, { ismodal: this.comp.props.meta.ismodal })
+    }
     this.comp.component.props = Object.assign({}, this.comp.props, props)
     this.comp.component.ctx.updateObserver()
   }
