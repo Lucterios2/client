@@ -185,30 +185,32 @@ export default {
     },
     set_info(dialog_box) {
       this.dialog_box = dialog_box
-      if (this.dialog_box.allsize) {
-        this.element_card.style.left = '10px'
-        this.element_card.style.top = '60px'
-        this.element_card.style.width = 'calc(100% - 20px)'
-        this.element_card.style.height = 'calc(100% - 90px)'
-        this.element_cardtext.style.width = 'calc(100% - 20px)'
-        this.element_cardtext.style.height = 'calc(100% - 98px)'
-        first_element_by_class(this.element_card, 'v-card-title').className =
-          'v-card-title bg-grey-darken-1'
-      } else {
-        this.element_card.style.left = (100.0 * this.dialog_box.StartX) / window.innerWidth + '%'
-        this.element_card.style.top = (100.0 * this.dialog_box.StartY) / window.innerHeight + '%'
-        this.element_card.style.width = this.dialog_box.StartW + 'px'
-        this.element_card.style.height = this.dialog_box.StartH + 'px'
-        if (this.dialog_box.StartW) {
-          this.element_cardtext.style.width = this.dialog_box.StartW + 'px'
+      if (this.element_card) {
+        if (this.dialog_box.allsize) {
+          this.element_card.style.left = '10px'
+          this.element_card.style.top = '60px'
+          this.element_card.style.width = 'calc(100% - 20px)'
+          this.element_card.style.height = 'calc(100% - 90px)'
+          this.element_cardtext.style.width = 'calc(100% - 20px)'
+          this.element_cardtext.style.height = 'calc(100% - 98px)'
+          first_element_by_class(this.element_card, 'v-card-title').className =
+            'v-card-title bg-grey-darken-1'
+        } else {
+          this.element_card.style.left = (100.0 * this.dialog_box.StartX) / window.innerWidth + '%'
+          this.element_card.style.top = (100.0 * this.dialog_box.StartY) / window.innerHeight + '%'
+          this.element_card.style.width = this.dialog_box.StartW + 'px'
+          this.element_card.style.height = this.dialog_box.StartH + 'px'
+          if (this.dialog_box.StartW) {
+            this.element_cardtext.style.width = this.dialog_box.StartW + 'px'
+          }
+          if (this.dialog_box.StartH) {
+            this.element_cardtext.style.height =
+              this.dialog_box.StartH - this.dialog_box.StartDiffH + 'px'
+          }
+          first_element_by_class(this.element_card, 'v-card-title').className = !this.noaction
+            ? 'v-card-title bg-grey-darken-1 movecursor'
+            : 'v-card-title bg-grey-darken-1'
         }
-        if (this.dialog_box.StartH) {
-          this.element_cardtext.style.height =
-            this.dialog_box.StartH - this.dialog_box.StartDiffH + 'px'
-        }
-        first_element_by_class(this.element_card, 'v-card-title').className = !this.noaction
-          ? 'v-card-title bg-grey-darken-1 movecursor'
-          : 'v-card-title bg-grey-darken-1'
       }
       this.dialog_box.posrefresh = true
     },
