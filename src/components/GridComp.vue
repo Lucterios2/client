@@ -304,7 +304,7 @@ tr.even {
   background-color: #ffffff;
 }
 tr.odd {
-  background-color: #f0f0f0;
+  background-color: #f4f4f4;
 }
 tr.selected {
   background-color: #d0d0d0;

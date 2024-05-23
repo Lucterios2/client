@@ -35,7 +35,8 @@ const storage = createStore({
     client: {
       jsversion: '2.0.1.24040816'
     },
-    observer_info: {}
+    observer_info: {},
+    observer_dlg: {}
   },
   mutations: {
     check_login(state) {
@@ -56,11 +57,15 @@ const storage = createStore({
     change_client(state, client) {
       state.client = Object.assign({}, state.client, client)
     },
-    save_observer_info(state, observerId, info) {
+    save_observer_info(state, { observerId, info }) {
       state.observer_info[observerId] = info
+    },
+    save_observer_dlg(state, { observerId, dlg }) {
+      state.observer_dlg[observerId] = dlg
     },
     clean_observer(state, observerId) {
       delete state.observer_info[observerId]
+      delete state.observer_dlg[observerId]
     }
   },
   actions: {

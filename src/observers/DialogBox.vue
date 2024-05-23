@@ -4,7 +4,7 @@ import FrameDlg from '@/libs/FrameDlg.vue'
 import { convertLuctoriosFormatToHtml } from '@/libs/convert'
 import { XFER_DBOX_CONFIRMATION, XFER_DBOX_ERROR, XFER_DBOX_WARNING } from '@/libs/utils'
 export default {
-  name: 'AcknowledgeReturn',
+  name: 'DialogBox',
   extends: AbstractObserver,
   components: { FrameDlg },
   data: () => ({
@@ -26,18 +26,36 @@ export default {
       this.forceRecompute
       return convertLuctoriosFormatToHtml(this.data.text)
     }
+  },
+  methods: {
+    click_dlg_action(action, no_owner) {
+      this.$options.FrameInterface.save_dlg()
+      this.click_action(action, no_owner)
+    },
+    updateObserver() {
+      this.$forceUpdate()
+      this.forceRecompute++
+      this.$nextTick(() => {
+        this.$options.FrameInterface.load_dlg()
+      })
+    },
+    getFrameInterface(FrameInterface) {
+      this.$options.FrameInterface = FrameInterface
+    }
   }
 }
 </script>
 
 <template>
   <FrameDlg
+    :id="id"
     :meta="meta"
     :actions="actions"
     :close="close"
     :key="forceRecompute"
-    @action="click_action"
+    @action="click_dlg_action"
     @close="onClose"
+    @interface="getFrameInterface"
   >
     <v-row>
       <v-col cols="2">

@@ -95,4 +95,9 @@ function get_icon_url(menu) {
   background-color: #eee;
   border: 1px solid black;
 }
+@media (max-height: 500px) {
+  .show_help {
+    font-size: 10px;
+  }
+}
 </style>

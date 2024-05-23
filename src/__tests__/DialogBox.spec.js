@@ -3,6 +3,7 @@ import { mount } from '@vue/test-utils'
 
 import DialogBox from '@/observers/DialogBox.vue'
 import i18n from '@/libs/i18n.js'
+import storage from '@/libs/datastorage'
 import { convert_event_to_object } from '@/__tests__/tools.js'
 
 beforeEach(() => {
@@ -20,7 +21,7 @@ describe('DialogBox', () => {
         actions: []
       },
       global: {
-        plugins: [i18n]
+        plugins: [i18n, storage]
       }
     })
     expect(wrapper.find('v-card').element.childElementCount).toBe(3)
@@ -70,7 +71,7 @@ describe('DialogBox', () => {
         ]
       },
       global: {
-        plugins: [i18n]
+        plugins: [i18n, storage]
       }
     })
     expect(wrapper.find('v-card').element.childElementCount).toBe(3)
@@ -139,7 +140,7 @@ describe('DialogBox', () => {
         actions: []
       },
       global: {
-        plugins: [i18n]
+        plugins: [i18n, storage]
       }
     })
     expect(wrapper.find('v-card').element.childElementCount).toBe(3)
@@ -190,7 +191,7 @@ describe('DialogBox', () => {
         actions: [{ id: 'def', text: 'action2', icon: 'icon2', close: '0' }]
       },
       global: {
-        plugins: [i18n]
+        plugins: [i18n, storage]
       }
     })
     expect(wrapper.find('v-card').element.childElementCount).toBe(3)

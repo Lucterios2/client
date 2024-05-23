@@ -62,4 +62,15 @@ button.v-btn.bg-act > span > span {
     min-width: 40px;
   }
 }
+
+@media (max-height: 500px) {
+  button.v-btn.bg-act {
+    font-size: 11px;
+    min-width: 120px;
+    height: 30px;
+  }
+  button.v-btn.btnmini {
+    min-width: 40px;
+  }
+}
 </style>

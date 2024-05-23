@@ -67,4 +67,14 @@ function get_icon_url(menu) {
     line-height: 16px;
   }
 }
+
+@media (max-height: 500px) {
+  .submenu {
+    width: 200px;
+  }
+  .menutext {
+    font-size: 10px;
+    line-height: 11px;
+  }
+}
 </style>

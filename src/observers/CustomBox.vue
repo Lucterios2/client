@@ -22,6 +22,7 @@ export default {
   },
   methods: {
     click_action(action, no_owner) {
+      this.$options.FrameInterface.save_dlg()
       if (action === null) {
         this.actions.forEach((act) => {
           if (action === null && act.id !== '') {
@@ -34,16 +35,15 @@ export default {
         return false
       } else {
         this.currentinfo = this.$options.childInterface.get_info()
-        this.$store.commit('save_observer_info', this.id, this.currentinfo)
+        this.$store.commit('save_observer_info', { observerId: this.id, info: this.currentinfo })
         return AbstractObserver.methods.click_action.call(this, action, no_owner)
       }
     },
     updateObserver() {
-      const info = this.$options.FrameInterface.get_info()
       this.$forceUpdate()
       this.forceRecompute++
       this.$nextTick(() => {
-        this.$options.FrameInterface.set_info(info)
+        this.$options.FrameInterface.load_dlg()
       })
     },
     click_action_in_customcomponents(action, no_owner) {
@@ -64,6 +64,7 @@ export default {
 
 <template>
   <FrameDlg
+    :id="id"
     :meta="meta"
     :actions="actions"
     :close="close_act"

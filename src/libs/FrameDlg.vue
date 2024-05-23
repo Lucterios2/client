@@ -7,6 +7,7 @@ export default {
   name: 'FrameDlg',
   components: { ButtonsBar },
   props: {
+    id: String,
     meta: Object,
     actions: Array,
     close: Object,
@@ -17,6 +18,7 @@ export default {
     element_card: null,
     element_cardtext: null,
     dialog_box: {
+      frameid: '',
       move: false,
       allsize: false,
       resize: false,
@@ -36,6 +38,9 @@ export default {
     }
   }),
   computed: {
+    frame_id() {
+      return 'frame_' + this.id
+    },
     content_style() {
       return Stringformat('max-height: {0}px', [this.dialog_box.height - 250])
     },
@@ -183,77 +188,100 @@ export default {
       }
       this.dialog_box.posrefresh = null
     },
-    set_info(dialog_box) {
-      this.dialog_box = dialog_box
-      if (this.element_card) {
+    get_card_elements() {
+      const element_frame = document.querySelector('#' + this.frame_id)
+      var current_card = null
+      var current_cardtext = null
+      if (element_frame) {
+        Array.from(element_frame.getElementsByClassName('v-card')).forEach((card) => {
+          current_card = card
+          Array.from(this.element_card.getElementsByClassName('v-card-text')).forEach(
+            (cardtext) => {
+              current_cardtext = cardtext
+            }
+          )
+        })
+      }
+      return [current_card, current_cardtext]
+    },
+    load_dlg() {
+      this.dialog_box = this.$store.state.observer_dlg[this.id] || {}
+      const cardelements = this.get_card_elements()
+      const current_card = cardelements[0]
+      const current_cardtext = cardelements[1]
+      this.dialog_box.posrefresh = this.dialog_box.allsize !== undefined
+      if (current_card && this.dialog_box.posrefresh) {
         if (this.dialog_box.allsize) {
-          this.element_card.style.left = '10px'
-          this.element_card.style.top = '60px'
-          this.element_card.style.width = 'calc(100% - 20px)'
-          this.element_card.style.height = 'calc(100% - 90px)'
-          this.element_cardtext.style.width = 'calc(100% - 20px)'
-          this.element_cardtext.style.height = 'calc(100% - 98px)'
-          first_element_by_class(this.element_card, 'v-card-title').className =
+          current_card.style.left = '10px'
+          current_card.style.top = '60px'
+          current_card.style.width = 'calc(100% - 20px)'
+          current_card.style.height = 'calc(100% - 90px)'
+          current_cardtext.style.width = 'calc(100% - 20px)'
+          current_cardtext.style.height = 'calc(100% - 98px)'
+          first_element_by_class(current_card, 'v-card-title').className =
             'v-card-title bg-grey-darken-1'
         } else {
-          this.element_card.style.left = (100.0 * this.dialog_box.StartX) / window.innerWidth + '%'
-          this.element_card.style.top = (100.0 * this.dialog_box.StartY) / window.innerHeight + '%'
-          this.element_card.style.width = this.dialog_box.StartW + 'px'
-          this.element_card.style.height = this.dialog_box.StartH + 'px'
+          current_card.style.left = (100.0 * this.dialog_box.StartX) / window.innerWidth + '%'
+          current_card.style.top = (100.0 * this.dialog_box.StartY) / window.innerHeight + '%'
+          current_card.style.width = this.dialog_box.StartW + 'px'
+          current_card.style.height = this.dialog_box.StartH + 'px'
           if (this.dialog_box.StartW) {
-            this.element_cardtext.style.width = this.dialog_box.StartW + 'px'
+            current_cardtext.style.width = this.dialog_box.StartW + 'px'
           }
           if (this.dialog_box.StartH) {
-            this.element_cardtext.style.height =
+            current_cardtext.style.height =
               this.dialog_box.StartH - this.dialog_box.StartDiffH + 'px'
           }
-          first_element_by_class(this.element_card, 'v-card-title').className = !this.noaction
+          first_element_by_class(current_card, 'v-card-title').className = !this.noaction
             ? 'v-card-title bg-grey-darken-1 movecursor'
             : 'v-card-title bg-grey-darken-1'
         }
       }
-      this.dialog_box.posrefresh = true
     },
-    get_info() {
-      if (this.element_card) {
-        if (this.element_card.style.left) {
+    save_dlg() {
+      const cardelements = this.get_card_elements()
+      const current_card = cardelements[0]
+      const current_cardtext = cardelements[1]
+      if (current_card) {
+        this.dialog_box.frameid = this.frame_id
+        if (current_card.style.left) {
           this.dialog_box.StartX =
-            (parseFloat(this.element_card.style.left.replace('%', '')) * window.innerWidth) / 100
+            (parseFloat(current_card.style.left.replace('%', '')) * window.innerWidth) / 100
         } else {
-          this.dialog_box.StartX = this.element_card.getBoundingClientRect().left
+          this.dialog_box.StartX = current_card.getBoundingClientRect().left
         }
-        if (this.element_card.style.top) {
+        if (current_card.style.top) {
           this.dialog_box.StartY =
-            (parseFloat(this.element_card.style.top.replace('%', '')) * window.innerHeight) / 100
+            (parseFloat(current_card.style.top.replace('%', '')) * window.innerHeight) / 100
         } else {
-          this.dialog_box.StartY = this.element_card.getBoundingClientRect().top
+          this.dialog_box.StartY = current_card.getBoundingClientRect().top
         }
-        if (this.element_card.style.width) {
-          this.dialog_box.StartW = parseFloat(this.element_card.style.width.replace('px', ''))
+        if (current_card.style.width) {
+          this.dialog_box.StartW = parseFloat(current_card.style.width.replace('px', ''))
         } else {
-          this.dialog_box.StartW = this.element_card.getBoundingClientRect().width
-            ? this.element_card.getBoundingClientRect().width
+          this.dialog_box.StartW = current_card.getBoundingClientRect().width
+            ? current_card.getBoundingClientRect().width
             : null
         }
-        if (this.element_card.style.height) {
-          this.dialog_box.StartH = parseFloat(this.element_card.style.height.replace('px', ''))
+        if (current_card.style.height) {
+          this.dialog_box.StartH = parseFloat(current_card.style.height.replace('px', ''))
         } else {
-          this.dialog_box.StartH = this.element_card.getBoundingClientRect().height
-            ? this.element_card.getBoundingClientRect().height
+          this.dialog_box.StartH = current_card.getBoundingClientRect().height
+            ? current_card.getBoundingClientRect().height
             : null
         }
         this.dialog_box.StartDiffH =
-          this.dialog_box.StartH - this.element_cardtext.getBoundingClientRect().height
+          this.dialog_box.StartH - current_cardtext.getBoundingClientRect().height
       }
-      return this.dialog_box
+      this.$store.commit('save_observer_dlg', { observerId: this.id, dlg: this.dialog_box })
     },
     emitInterface() {
       this.$emit('interface', {
-        set_info: (info) => {
-          this.set_info(info)
+        load_dlg: () => {
+          this.load_dlg()
         },
-        get_info: () => {
-          return this.get_info()
+        save_dlg: () => {
+          this.save_dlg()
         }
       })
     }
@@ -285,7 +313,13 @@ export default {
 </script>
 
 <template>
-  <div class="frameDlg" @mousedown="mouse_down" @mouseup="mouse_up" @mousemove="mouse_move">
+  <div
+    :id="frame_id"
+    class="frameDlg"
+    @mousedown="mouse_down"
+    @mouseup="mouse_up"
+    @mousemove="mouse_move"
+  >
     <div class="modaldlg" v-if="active_modal_frame"></div>
     <v-card>
       <v-card-title :class="!noaction ? 'bg-grey-lighten-1 movecursor' : 'bg-grey-lighten-1'">
@@ -342,6 +376,12 @@ export default {
 @media (min-width: 1600px) {
   .frameDlg .v-card .v-card-text {
     font-size: 1.1rem;
+  }
+}
+
+@media (max-height: 500px) {
+  .frameDlg .v-card .v-card-text {
+    font-size: 0.7rem;
   }
 }
 

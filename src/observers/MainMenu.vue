@@ -201,6 +201,11 @@ export default {
     font-size: 16px;
   }
 }
+@media (max-height: 500px) {
+  .mainmenu button {
+    font-size: 12px;
+  }
+}
 
 .item-submenus {
   height: 100%;
