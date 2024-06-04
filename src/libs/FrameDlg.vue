@@ -22,6 +22,8 @@ export default {
       move: false,
       allsize: false,
       resize: false,
+      moved: false,
+      resized: false,
       StartXsize: 0,
       StartYsize: 0,
       StartX: 0,
@@ -125,9 +127,11 @@ export default {
     mouse_up() {
       if (this.dialog_box.move) {
         this.dialog_box.move = false
+        this.dialog_box.moved = true
       }
       if (this.dialog_box.resize) {
         this.dialog_box.resize = false
+        this.dialog_box.resized = true
       }
     },
     mouse_move(event) {
@@ -221,16 +225,22 @@ export default {
           first_element_by_class(current_card, 'v-card-title').className =
             'v-card-title bg-grey-darken-1'
         } else {
-          current_card.style.left = (100.0 * this.dialog_box.StartX) / window.innerWidth + '%'
-          current_card.style.top = (100.0 * this.dialog_box.StartY) / window.innerHeight + '%'
-          current_card.style.width = this.dialog_box.StartW + 'px'
-          current_card.style.height = this.dialog_box.StartH + 'px'
-          if (this.dialog_box.StartW) {
-            current_cardtext.style.width = this.dialog_box.StartW + 'px'
+          if (this.dialog_box.moved) {
+            current_card.style.left = (100.0 * this.dialog_box.StartX) / window.innerWidth + '%'
+            current_card.style.top = (100.0 * this.dialog_box.StartY) / window.innerHeight + '%'
+          } else {
+            this.dialog_box.posrefresh = false
           }
-          if (this.dialog_box.StartH) {
-            current_cardtext.style.height =
-              this.dialog_box.StartH - this.dialog_box.StartDiffH + 'px'
+          if (this.dialog_box.resized) {
+            current_card.style.width = this.dialog_box.StartW + 'px'
+            current_card.style.height = this.dialog_box.StartH + 'px'
+            if (this.dialog_box.StartW) {
+              current_cardtext.style.width = this.dialog_box.StartW + 'px'
+            }
+            if (this.dialog_box.StartH) {
+              current_cardtext.style.height =
+                this.dialog_box.StartH - this.dialog_box.StartDiffH + 'px'
+            }
           }
           first_element_by_class(current_card, 'v-card-title').className = !this.noaction
             ? 'v-card-title bg-grey-darken-1 movecursor'
