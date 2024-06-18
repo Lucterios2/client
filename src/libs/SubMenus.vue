@@ -1,7 +1,9 @@
 <script setup>
 import SubMenu from '@/libs/SubMenu.vue'
+import { useStore } from 'vuex'
 import { convertLuctoriosFormatToHtml } from '@/libs/convert'
 import { getUrlServer } from '@/libs/transport'
+const store = useStore()
 const emit = defineEmits(['clickaction'])
 const props = defineProps({
   menu: Object,
@@ -36,7 +38,7 @@ function get_icon_url(menu) {
 <template>
   <v-card :class="card_class()">
     <v-card-item>
-      <v-toolbar color="#BBB" height="40" dark v-if="with_image">
+      <v-toolbar :color="store.state.backcolor" height="40" dark v-if="with_image">
         <v-img
           :src="get_icon_url(menu)"
           height="32"

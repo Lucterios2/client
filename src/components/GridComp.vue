@@ -1,7 +1,7 @@
 <script>
 import AbstractComp from '@/components/AbstractComp.vue'
 import ButtonsBar from '@/libs/ButtonsBar.vue'
-import { SELECT_SINGLE, SELECT_MULTI, SELECT_NONE, refreshAction } from '@/libs/utils'
+import { SELECT_SINGLE, SELECT_MULTI, SELECT_NONE, refreshAction, CLOSE_YES } from '@/libs/utils'
 import {
   Stringformat,
   convertLuctoriosFormatToHtml,
@@ -215,6 +215,9 @@ export default {
         })
         if (dbl_action != null) {
           this.click_action(dbl_action)
+        }
+        if (dbl_action && Number(dbl_action.close) === CLOSE_YES) {
+          this.onclose(dbl_action.id == '')
         }
       }
     }

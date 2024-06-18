@@ -105,7 +105,7 @@ export default {
     this.$store.commit('change_server', convert_object_lowercase(this.connexion))
     this.refresh_document()
     if (this.$store.state.server.style !== '') {
-      insertStyle(this.$store.state.server.style)
+      this.$store.commit('backcolor', insertStyle(this.$store.state.server.style))
     }
     this.$store.commit('check_login')
     if (this.data === 'OK') {

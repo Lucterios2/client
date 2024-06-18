@@ -91,6 +91,10 @@ export function insertStyle(rule) {
   css.type = 'text/css'
   css.innerHTML = rule
   document.body.appendChild(css)
+  if (css.sheet.cssRules && css.sheet.cssRules.length > 0) {
+    return css.sheet.cssRules[0].style.backgroundColor
+  }
+  return null
 }
 
 export const XFER_DBOX_INFORMATION = 1

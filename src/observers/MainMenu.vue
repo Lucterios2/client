@@ -107,7 +107,13 @@ export default {
     <v-row>
       <v-col cols="max">
         <v-card>
-          <v-tabs v-model="tab" bg-color="#888" color="#000" class="mainmenu">
+          <v-tabs
+            v-model="tab"
+            bg-color="#888"
+            color="#000"
+            :slider-color="$store.state.backcolor"
+            class="mainmenu"
+          >
             <v-tab v-for="tabmenu in tabs_menus()" :key="tabmenu.id" :value="tabmenu.id"
               ><v-img
                 :src="get_icon_url(tabmenu)"
@@ -148,7 +154,7 @@ export default {
           :value="submenu.id"
           @click="refresh_summary(submenu)"
         >
-          <v-expansion-panel-title color="#555">
+          <v-expansion-panel-title :color="$store.state.backcolor">
             <v-icon v-if="submenu.short_icon">{{ submenu.short_icon }}</v-icon>
             <div v-if="!submenu.short_icon">
               <v-img

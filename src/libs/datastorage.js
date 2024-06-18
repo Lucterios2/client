@@ -7,6 +7,7 @@ const storage = createStore({
     show_waiting: false,
     show_status: true,
     show_summary: true,
+    backcolor: '#BBB',
     server: {
       title: 'Lucterios',
       subtitle: '',
@@ -50,6 +51,11 @@ const storage = createStore({
     },
     call_summary(state, summary) {
       state.show_summary = summary
+    },
+    backcolor(state, newcolor) {
+      if (newcolor != null) {
+        state.backcolor = newcolor
+      }
     },
     change_server(state, server) {
       state.server = Object.assign({}, state.server, server)

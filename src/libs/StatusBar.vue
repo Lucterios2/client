@@ -72,6 +72,7 @@ function get_items() {
     <div class="v-toolbar__prepend">
       <v-app-bar-nav-icon
         icon="mdi:mdi-information-slab-box-outline"
+        :color="$store.state.backcolor"
         @click="$store.dispatch('toggle_summary')"
       ></v-app-bar-nav-icon>
       <v-img
