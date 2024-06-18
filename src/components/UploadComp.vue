@@ -177,6 +177,7 @@ export default {
         :accept="files_accepted"
         :label="component.description"
         :model-value="selected_files"
+        :name="component.name"
         @focusin="savefocusin"
         @change="selectFile"
         @click:clear="selectFile"

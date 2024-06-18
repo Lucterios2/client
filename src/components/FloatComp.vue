@@ -56,6 +56,7 @@ export default {
     :disabled="is_disabled"
     :key="forceRecompute"
     :style="style_size"
+    :name="component.name"
     @focusin="savefocusin"
     @focusout="onFocusout"
     @keyup.enter="onPressEnter"

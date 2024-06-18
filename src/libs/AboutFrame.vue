@@ -110,7 +110,7 @@ const clienVersionChecked = computed(() => {
           ><v-icon icon="mdi:mdi-mail" width="100px" />{{ $t('support') }}</v-btn
         >
         <v-btn class="bg-grey" @click="emit('close')" width="100px"
-          ><v-icon icon="mdi:mdi-check" />{{ $t('ok') }}</v-btn
+          ><v-icon icon="mdi:mdi-check" />{{ $t('Ok') }}</v-btn
         >
       </v-card-actions>
     </v-card>

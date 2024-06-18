@@ -104,6 +104,7 @@ export default {
       <v-col :cols="Number(component.simple) ? 6 : 12">
         <select
           multiple
+          :name="component.name + '_available'"
           @change="onleftChange($event)"
           @focusin="savefocusin"
           @focusout="runIfChange"
@@ -123,30 +124,40 @@ export default {
         <v-btn
           size="x-small"
           icon="mdi mdi-chevron-double-right"
+          :name="component.name + '_addall'"
           @focusin="savefocusin"
           @click="addall"
         ></v-btn>
         <v-btn
           size="x-small"
           icon="mdi mdi-chevron-right"
+          :name="component.name + '_add'"
           @focusin="savefocusin"
           @click="addone"
         ></v-btn>
         <v-btn
           size="x-small"
           icon="mdi mdi-chevron-left"
+          :name="component.name + '_del'"
           @focusin="savefocusin"
           @click="delone"
         ></v-btn>
         <v-btn
           size="x-small"
           icon="mdi mdi-chevron-double-left"
+          :name="component.name + '_delall'"
           @focusin="savefocusin"
           @click="delall"
         ></v-btn>
       </v-col>
       <v-col cols="5" v-if="Number(component.simple) === 2">
-        <select multiple @change="onrightChange($event)" @focusin="savefocusin" ref="selected">
+        <select
+          multiple
+          :name="component.name + '_chosen'"
+          @change="onrightChange($event)"
+          @focusin="savefocusin"
+          ref="selected"
+        >
           <option :value="item.value" :key="idx" v-for="(item, idx) in right_select">
             {{ item.title }}
           </option>

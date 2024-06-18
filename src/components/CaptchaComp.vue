@@ -48,6 +48,7 @@ export default {
       ref="tofocus"
       type="text"
       v-model="result"
+      :name="component.name"
       @focusin="savefocusin"
       @keyup.enter="$emit('action', null)"
     />

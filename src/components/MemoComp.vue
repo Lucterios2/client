@@ -116,6 +116,7 @@ export default {
     :disabled="is_disabled"
     :style="style_size"
     ref="tofocus"
+    :name="component.name"
     @focusin="savefocusin"
     @focusout="runIfChange"
     @keyup.enter="onPressEnter"
@@ -124,6 +125,7 @@ export default {
   <div :class="is_bad_empty() ? 'memo_need' : ''" v-if="component.with_hypertext">
     <QuillEditor
       v-model:content="current_value"
+      :name="component.name"
       ref="tofocus"
       theme="snow"
       toolbar="essential"

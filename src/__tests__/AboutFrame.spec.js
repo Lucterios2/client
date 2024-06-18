@@ -126,7 +126,7 @@ describe('AboutFrame', () => {
     ).toBe('Support')
 
     expect(wrapper.find('v-card-actions > v-btn:nth-of-type(1)').text()).toBe('Support')
-    expect(wrapper.find('v-card-actions > v-btn:nth-of-type(2)').text()).toBe('OK')
+    expect(wrapper.find('v-card-actions > v-btn:nth-of-type(2)').text()).toBe('Ok')
 
     await wrapper.find('v-card-text > v-img').trigger('click')
     expect(

@@ -3,7 +3,7 @@ const visible = true
 </script>
 
 <template>
-  <v-dialog v-model="visible" persistent>
+  <v-dialog v-model="visible" id="overlay" persistent>
     <v-row>
       <v-col cols="12" class="text-center">
         <v-progress-circular

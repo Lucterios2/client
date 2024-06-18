@@ -34,7 +34,7 @@ const storage = createStore({
       version_expected: ''
     },
     client: {
-      jsversion: '2.0.1.24040816'
+      jsversion: '2.0.2.24061812'
     },
     observer_info: {},
     observer_dlg: {}

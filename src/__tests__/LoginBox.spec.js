@@ -93,10 +93,10 @@ describe('LoginBox', () => {
     expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(3)
     expect(
       wrapper.find('v-card > v-card-actions > div:nth-of-type(1) > v-btn > v-icon').text()
-    ).toStrictEqual('mdi:mdi-logout')
+    ).toStrictEqual('mdi:mdi-power')
     expect(
       wrapper.find('v-card > v-card-actions > div:nth-of-type(2) > v-btn > v-icon').text()
-    ).toStrictEqual('mdi:mdi-power')
+    ).toStrictEqual('mdi:mdi-logout')
   })
 
   it('login need auth', async () => {
@@ -294,10 +294,10 @@ describe('LoginBox', () => {
     expect(wrapper.find('v-card > v-card-actions').element.childElementCount).toBe(3)
     expect(
       wrapper.find('v-card > v-card-actions > div:nth-of-type(1) > v-btn > v-icon').text()
-    ).toStrictEqual('mdi:mdi-logout')
+    ).toStrictEqual('mdi:mdi-power')
     expect(
       wrapper.find('v-card > v-card-actions > div:nth-of-type(2) > v-btn > v-icon').text()
-    ).toStrictEqual('mdi:mdi-power')
+    ).toStrictEqual('mdi:mdi-logout')
 
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
     await wrapper

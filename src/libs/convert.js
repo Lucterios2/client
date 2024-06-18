@@ -207,6 +207,9 @@ export function formatToString(initialvalue, formatNum, formatStr) {
 }
 
 export function convert_object_lowercase(old_object) {
+  if (old_object == undefined) {
+    return {}
+  }
   if (old_object) {
     const new_object = {}
     Object.keys(old_object).forEach((key) => {

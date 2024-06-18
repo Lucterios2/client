@@ -32,7 +32,7 @@ const action_list = computed(() => {
       return action
     })
   } else {
-    return [{ text: i18n.t('ok'), id: '', short_icon: 'mdi:mdi-check', close: '1' }]
+    return [{ text: i18n.t('Ok'), id: '', short_icon: 'mdi:mdi-check', close: '1' }]
   }
 })
 </script>

@@ -61,16 +61,16 @@ export default {
         cust_cards.forEach((cust_card) => {
           cust_card.style.zIndex = new_index--
           first_element_by_class(cust_card, 'v-card-title').className = !this.noaction
-            ? 'v-card-title bg-grey-lighten-1 movecursor'
-            : 'v-card-title bg-grey-lighten-1'
+            ? 'v-card-title frm-title bg-grey-lighten-1 movecursor'
+            : 'v-card-title frm-title bg-grey-lighten-1'
         })
       })
       const current_card = first_element_by_class(current, 'v-card')
       if (current_card) {
         current_card.style.zIndex = 10000
         first_element_by_class(current_card, 'v-card-title').className = !this.noaction
-          ? 'v-card-title bg-grey-darken-1 movecursor'
-          : 'v-card-title bg-grey-darken-1'
+          ? 'v-card-title frm-title bg-grey-darken-1 movecursor'
+          : 'v-card-title frm-title bg-grey-darken-1'
       }
     },
     all_size() {
@@ -85,8 +85,8 @@ export default {
         this.element_cardtext.style.width = ''
         this.element_cardtext.style.height = ''
         first_element_by_class(this.element_card, 'v-card-title').className = !this.noaction
-          ? 'v-card-title bg-grey-darken-1 movecursor'
-          : 'v-card-title bg-grey-darken-1'
+          ? 'v-card-title frm-title bg-grey-darken-1 movecursor'
+          : 'v-card-title frm-title bg-grey-darken-1'
       } else {
         this.dialog_box.allsize = true
         this.dialog_box.StartXsize = this.element_card.getBoundingClientRect().left
@@ -100,7 +100,7 @@ export default {
         this.element_cardtext.style.width = 'calc(100% - 20px)'
         this.element_cardtext.style.height = 'calc(100% - 98px)'
         first_element_by_class(this.element_card, 'v-card-title').className =
-          'v-card-title bg-grey-darken-1'
+          'v-card-title frm-title bg-grey-darken-1'
       }
       this.dialog_box.height = this.$el.getBoundingClientRect().height
     },
@@ -223,7 +223,7 @@ export default {
           current_cardtext.style.width = 'calc(100% - 20px)'
           current_cardtext.style.height = 'calc(100% - 98px)'
           first_element_by_class(current_card, 'v-card-title').className =
-            'v-card-title bg-grey-darken-1'
+            'v-card-title frm-title bg-grey-darken-1'
         } else {
           if (this.dialog_box.moved) {
             current_card.style.left = (100.0 * this.dialog_box.StartX) / window.innerWidth + '%'
@@ -243,8 +243,8 @@ export default {
             }
           }
           first_element_by_class(current_card, 'v-card-title').className = !this.noaction
-            ? 'v-card-title bg-grey-darken-1 movecursor'
-            : 'v-card-title bg-grey-darken-1'
+            ? 'v-card-title frm-title bg-grey-darken-1 movecursor'
+            : 'v-card-title frm-title bg-grey-darken-1'
         }
       }
     },
@@ -332,7 +332,11 @@ export default {
   >
     <div class="modaldlg" v-if="active_modal_frame"></div>
     <v-card>
-      <v-card-title :class="!noaction ? 'bg-grey-lighten-1 movecursor' : 'bg-grey-lighten-1'">
+      <v-card-title
+        :class="
+          !noaction ? 'frm-title bg-grey-lighten-1 movecursor' : 'frm-title bg-grey-lighten-1'
+        "
+      >
         {{ meta.title }}
         <div class="tools" v-if="!noaction">
           <v-btn

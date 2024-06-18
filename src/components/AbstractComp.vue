@@ -73,7 +73,7 @@ export default {
 <template>
   <div :name="component.name">
     <label class="v-label" v-if="component.description">{{ component.description }}</label>
-    <div class="v-field_abstract" :style="style_size">
+    <div class="v-field_abstract" :name="component.name" :style="style_size">
       <slot />
     </div>
   </div>

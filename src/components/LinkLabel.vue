@@ -14,6 +14,7 @@ export default {
       ref="tofocus"
       @focusin="savefocusin"
       :href="component.link"
+      :name="component.name"
       v-html="value_formated"
     ></a>
   </AbstractComp>

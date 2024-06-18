@@ -156,6 +156,7 @@ describe('LabelComp', () => {
     expect(wrapper.find('a').text()).toBe('cccc')
     expect(wrapper.find('a').attributes()).toStrictEqual({
       target: '_blank',
+      name: 'val1',
       href: 'https://www.diacamma.org'
     })
   })

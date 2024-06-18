@@ -38,11 +38,11 @@ const items = [
   {
     title: i18n.t('login'),
     action: () => {
-      emit('login')
+      emit('logoff')
     },
     icon: 'mdi:mdi-login',
     condition: function () {
-      return store.state.server.mode === 1 && store.state.server.login === ''
+      return store.state.server.mode == 1 && store.state.server.login === ''
     }
   },
   {
@@ -68,7 +68,7 @@ function get_items() {
 </script>
 
 <template>
-  <v-app-bar color="#555" density="compact">
+  <v-app-bar color="#555" density="compact" id="status">
     <div class="v-toolbar__prepend">
       <v-app-bar-nav-icon
         icon="mdi:mdi-information-slab-box-outline"
@@ -84,8 +84,10 @@ function get_items() {
       ></v-img>
     </div>
 
-    <v-app-bar-title v-if="$store.state.server.login !== ''"
-      >{{ $store.state.server.login }}@{{ $store.state.server.instance }}</v-app-bar-title
+    <v-app-bar-title id="statususer" v-if="$store.state.server.login !== ''"
+      >{{ $store.state.server.realname }} ({{ $store.state.server.login }}@{{
+        $store.state.server.instance
+      }})</v-app-bar-title
     >
 
     <v-btn

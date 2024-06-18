@@ -253,6 +253,7 @@ export default {
       :items-per-page-text="$t('Results per page')"
       :no-data-text="$t('No result')"
       :page-text="page_text"
+      :name="component.name"
       item-value="id"
       ref="tofocus"
       @focusin="savefocusin"

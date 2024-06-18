@@ -14,6 +14,7 @@ describe('StatusBar', () => {
     storage.commit('change_server', {
       login: 'toto',
       instance: 'foo',
+      realname: 'Toto',
       logoname: 'logo.png',
       mode: 0
     })
@@ -24,7 +25,7 @@ describe('StatusBar', () => {
       }
     })
     expect(wrapper.find('v-app-bar-title').exists()).toBe(true)
-    expect(wrapper.get('v-app-bar-title').text()).toBe('toto@foo')
+    expect(wrapper.get('v-app-bar-title').text()).toBe('Toto (toto@foo)')
     expect(wrapper.get('v-img').attributes('src')).toBe('logo.png')
     expect(wrapper.findAll('v-btn').length).toBe(4)
     expect(wrapper.findAll('v-btn > v-tooltip').at(0).text()).toBe('Rafraichir')
@@ -73,14 +74,15 @@ describe('StatusBar', () => {
       expect(wrapper.findAll('v-btn > v-tooltip').at(3).text()).toBe('Connexion')
       expect(wrapper.findAll('v-btn > v-icon').at(3).attributes('icon')).toBe('mdi:mdi-login')
 
-      expect(wrapper.emitted('login')).toStrictEqual(undefined)
+      expect(wrapper.emitted('logoff')).toStrictEqual(undefined)
       await wrapper.findAll('v-btn').at(3).trigger('click')
-      expect(wrapper.emitted('login')).toStrictEqual([[]])
+      expect(wrapper.emitted('logoff')).toStrictEqual([[]])
     }),
     it('menu mode 1 logged', () => {
       storage.commit('change_server', {
         login: 'toto',
         instance: 'foo',
+        realname: 'Toto',
         logoname: 'logo.png',
         mode: 1
       })
@@ -91,7 +93,7 @@ describe('StatusBar', () => {
         }
       })
       expect(wrapper.find('v-app-bar-title').exists()).toBe(true)
-      expect(wrapper.get('v-app-bar-title').text()).toBe('toto@foo')
+      expect(wrapper.get('v-app-bar-title').text()).toBe('Toto (toto@foo)')
       expect(wrapper.get('v-img').attributes('src')).toBe('logo.png')
       expect(wrapper.findAll('v-btn').length).toBe(4)
       expect(wrapper.findAll('v-btn > v-tooltip').at(0).text()).toBe('Rafraichir')

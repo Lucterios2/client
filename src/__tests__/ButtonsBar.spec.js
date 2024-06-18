@@ -24,7 +24,7 @@ describe('ButtonsBar', () => {
     expect(wrapper.find('div').element.childElementCount).toBe(1)
     expect(
       wrapper.find('div > button-action-stub').getCurrentComponent().props.action
-    ).toStrictEqual({ id: '', text: 'OK', short_icon: 'mdi:mdi-check', close: '1' })
+    ).toStrictEqual({ id: '', text: 'Ok', short_icon: 'mdi:mdi-check', close: '1' })
 
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
     expect(wrapper.emitted('close')).toStrictEqual(undefined)
@@ -48,7 +48,7 @@ describe('ButtonsBar', () => {
     expect(wrapper.find('div').element.childElementCount).toBe(1)
     expect(
       wrapper.find('div > button-action-stub').getCurrentComponent().props.action
-    ).toStrictEqual({ id: '', text: 'OK', short_icon: 'mdi:mdi-check', close: '1' })
+    ).toStrictEqual({ id: '', text: 'Ok', short_icon: 'mdi:mdi-check', close: '1' })
 
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
     expect(wrapper.emitted('close')).toStrictEqual(undefined)

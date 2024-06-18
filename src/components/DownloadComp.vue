@@ -35,6 +35,7 @@ export default {
     <v-btn
       prepend-icon="mdi:mdi-content-save"
       ref="tofocus"
+      :name="component.name"
       @focusin="savefocusin"
       @click="openFile"
       >{{ $t('Save as...') }}</v-btn

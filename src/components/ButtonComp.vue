@@ -19,6 +19,7 @@ export default {
     <ButtonAction
       ref="tofocus"
       class="button"
+      :name="component.name"
       :action="component.action"
       :is_mini="component.is_mini"
       @click="actionPerformed()"

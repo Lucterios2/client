@@ -55,6 +55,7 @@ export default {
     :rules="check"
     :disabled="is_disabled"
     :style="style_size"
+    :name="component.name"
     @focusin="savefocusin"
     @focusout="runIfChange"
     @keyup.enter="onPressEnter"

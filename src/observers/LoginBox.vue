@@ -32,7 +32,14 @@ export default {
     },
     action_list() {
       const actions = Array()
-      if (this.$store.state.server.mode === 1) {
+      actions.push({
+        id: 'ok',
+        text: this.$t('Ok'),
+        short_icon: 'mdi:mdi-power',
+        close: 1,
+        disabled: !this.form
+      })
+      if (this.$store.state.server.mode == 1) {
         actions.push({
           id: 'cancel',
           text: this.$t('cancel'),
@@ -40,13 +47,6 @@ export default {
           close: 1
         })
       }
-      actions.push({
-        id: 'ok',
-        text: this.$t('ok'),
-        short_icon: 'mdi:mdi-power',
-        close: 1,
-        disabled: !this.form
-      })
       return actions
     },
     showMessage() {
@@ -69,7 +69,7 @@ export default {
     },
     run_action(action) {
       if (action.id === 'cancel') {
-        this.execute_action({ id: 'CORE/exitConnection' })
+        this.execute_action({ id: 'CORE/authentification', method: 'POST' })
         this.$emit('close')
       }
       if (action.id === 'ok') {
@@ -101,15 +101,16 @@ export default {
     }
   },
   mounted() {
-    this.$store.commit('call_status', false)
-    this.$store.commit('change_server', convert_object_lowercase(this.connexion))
+    const connexion_convert = convert_object_lowercase(this.connexion)
+    this.$i18n.locale = connexion_convert.language ? connexion_convert.language : 'fr'
+    this.$store.commit('call_status', this.data === 'OK')
+    this.$store.commit('change_server', connexion_convert)
     this.refresh_document()
     if (this.$store.state.server.style !== '') {
       this.$store.commit('backcolor', insertStyle(this.$store.state.server.style))
     }
     this.$store.commit('check_login')
     if (this.data === 'OK') {
-      this.$i18n.locale = this.connexion.language ? this.connexion.language : 'fr'
       if (!this.context.norefresh) {
         var refreshIntervalId = setInterval(() => {
           this.execute_action({ id: 'CORE/menu' })
@@ -161,6 +162,7 @@ export default {
         <v-container grid-list-md>
           <v-text-field
             v-model="login"
+            name="login"
             clearable
             :label="login_label()"
             @keyup.enter="onSubmit"
@@ -168,6 +170,7 @@ export default {
           ></v-text-field>
           <v-text-field
             v-model="password"
+            name="password"
             clearable
             :label="$t('password')"
             type="password"

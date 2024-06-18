@@ -43,6 +43,7 @@ export default {
     :disabled="is_disabled"
     :key="forceRecompute"
     :style="style_size"
+    :name="component.name"
     :no-data-text="$t('No data available')"
     single-line
     @focusin="savefocusin"
