@@ -162,41 +162,41 @@ describe('CustomComponents', () => {
     expect(wrapper.find('div > v-tabs > v-tab:nth-of-type(2)').text()).toBe('222')
     expect(wrapper.find('div > v-tabs > v-tab:nth-of-type(3)').attributes('value')).toBe('tab__3')
     expect(wrapper.find('div > v-tabs > v-tab:nth-of-type(3)').text()).toBe('333')
-    expect(wrapper.find('div > v-window').element.childElementCount).toBe(3)
-    expect(wrapper.find('div > v-window > v-window-item:nth-of-type(1)').attributes('value')).toBe(
-      'tab__1'
-    )
+    expect(wrapper.find('div > v-tabs-window').element.childElementCount).toBe(3)
     expect(
-      wrapper.find('div > v-window > v-window-item:nth-of-type(1) > table > tr > td').element
-        .childElementCount
+      wrapper.find('div > v-tabs-window > v-tabs-window-item:nth-of-type(1)').attributes('value')
+    ).toBe('tab__1')
+    expect(
+      wrapper.find('div > v-tabs-window > v-tabs-window-item:nth-of-type(1) > table > tr > td')
+        .element.childElementCount
     ).toBe(1)
     expect(
       wrapper
-        .find('div > v-window > v-window-item:nth-of-type(1) > table > tr > td > div')
+        .find('div > v-tabs-window > v-tabs-window-item:nth-of-type(1) > table > tr > td > div')
         .attributes().value
     ).toBe('bbb')
-    expect(wrapper.find('div > v-window > v-window-item:nth-of-type(2)').attributes('value')).toBe(
-      'tab__2'
-    )
     expect(
-      wrapper.find('div > v-window > v-window-item:nth-of-type(2) > table > tr > td').element
-        .childElementCount
+      wrapper.find('div > v-tabs-window > v-tabs-window-item:nth-of-type(2)').attributes('value')
+    ).toBe('tab__2')
+    expect(
+      wrapper.find('div > v-tabs-window > v-tabs-window-item:nth-of-type(2) > table > tr > td')
+        .element.childElementCount
     ).toBe(1)
     expect(
       wrapper
-        .find('div > v-window > v-window-item:nth-of-type(2) > table > tr > td > div')
+        .find('div > v-tabs-window > v-tabs-window-item:nth-of-type(2) > table > tr > td > div')
         .attributes().value
     ).toBe('ccc')
-    expect(wrapper.find('div > v-window > v-window-item:nth-of-type(3)').attributes('value')).toBe(
-      'tab__3'
-    )
     expect(
-      wrapper.find('div > v-window > v-window-item:nth-of-type(3) > table > tr > td').element
-        .childElementCount
+      wrapper.find('div > v-tabs-window > v-tabs-window-item:nth-of-type(3)').attributes('value')
+    ).toBe('tab__3')
+    expect(
+      wrapper.find('div > v-tabs-window > v-tabs-window-item:nth-of-type(3) > table > tr > td')
+        .element.childElementCount
     ).toBe(1)
     expect(
       wrapper
-        .find('div > v-window > v-window-item:nth-of-type(3) > table > tr > td > div')
+        .find('div > v-tabs-window > v-tabs-window-item:nth-of-type(3) > table > tr > td > div')
         .attributes().value
     ).toBe('ddd')
   })

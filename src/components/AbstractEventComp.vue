@@ -116,8 +116,10 @@ export default {
         this.actionPerformed()
       }
     },
-    onPressEnter() {
-      this.$emit('action', null, false)
+    onPressEnter(event) {
+      if (!event.ctrlKey && !event.shiftKey) {
+        this.$emit('action', null, false)
+      }
     }
   },
   mounted() {

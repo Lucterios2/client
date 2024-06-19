@@ -9,7 +9,8 @@ export default {
   name: 'CustomComponents',
   data: () => ({
     internalInfo: {},
-    componentlist: []
+    componentlist: [],
+    must_refresh: true
   }),
   props: {
     context: Object,
@@ -214,7 +215,10 @@ export default {
     }, 100)
   },
   updated() {
-    this.refresh()
+    if (this.must_refresh) {
+      this.refresh()
+      this.must_refresh = false
+    }
   }
 }
 </script>
@@ -223,16 +227,25 @@ export default {
   <div ref="root" class="custom-comp">
     <table class="root-row" width="100%"></table>
     <div class="tabroot" v-if="tablist.length > 0">
-      <v-tabs v-model="internalInfo.tab" bg-color="#888" color="#000" height="35">
+      <v-tabs v-model="internalInfo.tab" bg-color="#888" color="#000" height="35" stacked>
         <v-tab v-for="tab in tablist" :value="tab.name" :key="tab.tab" class="tabheader">{{
           data[tab.name]
         }}</v-tab>
       </v-tabs>
-      <v-window v-model="internalInfo.tab">
-        <v-window-item v-for="tab in tablist" :value="tab.name" :key="tab.tab" class="tabcontent">
-          <table :class="tab.name + '__row'" width="100%"></table>
-        </v-window-item>
-      </v-window>
+      <v-tabs-window v-model="internalInfo.tab">
+        <v-tabs-window-item
+          v-for="tab in tablist"
+          :value="tab.name"
+          :key="tab.tab"
+          class="tabcontent"
+        >
+          <table
+            :class="tab.name + '__row'"
+            width="100%"
+            v-show="tab.name == internalInfo.tab"
+          ></table>
+        </v-tabs-window-item>
+      </v-tabs-window>
     </div>
   </div>
 </template>

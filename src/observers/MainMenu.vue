@@ -93,6 +93,10 @@ export default {
       this.summary_selected = [default_summary.id]
       await this.refresh_summary(default_summary)
       this.$store.commit('call_status', true)
+      this.$store.commit('call_summary', false)
+      this.$nextTick(() => {
+        this.$store.commit('call_summary', true)
+      })
       var refreshIntervalId = setInterval(() => {
         this.$store.commit('call_summary', false)
         clearInterval(refreshIntervalId)
