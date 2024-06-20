@@ -29,7 +29,9 @@ describe('Print', () => {
       }
     })
     expect(wrapper.element.childElementCount).toBe(0)
-    expect(wrapper.emitted('close')).toStrictEqual([[true]])
+    expect(wrapper.emitted('clickaction')).toStrictEqual([
+      [{ id: '', close: 1, params: { id: 123, text: 'abc' } }, false, null]
+    ])
     expect(utils.openBlob).toHaveBeenCalledTimes(1)
     expect(utils.openBlob).lastCalledWith(new Blob(), 'Example_d_impression.csv')
   })

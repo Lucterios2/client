@@ -1,10 +1,11 @@
 <script setup>
-import { computed, nextTick } from 'vue'
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import ButtonAction from '@/libs/ButtonAction.vue'
 import { CLOSE_YES } from '@/libs/utils'
+import { convert_action } from './convert'
 const i18n = useI18n()
-const emit = defineEmits(['clickaction', 'close'])
+const emit = defineEmits(['clickaction'])
 const props = defineProps({
   actions: Array,
   close: Object,
@@ -12,18 +13,11 @@ const props = defineProps({
 })
 var increment_action = 0
 function click_action(action) {
-  var act_ret = true
-  if (action.id !== '') {
-    act_ret = emit('clickaction', action, false) != false
+  var action_close = null
+  if (Number(action.close) === CLOSE_YES && props.close) {
+    action_close = props.close
   }
-  if (act_ret && Number(action.close) === CLOSE_YES) {
-    nextTick(() => {
-      if (props.close) {
-        emit('clickaction', props.close, true)
-      }
-      emit('close', action.id == '')
-    })
-  }
+  emit('clickaction', convert_action(action, action.id == ''), false, action_close) != false
 }
 const action_list = computed(() => {
   if (props.actions.length > 0) {

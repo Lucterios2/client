@@ -174,6 +174,7 @@ describe('DateTimeComp', () => {
           method: 'POST',
           modal: '1',
           name: 'edt1',
+          no_check: true,
           params: {
             val1: '2022-01-29 14:08'
           },

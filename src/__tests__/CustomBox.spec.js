@@ -53,9 +53,7 @@ describe('CustomBox', () => {
     )
 
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
-    expect(wrapper.emitted('close')).toStrictEqual(undefined)
     await wrapper.find('v-card > v-card-actions > div:nth-of-type(2) > v-btn').trigger('click')
-    expect(wrapper.emitted('close')).toStrictEqual(undefined)
     expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([
       [
         {
@@ -66,7 +64,8 @@ describe('CustomBox', () => {
           params: { value: 54.65, id: 123, text: 'abc', val1: 'aaa', val2: 'bbb' },
           num: 1
         },
-        false
+        false,
+        null
       ]
     ])
 
@@ -81,7 +80,8 @@ describe('CustomBox', () => {
           params: { value: 54.65, id: 123, text: 'abc', val1: 'aaa', val2: 'bbb' },
           num: 1
         },
-        false
+        false,
+        null
       ],
       [
         {
@@ -92,11 +92,11 @@ describe('CustomBox', () => {
           params: { id: 123, text: 'abc', val1: 'aaa', val2: 'bbb' },
           num: 0
         },
-        false
+        false,
+        null
       ]
     ])
-    expect(wrapper.emitted('close')).toStrictEqual([[false]])
-    wrapper.vm.click_action(null)
+    wrapper.vm.click_action(null, true, null)
     expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([
       [
         {
@@ -107,7 +107,8 @@ describe('CustomBox', () => {
           params: { value: 54.65, id: 123, text: 'abc', val1: 'aaa', val2: 'bbb' },
           num: 1
         },
-        false
+        false,
+        null
       ],
       [
         {
@@ -118,7 +119,8 @@ describe('CustomBox', () => {
           params: { id: 123, text: 'abc', val1: 'aaa', val2: 'bbb' },
           num: 0
         },
-        false
+        false,
+        null
       ],
       [
         {
@@ -129,10 +131,10 @@ describe('CustomBox', () => {
           params: { id: 123, text: 'abc', val1: 'aaa', val2: 'bbb' },
           num: 0
         },
-        undefined
+        true,
+        null
       ]
     ])
-    expect(wrapper.emitted('close')).toStrictEqual([[false]])
   })
 
   it('check CustomComponents', async () => {

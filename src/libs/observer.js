@@ -7,6 +7,7 @@ import CustomBox from '@/observers/CustomBox.vue'
 import ExceptionBox from '@/observers/ExceptionBox.vue'
 import PrintReturn from '@/observers/PrintReturn.vue'
 import { LucteriosException, GRAVE } from '@/libs/error'
+import { CLOSE_YES } from '@/libs/utils'
 
 var current_app = null
 
@@ -60,10 +61,23 @@ function getOwnerId(ident) {
   return owenerid
 }
 
+export var CompIdDefault = null
+export function setCompIdDefault(newCompIdDefault) {
+  CompIdDefault = newCompIdDefault
+}
+
+function getCompId() {
+  if (CompIdDefault == null) {
+    return new Date().valueOf().toString()
+  } else {
+    return CompIdDefault
+  }
+}
+
 class CompManager {
   constructor(ownerid, click_action) {
     this.ownerid = ownerid
-    this.id = new Date().valueOf().toString()
+    this.id = getCompId()
     this.el = document.createElement('div')
     this.el.id = this.id
     this.click_action = click_action
@@ -73,11 +87,18 @@ class CompManager {
   mount(component, props) {
     let self = this
     let emits = {
-      clickaction: function (action, no_owner) {
-        return self.click_action(action, no_owner ? null : self.el.id)
-      },
-      close: function (refresh_parent) {
-        return self.close(refresh_parent)
+      clickaction: async function (action, no_owner, action_close) {
+        if (action_close) {
+          await self.click_action(action_close, null)
+        }
+        var act_ret = action != null
+        const source = no_owner ? null : self.el ? self.el.id : null
+        if (act_ret && Number(action.close) === CLOSE_YES) {
+          self.close(action.id == '')
+        }
+        if (act_ret && action.id != '') {
+          act_ret = await self.click_action(action, source)
+        }
       }
     }
     if (props.id === undefined) {

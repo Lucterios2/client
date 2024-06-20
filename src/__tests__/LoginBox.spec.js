@@ -304,7 +304,7 @@ describe('LoginBox', () => {
       .find('v-card > v-card-text > div.login_actions > v-card-actions:nth-of-type(1) > v-btn')
       .trigger('click')
     expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([
-      [{ id: 'abc', text: 'action1', short_icon: 'icon1' }]
+      [{ id: 'abc', text: 'action1', short_icon: 'icon1' }, true, null]
     ])
   })
 

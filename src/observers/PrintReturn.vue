@@ -1,6 +1,6 @@
 <script>
 import AbstractObserver from '@/observers/AbstractObserver.vue'
-import { openBlob } from '@/libs/utils'
+import { CLOSE_YES, openBlob } from '@/libs/utils'
 import { getFileNameWithoutForgottenChar, convertToBytes } from '@/libs/convert'
 
 export default {
@@ -25,7 +25,7 @@ export default {
       getFileNameWithoutForgottenChar(this.print.title) +
       (this.print.extension.startsWith('.') ? this.print.extension : '.' + this.print.extension)
     this.saveFile(this.print.content, filename)
-    this.$emit('close', true)
+    this.click_action({ id: '', close: CLOSE_YES }, false, null)
   }
 }
 </script>

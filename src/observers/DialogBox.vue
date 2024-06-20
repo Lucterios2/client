@@ -28,9 +28,9 @@ export default {
     }
   },
   methods: {
-    click_dlg_action(action, no_owner) {
+    click_dlg_action(action, no_owner, action_close) {
       this.$options.FrameInterface.save_dlg()
-      this.click_action(action, no_owner)
+      this.click_action(action, no_owner, action_close)
     },
     updateObserver() {
       this.$forceUpdate()
@@ -54,7 +54,6 @@ export default {
     :close="close"
     :key="forceRecompute"
     @action="click_dlg_action"
-    @close="onClose"
     @interface="getFrameInterface"
   >
     <v-row>

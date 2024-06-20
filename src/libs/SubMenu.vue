@@ -1,13 +1,14 @@
 <script setup>
 import { convertLuctoriosFormatToHtml } from '@/libs/convert'
 import { getUrlServer } from '@/libs/transport'
+import { CLOSE_NO } from '@/libs/utils'
 
 const emit = defineEmits(['click'])
 const prop = defineProps({
   menu: Object
 })
 function click_action() {
-  emit('click', prop.menu, true)
+  emit('click', Object.assign({}, prop.menu, { close: CLOSE_NO }), true)
 }
 function get_icon_url(menu) {
   return getUrlServer() + menu.icon

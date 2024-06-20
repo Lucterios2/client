@@ -144,6 +144,7 @@ describe('FloatComp', () => {
           method: 'POST',
           modal: '1',
           name: 'edt1',
+          no_check: true,
           params: {
             val1: 57.4
           },

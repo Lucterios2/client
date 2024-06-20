@@ -1,7 +1,7 @@
 <script>
 import ButtonsBar from '@/libs/ButtonsBar.vue'
-import { Stringformat } from '@/libs/convert'
-import { first_element_by_class, refreshAction } from '@/libs/utils'
+import { Stringformat, convert_action } from '@/libs/convert'
+import { CLOSE_YES, first_element_by_class, refreshAction } from '@/libs/utils'
 
 export default {
   name: 'FrameDlg',
@@ -13,7 +13,7 @@ export default {
     close: Object,
     noaction: Boolean
   },
-  emits: ['action', 'close', 'interface'],
+  emits: ['action', 'interface'],
   data: () => ({
     element_card: null,
     element_cardtext: null,
@@ -162,20 +162,14 @@ export default {
         this.element_cardtext.style.height = height - this.dialog_box.StartDiffH + 'px'
       }
     },
-    onClickaction(act, no_owner) {
-      return this.$emit('action', act, no_owner)
-    },
-    onClose(refresh_parent) {
-      this.$emit('close', refresh_parent)
+    onClickaction(act, no_owner, act_close) {
+      return this.$emit('action', act, no_owner, act_close)
     },
     refreshDlg() {
-      this.onClickaction(refreshAction(this.meta))
+      this.onClickaction(refreshAction(this.meta), false, null)
     },
     closeDlg() {
-      if (this.close) {
-        this.onClickaction(this.close, true)
-      }
-      this.onClose(true)
+      this.onClickaction(convert_action({ id: '', close: CLOSE_YES }, true), true, this.close)
     },
     define_position() {
       if (this.element_card && !this.dialog_box.posrefresh) {
@@ -354,7 +348,7 @@ export default {
       <v-card-text>
         <slot />
       </v-card-text>
-      <ButtonsBar :actions="actions" :close="close" @clickaction="onClickaction" @close="onClose">
+      <ButtonsBar :actions="actions" :close="close" @clickaction="onClickaction">
         <v-icon class="resize_spot" v-if="!noaction">mdi</v-icon>
       </ButtonsBar>
     </v-card>

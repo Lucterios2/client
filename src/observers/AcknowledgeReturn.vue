@@ -1,4 +1,5 @@
 <script>
+import { CLOSE_YES } from '@/libs/utils'
 import AbstractObserver from '@/observers/AbstractObserver.vue'
 export default {
   name: 'AcknowledgeReturn',
@@ -6,27 +7,12 @@ export default {
   props: {
     action: Object
   },
-  methods: {
-    call_close() {
-      this.$nextTick(() => {
-        if (this.close) {
-          this.click_action(this.close, true)
-          this.onClose(this.action == null)
-        } else {
-          this.onClose(this.action == null)
-        }
-      })
-    }
-  },
   mounted() {
     this.$nextTick(() => {
-      if (this.action) {
-        if (this.click_action(this.action, false) != false) {
-          this.call_close()
-        }
-      } else {
-        this.call_close()
-      }
+      const current_action = this.action
+        ? Object.assign({}, this.action, { close: CLOSE_YES })
+        : { id: '', close: CLOSE_YES }
+      this.click_action(current_action, false, this.close)
     })
   }
 }

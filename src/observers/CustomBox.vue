@@ -21,7 +21,10 @@ export default {
     }
   },
   methods: {
-    click_action(action, no_owner) {
+    click_action(action, no_owner, action_close) {
+      if (action_close === undefined) {
+        action_close = this.close ? this.close : null
+      }
       this.$options.FrameInterface.save_dlg()
       if (action === null) {
         this.actions.forEach((act) => {
@@ -30,13 +33,13 @@ export default {
           }
         })
         if (action != null) {
-          return this.click_action_in_customcomponents(action, no_owner)
+          return this.click_action_in_customcomponents(action, no_owner, action_close)
         }
         return false
       } else {
         this.currentinfo = this.$options.childInterface.get_info()
         this.$store.commit('save_observer_info', { observerId: this.id, info: this.currentinfo })
-        return AbstractObserver.methods.click_action.call(this, action, no_owner)
+        return AbstractObserver.methods.click_action.call(this, action, no_owner, action_close)
       }
     },
     updateObserver() {
@@ -46,8 +49,8 @@ export default {
         this.$options.FrameInterface.load_dlg()
       })
     },
-    click_action_in_customcomponents(action, no_owner) {
-      return this.$options.childInterface.call_action(action, no_owner)
+    click_action_in_customcomponents(action, no_owner, action_close) {
+      return this.$options.childInterface.call_action(action, no_owner, action_close)
     },
     getChildInterface(childInterface) {
       this.$options.childInterface = childInterface
@@ -70,7 +73,6 @@ export default {
     :close="close_act"
     :key="forceRecompute"
     @action="click_action_in_customcomponents"
-    @close="onClose"
     @interface="getFrameInterface"
   >
     <CustomComponents
@@ -80,7 +82,6 @@ export default {
       :context="context"
       :initialInfo="currentinfo"
       @action="click_action"
-      @close="onClose"
       @interface="getChildInterface"
       :key="forceRecompute"
     />

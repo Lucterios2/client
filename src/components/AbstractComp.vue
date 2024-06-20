@@ -9,7 +9,7 @@ export default {
     component: Object,
     meta: Object
   },
-  emits: ['action', 'close', 'focusin'],
+  emits: ['action', 'focusin'],
   methods: {
     get_component() {
       return this.component

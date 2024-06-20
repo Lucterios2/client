@@ -22,8 +22,17 @@ describe('Acknowledge', () => {
     await nextTick()
     await nextTick()
     expect(wrapper.element.childElementCount).toBe(0)
-    expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
-    expect(wrapper.emitted('close')).toStrictEqual([[true]])
+    expect(wrapper.emitted('clickaction')).toStrictEqual([
+      [
+        {
+          id: '',
+          close: 1,
+          params: { id: 123, text: 'abc' }
+        },
+        false,
+        null
+      ]
+    ])
   }),
     it('with action', async () => {
       const wrapper = shallowMount(AcknowledgeReturn, {
@@ -48,13 +57,13 @@ describe('Acknowledge', () => {
             id: 'def',
             text: 'action2',
             icon: 'icon2',
-            close: '0',
+            close: 1,
             params: { value: 54.65, id: 123, text: 'abc' }
           },
-          false
+          false,
+          null
         ]
       ])
-      expect(wrapper.emitted('close')).toStrictEqual([[false]])
     }),
     it('with close', async () => {
       const wrapper = shallowMount(AcknowledgeReturn, {
@@ -70,16 +79,20 @@ describe('Acknowledge', () => {
       expect(wrapper.emitted('clickaction')).toStrictEqual([
         [
           {
+            id: '',
+            close: 1,
+            params: { id: 123, text: 'abc' }
+          },
+          false,
+          {
             id: 'abc',
             text: 'action1',
             icon: 'icon1',
             close: '1',
             params: { truc: true, id: 123, text: 'abc' }
-          },
-          true
+          }
         ]
       ])
-      expect(wrapper.emitted('close')).toStrictEqual([[true]])
     }),
     it('both action & close', async () => {
       const wrapper = shallowMount(AcknowledgeReturn, {
@@ -105,22 +118,18 @@ describe('Acknowledge', () => {
             id: 'def',
             text: 'action2',
             icon: 'icon2',
-            close: '0',
+            close: 1,
             params: { value: 54.65, id: 123, text: 'abc' }
           },
-          false
-        ],
-        [
+          false,
           {
             id: 'abc',
             text: 'action1',
             icon: 'icon1',
             close: '1',
             params: { truc: true, id: 123, text: 'abc' }
-          },
-          true
+          }
         ]
       ])
-      expect(wrapper.emitted('close')).toStrictEqual([[false]])
     })
 })

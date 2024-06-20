@@ -40,7 +40,7 @@ export default {
       return ''
     },
     click_action(menu, no_owner) {
-      this.$emit('clickaction', menu, no_owner)
+      this.$emit('clickaction', menu, no_owner, null)
     },
     show_summary() {
       if (this.$store.state.show_summary && this.summary_menu.length > 0) {

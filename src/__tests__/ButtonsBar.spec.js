@@ -27,10 +27,14 @@ describe('ButtonsBar', () => {
     ).toStrictEqual({ id: '', text: 'Ok', short_icon: 'mdi:mdi-check', close: '1' })
 
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
-    expect(wrapper.emitted('close')).toStrictEqual(undefined)
     await wrapper.find('div > button-action-stub').trigger('click')
-    expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
-    expect(wrapper.emitted('close')).toStrictEqual([[true]])
+    expect(wrapper.emitted('clickaction')).toStrictEqual([
+      [
+        { id: '', text: 'Ok', short_icon: 'mdi:mdi-check', no_check: true, close: '1', params: {} },
+        false,
+        null
+      ]
+    ])
   })
 
   it('No actions - Close', async () => {
@@ -51,12 +55,14 @@ describe('ButtonsBar', () => {
     ).toStrictEqual({ id: '', text: 'Ok', short_icon: 'mdi:mdi-check', close: '1' })
 
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
-    expect(wrapper.emitted('close')).toStrictEqual(undefined)
     await wrapper.find('div > button-action-stub').trigger('click')
     expect(wrapper.emitted('clickaction')).toStrictEqual([
-      [{ id: 'xyz', text: 'actionend', short_icon: 'iconend' }, true]
+      [
+        { id: '', text: 'Ok', short_icon: 'mdi:mdi-check', no_check: true, close: '1', params: {} },
+        false,
+        { id: 'xyz', text: 'actionend', short_icon: 'iconend' }
+      ]
     ])
-    expect(wrapper.emitted('close')).toStrictEqual([[true]])
   })
 
   it('Actions - No close', async () => {
@@ -89,27 +95,26 @@ describe('ButtonsBar', () => {
     })
 
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
-    expect(wrapper.emitted('close')).toStrictEqual(undefined)
     await wrapper.find('div:nth-of-type(1) > button-action-stub').trigger('click')
     expect(wrapper.emitted('clickaction')).toStrictEqual([
-      [{ id: 'abc', text: 'action1', icon: 'icon1', close: '0', num: 0 }, false]
+      [{ id: 'abc', text: 'action1', icon: 'icon1', close: '0', num: 0, params: {} }, false, null]
     ])
-    expect(wrapper.emitted('close')).toStrictEqual(undefined)
     await wrapper.find('div:nth-of-type(2) > button-action-stub').trigger('click')
     expect(wrapper.emitted('clickaction')).toStrictEqual([
-      [{ id: 'abc', text: 'action1', icon: 'icon1', close: '0', num: 0 }, false],
+      [{ id: 'abc', text: 'action1', icon: 'icon1', close: '0', num: 0, params: {} }, false, null],
       [
         {
           id: 'def',
           text: 'action2',
           icon: 'icon2',
           close: '0',
-          num: 1
+          num: 1,
+          params: {}
         },
-        false
+        false,
+        null
       ]
     ])
-    expect(wrapper.emitted('close')).toStrictEqual(undefined)
   })
 
   it('Actions - Close', async () => {
@@ -142,27 +147,25 @@ describe('ButtonsBar', () => {
     })
 
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
-    expect(wrapper.emitted('close')).toStrictEqual(undefined)
     await wrapper.find('div:nth-of-type(1) > button-action-stub').trigger('click')
     expect(wrapper.emitted('clickaction')).toStrictEqual([
-      [{ id: 'abc', text: 'action1', icon: 'icon1', close: '0', num: 0 }, false]
+      [{ id: 'abc', text: 'action1', icon: 'icon1', close: '0', num: 0, params: {} }, false, null]
     ])
-    expect(wrapper.emitted('close')).toStrictEqual(undefined)
     await wrapper.find('div:nth-of-type(2) > button-action-stub').trigger('click')
     expect(wrapper.emitted('clickaction')).toStrictEqual([
-      [{ id: 'abc', text: 'action1', icon: 'icon1', close: '0', num: 0 }, false],
+      [{ id: 'abc', text: 'action1', icon: 'icon1', close: '0', num: 0, params: {} }, false, null],
       [
         {
           id: 'def',
           text: 'action2',
           icon: 'icon2',
           close: '1',
-          num: 1
+          num: 1,
+          params: {}
         },
-        false
-      ],
-      [{ id: 'xyz', text: 'actionend', icon: 'iconend' }, true]
+        false,
+        { id: 'xyz', text: 'actionend', icon: 'iconend' }
+      ]
     ])
-    expect(wrapper.emitted('close')).toStrictEqual([[false]])
   })
 })

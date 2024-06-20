@@ -74,7 +74,8 @@ describe('CustomComponentsDynamic', () => {
           short_icon: 'icon',
           text: 'action btn'
         },
-        false
+        false,
+        undefined
       ]
     ])
   })
@@ -120,7 +121,7 @@ describe('CustomComponentsDynamic', () => {
     ).toStrictEqual('action btn')
     expect(wrapper.emitted('action')).toStrictEqual(undefined)
     await wrapper.find('table > tr:nth-of-type(1) > td > v-text-field').trigger('keyup.enter')
-    expect(wrapper.emitted('action')).toStrictEqual([[null, false]])
+    expect(wrapper.emitted('action')).toStrictEqual([[null, false, undefined]])
   })
 
   it('script value', async () => {
@@ -349,6 +350,7 @@ describe('CustomComponentsDynamic', () => {
         {
           close: '0',
           id: 'def',
+          no_check: true,
           params: {
             val1: 'aaa',
             value: 54.65
@@ -356,7 +358,8 @@ describe('CustomComponentsDynamic', () => {
           short_icon: 'icon',
           text: 'action btn'
         },
-        false
+        false,
+        undefined
       ]
     ])
 
@@ -371,6 +374,7 @@ describe('CustomComponentsDynamic', () => {
         {
           close: '0',
           id: 'def',
+          no_check: true,
           params: {
             val1: 'aaa',
             value: 54.65
@@ -378,7 +382,8 @@ describe('CustomComponentsDynamic', () => {
           short_icon: 'icon',
           text: 'action btn'
         },
-        false
+        false,
+        undefined
       ]
     ])
   })

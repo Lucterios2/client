@@ -1,10 +1,11 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
+import { nextTick } from 'vue'
 
 import ExceptionBox from '@/observers/ExceptionBox.vue'
 import storage from '@/libs/datastorage.js'
 import i18n from '@/libs/i18n.js'
-import { nextTick } from 'vue'
+import { convert_event_to_object } from '@/__tests__/tools.js'
 
 beforeEach(() => {
   console.warn = vi.fn()
@@ -55,10 +56,6 @@ describe('ExceptionBox', () => {
     expect(
       wrapper.find('v-card > buttons-bar-stub').getCurrentComponent().props.actions
     ).toStrictEqual([{ id: '', text: 'Fermer', short_icon: 'mdi:mdi-close', close: '1' }])
-
-    expect(wrapper.emitted('close')).toStrictEqual(undefined)
-    await wrapper.find('v-card > buttons-bar-stub').trigger('close')
-    expect(wrapper.emitted('close')).toStrictEqual([[true]])
   })
 
   it('important', async () => {
@@ -455,19 +452,46 @@ describe('ExceptionBox', () => {
     ])
 
     expect(window.location.href).toBe('http://localhost:3000/')
-    expect(wrapper.emitted('close')).toStrictEqual(undefined)
+    expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
     await wrapper
       .find('v-card > buttons-bar-stub')
-      .trigger('actionclick', { id: '', text: 'Fermer', icon: 'mdi:mdi-close', close: '0' })
+      .trigger('clickaction', { id: '', text: 'Fermer', icon: 'mdi:mdi-close', close: '1' })
     expect(window.location.href).toBe('http://localhost:3000/')
-    expect(wrapper.emitted('close')).toStrictEqual(undefined)
-    await wrapper.find('v-card > buttons-bar-stub').trigger('close')
-    expect(window.location.href).toBe('http://localhost:3000/')
-    expect(wrapper.emitted('close')).toStrictEqual([[true]])
+    expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([
+      [
+        {
+          close: '1',
+          icon: 'mdi:mdi-close',
+          id: '',
+          params: {
+            id: 123,
+            text: 'abc'
+          },
+          text: 'Fermer'
+        },
+        true,
+        null
+      ]
+    ])
     await wrapper
       .find('v-card > buttons-bar-stub')
-      .trigger('clickaction', { id: 'send', text: 'Support', icon: 'mdi:mdi-mail', close: '1' })
-    expect(wrapper.emitted('close')).toStrictEqual([[true]])
+      .trigger('clickaction', { id: 'send', text: 'Support', icon: 'mdi:mdi-mail', close: '0' })
+    expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([
+      [
+        {
+          close: '1',
+          icon: 'mdi:mdi-close',
+          id: '',
+          params: {
+            id: 123,
+            text: 'abc'
+          },
+          text: 'Fermer'
+        },
+        true,
+        null
+      ]
+    ])
     expect(window.location).toBe(
       "mailto:support@lucterios.org?subject=Rapport%20de%20bogue&body=%0AD%C3%A9crivez%20le%20plus%20pr%C3%A9cis%C3%A9ment%20possible%2C%20comment%20vous%20avez%20obtenu%20ce%20probl%C3%A8me.%0AMerci%20de%20votre%20aide.%0A%0A%0A%23%23%23%20Failure%20message%20%23%23%23%0A**Pile%20d'appel**%0AFirst%20line%0Asecond%20line%0A...%0Alast%20line%0A%0A**Extra**%0ALucteriosException%0A%0A**Requ%C3%AAte**%0Atruc%2Fmuche%3Fid%3D1%26value%3D12%0A%0A**Reponse**%0A%7B%22name%22%3A%22aaa%22%2C%20%22list%22%3A%5B12%2C45%2C98%5D%2C%20%22value%22%3A%2036.82%2C%20%22check%22%3Atrue%7D%0A%0A__________________________________________%0A%23%23%23%23%20Lucterios%20%23%23%23%23%0AVersion%20%3A%20%0AServeur%20%3A%20%0AClient%20%3A%20%0AConnexion%20%3A%20%40%0Aundefined%0A%0A__________________________________________%0A%0A"
     )

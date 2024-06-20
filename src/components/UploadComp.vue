@@ -2,6 +2,7 @@
 import AbstractEventComp from '@/components/AbstractEventComp.vue'
 import ButtonsBar from '@/libs/ButtonsBar.vue'
 import { Stringformat, blobToData, convertToBytes } from '@/libs/convert'
+import { CLOSE_YES } from '@/libs/utils'
 import JSZip from 'jszip'
 export default {
   name: 'UploadComp',
@@ -161,6 +162,9 @@ export default {
         this.load_miniature()
         this.getFileContentBase64()
       }
+      if (act.close == CLOSE_YES) {
+        this.close_camera()
+      }
     }
   }
 }
@@ -209,11 +213,7 @@ export default {
               <canvas v-show="isPhotoTaken" ref="canvas" :width="400" height="337.5"></canvas>
             </div>
           </v-card-text>
-          <ButtonsBar
-            :actions="act_camera_list"
-            @clickaction="action_camera"
-            @close="close_camera"
-          />
+          <ButtonsBar :actions="act_camera_list" @clickaction="action_camera" />
         </v-card>
       </v-dialog>
     </v-col>

@@ -3,7 +3,7 @@ import AbstractObserver from '@/observers/AbstractObserver.vue'
 import ButtonAction from '@/libs/ButtonAction.vue'
 import FrameDlg from '@/libs/FrameDlg.vue'
 import { convertLuctoriosFormatToHtml, convert_object_lowercase } from '@/libs/convert'
-import { insertStyle } from '@/libs/utils'
+import { CLOSE_YES, insertStyle } from '@/libs/utils'
 import { clearComponent } from '@/libs/observer'
 
 export default {
@@ -65,28 +65,24 @@ export default {
       }
     },
     execute_action(action) {
-      return this.$emit('clickaction', action)
+      return this.$emit('clickaction', action, true, null)
     },
     run_action(action) {
       if (action.id === 'cancel') {
-        this.execute_action({ id: 'CORE/authentification', method: 'POST' })
-        this.$emit('close')
+        this.execute_action({ id: 'CORE/authentification', method: 'POST', close: CLOSE_YES })
       }
       if (action.id === 'ok') {
         this.onSubmit()
       }
-    },
-    run_close() {
-      this.$emit('close')
     },
     onSubmit() {
       if (!this.form) return
       this.execute_action({
         id: 'CORE/authentification',
         method: 'POST',
+        close: CLOSE_YES,
         params: { login: this.login, password: this.password }
       })
-      this.$emit('close')
     },
     required(v) {
       return !!v || this.$t('field_required')
@@ -113,13 +109,12 @@ export default {
     if (this.data === 'OK') {
       if (!this.context.norefresh) {
         var refreshIntervalId = setInterval(() => {
-          this.execute_action({ id: 'CORE/menu' })
-          this.$emit('close')
+          this.execute_action({ id: 'CORE/menu', close: CLOSE_YES })
           clearInterval(refreshIntervalId)
         }, 100)
       } else {
         this.$store.commit('call_status', true)
-        this.$emit('close')
+        this.execute_action({ id: '', close: CLOSE_YES })
       }
     } else if (this.data === 'BADAUTH') {
       this.show_login = true
@@ -155,7 +150,6 @@ export default {
       :noaction="true"
       :key="forceRecompute"
       @action="run_action"
-      @close="run_close"
     >
       <v-alert :text="message" v-if="showMessage" type="error"> </v-alert>
       <v-form v-model="form" @submit.prevent="onSubmit">

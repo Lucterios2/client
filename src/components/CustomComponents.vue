@@ -19,18 +19,18 @@ export default {
     meta: Object,
     initialInfo: Object
   },
-  emits: ['action', 'close', 'interface'],
+  emits: ['action', 'interface'],
   computed: {
     tablist() {
       return this.comp.filter((item) => item.component === 'TAB')
     }
   },
   methods: {
-    async call_action(action, no_owner) {
+    async call_action(action, no_owner, action_close) {
       if (action == null) {
         action = this.get_default_action()
         if (action == null) {
-          return this.$emit('action', null, no_owner)
+          return this.$emit('action', null, no_owner, action_close)
         }
       }
       var is_valid = true
@@ -48,7 +48,7 @@ export default {
         this.componentlist.forEach((comp) => {
           comp.add_parameters(new_action.params)
         })
-        return this.$emit('action', new_action, no_owner)
+        return this.$emit('action', new_action, no_owner, action_close)
       } else {
         console.log('invalid names', invalid_name)
         await runErrorCaptured(
@@ -93,9 +93,6 @@ export default {
         current_td.setAttribute('class', 'customcell')
         const emits = {
           action: this.call_action,
-          close: (refresh_parent) => {
-            this.$emit('close', refresh_parent)
-          },
           focusin: this.receive_focus
         }
         current_td.id = new Date().valueOf()
@@ -184,8 +181,8 @@ export default {
     },
     emitInterface() {
       this.$emit('interface', {
-        call_action: (action, no_owner) => {
-          return this.call_action(action, no_owner)
+        call_action: (action, no_owner, action_close) => {
+          return this.call_action(action, no_owner, action_close)
         },
         get_info: () => this.internalInfo
       })
@@ -232,20 +229,13 @@ export default {
           data[tab.name]
         }}</v-tab>
       </v-tabs>
-      <v-tabs-window v-model="internalInfo.tab">
-        <v-tabs-window-item
-          v-for="tab in tablist"
-          :value="tab.name"
-          :key="tab.tab"
-          class="tabcontent"
-        >
-          <table
-            :class="tab.name + '__row'"
-            width="100%"
-            v-show="tab.name == internalInfo.tab"
-          ></table>
-        </v-tabs-window-item>
-      </v-tabs-window>
+      <div v-for="tab in tablist" :value="tab.name" :key="tab.tab" class="tabcontent">
+        <table
+          :class="tab.name + '__row'"
+          width="100%"
+          v-show="tab.name == internalInfo.tab"
+        ></table>
+      </div>
     </div>
   </div>
 </template>

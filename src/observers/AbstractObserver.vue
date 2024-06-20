@@ -14,17 +14,20 @@ export default {
     data: [Object, String],
     meta: Object // {extension: String, title: String, action: String, observer: String}
   },
-  emits: ['clickaction', 'close'],
+  emits: ['clickaction'],
   methods: {
-    onClose(refresh_parent) {
-      this.$emit('close', refresh_parent)
-    },
-    click_action(action, no_owner) {
+    click_action(action, no_owner, action_close) {
       if (action.params === undefined) {
         action.params = {}
       }
       action.params = Object.assign({}, this.context, action.params)
-      return this.$emit('clickaction', action, no_owner)
+      if (action_close) {
+        if (action_close.params === undefined) {
+          action_close.params = {}
+        }
+        action_close.params = Object.assign({}, this.context, action_close.params)
+      }
+      return this.$emit('clickaction', action, no_owner, action_close)
     },
     updateObserver() {
       this.$forceUpdate()

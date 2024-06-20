@@ -122,16 +122,6 @@ export default {
     }
   },
   methods: {
-    call_close() {
-      this.$nextTick(() => {
-        if (this.close) {
-          this.click_action(this.close, true)
-          this.onClose(false)
-        } else {
-          this.onClose(true)
-        }
-      })
-    },
     toggle_more() {
       this.more = !this.more
     },
@@ -143,6 +133,8 @@ export default {
         complement += part_for_email(this.$t('Request'), this.exception.request)
         complement += part_for_email(this.$t('Response'), this.exception.response)
         send_to_support(this.$t, this.$store, complement)
+      } else if (action) {
+        this.click_action(action, true, this.close)
       }
     }
   }
@@ -195,7 +187,7 @@ export default {
           </v-col>
         </v-row>
       </v-card-text>
-      <ButtonsBar :actions="action_list" @clickaction="execute_click" @close="call_close" />
+      <ButtonsBar :actions="action_list" @clickaction="execute_click" />
     </v-card>
   </v-dialog>
 </template>

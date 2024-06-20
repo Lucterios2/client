@@ -403,7 +403,7 @@ describe('MainMenu', () => {
       )
       .trigger('clickaction', { id: 'core.general' })
     expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([
-      [{ id: 'core.general' }, undefined]
+      [{ id: 'core.general' }, null, null]
     ])
   })
 
@@ -450,7 +450,9 @@ describe('MainMenu', () => {
     ).toBe('Fiche de notre structure et de ses responsables')
     expect(wrapper.emitted('click')).toStrictEqual(undefined)
     await wrapper.find('div > v-card').trigger('click')
-    expect(wrapper.emitted('click')).toStrictEqual([[initial_menu, true]])
+    expect(wrapper.emitted('click')).toStrictEqual([
+      [Object.assign({}, initial_menu, { close: 0 }), true]
+    ])
   })
 
   it('submenu img', async () => {
@@ -496,7 +498,9 @@ describe('MainMenu', () => {
     ).toBe('Fiche de notre structure et de ses responsables')
     expect(wrapper.emitted('click')).toStrictEqual(undefined)
     await wrapper.find('div > v-card').trigger('click')
-    expect(wrapper.emitted('click')).toStrictEqual([[initial_menu, true]])
+    expect(wrapper.emitted('click')).toStrictEqual([
+      [Object.assign({}, initial_menu, { close: 0 }), true]
+    ])
   })
 
   it('submenus with image - empty', async () => {
@@ -870,15 +874,15 @@ describe('MainMenu', () => {
       .find('v-card > v-card-item > v-card-text > v-row > v-col:nth-of-type(7) > sub-menu-stub')
       .trigger('click', { id: 'lucterios.contacts/currentStructure' })
     expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([
-      [{ id: 'lucterios.contacts/currentStructure' }, undefined]
+      [{ id: 'lucterios.contacts/currentStructure' }, null]
     ])
 
     await wrapper
       .find('v-card > v-card-item > v-card-text > v-row > v-col:nth-of-type(5) > sub-menus-stub')
       .trigger('clickaction', { id: 'core.general' })
     expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([
-      [{ id: 'lucterios.contacts/currentStructure' }, undefined],
-      [{ id: 'core.general' }, undefined]
+      [{ id: 'lucterios.contacts/currentStructure' }, null],
+      [{ id: 'core.general' }, null]
     ])
   })
 })

@@ -1,7 +1,7 @@
 <script>
 import AbstractComp from '@/components/AbstractComp.vue'
 import ButtonsBar from '@/libs/ButtonsBar.vue'
-import { SELECT_SINGLE, SELECT_MULTI, SELECT_NONE, refreshAction, CLOSE_YES } from '@/libs/utils'
+import { SELECT_SINGLE, SELECT_MULTI, SELECT_NONE, refreshAction } from '@/libs/utils'
 import {
   Stringformat,
   convertLuctoriosFormatToHtml,
@@ -160,11 +160,8 @@ export default {
     refresh() {
       this.$emit('action', refreshAction(this.meta, this.gridcontext))
     },
-    onclose(refresh_parent) {
-      this.$emit('close', refresh_parent)
-    },
     click_action(action) {
-      var new_action = convert_action(action)
+      var new_action = convert_action(action, true)
       if (this.selectItems.length > 0 && Number(new_action.unique) !== SELECT_NONE) {
         new_action.params[this.component.name] = this.selectItems.join(';')
       }
@@ -216,9 +213,6 @@ export default {
         if (dbl_action != null) {
           this.click_action(dbl_action)
         }
-        if (dbl_action && Number(dbl_action.close) === CLOSE_YES) {
-          this.onclose(dbl_action.id == '')
-        }
       }
     }
   },
@@ -238,7 +232,6 @@ export default {
       :actions="actions"
       :center="true"
       @clickaction="click_action"
-      @close="onclose"
       v-if="actions.length > 0"
     />
     <v-data-table-server

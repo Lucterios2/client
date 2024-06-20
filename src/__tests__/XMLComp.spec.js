@@ -107,6 +107,7 @@ describe('XMLComp', () => {
           method: 'POST',
           modal: '1',
           name: 'edt1',
+          no_check: true,
           params: {
             val1: 'Hello word!\nKiss'
           },

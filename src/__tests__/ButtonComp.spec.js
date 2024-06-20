@@ -61,6 +61,7 @@ describe('ButtonComp', () => {
           id: 'def',
           text: 'action btn',
           icon: '/icon',
+          no_check: true,
           close: '0',
           params: { value: 54.65 }
         },
@@ -105,6 +106,7 @@ describe('ButtonComp', () => {
           id: 'def',
           text: 'action btn',
           icon: '/icon',
+          no_check: true,
           close: '0',
           params: { value: 54.65 }
         },
@@ -149,6 +151,7 @@ describe('ButtonComp', () => {
           id: 'def',
           text: 'action btn',
           short_icon: 'icon',
+          no_check: true,
           close: '0',
           params: { value: 54.65 }
         },

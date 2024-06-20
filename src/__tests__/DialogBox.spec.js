@@ -112,7 +112,6 @@ describe('DialogBox', () => {
     )
 
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
-    expect(wrapper.emitted('close')).toStrictEqual(undefined)
     await wrapper.find('v-card > v-card-actions > div:nth-of-type(1) > v-btn').trigger('click')
     expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([
       [
@@ -124,10 +123,10 @@ describe('DialogBox', () => {
           close: '1',
           params: { id: 123, text: 'abc' }
         },
-        false
+        false,
+        null
       ]
     ])
-    expect(wrapper.emitted('close')).toStrictEqual([[false]])
   })
 
   it('Warning', async () => {
@@ -228,7 +227,6 @@ describe('DialogBox', () => {
       'action2'
     )
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
-    expect(wrapper.emitted('close')).toStrictEqual(undefined)
     await wrapper.find('v-card > v-card-actions > div:nth-of-type(1) > v-btn').trigger('click')
     expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([
       [
@@ -240,12 +238,11 @@ describe('DialogBox', () => {
           num: 0,
           params: { id: 123, text: 'abc' }
         },
-        false
+        false,
+        null
       ]
     ])
-    expect(wrapper.emitted('close')).toStrictEqual(undefined)
     await wrapper.find('v-card > v-card-title > div > v-btn:nth-of-type(2)').trigger('click')
-    expect(wrapper.emitted('close')).toStrictEqual([[true]])
     expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([
       [
         {
@@ -256,16 +253,18 @@ describe('DialogBox', () => {
           num: 0,
           params: { id: 123, text: 'abc' }
         },
-        false
+        false,
+        null
       ],
       [
+        { id: '', close: 1, no_check: true, params: { id: 123, text: 'abc' } },
+        true,
         {
           id: 'abc',
           text: 'action1',
           icon: 'icon1',
           params: { id: 123, text: 'abc', value: 54.65 }
-        },
-        true
+        }
       ]
     ])
   })

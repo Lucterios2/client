@@ -1,6 +1,6 @@
 <script>
 import AbstractComp from '@/components/AbstractComp.vue'
-import { CLOSE_YES, singleton } from '@/libs/utils'
+import { singleton } from '@/libs/utils'
 import { convert_action } from '@/libs/convert'
 export default {
   name: 'AbstractEventComp',
@@ -100,14 +100,9 @@ export default {
     },
     actionPerformed() {
       if (this.component.action) {
-        var new_action = convert_action(this.component.action)
+        var new_action = convert_action(this.component.action, true)
         this.add_parameters(new_action.params)
         this.$emit('action', new_action, false)
-        if (Number(new_action.close) === CLOSE_YES) {
-          this.$nextTick(() => {
-            this.$emit('close', new_action.id == '')
-          })
-        }
       }
     },
     runIfChange() {
