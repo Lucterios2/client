@@ -70,7 +70,7 @@ click_action({ id: 'CORE/authentification', method: 'POST' }, null)
 
 setInterval(
   () => {
-    if (store.state.server.login !== '') {
+    if (store.state.server.login !== '' && !store.state.server.show_waiting) {
       click_action(
         { id: 'CORE/authentification', method: 'POST', params: { info: true, norefresh: true } },
         null
