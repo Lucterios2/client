@@ -3,6 +3,7 @@ import { shallowMount } from '@vue/test-utils'
 
 import * as utils from '@/libs/utils'
 import PrintReturn from '@/observers/PrintReturn.vue'
+import { nextTick } from 'vue'
 
 beforeEach(() => {
   console.warn = vi.fn()
@@ -28,6 +29,8 @@ describe('Print', () => {
         }
       }
     })
+    await nextTick()
+    await nextTick()
     expect(wrapper.element.childElementCount).toBe(0)
     expect(wrapper.emitted('clickaction')).toStrictEqual([
       [{ id: '', close: 1, params: { id: 123, text: 'abc' } }, false, null]

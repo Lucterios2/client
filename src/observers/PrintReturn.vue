@@ -21,11 +21,15 @@ export default {
     }
   },
   mounted() {
-    const filename =
-      getFileNameWithoutForgottenChar(this.print.title) +
-      (this.print.extension.startsWith('.') ? this.print.extension : '.' + this.print.extension)
-    this.saveFile(this.print.content, filename)
-    this.click_action({ id: '', close: CLOSE_YES }, false, null)
+    this.$nextTick(() => {
+      const filename =
+        getFileNameWithoutForgottenChar(this.print.title) +
+        (this.print.extension.startsWith('.') ? this.print.extension : '.' + this.print.extension)
+      this.saveFile(this.print.content, filename)
+      this.$nextTick(() => {
+        this.click_action({ id: '', close: CLOSE_YES }, false, null)
+      })
+    })
   }
 }
 </script>
