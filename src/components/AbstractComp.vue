@@ -47,6 +47,9 @@ export default {
     add_parameters() {}
   },
   computed: {
+    is_focuseble() {
+      return false
+    },
     value_formated() {
       const formatstr = this.component.formatstr || '{0}'
       const int_label = formatToString(

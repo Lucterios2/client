@@ -14,6 +14,9 @@ export default {
     is_disabled: false
   }),
   computed: {
+    is_focuseble() {
+      return true
+    },
     is_empty() {
       return this.getValue() === ''
     },

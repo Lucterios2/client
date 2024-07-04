@@ -1,5 +1,6 @@
 #!/bin/bash
 
+export PYTHONPATH=
 root_dir="$(dirname $(readlink -f "$0"))"
 current_dir="$root_dir/web"
 demo_archive="$(dirname $root_dir)/lct-test-fct/data/archive_asso.lbk"
@@ -13,7 +14,7 @@ then
         python3 -m virtualenv --python=$PYTHONVER virt 2>&1  || echo "no virtualenv"
     fi
     [ -f virt/bin/activate ] && . virt/bin/activate
-    pip install -U pip gunicorn lucterios lucterios-documents lucterios-contacts diacamma-financial diacamma-asso --extra-index-url https://pypi.lucterios.org/simple
+    pip install -U pip gunicorn lucterios lucterios-standard lucterios-documents lucterios-contacts diacamma-financial diacamma-asso --extra-index-url https://pypi.lucterios.org/simple
 else
     [ -f virt/bin/activate ] && . virt/bin/activate
 fi

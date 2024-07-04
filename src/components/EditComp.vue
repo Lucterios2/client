@@ -44,6 +44,7 @@ export default {
     :clearable="!component.needed"
     :style="style_size"
     :name="component.name"
+    :key="forceRecompute"
     @focusin="savefocusin"
     @focusout="runIfChange"
     @keyup.enter="onPressEnter"

@@ -4,14 +4,26 @@ import { NULL_VALUE } from '@/libs/utils'
 export default {
   name: 'DateComp',
   extends: AbstractEventComp,
+  computed: {
+    check() {
+      return [this.check_no_empty, this.check_null]
+    }
+  },
   methods: {
+    check_null() {
+      if (this.component.needed && (!this.getValue() || this.getValue() === NULL_VALUE)) {
+        return this.$t('This field is needed!')
+      }
+      return true
+    },
     setValue(params) {
       this.setValueEx(params)
-      if (this.current_value === NULL_VALUE) {
+      if (this.current_value == null || this.current_value === NULL_VALUE) {
         this.current_value = ''
       } else if (this.current_value === '') {
         this.current_value = new Date().toISOString().substring(0, 10)
       }
+      this.forceRecompute++
       this.$forceUpdate()
     },
     getValue(final_return) {
@@ -28,14 +40,15 @@ export default {
   <v-text-field
     class="edit"
     type="date"
-    ref="tofocus"
     v-model="current_value"
+    ref="tofocus"
     :label="component.description"
     :rules="check"
     :disabled="is_disabled"
     :clearable="!component.needed"
     :style="style_size"
     :name="component.name"
+    :key="forceRecompute"
     @focusin="savefocusin"
     @focusout="runIfChange"
     @keyup.enter="onPressEnter"

@@ -1,6 +1,6 @@
 <script>
 import { createCompnent } from '@/libs/observer'
-import { FORMTYPE_REFRESH, first_element_by_class } from '@/libs/utils'
+import { FORMTYPE_REFRESH, first_element_by_class, sleep } from '@/libs/utils'
 import { convert_action } from '@/libs/convert'
 import { factory_components } from '@/components/tools'
 import { LucteriosException, IMPORTANT, runErrorCaptured } from '@/libs/error'
@@ -186,6 +186,20 @@ export default {
         },
         get_info: () => this.internalInfo
       })
+    },
+    async focus_current_comp() {
+      const comp_selectables = this.componentlist.filter((comp) => comp.is_focuseble)
+      const old_focus_name = this.internalInfo.focus_name
+      comp_selectables.forEach(async (comp) => {
+        await sleep(1)
+        comp.setfocus()
+      })
+      await sleep(1)
+      comp_selectables.forEach((comp) => {
+        if (old_focus_name === comp.get_component().name) {
+          comp.setfocus()
+        }
+      })
     }
   },
   mounted() {
@@ -193,18 +207,14 @@ export default {
     this.refresh()
     this.internalInfo = this.initialInfo
     if (this.internalInfo == undefined) {
+      const comp_selectables = this.componentlist.filter((comp) => comp.is_focuseble)
       this.internalInfo = {
         tab: this.tablist.length > 0 ? this.tablist[0].name : null,
-        focus_name:
-          this.componentlist.length > 0
-            ? this.componentlist[this.componentlist.length - 1].get_component().name
-            : null
+        focus_name: comp_selectables.length > 0 ? comp_selectables[0].get_component().name : null
       }
     }
-    this.componentlist.forEach((comp) => {
-      if (this.internalInfo.focus_name === comp.get_component().name) {
-        comp.setfocus()
-      }
+    this.$nextTick(() => {
+      this.focus_current_comp()
     })
     var refreshSizeId = setInterval(() => {
       this.adapt_size()

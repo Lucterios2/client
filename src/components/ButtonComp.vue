@@ -5,6 +5,11 @@ export default {
   name: 'ButtonComp',
   extends: AbstractEventComp,
   components: { AbstractEventComp, ButtonAction },
+  computed: {
+    is_focuseble() {
+      return false
+    }
+  },
   methods: {
     getValue() {
       return this.component.name
