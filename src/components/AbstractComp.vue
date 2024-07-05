@@ -125,6 +125,14 @@ div.v-input__details {
 .checklist {
   border-bottom: 1px solid grey;
   background-color: #eee;
+  margin-bottom: 8px;
+}
+.checklist:focus-within {
+  background-color: #d5d5d5;
+  border-bottom: 3px solid grey;
+}
+.checklist:focus-within > label.v-label {
+  opacity: unset;
 }
 .checklist > div.v-field_abstract > .v-row {
   min-height: 100px;
@@ -135,7 +143,9 @@ div.v-input__details {
   vertical-align: middle;
   overflow-x: scroll;
 }
-
+.checklist > div.v-field_abstract > select {
+  width: 100%;
+}
 .v-checkbox.v-input {
   height: 25px;
   margin-bottom: 15px;

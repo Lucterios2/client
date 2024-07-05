@@ -3,6 +3,7 @@ import AbstractEventComp from '@/components/AbstractEventComp.vue'
 export default {
   name: 'SelectComp',
   extends: AbstractEventComp,
+  components: { AbstractEventComp },
   computed: {
     check() {
       return []
@@ -33,21 +34,17 @@ export default {
 </script>
 
 <template>
-  <v-select
-    v-model="current_value"
-    ref="tofocus"
-    :label="component.description"
-    :items="items"
-    item-title="title"
-    item-value="value"
-    :disabled="is_disabled"
-    :key="forceRecompute"
-    :style="style_size"
-    :name="component.name"
-    :no-data-text="$t('No data available')"
-    single-line
-    @focusin="savefocusin"
-    @update:modelValue="runIfChange"
-    @keyup.enter="onPressEnter"
-  />
+  <AbstractEventComp class="checklist" :value="value" :component="component">
+    <select
+      v-model="current_value"
+      ref="tofocus"
+      :name="component.name"
+      :key="forceRecompute"
+      @focusin="savefocusin"
+      @change="runIfChange"
+      @keyup.enter="onPressEnter"
+    >
+      <option :value="item.value" :key="item.value" v-for="item in items">{{ item.title }}</option>
+    </select>
+  </AbstractEventComp>
 </template>

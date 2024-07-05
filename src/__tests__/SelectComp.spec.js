@@ -36,16 +36,41 @@ describe('SelectComp', () => {
       }
     })
     await nextTick()
-    expect(wrapper.element.childElementCount).toBe(2)
+    expect(wrapper.element.childElementCount).toBe(1)
+    expect(wrapper.find('div.checklist').element.childElementCount).toBe(1)
+    expect(wrapper.find('div.checklist > div.v-field_abstract').element.childElementCount).toBe(1)
+    expect(wrapper.find('div.checklist > div.v-field_abstract > select').element.name).toBe('val1')
+    expect(wrapper.find('div.checklist > div.v-field_abstract > select').element.value).toBe('1')
     expect(
-      wrapper
-        .find(
-          '.v-input__control > .v-field > .v-field__field > .v-field__input > .v-select__selection > span'
-        )
-        .text()
+      wrapper.find('div.checklist > div.v-field_abstract > select').element.childElementCount
+    ).toBe(3)
+    expect(
+      wrapper.find('div.checklist > div.v-field_abstract > select > option:nth-of-type(1)').element
+        .value
+    ).toBe('1')
+    expect(
+      wrapper.find('div.checklist > div.v-field_abstract > select > option:nth-of-type(1)').text()
     ).toBe('abc')
-    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').text()).toBe('')
+    expect(
+      wrapper.find('div.checklist > div.v-field_abstract > select > option:nth-of-type(2)').element
+        .value
+    ).toBe('2')
+    expect(
+      wrapper.find('div.checklist > div.v-field_abstract > select > option:nth-of-type(2)').text()
+    ).toBe('def')
+    expect(
+      wrapper.find('div.checklist > div.v-field_abstract > select > option:nth-of-type(3)').element
+        .value
+    ).toBe('3')
+    expect(
+      wrapper.find('div.checklist > div.v-field_abstract > select > option:nth-of-type(3)').text()
+    ).toBe('ghij')
     expect(wrapper.vm.is_valid()).toBe(true)
+    expect(wrapper.vm.getValue()).toStrictEqual('1')
+    expect(wrapper.emitted('action')).toStrictEqual(undefined)
+    await wrapper.find('div.checklist > div.v-field_abstract > select').setValue('2')
+    expect(wrapper.vm.getValue()).toStrictEqual('2')
+    expect(wrapper.emitted('action')).toStrictEqual(undefined)
   })
 
   it('with description', async () => {
@@ -87,16 +112,59 @@ describe('SelectComp', () => {
     })
     await nextTick()
     expect(wrapper.element.childElementCount).toBe(2)
+    expect(wrapper.find('div.checklist').element.childElementCount).toBe(2)
+    expect(wrapper.find('div.checklist > label.v-label').text()).toBe('select')
+    expect(wrapper.find('div.checklist > div.v-field_abstract').element.childElementCount).toBe(1)
+    expect(wrapper.find('div.checklist > div.v-field_abstract > select').element.name).toBe('val1')
+    expect(wrapper.find('div.checklist > div.v-field_abstract > select').element.value).toBe('3')
     expect(
-      wrapper
-        .find(
-          '.v-input__control > .v-field > .v-field__field > .v-field__input > .v-select__selection > span'
-        )
-        .text()
+      wrapper.find('div.checklist > div.v-field_abstract > select').element.childElementCount
+    ).toBe(3)
+    expect(
+      wrapper.find('div.checklist > div.v-field_abstract > select > option:nth-of-type(1)').element
+        .value
+    ).toBe('1')
+    expect(
+      wrapper.find('div.checklist > div.v-field_abstract > select > option:nth-of-type(1)').text()
+    ).toBe('abc')
+    expect(
+      wrapper.find('div.checklist > div.v-field_abstract > select > option:nth-of-type(2)').element
+        .value
+    ).toBe('2')
+    expect(
+      wrapper.find('div.checklist > div.v-field_abstract > select > option:nth-of-type(2)').text()
+    ).toBe('def')
+    expect(
+      wrapper.find('div.checklist > div.v-field_abstract > select > option:nth-of-type(3)').element
+        .value
+    ).toBe('3')
+    expect(
+      wrapper.find('div.checklist > div.v-field_abstract > select > option:nth-of-type(3)').text()
     ).toBe('ghij')
-    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').text()).toBe(
-      'select'
-    )
+    expect(wrapper.vm.is_valid()).toBe(true)
+    expect(wrapper.vm.getValue()).toStrictEqual('3')
     expect(wrapper.emitted('action')).toStrictEqual(undefined)
+    await wrapper.find('div.checklist > div.v-field_abstract > select').setValue('2')
+    expect(wrapper.vm.getValue()).toStrictEqual('2')
+    expect(wrapper.emitted('action')).toStrictEqual([
+      [
+        {
+          action: 'act',
+          close: '0',
+          extension: 'ext',
+          id: 'ext/act',
+          method: 'POST',
+          modal: '1',
+          name: 'edt1',
+          no_check: true,
+          params: {
+            val1: '2'
+          },
+          text: 'Modify',
+          unique: '1'
+        },
+        false
+      ]
+    ])
   })
 })
