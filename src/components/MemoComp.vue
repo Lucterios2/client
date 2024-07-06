@@ -47,8 +47,14 @@ export default {
       this.setValueEx(params)
       if (this.component.with_hypertext) {
         this.current_value = convertLuctoriosFormatToHtml(this.current_value, true)
+        const values_param = []
+        const current_values = this.current_value.replaceAll('<br>', '<br/>').split('<br/>')
+        current_values.forEach((line) => {
+          values_param.push('<p>' + line + '</p>')
+        })
+        this.current_value = values_param.join('')
       } else {
-        this.current_value = this.current_value.replace('{[br/]}', '\n')
+        this.current_value = this.current_value.replaceAll('{[br/]}', '\n')
       }
       this.$forceUpdate()
     },
@@ -58,6 +64,9 @@ export default {
         return_value = return_value.replace(/\n/g, '{[br/]}')
         if (this.component.with_hypertext) {
           return_value = return_value.replaceAll('<br>', '')
+          while (return_value.length > 0 && return_value.endsWith('<p></p>')) {
+            return_value = return_value.substring(0, return_value.length - 7)
+          }
           return_value = return_value.replaceAll('<p>', '')
           return_value = return_value.replaceAll('</p>', '{[br/]}')
           return_value = return_value.replace(/</g, '{[')
@@ -128,7 +137,11 @@ export default {
       :name="component.name"
       ref="tofocus"
       theme="snow"
-      toolbar="essential"
+      :toolbar="[
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ color: [] }, { background: [] }],
+        ['clean']
+      ]"
       contentType="html"
       :label="component.description"
       :rules="check"

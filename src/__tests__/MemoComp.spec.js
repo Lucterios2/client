@@ -73,7 +73,7 @@ describe('MemoComp', () => {
     await nextTick()
     expect(wrapper.element.childElementCount).toBe(1)
     expect(wrapper.find('.ql-container > .ql-editor').html()).toBe(
-      '<div class="ql-editor" data-gramm="false" contenteditable="true">\n  <p>Coucou les amis !</p>\n  <p><br></p>\n  <p>Bise</p>\n</div>'
+      '<div class="ql-editor" data-gramm="false" contenteditable="true">\n  <p>Coucou les amis !</p>\n  <p>Bise</p>\n</div>'
     )
     expect(wrapper.find('.ql-container').attributes().label).toBe('memo')
     expect(wrapper.vm.is_valid()).toBe(true)
