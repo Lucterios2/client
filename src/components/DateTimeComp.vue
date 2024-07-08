@@ -4,7 +4,18 @@ import { NULL_VALUE } from '@/libs/utils'
 export default {
   name: 'DateTimeComp',
   extends: AbstractEventComp,
+  computed: {
+    check() {
+      return [this.check_no_empty, this.check_null]
+    }
+  },
   methods: {
+    check_null() {
+      if (this.component.needed && (!this.getValue() || this.getValue() === NULL_VALUE)) {
+        return this.$t('This field is needed!')
+      }
+      return true
+    },
     getInitialValue() {
       return this.value.substring(0, 16).replace('T', ' ')
     },
@@ -14,7 +25,11 @@ export default {
         this.current_value === ''
       }
       this.current_value = this.current_value.substring(0, 16)
+      this.forceRecompute++
       this.$forceUpdate()
+    },
+    add_parameters(params) {
+      params[this.component.name] = this.getValue(true)
     },
     getValue(final_return) {
       if (final_return && this.current_value === '') {
@@ -38,6 +53,7 @@ export default {
     :clearable="!component.needed"
     :style="style_size"
     :name="component.name"
+    :key="forceRecompute"
     @focusin="savefocusin"
     @focusout="runIfChange"
     @keyup.enter="onPressEnter"

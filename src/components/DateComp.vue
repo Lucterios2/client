@@ -26,6 +26,9 @@ export default {
       this.forceRecompute++
       this.$forceUpdate()
     },
+    add_parameters(params) {
+      params[this.component.name] = this.getValue(true)
+    },
     getValue(final_return) {
       if (final_return && this.current_value === '') {
         return NULL_VALUE
