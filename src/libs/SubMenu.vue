@@ -41,7 +41,7 @@ function get_icon_url(menu) {
   </div>
 </template>
 
-<style scoped>
+<style>
 .submenu {
   border: 1px black solid;
   width: 275px;
@@ -57,6 +57,10 @@ function get_icon_url(menu) {
 .bg-menu {
   background-color: #888;
   color: #000;
+}
+
+div.menutext > div {
+  white-space: initial;
 }
 
 @media (min-width: 1600px) {

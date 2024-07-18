@@ -220,6 +220,9 @@ export default {
       this.adapt_size()
       clearInterval(refreshSizeId)
     }, 100)
+    if (this.internalInfo.tab === null && this.tablist.length > 0) {
+      this.internalInfo.tab = this.tablist[0].name
+    }
   },
   updated() {
     if (this.must_refresh) {
