@@ -1,5 +1,5 @@
 <script>
-import { convertLuctoriosFormatToHtml, formatToString, Stringformat } from '@/libs/convert'
+import { convertLuctoriosFormatToHtml, formatToString } from '@/libs/convert'
 export default {
   name: 'AbstractComp',
   props: {
@@ -43,6 +43,7 @@ export default {
     setValue() {},
     setEnabled() {},
     setVisible() {},
+    onResize() {},
     setOwner() {},
     add_parameters() {}
   },
@@ -58,16 +59,6 @@ export default {
         formatstr.replaceAll('%s', '{0}')
       )
       return convertLuctoriosFormatToHtml(int_label)
-    },
-    style_size() {
-      var style_txt = ''
-      if (this.component.VMin) {
-        style_txt = style_txt + Stringformat('min-height:{0}px;', [this.component.VMin])
-      }
-      if (this.component.HMin) {
-        style_txt = style_txt + Stringformat('min-width:{0}px;', [this.component.HMin])
-      }
-      return style_txt
     }
   }
 }
@@ -76,7 +67,7 @@ export default {
 <template>
   <div :name="component.name">
     <label class="v-label" v-if="component.description">{{ component.description }}</label>
-    <div class="v-field_abstract" :name="component.name" :style="style_size">
+    <div class="v-field_abstract" :name="component.name">
       <slot />
     </div>
   </div>

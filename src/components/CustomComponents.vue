@@ -159,6 +159,11 @@ export default {
         clearInterval(refreshOwnerId)
       }, 100)
     },
+    onResize(height_diff) {
+      this.componentlist.forEach((comp) => {
+        comp.onResize(height_diff)
+      })
+    },
     get(name) {
       var component = null
       this.componentlist.forEach((comp) => {
@@ -184,7 +189,8 @@ export default {
         call_action: (action, no_owner, action_close) => {
           return this.call_action(action, no_owner, action_close)
         },
-        get_info: () => this.internalInfo
+        get_info: () => this.internalInfo,
+        onResize: (height_diff) => this.onResize(height_diff)
       })
     },
     async focus_current_comp() {

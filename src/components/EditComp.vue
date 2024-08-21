@@ -42,7 +42,6 @@ export default {
     :rules="check"
     :disabled="is_disabled"
     :clearable="!component.needed"
-    :style="style_size"
     :name="component.name"
     :key="forceRecompute"
     @focusin="savefocusin"

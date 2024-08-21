@@ -13,7 +13,7 @@ export default {
     close: Object,
     noaction: Boolean
   },
-  emits: ['action', 'interface'],
+  emits: ['action', 'interface', 'resize'],
   data: () => ({
     element_card: null,
     element_cardtext: null,
@@ -36,6 +36,7 @@ export default {
       mouseStartX: 0,
       mouseStartY: 0,
       height: 0,
+      initial_height: null,
       posrefresh: null
     }
   }),
@@ -103,6 +104,10 @@ export default {
           'v-card-title frm-title bg-grey-darken-1'
       }
       this.dialog_box.height = this.$el.getBoundingClientRect().height
+      this.$emit(
+        'resize',
+        this.element_card.getBoundingClientRect().height - this.dialog_box.initial_height - 20
+      )
     },
     mouse_down(event) {
       if (this.noaction) {
@@ -160,6 +165,10 @@ export default {
         this.element_card.style.height = height + 'px'
         this.element_cardtext.style.width = width + 'px'
         this.element_cardtext.style.height = height - this.dialog_box.StartDiffH + 'px'
+        this.$emit(
+          'resize',
+          this.element_card.getBoundingClientRect().height - this.dialog_box.initial_height
+        )
       }
     },
     onClickaction(act, no_owner, act_close) {
@@ -184,6 +193,12 @@ export default {
         this.element_card.style.left = '%X%'.replace('%X', (100 * left) / window.innerWidth)
         this.element_card.style.top = '%Y%'.replace('%Y', (100 * top) / window.innerHeight)
       }
+      if (
+        (this.dialog_box.initial_height == null || this.dialog_box.initial_height == undefined) &&
+        this.element_card
+      ) {
+        this.dialog_box.initial_height = this.element_card.getBoundingClientRect().height
+      }
       this.dialog_box.posrefresh = null
     },
     get_card_elements() {
@@ -207,6 +222,12 @@ export default {
       const cardelements = this.get_card_elements()
       const current_card = cardelements[0]
       const current_cardtext = cardelements[1]
+      if (
+        (this.dialog_box.initial_height == null || this.dialog_box.initial_height == undefined) &&
+        this.element_card
+      ) {
+        this.dialog_box.initial_height = this.element_card.getBoundingClientRect().height
+      }
       this.dialog_box.posrefresh = this.dialog_box.allsize !== undefined
       if (current_card && this.dialog_box.posrefresh) {
         if (this.dialog_box.allsize) {

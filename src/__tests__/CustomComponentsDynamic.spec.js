@@ -206,7 +206,7 @@ describe('CustomComponentsDynamic', () => {
     ).toStrictEqual('bbb')
     expect(
       wrapper.find('table > tr:nth-of-type(2) > td > v-text-field').attributes().style
-    ).toStrictEqual('')
+    ).toStrictEqual(undefined)
     expect(wrapper.emitted('action')).toStrictEqual(undefined)
 
     await wrapper.vm.get('val1').setValue('no')

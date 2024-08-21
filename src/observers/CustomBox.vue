@@ -57,6 +57,9 @@ export default {
     },
     getFrameInterface(FrameInterface) {
       this.$options.FrameInterface = FrameInterface
+    },
+    onResize(height_ratio) {
+      this.$options.childInterface.onResize(height_ratio)
     }
   },
   mounted() {
@@ -74,6 +77,7 @@ export default {
     :key="forceRecompute"
     @action="click_action_in_customcomponents"
     @interface="getFrameInterface"
+    @resize="onResize"
   >
     <CustomComponents
       :data="data"

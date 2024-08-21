@@ -21,6 +21,7 @@ const store = useStore()
 const i18n = useI18n()
 
 const show_about = defineModel('show_about', { type: Boolean, default: false })
+const disabled_waiting = defineModel('disabled_waiting', { type: Boolean, default: false })
 
 initialObserver()
 initialTransport(store, i18n)
@@ -69,16 +70,21 @@ async function click_action(action, source) {
 click_action({ id: 'CORE/authentification', method: 'POST' }, null)
 
 setInterval(
-  () => {
+  async () => {
     if (store.state.server.login !== '' && !store.state.server.show_waiting) {
-      click_action(
-        { id: 'CORE/authentification', method: 'POST', params: { info: true, norefresh: true } },
-        null
-      )
+      disabled_waiting.value = true
+      try {
+        await click_action(
+          { id: 'CORE/authentification', method: 'POST', params: { info: true, norefresh: true } },
+          null
+        )
+      } finally {
+        disabled_waiting.value = false
+      }
     }
   },
-  5 * 60 * 1000
-) // Watchdog 5 min
+  10 * 60 * 1000
+) // Watchdog 10 min
 </script>
 
 <template>
@@ -94,7 +100,7 @@ setInterval(
       />
     </v-row>
     <AboutFrame v-if="show_about" @close="show_about = false" />
-    <WaitingFrame v-if="$store.state.show_waiting" />
+    <WaitingFrame v-if="!disabled_waiting && $store.state.show_waiting" />
     <div id="comp"></div>
   </v-app>
 </template>

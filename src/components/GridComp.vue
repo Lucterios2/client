@@ -26,9 +26,17 @@ export default {
     gridcontext: {},
     selectItems: [],
     lastselectid: null,
+    initial_height: null,
     i18n: useI18n()
   }),
   computed: {
+    scroll_element() {
+      if (this.$el.firstElementChild.children.length > 1) {
+        return this.$el.firstElementChild.children[1]
+      } else {
+        return this.$el.firstElementChild.children[0]
+      }
+    },
     buttonMode() {
       const select_list = this.component.actions.map((action_item) => {
         return Number(action_item.unique)
@@ -214,13 +222,23 @@ export default {
           this.click_action(dbl_action)
         }
       }
+    },
+    onResize(height_diff) {
+      this.scroll_element.style.maxHeight = Math.max(200, this.initial_height + height_diff) + 'px'
     }
   },
   mounted() {
-    if (this.component.no_pager) {
-      Array.from(this.$el.getElementsByClassName('v-data-table-footer')).forEach((footer) => {
+    Array.from(this.$el.getElementsByClassName('v-data-table-footer')).forEach((footer) => {
+      if (this.component.no_pager) {
         footer.style.display = 'none'
-      })
+      } else {
+        this.$el.firstElementChild.appendChild(footer)
+      }
+    })
+    this.initial_height = this.component.VMin ? this.component.VMin : 200
+    if (this.scroll_element) {
+      this.scroll_element.style.maxHeight = this.initial_height + 'px'
+      this.onResize(0)
     }
   }
 }
@@ -234,51 +252,60 @@ export default {
       @clickaction="click_action"
       v-if="actions.length > 0"
     />
-    <v-data-table-server
-      v-model:items-per-page="itemsPerPage"
-      :headers="headers"
-      :items-length="component.nb_lines"
-      :items="serverItems"
-      :page="component.page_num + 1"
-      :multi-sort="true"
-      :sort-by="sortby"
-      :items-per-page-options="items_per_page_options"
-      :items-per-page-text="$t('Results per page')"
-      :no-data-text="$t('No result')"
-      :page-text="page_text"
-      :name="component.name"
-      item-value="id"
-      ref="tofocus"
-      @focusin="savefocusin"
-      @update:options="loadItems"
-    >
-      <template #item="{ item }">
-        <tr
-          :class="
-            'v-data-table__tr ' +
-            item.classname +
-            (selectItems.includes(item.id) ? ' selected' : '')
-          "
-        >
-          <td
-            class="v-data-table__td"
-            v-for="header in component.headers"
-            :key="header[0]"
-            @click="click_row($event, item)"
-            @dblclick="dblclick_row($event, item)"
+    <div class="scroll_table">
+      <v-data-table-server
+        v-model:items-per-page="itemsPerPage"
+        :headers="headers"
+        :items-length="component.nb_lines"
+        :items="serverItems"
+        :page="component.page_num + 1"
+        :multi-sort="true"
+        :sort-by="sortby"
+        :items-per-page-options="items_per_page_options"
+        :items-per-page-text="$t('Results per page')"
+        :no-data-text="$t('No result')"
+        :page-text="page_text"
+        :name="component.name"
+        item-value="id"
+        ref="tofocus"
+        @focusin="savefocusin"
+        @update:options="loadItems"
+      >
+        <template #item="{ item }">
+          <tr
+            :class="
+              'v-data-table__tr ' +
+              item.classname +
+              (selectItems.includes(item.id) ? ' selected' : '')
+            "
           >
-            <span v-if="header[2] !== 'icon'" v-html="item[header[0]]"></span>
-            <img :src="item[header[0]]" v-if="header[2] === 'icon'" />
-          </td>
-        </tr>
-      </template>
-    </v-data-table-server>
+            <td
+              class="v-data-table__td"
+              v-for="header in component.headers"
+              :key="header[0]"
+              @click="click_row($event, item)"
+              @dblclick="dblclick_row($event, item)"
+            >
+              <span v-if="header[2] !== 'icon'" v-html="item[header[0]]"></span>
+              <img :src="item[header[0]]" v-if="header[2] === 'icon'" />
+            </td>
+          </tr>
+        </template>
+      </v-data-table-server>
+    </div>
   </AbstractComp>
 </template>
 
 <style>
+.scroll_table {
+  max-height: 200px;
+  display: block;
+  overflow: auto;
+  width: 100%;
+}
 .v-table > .v-table__wrapper > table {
   border: 1px solid #cfcfcf;
+  width: 100%;
 }
 .v-table > .v-table__wrapper > table thead.v-data-table__thead th.v-data-table__th {
   background: linear-gradient(#eeeeee, #cccccc);

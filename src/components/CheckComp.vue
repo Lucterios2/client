@@ -37,7 +37,6 @@ export default {
     ref="tofocus"
     :label="component.description"
     :disabled="is_disabled"
-    :style="style_size"
     @focusin="savefocusin"
     @change="runIfChange"
     @keyup.enter="onPressEnter"
