@@ -17,6 +17,7 @@ import PasswordComp from '@/components/PasswordComp.vue'
 import UploadComp from '@/components/UploadComp.vue'
 import DownloadComp from '@/components/DownloadComp.vue'
 import CaptchaComp from '@/components/CaptchaComp.vue'
+import SearchComp from '@/components/SearchComp.vue'
 
 export function factory_components(componentname) {
   var current_comp
@@ -74,6 +75,9 @@ export function factory_components(componentname) {
       break
     case 'DOWNLOAD':
       current_comp = DownloadComp
+      break
+    case 'SEARCH':
+      current_comp = SearchComp
       break
     case 'CAPTCHA':
       current_comp = CaptchaComp

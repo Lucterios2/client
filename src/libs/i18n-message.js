@@ -57,7 +57,20 @@ export const messages = {
     use_lucterios_framework: 'Use the Lucterios framework',
     username: 'username',
     username_wrong: 'Username or password wrong!',
-    version: 'Version'
+    version: 'Version',
+
+    'Your criteria of search': 'Your criteria of search',
+    'No criteria of search': 'No criteria of search',
+    equals: 'equals',
+    different: 'different',
+    inferior: 'inferior',
+    superior: 'superior',
+    contains: 'contains',
+    'starts with': 'starts with',
+    'ends with': 'ends with',
+    or: 'or',
+    and: 'and',
+    '---': '---'
   },
   fr: {
     'At least one field is not valid!': "Au moins un champ n'est pas valid !",
@@ -119,6 +132,19 @@ export const messages = {
     use_lucterios_framework: "Utilise le cadre d'application Lucterios",
     username: 'Alias',
     username_wrong: 'Alias ou Mot de passe incorrect!',
-    version: 'Version'
+    version: 'Version',
+
+    'Your criteria of search': 'Votre critère de recherche',
+    'No criteria of search': 'Pas de critère de recherche',
+    equals: 'égal',
+    different: 'différent',
+    inferior: 'inférieur',
+    superior: 'supérieur',
+    contains: 'contenu',
+    'starts with': 'commence par',
+    'ends with': 'fini par',
+    or: 'ou',
+    and: 'et',
+    '---': '---'
   }
 }
