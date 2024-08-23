@@ -175,9 +175,9 @@ export default {
         ])
       } else if (selector.type == 'bool') {
         if (value == 'o' || value == true) {
-          return this.$t('yes')
+          return this.$t('Yes')
         } else {
-          return this.$t('no')
+          return this.$t('No')
         }
       } else if (selector.type == 'date') {
         return typeof value === 'string' ? value : value.join(sep_for_list)
