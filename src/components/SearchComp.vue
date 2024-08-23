@@ -183,7 +183,7 @@ export default {
         return typeof value === 'string' ? value : value.join(sep_for_list)
       } else if (selector.type == 'datetime') {
         return typeof value === 'string' ? value : value.join(sep_for_list)
-      } else if (selector.type == 'list' || self.field_type == 'listmult') {
+      } else if (selector.type == 'list' || selector.type == 'listmult') {
         const ids = typeof value === 'string' ? value.split(';') : value
         return selector.extra
           .filter((new_item) => ids.includes(new_item[0]))
