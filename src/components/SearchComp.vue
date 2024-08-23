@@ -118,7 +118,13 @@ export default {
         } else {
           new_value.splice(this.criteria_index, 1)
         }
-        return JSON.stringify(new_value)
+        return JSON.stringify(
+          new_value.map((item) => [
+            item[0],
+            item[1],
+            Array.isArray(item[2]) ? item[2].join(';') : item[2]
+          ])
+        )
       } else {
         return this.current_value
       }
