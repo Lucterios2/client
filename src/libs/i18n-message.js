@@ -59,6 +59,9 @@ export const messages = {
     username_wrong: 'Username or password wrong!',
     version: 'Version',
 
+    next: 'next',
+    last: 'last',
+
     'Your criteria of search': 'Your criteria of search',
     'No criteria of search': 'No criteria of search',
     equals: 'equals',
@@ -133,6 +136,9 @@ export const messages = {
     username: 'Alias',
     username_wrong: 'Alias ou Mot de passe incorrect!',
     version: 'Version',
+
+    next: 'suivant',
+    last: 'précedent',
 
     'Your criteria of search': 'Votre critère de recherche',
     'No criteria of search': 'Pas de critère de recherche',

@@ -33,6 +33,13 @@ export default {
     }
   },
   methods: {
+    getInitialValue() {
+      if (Array.isArray(this.value)) {
+        return this.value.join(';')
+      } else {
+        return this.value
+      }
+    },
     setValue(params) {
       if (Array.isArray(params)) {
         this.current_value = params.map((val) => val.toString())
@@ -101,7 +108,7 @@ export default {
 <template>
   <AbstractEventComp class="checklist" :value="value" :component="component">
     <v-row>
-      <v-col :cols="Number(component.simple) ? 6 : 12">
+      <v-col :cols="Number(component.simple) ? 5 : 12">
         <select
           multiple
           :name="component.name + '_available'"
@@ -120,7 +127,7 @@ export default {
           </option>
         </select>
       </v-col>
-      <v-col cols="1" v-if="Number(component.simple) === 2" style="padding-bottom: 20px">
+      <v-col cols="1" class="checklist_btns" v-if="Number(component.simple) === 2">
         <v-btn
           size="x-small"
           icon="mdi mdi-chevron-double-right"

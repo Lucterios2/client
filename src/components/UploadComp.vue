@@ -108,6 +108,9 @@ export default {
         }
       }
     },
+    check_exist() {
+      return this.selectedFile != null || !this.component.needed
+    },
     selectFile(event) {
       if (event.target.files) {
         this.selectedFile = event.target.files[0]
@@ -172,7 +175,7 @@ export default {
 
 <template>
   <v-row>
-    <v-col cols="max">
+    <v-col cols="max" :class="check_exist() ? '' : 'in_error'">
       <v-file-input
         clearable
         show-size
@@ -224,5 +227,8 @@ export default {
 .miniature {
   margin: 5px 0px;
   width: 40px;
+}
+.in_error {
+  color: rgb(176, 0, 32);
 }
 </style>

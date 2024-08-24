@@ -1,6 +1,7 @@
 import ImageComp from '@/components/ImageComp.vue'
 import LabelForm from '@/components/LabelForm.vue'
 import EditComp from '@/components/EditComp.vue'
+import StepComp from '@/components/StepComp.vue'
 import FloatComp from '@/components/FloatComp.vue'
 import MemoComp from '@/components/MemoComp.vue'
 import XMLComp from '@/components/XMLComp.vue'
@@ -30,6 +31,9 @@ export function factory_components(componentname) {
       break
     case 'EDIT':
       current_comp = EditComp
+      break
+    case 'STEP':
+      current_comp = StepComp
       break
     case 'FLOAT':
       current_comp = FloatComp

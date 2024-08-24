@@ -137,9 +137,20 @@ div.v-input__details {
 .checklist > div.v-field_abstract > select {
   width: 100%;
 }
+.checklist_btns {
+  min-width: 25px;
+  background-color: white;
+  padding: 0px 3px 20px 3px;
+  text-align: center;
+  margin-top: 15px;
+}
 .v-checkbox.v-input {
   height: 25px;
   margin-bottom: 15px;
   margin-top: -10px;
+}
+.step_btn {
+  top: -20px;
+  width: 150px;
 }
 </style>
