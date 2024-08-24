@@ -153,4 +153,9 @@ div.v-input__details {
   top: -20px;
   width: 150px;
 }
+
+div.v-field_abstract > div.v-rating > div.v-rating__wrapper > div.v-rating__item > label > button {
+  width: 30px;
+}
+
 </style>
