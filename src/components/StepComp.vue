@@ -21,7 +21,6 @@ export default {
         this.current_value = parseInt(this.value.toString())
       }
       this.current_value = Math.min(this.component.max, Math.max(1, this.current_value))
-      console.log('setValue', params, this.current_value)
       this.$forceUpdate()
     },
     prevact() {

@@ -19,6 +19,7 @@ import UploadComp from '@/components/UploadComp.vue'
 import DownloadComp from '@/components/DownloadComp.vue'
 import CaptchaComp from '@/components/CaptchaComp.vue'
 import SearchComp from '@/components/SearchComp.vue'
+import MosaicComp from './MosaicComp.vue'
 
 export function factory_components(componentname) {
   var current_comp
@@ -49,6 +50,9 @@ export function factory_components(componentname) {
       break
     case 'GRID':
       current_comp = GridComp
+      break
+    case 'MOSAIC':
+      current_comp = MosaicComp
       break
     case 'LINK':
       current_comp = LinkLabel

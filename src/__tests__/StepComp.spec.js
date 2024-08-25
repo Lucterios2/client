@@ -125,7 +125,6 @@ describe('StepComp', () => {
       }
     })
     await nextTick()
-    console.log(wrapper.html())
     expect(wrapper.element.childElementCount).toBe(2)
     expect(wrapper.find('label').text()).toBe('title')
     expect(wrapper.find('.v-field_abstract').element.childElementCount).toBe(3)

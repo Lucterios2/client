@@ -73,7 +73,11 @@ export const messages = {
     'ends with': 'ends with',
     or: 'or',
     and: 'and',
-    '---': '---'
+    '---': '---',
+
+    '%0 to %1 (%2 in total)': '%0 to %1 (%2 in total)',
+    'Image size': 'Image size',
+    'Order by': 'Order by'
   },
   fr: {
     'At least one field is not valid!': "Au moins un champ n'est pas valid !",
@@ -151,6 +155,10 @@ export const messages = {
     'ends with': 'fini par',
     or: 'ou',
     and: 'et',
-    '---': '---'
+    '---': '---',
+
+    '%0 to %1 (%2 in total)': '%0 à %1 (%2 au total)',
+    'Image size': "Taille d'image",
+    'Order by': 'Trié par'
   }
 }

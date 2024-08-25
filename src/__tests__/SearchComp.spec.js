@@ -452,7 +452,6 @@ describe('SearchComp', () => {
     await nextTick()
     await wrapper.find('.search_select > .v-col:nth-of-type(1) > select').setValue('time')
     await nextTick()
-    console.log(wrapper.html())
     expect(wrapper.findAll('.search_select > .v-col:nth-of-type(1) > select > option').length).toBe(
       7
     )
@@ -836,7 +835,6 @@ describe('SearchComp', () => {
       }
     })
     await nextTick()
-    console.log(wrapper.html())
     expect(wrapper.find('.search_result').element.childElementCount).toBe(2)
     expect(wrapper.find('.search_result > .search_title').text()).toBe('Votre critère de recherche')
     expect(wrapper.findAll('.search_result > .v-col > .search_result').length).toBe(7)
