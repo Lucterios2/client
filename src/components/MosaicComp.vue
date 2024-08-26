@@ -23,10 +23,14 @@ export default {
   }),
   computed: {
     scroll_element() {
-      if (this.$el.children.length > 1) {
-        return this.$el.children[1].children[1].firstElementChild
+      if (this.$el && this.$el.children) {
+        if (this.$el.children.length > 1) {
+          return this.$el.children[1].children[1].firstElementChild
+        } else {
+          return this.$el.children[0].children[1].firstElementChild
+        }
       } else {
-        return this.$el.children[0].children[1].firstElementChild
+        return null
       }
     },
     page_text() {
@@ -78,6 +82,15 @@ export default {
     },
     image_style() {
       if (this.image_dim == 0) {
+        return 'height: 50px;'
+      } else if (this.image_dim == 1) {
+        return 'height: 125px;'
+      } else {
+        return 'height: 250px;'
+      }
+    },
+    icon_style() {
+      if (this.image_dim == 0) {
         return 'font-size: 50px;'
       } else if (this.image_dim == 1) {
         return 'font-size: 125px;'
@@ -96,8 +109,22 @@ export default {
       const new_action = refreshAction(this.meta, params)
       this.$emit('action', new_action, false)
     },
+    is_icon(item) {
+      return item.image.startsWith('mdi:')
+    },
     onResize(height_diff) {
       this.scroll_element.style.maxHeight = Math.max(200, this.initial_height + height_diff) + 'px'
+    },
+    isSelected(item) {
+      return this.items_selected.includes(String(item.id))
+    },
+    toggle(item) {
+      const index = this.value.indexOf(item)
+      if (this.selection.includes(index)) {
+        this.selection.splice(this.selection.indexOf(index), 1)
+      } else {
+        this.selection.push(index)
+      }
     },
     click_action(action) {
       var new_action = convert_action(action, true)
@@ -178,20 +205,25 @@ export default {
         <v-item-group v-model="selection" multiple>
           <v-row>
             <v-col v-for="(item, i) in value" :key="i">
-              <v-item v-slot="{ isSelected, toggle }">
+              <v-item>
                 <v-btn
                   class="mosaic_images_btn"
-                  :color="isSelected ? '#d0d0d0' : ''"
+                  :color="isSelected(item) ? '#d0d0d0' : ''"
                   dark
                   :width="image_size"
                   :height="image_size + 20"
-                  @click="toggle"
+                  @click="toggle(item)"
                   @dblclick="runAction(item)"
                 >
-                  <v-icon :style="image_style">{{ item.image }}</v-icon>
+                  <img :src="item.image" :style="image_style" v-if="!is_icon(item)" />
+                  <v-icon :style="icon_style" v-if="is_icon(item)">
+                    {{ item.image }}
+                  </v-icon>
                   <label>{{ item.name }}</label>
-                  <v-tooltip activator="parent" location="bottom"> {{ item.info }}</v-tooltip>
                 </v-btn>
+                <v-tooltip activator="parent" location="right" content-class="mosaic-tooltip"
+                  ><span v-html="item.info"></span
+                ></v-tooltip>
               </v-item>
             </v-col>
           </v-row>
@@ -247,6 +279,11 @@ export default {
   border: 1px solid black;
   padding: 10px;
   background-color: #f4f4f4;
+}
+div.v-tooltip > .mosaic-tooltip {
+  background-color: #f4f4f4;
+  color: black;
+  border: 1px solid black;
 }
 .mosaic_images_btn > span.v-btn__content {
   display: grid;
