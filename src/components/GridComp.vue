@@ -165,6 +165,9 @@ export default {
         this.refresh()
       }
     },
+    is_icon(image) {
+      return image.startsWith('mdi:')
+    },
     refresh() {
       this.$emit('action', refreshAction(this.meta, this.gridcontext))
     },
@@ -287,7 +290,13 @@ export default {
               @dblclick="dblclick_row($event, item)"
             >
               <span v-if="header[2] !== 'icon'" v-html="item[header[0]]"></span>
-              <img :src="item[header[0]]" v-if="header[2] === 'icon'" />
+              <img
+                :src="item[header[0]]"
+                v-if="header[2] === 'icon' && !is_icon(item[header[0]])"
+              />
+              <v-icon v-if="header[2] === 'icon' && is_icon(item[header[0]])">
+                {{ item[header[0]] }}
+              </v-icon>
             </td>
           </tr>
         </template>

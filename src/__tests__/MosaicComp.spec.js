@@ -192,10 +192,12 @@ describe('MosaicComp', () => {
       1
     )
     expect(
-      wrapper.find(
-        '.v-field_abstract > v-row:nth-of-type(2) > div.mosaic_images > v-item-group > v-row'
-      ).element.childElementCount
-    ).toBe(0)
+      wrapper
+        .find(
+          '.v-field_abstract > v-row:nth-of-type(2) > div.mosaic_images > v-item-group > v-row > label'
+        )
+        .text()
+    ).toBe('Aucun resultat')
 
     expect(wrapper.find('.v-field_abstract > v-row:nth-of-type(3)').element.childElementCount).toBe(
       3
@@ -287,7 +289,7 @@ describe('MosaicComp', () => {
     expect(
       wrapper
         .find(
-          '.v-field_abstract > v-row:nth-of-type(2) > div.mosaic_images > v-item-group > v-row > v-col:nth-of-type(1) > v-item > v-tooltip > span'
+          '.v-field_abstract > v-row:nth-of-type(2) > div.mosaic_images > v-item-group > v-row > v-col:nth-of-type(1) > v-item > .mosaic-tooltip > span'
         )
         .html()
     ).toBe('<span><b>AA</b> <i>11</i></span>')
@@ -316,7 +318,7 @@ describe('MosaicComp', () => {
     expect(
       wrapper
         .find(
-          '.v-field_abstract > v-row:nth-of-type(2) > div.mosaic_images > v-item-group > v-row > v-col:nth-of-type(2) > v-item > v-tooltip > span'
+          '.v-field_abstract > v-row:nth-of-type(2) > div.mosaic_images > v-item-group > v-row > v-col:nth-of-type(2) > v-item > .mosaic-tooltip > span'
         )
         .html()
     ).toBe('<span><b>BB</b> <i>22</i></span>')
@@ -345,7 +347,7 @@ describe('MosaicComp', () => {
     expect(
       wrapper
         .find(
-          '.v-field_abstract > v-row:nth-of-type(2) > div.mosaic_images > v-item-group > v-row > v-col:nth-of-type(3) > v-item > v-tooltip > span'
+          '.v-field_abstract > v-row:nth-of-type(2) > div.mosaic_images > v-item-group > v-row > v-col:nth-of-type(3) > v-item > .mosaic-tooltip > span'
         )
         .html()
     ).toBe('<span><b>CC</b> <i>33</i></span>')
@@ -374,7 +376,7 @@ describe('MosaicComp', () => {
     expect(
       wrapper
         .find(
-          '.v-field_abstract > v-row:nth-of-type(2) > div.mosaic_images > v-item-group > v-row > v-col:nth-of-type(4) > v-item > v-tooltip > span'
+          '.v-field_abstract > v-row:nth-of-type(2) > div.mosaic_images > v-item-group > v-row > v-col:nth-of-type(4) > v-item > .mosaic-tooltip > span'
         )
         .html()
     ).toBe('<span><b>DD</b> <i>44</i></span>')
@@ -489,16 +491,16 @@ describe('MosaicComp', () => {
     expect(
       wrapper
         .find(
-          '.mosaic_buttons > v-col:nth-of-type(1) > v-card-actions > div:nth-of-type(1) > v-btn > span'
+          '.mosaic_buttons > v-col:nth-of-type(1) > v-card-actions > div:nth-of-type(1) > v-btn > v-icon'
         )
-        .text()
+        .attributes('title')
     ).toBe('text none')
     expect(
       wrapper
         .find(
-          '.mosaic_buttons > v-col:nth-of-type(1) > v-card-actions > div:nth-of-type(2) > v-btn > span'
+          '.mosaic_buttons > v-col:nth-of-type(1) > v-card-actions > div:nth-of-type(2) > v-btn > v-icon'
         )
-        .text()
+        .attributes('title')
     ).toBe('text single')
     expect(
       wrapper
@@ -581,6 +583,7 @@ describe('MosaicComp', () => {
           unique: '2',
           method: 'DELETE',
           params: {
+            'MOSAIC_DIM%test': 1,
             test: '1;4'
           },
           disabled: false,
@@ -630,7 +633,10 @@ describe('MosaicComp', () => {
           unique: '1',
           method: 'GET',
           no_check: true,
-          params: { test: 1 }
+          params: {
+            'MOSAIC_DIM%test': 1,
+            test: 1
+          }
         },
         false
       ],
@@ -646,7 +652,10 @@ describe('MosaicComp', () => {
           unique: '1',
           method: 'GET',
           no_check: true,
-          params: { test: 2 }
+          params: {
+            'MOSAIC_DIM%test': 1,
+            test: 2
+          }
         },
         false
       ]

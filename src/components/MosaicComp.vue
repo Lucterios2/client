@@ -97,6 +97,15 @@ export default {
       } else {
         return 'font-size: 250px;'
       }
+    },
+    text_style() {
+      if (this.image_dim == 0) {
+        return 'font-size: 9px; width: 80px; margin-top: -5px;'
+      } else if (this.image_dim == 1) {
+        return 'font-size: 13px; width: 150px; margin-top: -10px;'
+      } else {
+        return 'font-size: 16px; width: 300px; margin-top: -10px;'
+      }
     }
   },
   methods: {
@@ -130,6 +139,7 @@ export default {
       var new_action = convert_action(action, true)
       if (this.items_selected.length > 0 && Number(new_action.unique) !== SELECT_NONE) {
         new_action.params[this.component.name] = this.items_selected.join(';')
+        new_action.params['MOSAIC_DIM%' + this.component.name] = this.image_dim
       }
       this.$emit('action', new_action, false)
     },
@@ -138,8 +148,19 @@ export default {
       if (action_special.length == 1 && action_special[0][1].length > 0) {
         var new_action = convert_action(action_special[0][1][0], true)
         new_action.params[this.component.name] = item.id
+        new_action.params['MOSAIC_DIM%' + this.component.name] = this.image_dim
         this.$emit('action', new_action, false)
       }
+    },
+    show_hint(event) {
+      const tooltip = event.target.parentElement.lastElementChild
+      tooltip.style.display = 'block'
+      tooltip.style.top = event.y + 10 + 'px'
+      tooltip.style.left = event.x + 10 + 'px'
+    },
+    hide_hint(event) {
+      const tooltip = event.target.parentElement.lastElementChild
+      tooltip.style.display = 'none'
     }
   },
   mounted() {
@@ -157,15 +178,16 @@ export default {
 <template>
   <AbstractComp :component="component" class="mosaic">
     <v-row class="bg-grey-lighten-3 mosaic_buttons">
-      <v-col cols="6">
+      <v-col cols="5">
         <ButtonsBar
+          :is_mini="true"
           :actions="actions"
-          :center="true"
+          :left="true"
           @clickaction="click_action"
           v-if="actions.length > 0"
         />
       </v-col>
-      <v-col cols="3">
+      <v-col cols="4">
         <AbstractComp
           class="checklist mosaic_imgsize"
           :value="value"
@@ -204,6 +226,7 @@ export default {
       <div class="scroll_table mosaic_images">
         <v-item-group v-model="selection" multiple>
           <v-row>
+            <label v-if="value.length == 0">{{ $t('No result') }}</label>
             <v-col v-for="(item, i) in value" :key="i">
               <v-item>
                 <v-btn
@@ -212,6 +235,8 @@ export default {
                   dark
                   :width="image_size"
                   :height="image_size + 20"
+                  @mouseenter="show_hint"
+                  @mouseleave="hide_hint"
                   @click="toggle(item)"
                   @dblclick="runAction(item)"
                 >
@@ -219,11 +244,11 @@ export default {
                   <v-icon :style="icon_style" v-if="is_icon(item)">
                     {{ item.image }}
                   </v-icon>
-                  <label>{{ item.name }}</label>
+                  <label :style="text_style">{{ item.name }}</label>
                 </v-btn>
-                <v-tooltip activator="parent" location="right" content-class="mosaic-tooltip"
-                  ><span v-html="item.info"></span
-                ></v-tooltip>
+                <div class="mosaic-tooltip" style="display: none">
+                  <span v-html="item.info"></span>
+                </div>
               </v-item>
             </v-col>
           </v-row>
@@ -280,13 +305,33 @@ export default {
   padding: 10px;
   background-color: #f4f4f4;
 }
-div.v-tooltip > .mosaic-tooltip {
+.mosaic_images > .v-item-group > .v-row > label {
+  height: 40px;
+  margin: 15px auto auto auto;
+}
+.mosaic_images > .v-item-group > .v-row > .v-col {
+  flex-grow: initial;
+}
+.mosaic-tooltip {
   background-color: #f4f4f4;
   color: black;
   border: 1px solid black;
+  position: fixed;
+  z-index: 100;
+  padding: 5px;
+  font-size: small;
 }
 .mosaic_images_btn > span.v-btn__content {
   display: grid;
+}
+.mosaic_images_btn > span.v-btn__content > .v-icon,
+.mosaic_images_btn > span.v-btn__content > img {
+  margin-left: auto;
+  margin-right: auto;
+}
+.mosaic_images_btn > span.v-btn__content > label {
+  text-transform: none;
+  text-wrap: wrap;
 }
 .mosaic_perpage {
   min-width: 135px;

@@ -9,7 +9,9 @@ const emit = defineEmits(['clickaction'])
 const props = defineProps({
   actions: Array,
   close: Object,
-  center: { type: Boolean, default: false }
+  is_mini: { type: Boolean, default: false },
+  center: { type: Boolean, default: false },
+  left: { type: Boolean, default: false }
 })
 var increment_action = 0
 function click_action(action) {
@@ -33,9 +35,9 @@ const action_list = computed(() => {
 
 <template>
   <v-card-actions class="bg-grey-lighten-3">
-    <v-spacer></v-spacer>
+    <v-spacer v-if="!left"></v-spacer>
     <div v-for="action in action_list" :key="action.num" style="margin: 0px 3px">
-      <ButtonAction :action="action" @click="click_action(action)" />
+      <ButtonAction :is_mini="is_mini" :action="action" @click="click_action(action)" />
     </div>
     <slot />
     <v-spacer v-if="center"></v-spacer>
