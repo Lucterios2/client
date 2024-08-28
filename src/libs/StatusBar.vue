@@ -6,6 +6,16 @@ const i18n = useI18n()
 const emit = defineEmits(['login', 'logoff', 'refresh', 'help', 'about'])
 const items = [
   {
+    title: '...',
+    icon: 'mdi:mdi-information-slab-box-outline',
+    action: () => {
+      store.dispatch('toggle_summary')
+    },
+    condition: function () {
+      return true
+    }
+  },
+  {
     title: i18n.t('refresh'),
     action: () => {
       emit('refresh')
@@ -70,11 +80,6 @@ function get_items() {
 <template>
   <v-app-bar color="#555" density="compact" id="status">
     <div class="v-toolbar__prepend">
-      <v-app-bar-nav-icon
-        icon="mdi:mdi-information-slab-box-outline"
-        :color="$store.state.backcolor"
-        @click="$store.dispatch('toggle_summary')"
-      ></v-app-bar-nav-icon>
       <v-img
         id="logo"
         :src="$store.state.server.logoname"
@@ -95,6 +100,7 @@ function get_items() {
       v-for="(item, index) in get_items()"
       :key="index"
       :value="index"
+      :color="$store.state.backcolor"
       @click="item.action"
       :title="item.title"
     >

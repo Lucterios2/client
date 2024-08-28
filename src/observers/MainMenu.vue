@@ -1,5 +1,6 @@
 <script>
 import SubMenus from '@/libs/SubMenus.vue'
+import ButtonsBar from '@/libs/ButtonsBar.vue'
 import CustomComponents from '@/components/CustomComponents.vue'
 import { callLucteriosAction, getUrlServer } from '@/libs/transport'
 import { convertLuctoriosFormatToHtml } from '@/libs/convert.js'
@@ -9,7 +10,7 @@ import { first_element_by_class } from '@/libs/utils'
 export default {
   name: 'MainMenu',
   extends: AbstractObserver,
-  components: { SubMenus, CustomComponents },
+  components: { SubMenus, CustomComponents, ButtonsBar },
   data: () => ({
     tab: null,
     custom_data: {},
@@ -24,6 +25,16 @@ export default {
   computed: {
     support_html() {
       return convertLuctoriosFormatToHtml(this.$store.state.server.support_html)
+    },
+    btn_actions() {
+      return [
+        {
+          id: 'close',
+          text: this.$t('close'),
+          short_icon: 'mdi:mdi-information-slab-box-outline',
+          close: 1
+        }
+      ]
     }
   },
   methods: {
@@ -186,6 +197,7 @@ export default {
       <div class="support_footer" v-if="$store.state.server.support_html">
         <span v-html="support_html"></span>
       </div>
+      <ButtonsBar :center="true" :actions="btn_actions" @clickaction="close_summary" />
     </div>
   </div>
 </template>

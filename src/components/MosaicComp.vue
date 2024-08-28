@@ -66,6 +66,18 @@ export default {
       }
       return []
     },
+    buttonMode() {
+      const select_list = this.actions.map((action_item) => {
+        return Number(action_item.unique)
+      })
+      if (select_list.includes(SELECT_MULTI)) {
+        return SELECT_MULTI
+      } else if (select_list.includes(SELECT_SINGLE)) {
+        return SELECT_SINGLE
+      } else {
+        return SELECT_NONE
+      }
+    },
     items_selected() {
       return this.value
         .filter((item, index) => this.selection.includes(index))
@@ -128,6 +140,12 @@ export default {
       return this.items_selected.includes(String(item.id))
     },
     toggle(item) {
+      if (this.buttonMode !== SELECT_MULTI) {
+        this.selection = []
+      }
+      if (this.buttonMode == SELECT_NONE) {
+        return
+      }
       const index = this.value.indexOf(item)
       if (this.selection.includes(index)) {
         this.selection.splice(this.selection.indexOf(index), 1)
