@@ -94,11 +94,11 @@ export default {
     },
     image_style() {
       if (this.image_dim == 0) {
-        return 'height: 50px;'
+        return 'max-height: 50px; max-width: 95%'
       } else if (this.image_dim == 1) {
-        return 'height: 125px;'
+        return 'max-height: 125px; max-width: 95%'
       } else {
-        return 'height: 250px;'
+        return 'max-height: 250px; max-width: 95%'
       }
     },
     icon_style() {
@@ -341,6 +341,7 @@ export default {
 }
 .mosaic_images_btn > span.v-btn__content {
   display: grid;
+  height: 100%;
 }
 .mosaic_images_btn > span.v-btn__content > .v-icon,
 .mosaic_images_btn > span.v-btn__content > img {

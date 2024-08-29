@@ -159,9 +159,11 @@ export default {
       }
       this.current_data = selected_items.filter((opt) => opt.selected).map((opt) => opt.value)
     },
+    add_parameters() {},
     actionPerformed(action, crit_index) {
       this.criteria_index = crit_index
       var new_action = convert_action(action, true)
+      new_action.params[this.component.name] = this.getValue(true)
       this.$emit('action', new_action, false)
     },
     onPressEnter(event) {

@@ -94,7 +94,9 @@ describe('SearchComp', () => {
           method: 'GET',
           modal: 2,
           close: 0,
-          params: {},
+          params: {
+            val1: []
+          },
           short_icon: 'mdi:mdi-pencil-plus-outline',
           text: 'add',
           no_check: true,
@@ -103,7 +105,6 @@ describe('SearchComp', () => {
         false
       ]
     ])
-    expect(wrapper.vm.getValue(true)).toStrictEqual([])
   })
 
   it('with description + selectors', async () => {
@@ -955,7 +956,9 @@ describe('SearchComp', () => {
           method: 'GET',
           modal: 2,
           close: 0,
-          params: {},
+          params: {
+            val1: '[["name",6,"abc123"],["value",3,"8.7"],["check",1,true],["time",4,"12:45"],["select",8,"1;3"],["multiselect",9,"20;40"]]'
+          },
           short_icon: 'mdi:mdi-delete-outline',
           text: 'delete',
           no_check: true,
@@ -964,8 +967,5 @@ describe('SearchComp', () => {
         false
       ]
     ])
-    expect(wrapper.vm.getValue(true)).toStrictEqual(
-      '[["name",6,"abc123"],["value",3,"8.7"],["check",1,true],["time",4,"12:45"],["select",8,"1;3"],["multiselect",9,"20;40"]]'
-    )
   })
 })

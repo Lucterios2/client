@@ -1,5 +1,6 @@
 <script>
 import AbstractEventComp from '@/components/AbstractEventComp.vue'
+import { convert_action } from '@/libs/convert'
 
 export default {
   name: 'StepComp',
@@ -14,6 +15,14 @@ export default {
     getInitialValue() {
       return parseInt(this.value)
     },
+    add_parameters() {},
+    actionPerformed() {
+      if (this.component.action) {
+        var new_action = convert_action(this.component.action, true)
+        new_action.params[this.component.name] = this.getValue(true)
+        this.$emit('action', new_action, false)
+      }
+    },
     setValue(params) {
       this.setValueEx(params)
       this.current_value = parseInt(this.current_value)
@@ -25,11 +34,11 @@ export default {
     },
     prevact() {
       this.current_value = Math.max(1, this.current_value - 1)
-      this.actionPerformed()
+      this.runIfChange()
     },
     nextact() {
       this.current_value = Math.min(this.component.max, this.current_value + 1)
-      this.actionPerformed()
+      this.runIfChange()
     }
   }
 }

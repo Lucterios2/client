@@ -146,10 +146,13 @@ describe('StepComp', () => {
       disabled: 'false',
       'append-icon': 'mdi mdi-chevron-right'
     })
+    expect(wrapper.vm.getInitialValue()).toBe(5)
     expect(wrapper.vm.getValue()).toBe(5)
 
     wrapper.find('.v-field_abstract > v-btn:nth-of-type(1)').trigger('click')
     await nextTick()
+    expect(wrapper.vm.getInitialValue()).toBe(5)
+    expect(wrapper.vm.getValue()).toBe(4)
     expect(wrapper.emitted('action')).toStrictEqual([
       [
         {
@@ -172,6 +175,8 @@ describe('StepComp', () => {
     ])
     wrapper.find('.v-field_abstract > v-btn:nth-of-type(2)').trigger('click')
     await nextTick()
+    expect(wrapper.vm.getInitialValue()).toBe(5)
+    expect(wrapper.vm.getValue()).toBe(5)
     expect(wrapper.emitted('action')).toStrictEqual([
       [
         {
@@ -185,24 +190,6 @@ describe('StepComp', () => {
           no_check: true,
           params: {
             val1: 4
-          },
-          text: 'Modify',
-          unique: '1'
-        },
-        false
-      ],
-      [
-        {
-          action: 'act',
-          close: '0',
-          extension: 'ext',
-          id: 'ext/act',
-          method: 'POST',
-          modal: '1',
-          name: 'edt1',
-          no_check: true,
-          params: {
-            val1: 5
           },
           text: 'Modify',
           unique: '1'
