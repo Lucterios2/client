@@ -50,7 +50,13 @@ export async function callLucteriosAction(action) {
       }
     } else {
       Object.keys(action.params).forEach(function (key) {
-        formData.append(key, action.params[key])
+        if (Array.isArray(action.params[key])) {
+          Array.from(action.params[key]).forEach((currentfile) => {
+            formData.append(key, currentfile)
+          })
+        } else {
+          formData.append(key, action.params[key])
+        }
       })
     }
   }

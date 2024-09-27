@@ -9,15 +9,14 @@ export default {
   extends: AbstractEventComp,
   components: { ButtonsBar },
   data: () => ({
-    selected_files: null,
-    selectedFile: null,
+    selectedFiles: [],
     isLoading: false,
     isPhotoTaken: false,
     show_camera: false
   }),
   computed: {
     active_miniature() {
-      return this.selectedFile && this.selectedFile.type.split('/')[0] === 'image'
+      return this.selectedFiles.length == 1 && this.selectedFiles[0].type.split('/')[0] === 'image'
     },
     files_accepted() {
       if (Array.isArray(this.component.filter)) {
@@ -48,15 +47,18 @@ export default {
   },
   methods: {
     async getFileContentBase64() {
-      this.current_value = null
-      if (this.selectedFile !== null) {
-        if (this.component.compress) {
-          var zip = new JSZip()
-          zip.file(this.name, this.selectedFile)
-          const blobResult = await zip.generateAsync({ type: 'blob' })
-          this.current_value = await this.getEncodeFile(blobResult)
-        } else {
-          this.current_value = await this.getEncodeFile(this.selectedFile)
+      this.current_value = []
+      if (this.selectedFiles.length > 0) {
+        for (let fileindex = 0; fileindex < this.selectedFiles.length; fileindex++) {
+          const selectedFile = this.selectedFiles[fileindex]
+          if (this.component.compress) {
+            var zip = new JSZip()
+            zip.file(this.name, selectedFile)
+            const blobResult = await zip.generateAsync({ type: 'blob' })
+            this.current_value.push(await this.getEncodeFile(blobResult))
+          } else {
+            this.current_value.push(await this.getEncodeFile(selectedFile))
+          }
         }
       }
     },
@@ -68,54 +70,58 @@ export default {
       }
     },
     add_parameters(params) {
-      if (this.selectedFile && this.getVisible() && this.getEnabled()) {
+      if (this.selectedFiles.length > 0 && this.getVisible() && this.getEnabled()) {
+        this.current_value.__proto__ = Object.create(FileList.prototype)
         params[this.component.name] = this.current_value
         if (this.component.compress) {
-          params[this.component.name + '_FILENAME'] = this.selectedFile.name
+          params[this.component.name + '_FILENAME'] = this.selectedFiles[0].name
         }
       }
     },
     check_max_size() {
-      if (this.selectedFile) {
-        if (this.selectedFile.size > this.component.maxsize) {
-          var unit = 'o'
-          var size = this.component.maxsize
-          if (size > 1024) {
-            size = size / 1024
-            unit = 'ko'
+      var result_check = true
+      if (this.selectedFiles.length > 0) {
+        this.selectedFiles.forEach((selectedFile) => {
+          if (selectedFile.size > this.component.maxsize) {
+            var unit = 'o'
+            var size = this.component.maxsize
             if (size > 1024) {
               size = size / 1024
-              unit = 'Mo'
+              unit = 'ko'
+              if (size > 1024) {
+                size = size / 1024
+                unit = 'Mo'
+              }
             }
+            const text = this.$t('Impossible: the file must be less than %0 %1')
+            result_check = Stringformat(text, [size.toFixed(1), unit])
           }
-          const text = this.$t('Impossible: the file must be less than %0 %1')
-          return Stringformat(text, [size.toFixed(1), unit])
-        }
+        })
       }
-      return true
+      return result_check
     },
     load_miniature() {
       if (this.active_miniature) {
         const miniature = this.$refs.miniature
-        if (this.selectedFile) {
+        if (this.selectedFiles.length == 1) {
           const fileimg = new FileReader()
           fileimg.onload = function (img) {
             miniature.src = img.target.result
           }
-          fileimg.readAsDataURL(this.selectedFile)
+          fileimg.readAsDataURL(this.selectedFiles[0])
         } else {
           miniature.src = ''
         }
       }
     },
     check_exist() {
-      return this.selectedFile != null || !this.component.needed
+      return this.selectedFiles.length > 0 || !this.component.needed
     },
     selectFile(event) {
       if (event.target.files) {
-        this.selectedFile = event.target.files[0]
+        this.selectedFiles = Array.from(event.target.files)
       } else {
-        this.selectedFile = null
+        this.selectedFiles = []
       }
       this.load_miniature()
       this.getFileContentBase64()
@@ -158,10 +164,11 @@ export default {
           today.getHours().toString(),
           today.getMinutes().toString()
         ])
-        this.selectedFile = new File(convertToBytes(window.atob(imageData)), imageName, {
-          type: 'image/png'
-        })
-        this.selected_files = [this.selectedFile]
+        this.selectedFiles = [
+          new File(convertToBytes(window.atob(imageData)), imageName, {
+            type: 'image/png'
+          })
+        ]
         this.load_miniature()
         this.getFileContentBase64()
       }
@@ -180,10 +187,11 @@ export default {
         clearable
         show-size
         ref="tofocus"
+        :multiple="component.multi_files"
         :rules="check"
         :accept="files_accepted"
         :label="component.description"
-        :model-value="selected_files"
+        :model-value="selectedFiles"
         :name="component.name"
         @focusin="savefocusin"
         @change="selectFile"

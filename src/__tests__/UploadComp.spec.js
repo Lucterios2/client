@@ -50,10 +50,10 @@ describe('UploadComp', () => {
       'upload'
     )
     expect(wrapper.vm.is_valid()).toBe(true)
-    wrapper.vm.selectedFile = test_example_blob
+    wrapper.vm.selectedFiles = [test_example_blob]
     await wrapper.vm.getFileContentBase64()
     expect(wrapper.vm.is_valid()).toBe(true)
-    expect(wrapper.vm.getValue()).toBe('data:application/octet-stream;base64,' + image_normal)
+    expect(wrapper.vm.getValue()).toEqual(['data:application/octet-stream;base64,' + image_normal])
     const params = {}
     wrapper.vm.add_parameters(params)
     expect(Object.keys(params)).toStrictEqual(['val1'])
@@ -88,10 +88,10 @@ describe('UploadComp', () => {
     ).toBe('')
     expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').text()).toBe('')
     expect(wrapper.vm.is_valid()).toBe(true)
-    wrapper.vm.selectedFile = test_example_blob
+    wrapper.vm.selectedFiles = [test_example_blob]
     await wrapper.vm.getFileContentBase64()
     expect(wrapper.vm.is_valid()).toBe(true)
-    expect(wrapper.vm.getValue()).toBe(test_example_blob)
+    expect(wrapper.vm.getValue()).toEqual([test_example_blob])
     const params = {}
     wrapper.vm.add_parameters(params)
     expect(Object.keys(params)).toStrictEqual(['val1'])
@@ -129,10 +129,10 @@ describe('UploadComp', () => {
       'upload'
     )
     expect(wrapper.vm.is_valid()).toBe(true)
-    wrapper.vm.selectedFile = test_example_blob
+    wrapper.vm.selectedFiles = [test_example_blob]
     await wrapper.vm.getFileContentBase64()
     expect(wrapper.vm.is_valid()).toBe(true)
-    expect(wrapper.vm.getValue().substring(0, 31)).toBe('data:application/zip;base64,UEs')
+    expect(wrapper.vm.getValue()[0].substring(0, 31)).toBe('data:application/zip;base64,UEs')
     const params = {}
     wrapper.vm.add_parameters(params)
     expect(Object.keys(params)).toStrictEqual(['val1', 'val1_FILENAME'])
@@ -168,11 +168,11 @@ describe('UploadComp', () => {
     ).toBe('')
     expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').text()).toBe('')
     expect(wrapper.vm.is_valid()).toBe(true)
-    wrapper.vm.selectedFile = test_example_blob
+    wrapper.vm.selectedFiles = [test_example_blob]
     await wrapper.vm.load_miniature()
     await wrapper.vm.getFileContentBase64()
     expect(wrapper.vm.is_valid()).toBe(true)
-    expect(wrapper.vm.getValue()).toStrictEqual(test_example_blobzipped)
+    expect(wrapper.vm.getValue()).toStrictEqual([test_example_blobzipped])
     const params = {}
     wrapper.vm.add_parameters(params)
     expect(Object.keys(params)).toStrictEqual(['val1', 'val1_FILENAME'])
@@ -214,7 +214,7 @@ describe('UploadComp', () => {
       type: 'image/ico'
     })
     favicon_blob.name = 'favicon.ico'
-    wrapper.vm.selectedFile = favicon_blob
+    wrapper.vm.selectedFiles = [favicon_blob]
     await wrapper.vm.load_miniature()
     await wrapper.vm.getFileContentBase64()
     expect(wrapper.vm.is_valid()).toBe('Impossible: le fichier doit faire moins de 2.0 ko')
