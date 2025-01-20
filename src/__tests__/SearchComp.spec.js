@@ -19,9 +19,9 @@ beforeEach(() => {
       removeListener: vi.fn(), // Deprecated
       addEventListener: vi.fn(),
       removeEventListener: vi.fn(),
-      dispatchEvent: vi.fn(),
-    })),
-  })  
+      dispatchEvent: vi.fn()
+    }))
+  })
 })
 
 const SELECTORS = [
@@ -90,8 +90,13 @@ describe('SearchComp', () => {
     expect(
       wrapper.find('.search_select > .v-col:nth-of-type(2) > select').element.childElementCount
     ).toBe(1)
-    expect(wrapper.find('.search_select > .v-col:nth-of-type(3) > .v-row').element.childElementCount).toBe(1)
-    expect(wrapper.find('.search_select > .v-col:nth-of-type(3) > .v-row > .v-col:nth-of-type(1)').element.childElementCount).toBe(0)
+    expect(
+      wrapper.find('.search_select > .v-col:nth-of-type(3) > .v-row').element.childElementCount
+    ).toBe(1)
+    expect(
+      wrapper.find('.search_select > .v-col:nth-of-type(3) > .v-row > .v-col:nth-of-type(1)')
+        .element.childElementCount
+    ).toBe(0)
     expect(
       wrapper.find('.search_select > .v-col:nth-of-type(4) > button').element.childElementCount
     ).toBe(3)
@@ -288,7 +293,9 @@ describe('SearchComp', () => {
       ['4', 'supérieur']
     ])
     expect(wrapper.find('.search_select > .v-col:nth-of-type(2) > select').element.value).toBe('1')
-    expect(wrapper.find('.search_select > .v-col:nth-of-type(3) > .v-row').element.childElementCount).toBe(1)
+    expect(
+      wrapper.find('.search_select > .v-col:nth-of-type(3) > .v-row').element.childElementCount
+    ).toBe(1)
     expect(
       wrapper
         .find(
@@ -351,7 +358,9 @@ describe('SearchComp', () => {
         .map((opt) => [opt.attributes('value'), opt.text()])
     ).toStrictEqual([['1', 'égal']])
     expect(wrapper.find('.search_select > .v-col:nth-of-type(2) > select').element.value).toBe('1')
-    expect(wrapper.find('.search_select > .v-col:nth-of-type(3) > .v-row').element.childElementCount).toBe(1)
+    expect(
+      wrapper.find('.search_select > .v-col:nth-of-type(3) > .v-row').element.childElementCount
+    ).toBe(1)
     expect(
       wrapper
         .find(
@@ -419,7 +428,9 @@ describe('SearchComp', () => {
       ['4', 'supérieur']
     ])
     expect(wrapper.find('.search_select > .v-col:nth-of-type(2) > select').element.value).toBe('1')
-    expect(wrapper.find('.search_select > .v-col:nth-of-type(3) > .v-row').element.childElementCount).toBe(2)
+    expect(
+      wrapper.find('.search_select > .v-col:nth-of-type(3) > .v-row').element.childElementCount
+    ).toBe(2)
     expect(
       wrapper
         .find(
@@ -440,12 +451,11 @@ describe('SearchComp', () => {
     expect(wrapper.vm.getValue(true)).toStrictEqual('[["date",2,"2018-07-21"]]')
     const check = wrapper.find(
       '.search_select > .v-col:nth-of-type(3) > .v-row > .v-col:nth-of-type(2) > .v-input > .v-input__control > .v-selection-control > div > .v-selection-control__input > input'
-    )  
+    )
     check.setValue(true)
     expect(wrapper.vm.getValue(true)).toStrictEqual('[["date",2,"CURRENT"]]')
   })
 
-  
   it('selectors time', async () => {
     const wrapper = mount(SearchComp, {
       global: {
@@ -493,7 +503,9 @@ describe('SearchComp', () => {
       ['4', 'supérieur']
     ])
     expect(wrapper.find('.search_select > .v-col:nth-of-type(2) > select').element.value).toBe('1')
-    expect(wrapper.find('.search_select > .v-col:nth-of-type(3) > .v-row').element.childElementCount).toBe(2)
+    expect(
+      wrapper.find('.search_select > .v-col:nth-of-type(3) > .v-row').element.childElementCount
+    ).toBe(2)
     expect(
       wrapper
         .find(
@@ -556,10 +568,14 @@ describe('SearchComp', () => {
         .map((opt) => [opt.attributes('value'), opt.text()])
     ).toStrictEqual([['8', 'ou']])
     expect(wrapper.find('.search_select > .v-col:nth-of-type(2) > select').element.value).toBe('8')
-    expect(wrapper.find('.search_select > .v-col:nth-of-type(3) > .v-row').element.childElementCount).toBe(1)
+    expect(
+      wrapper.find('.search_select > .v-col:nth-of-type(3) > .v-row').element.childElementCount
+    ).toBe(1)
     expect(
       wrapper
-        .findAll('.search_select > .v-col:nth-of-type(3) > .v-row > .v-col:nth-of-type(1) > select > option')
+        .findAll(
+          '.search_select > .v-col:nth-of-type(3) > .v-row > .v-col:nth-of-type(1) > select > option'
+        )
         .map((opt) => [opt.attributes('value'), opt.text()])
     ).toStrictEqual([
       ['1', 'aaa'],
@@ -572,7 +588,9 @@ describe('SearchComp', () => {
       'Pas de critère de recherche'
     )
     wrapper.find('.search_select > .v-col:nth-of-type(2) > select').setValue('8')
-    const input = wrapper.find('.search_select > .v-col:nth-of-type(3) > .v-row > .v-col:nth-of-type(1) > select')
+    const input = wrapper.find(
+      '.search_select > .v-col:nth-of-type(3) > .v-row > .v-col:nth-of-type(1) > select'
+    )
     input.setValue(['1', '3'])
     expect(wrapper.vm.getValue(true)).toStrictEqual('[["select",8,"1;3"]]')
   })
@@ -619,10 +637,14 @@ describe('SearchComp', () => {
         .map((opt) => [opt.attributes('value'), opt.text()])
     ).toStrictEqual([['8', 'ou']])
     expect(wrapper.find('.search_select > .v-col:nth-of-type(2) > select').element.value).toBe('8')
-    expect(wrapper.find('.search_select > .v-col:nth-of-type(3) > .v-row').element.childElementCount).toBe(1)
+    expect(
+      wrapper.find('.search_select > .v-col:nth-of-type(3) > .v-row').element.childElementCount
+    ).toBe(1)
     expect(
       wrapper
-        .findAll('.search_select > .v-col:nth-of-type(3) > .v-row > .v-col:nth-of-type(1) > select > option')
+        .findAll(
+          '.search_select > .v-col:nth-of-type(3) > .v-row > .v-col:nth-of-type(1) > select > option'
+        )
         .map((opt) => [opt.attributes('value'), opt.text()])
     ).toStrictEqual([
       ['1', 'aaa'],
@@ -653,7 +675,9 @@ describe('SearchComp', () => {
     ).toBe(true)
 
     wrapper.find('.search_select > .v-col:nth-of-type(2) > select').setValue('8')
-    const input = wrapper.find('.search_select > .v-col:nth-of-type(3) > .v-row > .v-col:nth-of-type(1) > select')
+    const input = wrapper.find(
+      '.search_select > .v-col:nth-of-type(3) > .v-row > .v-col:nth-of-type(1) > select'
+    )
     input.setValue('3')
     expect(wrapper.vm.getValue(true)).toStrictEqual('[["select",8,"1;2;3"]]')
   })
@@ -703,10 +727,14 @@ describe('SearchComp', () => {
       ['9', 'et']
     ])
     expect(wrapper.find('.search_select > .v-col:nth-of-type(2) > select').element.value).toBe('8')
-    expect(wrapper.find('.search_select > .v-col:nth-of-type(3) > .v-row').element.childElementCount).toBe(1)
+    expect(
+      wrapper.find('.search_select > .v-col:nth-of-type(3) > .v-row').element.childElementCount
+    ).toBe(1)
     expect(
       wrapper
-        .findAll('.search_select > .v-col:nth-of-type(3) > .v-row > .v-col:nth-of-type(1) > select > option')
+        .findAll(
+          '.search_select > .v-col:nth-of-type(3) > .v-row > .v-col:nth-of-type(1) > select > option'
+        )
         .map((opt) => [opt.attributes('value'), opt.text()])
     ).toStrictEqual([
       ['10', 'wwww'],
@@ -720,7 +748,9 @@ describe('SearchComp', () => {
       'Pas de critère de recherche'
     )
     wrapper.find('.search_select > .v-col:nth-of-type(2) > select').setValue('9')
-    const input = wrapper.find('.search_select > .v-col:nth-of-type(3) > .v-row > .v-col:nth-of-type(1) > select')
+    const input = wrapper.find(
+      '.search_select > .v-col:nth-of-type(3) > .v-row > .v-col:nth-of-type(1) > select'
+    )
     input.setValue(['20', '40'])
     expect(wrapper.vm.getValue(true)).toStrictEqual('[["multiselect",9,"20;40"]]')
   })

@@ -86,7 +86,9 @@ describe('UploadComp', () => {
     expect(
       wrapper.find('.v-input__control > .v-field > .v-field__field > input').element.value
     ).toBe('')
-    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').text()).toBe('')
+    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').exists()).toBe(
+      false
+    )
     expect(wrapper.vm.is_valid()).toBe(true)
     wrapper.vm.selectedFiles = [test_example_blob]
     await wrapper.vm.getFileContentBase64()
@@ -166,7 +168,9 @@ describe('UploadComp', () => {
     expect(
       wrapper.find('.v-input__control > .v-field > .v-field__field > input').element.value
     ).toBe('')
-    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').text()).toBe('')
+    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').exists()).toBe(
+      false
+    )
     expect(wrapper.vm.is_valid()).toBe(true)
     wrapper.vm.selectedFiles = [test_example_blob]
     await wrapper.vm.load_miniature()
@@ -208,7 +212,9 @@ describe('UploadComp', () => {
     expect(
       wrapper.find('.v-input__control > .v-field > .v-field__field > input').element.value
     ).toBe('')
-    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').text()).toBe('')
+    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').exists()).toBe(
+      false
+    )
     expect(wrapper.vm.is_valid()).toBe(true)
     const favicon_blob = new Blob(convertToBytes(window.atob(logo_normal.replaceAll('\n', ''))), {
       type: 'image/ico'
@@ -249,7 +255,9 @@ describe('UploadComp', () => {
     expect(
       wrapper.find('.v-input__control > .v-field > .v-field__field > input').element.value
     ).toBe('')
-    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').text()).toBe('')
+    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').exists()).toBe(
+      false
+    )
     expect(wrapper.vm.is_valid()).toBe(true)
     //expect(wrapper.html()).toBe(true)
     expect(wrapper.findAll('.v-col-2')[0].attributes().style).toBe('display: none;')

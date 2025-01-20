@@ -121,7 +121,10 @@ describe('MemoComp', () => {
     expect(
       wrapper.find('.v-input__control > .v-field > .v-field__field > textarea').element.value
     ).toBe('Coucou les amis !\nBise')
-    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').text()).toBe('')
+    console.log(wrapper.find('.v-input__control > .v-field > .v-field__field > label'))
+    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').exists()).toBe(
+      false
+    )
     expect(wrapper.vm.is_valid()).toBe(true)
     expect(wrapper.emitted('action')).toStrictEqual(undefined)
     await wrapper

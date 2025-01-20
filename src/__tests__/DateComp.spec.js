@@ -35,7 +35,9 @@ describe('DateComp', () => {
     expect(
       wrapper.find('.v-input__control > .v-field > .v-field__field > input').element.value
     ).toBe('2019-04-12')
-    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').text()).toBe('')
+    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').exists()).toBe(
+      false
+    )
     expect(wrapper.vm.is_valid()).toBe(true)
     expect(wrapper.vm.getValue(true)).toBe('2019-04-12')
     await wrapper
@@ -152,7 +154,9 @@ describe('DateComp', () => {
     expect(
       wrapper.find('.v-input__control > .v-field > .v-field__field > input').element.value
     ).toBe('2019-04-12')
-    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').text()).toBe('')
+    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').exists()).toBe(
+      false
+    )
     expect(wrapper.vm.is_valid()).toBe(true)
     expect(wrapper.emitted('action')).toStrictEqual(undefined)
     await wrapper

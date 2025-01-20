@@ -37,7 +37,9 @@ describe('EditComp', () => {
     expect(
       wrapper.find('.v-input__control > .v-field > .v-field__field > input').element.value
     ).toBe('aaa')
-    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').text()).toBe('')
+    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').exists()).toBe(
+      false
+    )
     expect(wrapper.vm.is_valid()).toBe(true)
     await wrapper.find('.v-input__control > .v-field > .v-field__field > input').setValue('bbb')
     expect(wrapper.vm.is_valid()).toBe(true)
@@ -106,7 +108,9 @@ describe('EditComp', () => {
     expect(
       wrapper.find('.v-input__control > .v-field > .v-field__field > input').element.value
     ).toBe('dddd')
-    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').text()).toBe('')
+    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').exists()).toBe(
+      false
+    )
     expect(wrapper.vm.is_valid()).toBe(true)
     await wrapper
       .find('.v-input__control > .v-field > .v-field__field > input')
@@ -141,7 +145,9 @@ describe('EditComp', () => {
     expect(
       wrapper.find('.v-input__control > .v-field > .v-field__field > input').element.value
     ).toBe('azerty')
-    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').text()).toBe('')
+    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').exists()).toBe(
+      false
+    )
     expect(wrapper.vm.is_valid()).toBe(true)
     await wrapper.find('.v-input__control > .v-field > .v-field__field > input').setValue('abc123')
     expect(wrapper.vm.is_valid()).toBe('Format invalide!')
@@ -222,7 +228,9 @@ describe('EditComp', () => {
     expect(
       wrapper.find('.v-input__control > .v-field > .v-field__field > input').element.value
     ).toBe('wxcvbn')
-    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').text()).toBe('')
+    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').exists()).toBe(
+      false
+    )
     expect(wrapper.vm.is_valid()).toBe(true)
     expect(wrapper.emitted('action')).toStrictEqual(undefined)
     await wrapper.find('.v-input__control > .v-field > .v-field__field > input').setValue('wxcvbn')

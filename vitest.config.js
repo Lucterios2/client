@@ -19,7 +19,7 @@ export default mergeConfig(
       coverage: {
         reporter: ['text', 'html', 'cobertura'],
         reportsDirectory: './coverage',
-        exclude: ['**/*.cjs', '**/plugins', '**/main.js'],
+        exclude: ['**/*.cjs', '**/plugins', '**/main.js', '*.config.js', '**/dist/**', '**/web/**'],
       },      
     }
   })

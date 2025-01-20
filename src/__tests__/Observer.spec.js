@@ -37,7 +37,7 @@ describe('observer', () => {
       expect(true).toBe(false)
     } catch (error) {
       expect(error).toStrictEqual(
-        new LucteriosException(2, 'NO COMPONENT', { meta: { observer: 'unknown' } })
+        new LucteriosException(2, 'NO COMPONENT', '', '{"meta":{"observer":"unknown"}}')
       )
     }
     expect(wrapper.find('div#comp').element.childElementCount).toBe(0)

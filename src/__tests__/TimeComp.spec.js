@@ -35,7 +35,9 @@ describe('TimeComp', () => {
     expect(
       wrapper.find('.v-input__control > .v-field > .v-field__field > input').element.value
     ).toBe('11:25')
-    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').text()).toBe('')
+    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').exists()).toBe(
+      false
+    )
     expect(wrapper.vm.is_valid()).toBe(true)
     expect(wrapper.vm.getValue(true)).toBe('11:25')
     await wrapper.find('.v-input__control > .v-field > .v-field__field > input').setValue('13:57')
@@ -148,7 +150,9 @@ describe('TimeComp', () => {
     expect(
       wrapper.find('.v-input__control > .v-field > .v-field__field > input').element.value
     ).toBe('11:25')
-    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').text()).toBe('')
+    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').exists()).toBe(
+      false
+    )
     expect(wrapper.vm.is_valid()).toBe(true)
     expect(wrapper.emitted('action')).toStrictEqual(undefined)
     await wrapper.find('.v-input__control > .v-field > .v-field__field > input').setValue('11:25')

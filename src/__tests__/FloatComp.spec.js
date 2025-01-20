@@ -38,7 +38,9 @@ describe('FloatComp', () => {
     expect(
       wrapper.find('.v-input__control > .v-field > .v-field__field > input').element.value
     ).toBe('123.46')
-    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').text()).toBe('')
+    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').exists()).toBe(
+      false
+    )
     expect(wrapper.vm.is_valid()).toBe(true)
     await wrapper.find('.v-input__control > .v-field > .v-field__field > input').setValue(657.7777)
     wrapper.find('.v-input__control > .v-field > .v-field__field > input').trigger('focusout')
@@ -126,7 +128,9 @@ describe('FloatComp', () => {
     expect(
       wrapper.find('.v-input__control > .v-field > .v-field__field > input').element.value
     ).toBe('54.9')
-    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').text()).toBe('')
+    expect(wrapper.find('.v-input__control > .v-field > .v-field__field > label').exists()).toBe(
+      false
+    )
     expect(wrapper.vm.is_valid()).toBe(true)
     expect(wrapper.emitted('action')).toStrictEqual(undefined)
     await wrapper.find('.v-input__control > .v-field > .v-field__field > input').setValue(54.9)
