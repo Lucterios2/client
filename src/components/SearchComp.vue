@@ -1,7 +1,7 @@
 <script>
 import AbstractEventComp from '@/components/AbstractEventComp.vue'
 import ButtonAction from '@/libs/ButtonAction.vue'
-import { convert_action, Stringformat } from '@/libs/convert'
+import { convert_action, formatValue, Stringformat } from '@/libs/convert'
 import { refreshAction } from '@/libs/utils'
 
 const OP_NULL = [0, '---']
@@ -39,6 +39,8 @@ const LIST_OP_BY_TYPE = {
   listmult: [OP_OR, OP_AND]
 }
 
+const CURRENT_DATE = 'CURRENT'
+
 export default {
   name: 'SearchComp',
   extends: AbstractEventComp,
@@ -48,7 +50,8 @@ export default {
     current_type: null,
     current_operation: null,
     current_data: '',
-    criteria_index: undefined
+    criteria_index: undefined,
+    datetime_current: false
   }),
   computed: {
     check() {
@@ -87,6 +90,13 @@ export default {
     getReturnData() {
       if (this.current_type == 'list' || this.current_type == 'listmult') {
         return this.current_data.join(';')
+      } else if (
+        this.datetime_current &&
+        (this.current_type == 'date' ||
+          this.current_type == 'time' ||
+          this.current_type == 'datetime')
+      ) {
+        return CURRENT_DATE
       } else if (this.current_type == 'date') {
         return this.current_data.date
       } else if (this.current_type == 'time') {
@@ -171,6 +181,31 @@ export default {
         this.actionPerformed(this.add_action)
       }
     },
+    date_check(value, valtype) {
+      if (typeof value === 'string') {
+        if (value == CURRENT_DATE) {
+          return this.$t('now')
+        } else {
+          try {
+            var formatNum
+            if (valtype === 'date') {
+              formatNum = 'D'
+            } else if (valtype === 'time') {
+              formatNum = 'T'
+            } else if (valtype === 'datetime') {
+              formatNum = 'H'
+            }
+            return formatValue(value, formatNum)
+          } catch (err) {
+            return value
+          }
+        }
+      } else {
+        return value.map((val) => {
+          return this.date_check(val, valtype)
+        })
+      }
+    },
     get_show_value(selector, value, operation) {
       const sep_for_list = Stringformat(' {0} ', [
         this.$t(OP_LIST[operation != OP_DIFFERENT[0] ? 8 : 9][1])
@@ -187,10 +222,11 @@ export default {
         } else {
           return this.$t('No')
         }
-      } else if (selector.type == 'date') {
-        return typeof value === 'string' ? value : value.join(sep_for_list)
-      } else if (selector.type == 'datetime') {
-        return typeof value === 'string' ? value : value.join(sep_for_list)
+      } else if (
+        selector.type == 'date' ||
+        (selector.type == 'time') | (selector.type == 'datetime')
+      ) {
+        return this.date_check(value.split(';'), selector.type).join(sep_for_list)
       } else if (selector.type == 'list' || selector.type == 'listmult') {
         const ids = typeof value === 'string' ? value.split(';') : value
         return selector.extra
@@ -257,62 +293,79 @@ export default {
         </select>
       </v-col>
       <v-col cols="4">
-        <v-text-field
-          v-if="current_type == 'str'"
-          class="edit"
-          v-model="current_data"
-          @keyup.enter="onPressEnter"
-        />
+        <v-row>
+          <v-col style="padding-right: 0px">
+            <v-text-field
+              v-if="current_type == 'str'"
+              class="edit"
+              v-model="current_data"
+              @keyup.enter="onPressEnter"
+            />
 
-        <v-text-field
-          v-if="current_type == 'float'"
-          class="edit"
-          type="number"
-          v-model="current_data"
-          :min="this.current_selector.extra[0]"
-          :max="this.current_selector.extra[1]"
-          :step="this.current_selector.extra[1]"
-          @keyup.enter="onPressEnter"
-        />
+            <v-text-field
+              v-if="current_type == 'float'"
+              class="edit"
+              type="number"
+              v-model="current_data"
+              :min="this.current_selector.extra[0]"
+              :max="this.current_selector.extra[1]"
+              :step="this.current_selector.extra[1]"
+              @keyup.enter="onPressEnter"
+            />
 
-        <v-checkbox
-          v-if="current_type == 'bool'"
-          v-model="current_data"
-          @keyup.enter="actionPerformed"
-        />
+            <v-checkbox
+              v-if="current_type == 'bool'"
+              v-model="current_data"
+              @keyup.enter="actionPerformed"
+            />
 
-        <v-text-field
-          v-if="current_type == 'date' || current_type == 'datetime'"
-          class="edit"
-          type="date"
-          v-model="current_data.date"
-          @keyup.enter="onPressEnter"
-        />
+            <v-text-field
+              v-if="current_type == 'date' || current_type == 'datetime'"
+              class="edit"
+              type="date"
+              :disabled="datetime_current"
+              v-model="current_data.date"
+              @keyup.enter="onPressEnter"
+            />
 
-        <v-text-field
-          v-if="current_type == 'time' || current_type == 'datetime'"
-          class="edit"
-          type="time"
-          v-model="current_data.time"
-          @keyup.enter="onPressEnter"
-        />
+            <v-text-field
+              v-if="current_type == 'time' || current_type == 'datetime'"
+              class="edit"
+              type="time"
+              :disabled="datetime_current"
+              v-model="current_data.time"
+              @keyup.enter="onPressEnter"
+            />
 
-        <select
-          class="checklist search_list"
-          v-if="current_type == 'list' || current_type == 'listmult'"
-          multiple
-          @change="onSelectChange($event)"
-          @keyup.enter="onPressEnter"
-        >
-          <option
-            :value="item[0]"
-            :selected="current_data.includes(item[0])"
-            :key="idx"
-            v-for="(item, idx) in this.current_selector.extra"
+            <select
+              class="checklist search_list"
+              v-if="current_type == 'list' || current_type == 'listmult'"
+              multiple
+              @change="onSelectChange($event)"
+              @keyup.enter="onPressEnter"
+            >
+              <option
+                :value="item[0]"
+                :selected="current_data.includes(item[0])"
+                :key="idx"
+                v-for="(item, idx) in this.current_selector.extra"
+              >
+                {{ item[1] }}
+              </option>
+            </select>
+          </v-col>
+          <v-col
+            cols="2"
+            v-if="current_type == 'time' || current_type == 'date' || current_type == 'datetime'"
+            style="padding-left: 0px; padding-right: 0px"
           >
-            {{ item[1] }}
-          </option>
-        </select>
+            <v-switch v-model="datetime_current" direction="vertical">
+              <template v-slot:label>
+                <v-tooltip activator="parent" location="bottom">{{ $t('now') }}</v-tooltip>
+              </template>
+            </v-switch>
+          </v-col>
+        </v-row>
       </v-col>
       <v-col cols="1">
         <ButtonAction

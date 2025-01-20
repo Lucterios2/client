@@ -147,6 +147,13 @@ describe('TestFunction', () => {
       "{[p align='right']}0,00 €{[/p]}"
     )
 
+    expect(formatToString(1234.56, 'C2EUR', "{[p align='right']}{0}{[/p]};---;---")).toEqual(
+      "{[p align='right']}1 234,56 €{[/p]}"
+    )
+    expect(formatToString(0, 'C2EUR', "{[p align='right']}{0}{[/p]};---;---")).toEqual('---')
+
+    expect(formatToString(-12.25, 'C2EUR', "{[p align='right']}{0}{[/p]};---;---")).toEqual('---')
+
     expect(formatToString(-1234.56, 'C2EUR', '{0};')).toEqual('-1 234,56 €')
     expect(formatToString(-1234.56, 'C2EUR', 'Crédit {0};Débit {0}')).toEqual('Débit 1 234,56 €')
     expect(
