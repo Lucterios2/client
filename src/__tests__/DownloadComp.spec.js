@@ -35,7 +35,9 @@ beforeEach(() => {
 
 describe('DownloadComp', () => {
   it('simple', async () => {
-    download_content = new Blob(convertToBytes(window.atob(image_normal)))
+    download_content = {
+      data: new Blob(convertToBytes(window.atob(image_normal)))
+    }
     const wrapper = mount(DownloadComp, {
       global: {
         plugins: [vuetify, i18n]
@@ -87,10 +89,9 @@ describe('DownloadComp', () => {
   it('compress', async () => {
     var zip = new JSZip()
     zip.file('test', window.atob(image_normal))
-    download_content = new File(
-      convertToBytes(await zip.generateAsync({ type: 'string' })),
-      'example.zip'
-    )
+    download_content = {
+      data: new File(convertToBytes(await zip.generateAsync({ type: 'string' })), 'example.zip')
+    }
 
     const wrapper = mount(DownloadComp, {
       global: {
@@ -124,12 +125,10 @@ describe('DownloadComp', () => {
     expect(wrapper.find('label').text()).toBe('download')
     expect(wrapper.find('.v-field_abstract > span').text()).toBe('example_compress.txt')
     expect(wrapper.find('.v-field_abstract > button').text()).toBe('Enregistrer sous...')
-    /*await wrapper.find('.v-field_abstract > button').trigger('click')
+    await wrapper.find('.v-field_abstract > button').trigger('click')
     expect(transport.getFileContent).toHaveBeenCalledTimes(1)
     expect(transport.getFileContent).lastCalledWith('folder/document')
     await nextTick()
-
-    expect(utils.openBlob).toHaveBeenCalledTimes(1)
-    expect(utils.openBlob).lastCalledWith(new Blob(), 'example_compress.txt')*/
+    expect(utils.openBlob).toHaveBeenCalledTimes(0)
   })
 })

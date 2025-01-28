@@ -11,7 +11,7 @@ export default {
   methods: {
     async openFile() {
       const file_returned = await getFileContent(this.component.filename)
-      if (this.component.compress && file_returned.size !== 0) {
+      if (this.component.compress && file_returned.data && file_returned.data.size !== 0) {
         const zipFileLoaded = new JSZip()
         const self = this
         await zipFileLoaded.loadAsync(file_returned.data).then(function (zip) {
@@ -22,7 +22,7 @@ export default {
           })
         })
       } else {
-        openBlob(file_returned, this.value)
+        openBlob(file_returned.data, this.value)
       }
     }
   }
