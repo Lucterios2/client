@@ -4,7 +4,7 @@ stages:
   - publish
 
 unit-test:
-  image: node:latest
+  image: node:22.13.1
   stage: test
   script:
     - npm install
@@ -19,14 +19,14 @@ unit-test:
         path: coverage/cobertura-coverage.xml
 
 lint-test:
-  image: node:latest
+  image: node:22.13.1
   stage: test
   script:
     - npm install
     - npm run lint
 
 build:
-  image: node:latest
+  image: node:22.13.1
   stage: build
   script:
     - apt-get install python3
@@ -40,7 +40,7 @@ build:
       - public/conf/build
 
 publish:
-  image: node:latest
+  image: node:22.13.1
   stage: publish
   needs: [build]
   script:
