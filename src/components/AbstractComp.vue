@@ -45,6 +45,8 @@ export default {
     setVisible() {},
     onResize() {},
     setOwner() {},
+    set_saved_data() {},
+    get_saving_data() {},
     add_parameters() {}
   },
   computed: {

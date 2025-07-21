@@ -10,7 +10,8 @@ export default {
   data: () => ({
     internalInfo: {},
     componentlist: [],
-    must_refresh: true
+    must_refresh: true,
+    ObserverId: 0
   }),
   props: {
     context: Object,
@@ -184,13 +185,51 @@ export default {
     receive_focus(component_name) {
       this.internalInfo.focus_name = component_name
     },
+    load_info(id){
+      this.ObserverId = id
+      const dialog_box = this.$store.state.observer_dlg[id] || {}
+      if (dialog_box.custom_info != undefined) {
+        if (dialog_box.custom_info.comp_info != undefined) {
+          this.componentlist.forEach((comp) => {
+            const data = dialog_box.custom_info.comp_info[comp.get_component().name]
+            if (data != undefined) {
+              comp.set_saved_data(data)
+            }
+          })
+        }
+        if (dialog_box.custom_info.scrollTop != undefined) {
+          this.$el.parentElement.scrollTop = dialog_box.custom_info.scrollTop
+        }
+      }
+    },
+    save_info(id){
+      const dialog_box = this.$store.state.observer_dlg[id] || {}
+      dialog_box.custom_info = {
+        scrollTop: this.$el.parentElement.scrollTop,
+        comp_info: {}
+      }
+      this.componentlist.forEach((comp) => {
+        const data = comp.get_saving_data()
+        if (data != undefined) {
+          dialog_box.custom_info.comp_info[comp.get_component().name] = data
+        }
+      })
+      this.$store.commit('save_observer_dlg', { observerId: id, dlg: dialog_box })
+    },
     emitInterface() {
       this.$emit('interface', {
         call_action: (action, no_owner, action_close) => {
           return this.call_action(action, no_owner, action_close)
         },
         get_info: () => this.internalInfo,
-        onResize: (height_diff) => this.onResize(height_diff)
+        onResize: (height_diff) => this.onResize(height_diff),
+        load_info: (id) => {
+          this.load_info(id)
+        },
+        save_info: (id) => {
+          console.log('save_info')
+          this.save_info(id)
+        }
       })
     },
     async focus_current_comp() {
@@ -224,6 +263,9 @@ export default {
     })
     var refreshSizeId = setInterval(() => {
       this.adapt_size()
+      if (this.ObserverId != 0) {
+        this.load_info(this.ObserverId)
+      }
       clearInterval(refreshSizeId)
     }, 100)
     if (this.internalInfo.tab === null && this.tablist.length > 0) {

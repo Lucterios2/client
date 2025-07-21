@@ -25,6 +25,7 @@ export default {
       if (action_close === undefined) {
         action_close = this.close ? this.close : null
       }
+      this.$options.childInterface.save_info(this.id)
       this.$options.FrameInterface.save_dlg()
       if (action === null) {
         this.actions.forEach((act) => {
@@ -47,6 +48,7 @@ export default {
       this.forceRecompute++
       this.$nextTick(() => {
         this.$options.FrameInterface.load_dlg()
+        this.$options.childInterface.load_info(this.id)
       })
     },
     click_action_in_customcomponents(action, no_owner, action_close) {

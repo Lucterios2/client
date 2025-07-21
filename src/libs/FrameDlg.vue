@@ -264,6 +264,7 @@ export default {
       }
     },
     save_dlg() {
+      this.dialog_box = this.$store.state.observer_dlg[this.id] || {}
       const cardelements = this.get_card_elements()
       const current_card = cardelements[0]
       const current_cardtext = cardelements[1]

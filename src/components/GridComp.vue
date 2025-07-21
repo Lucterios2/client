@@ -228,6 +228,20 @@ export default {
     },
     onResize(height_diff) {
       this.scroll_element.style.maxHeight = Math.max(200, this.initial_height + height_diff) + 'px'
+    },
+    set_saved_data(data) {
+      if (data && (data.scrollTop != undefined)) {
+        this.scroll_element.scrollTop = data.scrollTop
+      }
+    },
+    get_saving_data() {
+      if (this.scroll_element.scrollTop != 0) {
+        return {
+          scrollTop: this.scroll_element.scrollTop
+        }
+      } else {
+        return undefined
+      }
     }
   },
   mounted() {
