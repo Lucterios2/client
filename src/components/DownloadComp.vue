@@ -33,12 +33,12 @@ export default {
   <AbstractComp :value="value" :component="component">
     <span> {{ value }} </span>
     <v-btn
-      prepend-icon="mdi:mdi-content-save"
+      prepend-icon="mdi:mdi-download-box-outline"
       ref="tofocus"
       :name="component.name"
       @focusin="savefocusin"
       @click="openFile"
-      >{{ $t('Save as...') }}</v-btn
+      >{{ $t('Download...') }}</v-btn
     >
   </AbstractComp>
 </template>

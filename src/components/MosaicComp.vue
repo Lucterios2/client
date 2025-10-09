@@ -134,7 +134,9 @@ export default {
       return item.image.startsWith('mdi:')
     },
     onResize(height_diff) {
-      this.scroll_element.style.maxHeight = Math.max(200, this.initial_height + height_diff) + 'px'
+      if (this.scroll_element) {
+        this.scroll_element.style.maxHeight = Math.max(200, this.initial_height + height_diff) + 'px'
+      }
     },
     isSelected(item) {
       return this.items_selected.includes(String(item.id))
