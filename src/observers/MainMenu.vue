@@ -88,7 +88,7 @@ export default {
     },
     refreshObserver() {}
   },
-  async mounted() {
+  mounted() {
     this.menus.forEach((item) => {
       if (item.text === '') {
         this.summary_menu = item.menus
@@ -102,12 +102,15 @@ export default {
     if (this.summary_menu.length > 0) {
       const default_summary = this.summary_menu[this.summary_menu.length - 1]
       this.summary_selected = [default_summary.id]
-      await this.refresh_summary(default_summary)
-      this.$store.commit('call_status', true)
       this.$store.commit('call_summary', false)
-      this.$nextTick(() => {
-        this.$store.commit('call_summary', true)
-      })
+      var refreshSummaryId = setInterval(async () => {
+        await this.refresh_summary(default_summary)
+        this.$nextTick(() => {
+          this.$store.commit('call_summary', true)
+        })
+        clearInterval(refreshSummaryId)
+      }, 100)
+      this.$store.commit('call_status', true)
       var refreshIntervalId = setInterval(() => {
         this.$store.commit('call_summary', false)
         clearInterval(refreshIntervalId)
