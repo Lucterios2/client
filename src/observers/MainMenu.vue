@@ -50,6 +50,9 @@ export default {
       }
       return ''
     },
+    click_action_summary(menu) {
+      this.click_action(menu, false);
+    },
     click_action(menu, no_owner) {
       this.$emit('clickaction', menu, no_owner, null)
     },
@@ -86,7 +89,10 @@ export default {
     close_summary() {
       this.$store.commit('call_summary', false)
     },
-    refreshObserver() {}
+    refreshObserver() {
+      this.$store.commit('call_summary', false)
+      this.$store.commit('call_summary', true);
+    }
   },
   mounted() {
     this.menus.forEach((item) => {
@@ -189,7 +195,7 @@ export default {
               class="panel-custom"
               :data="custom_data"
               :comp="custom_comp"
-              @action="click_action"
+              @action="click_action_summary"
             />
           </v-expansion-panel-text>
         </v-expansion-panel>

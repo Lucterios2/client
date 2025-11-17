@@ -373,6 +373,7 @@ export default {
       <ButtonsBar :actions="actions" :close="close" @clickaction="onClickaction">
         <v-icon class="resize_spot" v-if="!noaction">mdi</v-icon>
       </ButtonsBar>
+      <slot name="footer"></slot>
     </v-card>
   </div>
 </template>

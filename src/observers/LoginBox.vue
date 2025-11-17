@@ -65,7 +65,7 @@ export default {
       }
     },
     execute_action(action) {
-      return this.$emit('clickaction', action, true, null)
+      return this.$emit('clickaction', action, false, null)
     },
     run_action(action) {
       if (action.id === 'cancel') {
@@ -173,11 +173,17 @@ export default {
           ></v-text-field>
         </v-container>
       </v-form>
-      <div class="login_actions" v-if="has_action">
-        <v-card-actions class="logactions" v-for="action in actions" :key="action.id">
-          <ButtonAction :action="action" @click="execute_action" />
-        </v-card-actions>
-      </div>
+      <template v-slot:footer>
+        <div class="bg-grey-lighten-3" v-if="has_action">
+          <div class="login_actions">
+            <v-spacer/>
+            <v-card-actions class="logactions">
+              <ButtonAction :action="action" v-for="action in actions" :key="action.id" @click="execute_action" />
+            </v-card-actions>
+            <v-spacer/>
+          </div>
+        </div>
+      </template>
     </FrameDlg>
   </div>
 </template>
@@ -186,17 +192,20 @@ export default {
 div.login > div.frameDlg > div.v-card {
   width: 375px;
 }
-div.login > div.frameDlg > div.v-card > .v-card-text > .login_actions {
-  margin-top: -15px;
-  padding-bottom: 5px;
+div.login > div.frameDlg > div.v-card > div > .login_actions {
+  margin-top: -5px;
+  padding-bottom: 0px;
 }
-div.login > div.frameDlg > div.v-card > .v-card-text > .login_actions > .logactions {
+div.login > div.frameDlg > div.v-card > div > .login_actions > .logactions {
   padding: 0px;
 }
-div.login > div.frameDlg > div.v-card > .v-card-text > .login_actions > .logactions button {
-  font-size: 10px;
+div.login > div.frameDlg > div.v-card > div > .login_actions > .logactions button {
+  font-size: 8px;
   margin: 0px auto;
-  width: 60%;
+  width: 45%;
+  background-color: #eeeeee;
+  text-decoration-line: underline;
+  text-decoration-color: blue;
 }
 div.login > .message_alert {
   position: absolute;
