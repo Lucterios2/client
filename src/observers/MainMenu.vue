@@ -108,13 +108,7 @@ export default {
     if (this.summary_menu.length > 0) {
       const default_summary = this.summary_menu[this.summary_menu.length - 1]
       this.summary_selected = [default_summary.id]
-      this.$store.commit('call_summary', false)
-      var refreshSummaryId = setInterval(async () => {
-        this.$nextTick(() => {
-          this.$store.commit('call_summary', true)
-        })
-        clearInterval(refreshSummaryId)
-      }, 100)
+      this.$store.commit('call_summary', true)
       this.$store.commit('call_status', true)
       var refreshIntervalId = setInterval(() => {
         this.$store.commit('call_summary', false)
