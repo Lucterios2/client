@@ -4,7 +4,7 @@ stages:
   - publish
 
 unit-test:
-  image: node:24.9-bookworm
+  image: node:25-bookworm
   stage: test
   script:
     - npm install
@@ -19,14 +19,14 @@ unit-test:
         path: coverage/cobertura-coverage.xml
 
 lint-test:
-  image: node:24.9-bookworm
+  image: node:25-bookworm
   stage: test
   script:
     - npm install
     - npm run lint
 
 build:
-  image: node:24.9-bookworm
+  image: node:25-bookworm
   stage: build
   needs: [unit-test]
   script:
@@ -41,7 +41,7 @@ build:
       - public/conf/build
 
 publish:
-  image: node:24.9-bookworm
+  image: node:25-bookworm
   stage: publish
   needs: [build]
   rules: 

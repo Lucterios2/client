@@ -2,7 +2,7 @@
 
 set -e
 
-rootversion="2.0.7"
+rootversion="2.0.8"
 buildtstmp=$(git log -1 --format=%at)
 build_number=$(python3 -c "import datetime;print(datetime.datetime.fromtimestamp(int('${buildtstmp}')).strftime('%y%m%d%H'))")
 
