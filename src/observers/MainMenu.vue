@@ -13,6 +13,7 @@ export default {
   components: { SubMenus, CustomComponents, ButtonsBar },
   data: () => ({
     tab: null,
+    custom_id: 0,
     custom_data: {},
     custom_comp: [],
     summary_menu: [],
@@ -77,9 +78,11 @@ export default {
         this.custom_data = {}
         this.custom_comp = []
         const summary_return = await callLucteriosAction(summary_menu)
+        console.debug("refresh_summary", summary_menu, "=>", summary_return)
         if (summary_return.meta.observer === 'core.custom') {
           this.custom_data = summary_return.data
           this.custom_comp = summary_return.comp
+          this.custom_id += 1
         }
       }
     },
@@ -184,7 +187,7 @@ export default {
             <span style="margin-left: 5px">{{ submenu.text }}</span>
           </v-expansion-panel-title>
           <v-expansion-panel-text>
-            <CustomComponents
+            <CustomComponents :key="custom_id"
               class="panel-custom"
               :data="custom_data"
               :comp="custom_comp"
