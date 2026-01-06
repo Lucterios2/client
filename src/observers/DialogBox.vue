@@ -8,7 +8,8 @@ export default {
   extends: AbstractObserver,
   components: { FrameDlg },
   data: () => ({
-    visible: true
+    visible: true,
+    FrameInterface: null
   }),
   computed: {
     icon() {
@@ -29,18 +30,18 @@ export default {
   },
   methods: {
     click_dlg_action(action, no_owner, action_close) {
-      this.$options.FrameInterface.save_dlg()
+      this.FrameInterface.save_dlg()
       this.click_action(action, no_owner, action_close)
     },
     updateObserver() {
       this.$forceUpdate()
       this.forceRecompute++
       this.$nextTick(() => {
-        this.$options.FrameInterface.load_dlg()
+        this.FrameInterface.load_dlg()
       })
     },
     getFrameInterface(FrameInterface) {
-      this.$options.FrameInterface = FrameInterface
+      this.FrameInterface = FrameInterface
     }
   }
 }

@@ -9,7 +9,9 @@ export default {
   extends: AbstractObserver,
   components: { FrameDlg, CustomComponents },
   data: () => ({
-    currentinfo: null
+    currentinfo: null,
+    childInterface: null,
+    FrameInterface: null
   }),
   props: {
     data: Object,
@@ -25,8 +27,8 @@ export default {
       if (action_close === undefined) {
         action_close = this.close ? this.close : null
       }
-      this.$options.childInterface.save_info(this.id)
-      this.$options.FrameInterface.save_dlg()
+      this.childInterface.save_info(this.id)
+      this.FrameInterface.save_dlg()
       if (action === null) {
         this.actions.forEach((act) => {
           if (action === null && act.id !== '') {
@@ -38,7 +40,7 @@ export default {
         }
         return false
       } else {
-        this.currentinfo = this.$options.childInterface.get_info()
+        this.currentinfo = this.childInterface.get_info()
         this.$store.commit('save_observer_info', { observerId: this.id, info: this.currentinfo })
         return AbstractObserver.methods.click_action.call(this, action, no_owner, action_close)
       }
@@ -47,21 +49,21 @@ export default {
       this.$forceUpdate()
       this.forceRecompute++
       this.$nextTick(() => {
-        this.$options.FrameInterface.load_dlg()
-        this.$options.childInterface.load_info(this.id)
+        this.FrameInterface.load_dlg()
+        this.childInterface.load_info(this.id)
       })
     },
     click_action_in_customcomponents(action, no_owner, action_close) {
-      return this.$options.childInterface.call_action(action, no_owner, action_close)
+      return this.childInterface.call_action(action, no_owner, action_close)
     },
     getChildInterface(childInterface) {
-      this.$options.childInterface = childInterface
+      this.childInterface = childInterface
     },
     getFrameInterface(FrameInterface) {
-      this.$options.FrameInterface = FrameInterface
+      this.FrameInterface = FrameInterface
     },
     onResize(height_ratio) {
-      this.$options.childInterface.onResize(height_ratio)
+      this.childInterface.onResize(height_ratio)
     }
   },
   mounted() {
