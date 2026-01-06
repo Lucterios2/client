@@ -135,7 +135,8 @@ export default {
     },
     onResize(height_diff) {
       if (this.scroll_element) {
-        this.scroll_element.style.maxHeight = Math.max(200, this.initial_height + height_diff) + 'px'
+        this.scroll_element.style.maxHeight =
+          Math.max(200, this.initial_height + height_diff) + 'px'
       }
     },
     isSelected(item) {

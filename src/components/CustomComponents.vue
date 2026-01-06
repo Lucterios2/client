@@ -185,7 +185,7 @@ export default {
     receive_focus(component_name) {
       this.internalInfo.focus_name = component_name
     },
-    load_info(id){
+    load_info(id) {
       this.ObserverId = id
       const dialog_box = this.$store.state.observer_dlg[id] || {}
       if (dialog_box.custom_info != undefined) {
@@ -202,7 +202,7 @@ export default {
         }
       }
     },
-    save_info(id){
+    save_info(id) {
       const dialog_box = this.$store.state.observer_dlg[id] || {}
       dialog_box.custom_info = {
         scrollTop: this.$el.parentElement.scrollTop,

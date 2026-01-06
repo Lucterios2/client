@@ -4,14 +4,12 @@ export const messages = {
     'Call-stack': 'Call-stack',
     'Captcha wrong!': 'Captcha wrong!',
     'Client obselete': 'Obsolete client <br/> Perform an update',
-    'Command unknown!': 'Command unknown!',
-    'Http error {0}': 'Http error {0}',
     'Impossible: the file must be less than %0 %1': 'Impossible: the file must be less than %0 %1',
     'Internal error !': 'Internal error !',
     'Invalid format!': 'Invalid format!',
     "May the browser didn't support or there is some errors.":
       "May the browser didn't support or there is some errors.",
-    'Method "{0}" unknown !': 'Method "{0}" unknown !',
+    'Method "%0" unknown !': 'Method "%0" unknown !',
     'No data available': 'No data available',
     'No result': 'No result',
     'Password too short!': 'Password too short!',
@@ -78,22 +76,30 @@ export const messages = {
 
     '%0 to %1 (%2 in total)': '%0 to %1 (%2 in total)',
     'Image size': 'Image size',
-    'Order by': 'Order by'
+    'Order by': 'Order by',
+
+    HTTPError_400: 'The syntax of the request is wrong.',
+    HTTPError_401: 'Authentication is required to access the resource.',
+    HTTPError_402: 'Payment required to access the resource.',
+    HTTPError_404: 'Resource not found.',
+    HTTPError_405: 'Request method not allowed.',
+    HTTPError_408: 'Waiting time for a client request, elapsed on the server side.',
+    'Http error %0 : "%1"': 'HTTP server response error #%0 : "%1"',
+    'Network Error':
+      'Network Error: check your network connection or contact your administrator if the problem persists.'
   },
   fr: {
     'At least one field is not valid!': "Au moins un champ n'est pas valid !",
     'Call-stack': "Pile d'appel",
     'Captcha wrong!': 'Mauvais Captcha!',
     'Client obselete': 'Client obsolète <br/> Effectuer une mise à jour',
-    'Command unknown!': 'Commande inconnue !',
-    'Http error {0}': 'Erreur Http {0}',
     'Impossible: the file must be less than %0 %1':
       'Impossible: le fichier doit faire moins de %0 %1',
     'Internal error !': 'Erreur interne !',
     'Invalid format!': 'Format invalide!',
     "May the browser didn't support or there is some errors.":
       'Peut-être que le navigateur ne supporte pas ou il y a quelques erreurs.',
-    'Method "{0}" unknown !': 'Methode "{0}" inconnue !',
+    'Method "%0" unknown !': 'Methode "%0" inconnue !',
     'No data available': 'Aucune donnée disponible',
     'No result': 'Aucun resultat',
     'Password too short!': 'Mot de passe trop court!',
@@ -161,6 +167,16 @@ export const messages = {
 
     '%0 to %1 (%2 in total)': '%0 à %1 (%2 au total)',
     'Image size': "Taille d'image",
-    'Order by': 'Trié par'
+    'Order by': 'Trié par',
+
+    HTTPError_400: 'La syntaxe de la requête est erronée.',
+    HTTPError_401: 'Une authentification est nécessaire pour accéder à la ressource.',
+    HTTPError_402: 'Paiement requis pour accéder à la ressource.',
+    HTTPError_404: 'Ressource non trouvée.',
+    HTTPError_405: 'Méthode de requête non autorisée.',
+    HTTPError_408: "Temps d'attente d'une requête du client, écoulé côté serveur.",
+    'Http error %0 : "%1"': 'Erreur de réponse serveur HTTP #%0 : "%1"',
+    'Network Error':
+      'Erreur réseau: vérifiez votre connexion réseau ou contactez votre administrateur si le problème persiste.'
   }
 }

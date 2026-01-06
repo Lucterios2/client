@@ -176,11 +176,16 @@ export default {
       <template v-slot:footer>
         <div class="bg-grey-lighten-3" v-if="has_action">
           <div class="login_actions">
-            <v-spacer/>
+            <v-spacer />
             <v-card-actions class="logactions">
-              <ButtonAction :action="action" v-for="action in actions" :key="action.id" @click="execute_action" />
+              <ButtonAction
+                :action="action"
+                v-for="action in actions"
+                :key="action.id"
+                @click="execute_action"
+              />
             </v-card-actions>
-            <v-spacer/>
+            <v-spacer />
           </div>
         </div>
       </template>

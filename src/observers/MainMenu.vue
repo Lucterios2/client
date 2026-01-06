@@ -52,7 +52,7 @@ export default {
       return ''
     },
     click_action_summary(menu) {
-      this.click_action(menu, false);
+      this.click_action(menu, false)
     },
     click_action(menu, no_owner) {
       this.$emit('clickaction', menu, no_owner, null)
@@ -78,7 +78,7 @@ export default {
         this.custom_data = {}
         this.custom_comp = []
         const summary_return = await callLucteriosAction(summary_menu)
-        console.debug("refresh_summary", summary_menu, "=>", summary_return)
+        console.debug('refresh_summary', summary_menu, '=>', summary_return)
         if (summary_return.meta.observer === 'core.custom') {
           this.custom_data = summary_return.data
           this.custom_comp = summary_return.comp
@@ -94,7 +94,7 @@ export default {
     },
     refreshObserver() {
       this.$store.commit('call_summary', false)
-      this.$store.commit('call_summary', true);
+      this.$store.commit('call_summary', true)
     }
   },
   mounted() {
@@ -187,7 +187,8 @@ export default {
             <span style="margin-left: 5px">{{ submenu.text }}</span>
           </v-expansion-panel-title>
           <v-expansion-panel-text>
-            <CustomComponents :key="custom_id"
+            <CustomComponents
+              :key="custom_id"
               class="panel-custom"
               :data="custom_data"
               :comp="custom_comp"

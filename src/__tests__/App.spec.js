@@ -43,7 +43,7 @@ beforeEach(() => {
 })
 
 describe('App', () => {
-  it('empty', async () => {
+  ;(it('empty', async () => {
     storage.commit('call_status', false)
     storage.commit('call_waiting', false)
 
@@ -160,5 +160,5 @@ describe('App', () => {
       expect(wrapper.find('about-frame-stub').text()).toBe('')
       expect(wrapper.find('div').element.childElementCount).toBe(0)
       expect(wrapper.find('div').attributes('id')).toBe('comp')
-    })
+    }))
 })

@@ -278,20 +278,16 @@ describe('LoginBox', () => {
     ).toStrictEqual('mdi:mdi-logout')
 
     expect(
-      wrapper.findAll('v-card > div > div.login_actions > v-card-actions > v-btn').length        
+      wrapper.findAll('v-card > div > div.login_actions > v-card-actions > v-btn').length
     ).toBe(2)
     expect(
       wrapper
-        .find(
-          'v-card > div > div.login_actions > v-card-actions > v-btn:nth-of-type(1) > v-icon'
-        )
+        .find('v-card > div > div.login_actions > v-card-actions > v-btn:nth-of-type(1) > v-icon')
         .text()
     ).toStrictEqual('icon1')
     expect(
       wrapper
-        .find(
-          'v-card > div > div.login_actions > v-card-actions > v-btn:nth-of-type(2) > v-icon'
-        )
+        .find('v-card > div > div.login_actions > v-card-actions > v-btn:nth-of-type(2) > v-icon')
         .text()
     ).toStrictEqual('icon2')
 

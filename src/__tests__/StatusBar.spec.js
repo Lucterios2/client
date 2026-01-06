@@ -10,7 +10,7 @@ beforeEach(() => {
 })
 
 describe('StatusBar', () => {
-  it('menu mode 0', async () => {
+  ;(it('menu mode 0', async () => {
     storage.commit('change_server', {
       login: 'toto',
       instance: 'foo',
@@ -162,5 +162,5 @@ describe('StatusBar', () => {
       expect(storage.state.show_summary).toBe(true)
       addSummaryBtn.trigger('click')
       expect(storage.state.show_summary).toBe(false)
-    })
+    }))
 })

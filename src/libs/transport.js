@@ -2,7 +2,7 @@ import axios from 'axios'
 
 import { FORMTYPE_MODAL } from '@/libs/utils'
 import { Stringformat } from '@/libs/convert'
-import { CRITIC, GRAVE, LucteriosException } from '@/libs/error'
+import { CRITIC, GRAVE, IMPORTANT, LucteriosException } from '@/libs/error'
 
 var current_store = null
 var current_translate = null
@@ -66,26 +66,29 @@ export async function callLucteriosAction(action) {
   }
   const failure = function (error) {
     reponsetext = JSON.stringify(error)
+    console.error('[An error is detected]', error)
     if (error.response !== undefined) {
-      if (error.response.status === 404) {
-        throw new LucteriosException(
-          GRAVE,
-          current_translate.t('Command unknown!'),
-          web_file,
-          reponsetext
-        )
+      if (error.response.status.toString().startsWith('4')) {
+        let error_text = current_translate.t('HTTPError_' + error.response.status.toString())
+        if (error_text.startsWith('HTTPError_')) {
+          error_text = error.response.statusText
+        }
+        throw new LucteriosException(IMPORTANT, error_text, web_file, reponsetext)
       } else {
         throw new LucteriosException(
-          CRITIC,
-          Stringformat(current_translate.t('Http error {0}'), [error.response.status]),
+          GRAVE,
+          Stringformat(current_translate.t('Http error %0 : "%1"'), [
+            error.response.status.toString(),
+            error.response.statusText
+          ]),
           web_file,
           reponsetext
         )
       }
     } else {
       throw new LucteriosException(
-        CRITIC,
-        current_translate.t('Internal error !'),
+        IMPORTANT,
+        current_translate.t(error.message || 'Internal error !'),
         web_file,
         reponsetext
       )
@@ -104,7 +107,7 @@ export async function callLucteriosAction(action) {
     } else {
       throw new LucteriosException(
         GRAVE,
-        Stringformat(current_translate.t('Method "{0}" unknown !'), [action.method]),
+        Stringformat(current_translate.t('Method "%0" unknown !'), [action.method]),
         web_file
       )
     }

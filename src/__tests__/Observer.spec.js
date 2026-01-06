@@ -20,7 +20,7 @@ beforeEach(() => {
 })
 
 describe('observer', () => {
-  it('unknown', async () => {
+  ;(it('unknown', async () => {
     clearComponent()
     const wrapper = mount(
       {
@@ -514,5 +514,5 @@ describe('observer', () => {
           .text()
       ).toBe('ddd')
       expect(action_fct).toHaveBeenCalledTimes(0)
-    })
+    }))
 })

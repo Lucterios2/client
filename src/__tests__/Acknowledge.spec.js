@@ -10,7 +10,7 @@ beforeEach(() => {
 })
 
 describe('Acknowledge', () => {
-  it('basic', async () => {
+  ;(it('basic', async () => {
     const wrapper = shallowMount(AcknowledgeReturn, {
       propsData: {
         action: null,
@@ -131,5 +131,5 @@ describe('Acknowledge', () => {
           }
         ]
       ])
-    })
+    }))
 })
