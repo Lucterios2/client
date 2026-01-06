@@ -2,7 +2,7 @@ import axios from 'axios'
 
 import { FORMTYPE_MODAL } from '@/libs/utils'
 import { Stringformat } from '@/libs/convert'
-import { CRITIC, GRAVE, IMPORTANT, LucteriosException } from '@/libs/error'
+import { GRAVE, IMPORTANT, LucteriosException } from '@/libs/error'
 
 var current_store = null
 var current_translate = null
