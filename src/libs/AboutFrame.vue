@@ -7,10 +7,10 @@ const i18n = useI18n()
 import { convertLuctoriosFormatToHtml } from '@/libs/convert'
 import { send_to_support } from '@/libs/utils.js'
 import { getUrlServer } from '@/libs/transport'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 const emit = defineEmits(['close'])
 const more_version = defineModel({ type: Boolean, default: false })
-const visible = true
+const visible = ref(true)
 function send_support() {
   send_to_support(i18n.t, store, '', getUrlServer())
 }
