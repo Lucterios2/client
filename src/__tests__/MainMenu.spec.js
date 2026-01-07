@@ -584,8 +584,8 @@ describe('MainMenu', () => {
     expect(wrapper.find('v-card').element.childElementCount).toBe(1)
     expect(wrapper.find('v-card > v-card-item').element.childElementCount).toBe(4)
     expect(wrapper.find('v-card > v-card-item > v-toolbar').element.childElementCount).toBe(5)
-    expect(wrapper.find('v-card > v-card-item > v-toolbar > v-icon:nth-of-type(1)').text()).toBe('')
-    expect(wrapper.find('v-card > v-card-item > v-toolbar > v-icon:nth-of-type(2)').text()).toBe(
+    expect(wrapper.findAll('v-card > v-card-item > v-toolbar > v-icon')[0].text()).toBe('')
+    expect(wrapper.findAll('v-card > v-card-item > v-toolbar > v-icon')[1].text()).toBe(
       'mdi:mdi-home'
     )
     expect(wrapper.find('v-card > v-card-item > v-toolbar > v-toolbar-title').text()).toBe(
@@ -785,100 +785,100 @@ describe('MainMenu', () => {
     ).toBe(7)
     expect(
       wrapper
-        .find('v-card > v-card-item > v-card-text > v-row > v-col:nth-of-type(1)')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[0]
         .attributes('cols')
     ).toBe('auto')
     expect(
       wrapper
-        .find('v-card > v-card-item > v-card-text > v-row > v-col:nth-of-type(1) > sub-menu-stub')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[0].find('sub-menu-stub')
         .getCurrentComponent().props.menu
     ).toStrictEqual(initial_menu.menus[0])
     expect(
       wrapper
-        .find('v-card > v-card-item > v-card-text > v-row > v-col:nth-of-type(2)')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[1]
         .attributes('cols')
     ).toBe('auto')
     expect(
       wrapper
-        .find('v-card > v-card-item > v-card-text > v-row > v-col:nth-of-type(2) > sub-menu-stub')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[1].find('sub-menu-stub')
         .getCurrentComponent().props.menu
     ).toStrictEqual(initial_menu.menus[1])
     expect(
       wrapper
-        .find('v-card > v-card-item > v-card-text > v-row > v-col:nth-of-type(3)')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[2]
         .attributes('cols')
     ).toBe('12')
     expect(
       wrapper
-        .find('v-card > v-card-item > v-card-text > v-row > v-col:nth-of-type(3) > sub-menus-stub')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[2].find('sub-menus-stub')
         .getCurrentComponent().props.menu
     ).toStrictEqual(initial_menu.menus[2])
     expect(
       wrapper
-        .find('v-card > v-card-item > v-card-text > v-row > v-col:nth-of-type(3) > sub-menus-stub')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[2].find('sub-menus-stub')
         .getCurrentComponent().props.with_image
     ).toStrictEqual(true)
     expect(
       wrapper
-        .find('v-card > v-card-item > v-card-text > v-row > v-col:nth-of-type(4)')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[3]
         .attributes('cols')
     ).toBe('auto')
     expect(
       wrapper
-        .find('v-card > v-card-item > v-card-text > v-row > v-col:nth-of-type(4) > sub-menu-stub')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[3].find('sub-menu-stub')
         .getCurrentComponent().props.menu
     ).toStrictEqual(initial_menu.menus[3])
     expect(
       wrapper
-        .find('v-card > v-card-item > v-card-text > v-row > v-col:nth-of-type(5)')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[4]
         .attributes('cols')
     ).toBe('12')
     expect(
       wrapper
-        .find('v-card > v-card-item > v-card-text > v-row > v-col:nth-of-type(5) > sub-menus-stub')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[4].find('sub-menus-stub')
         .getCurrentComponent().props.menu
     ).toStrictEqual(initial_menu.menus[4])
     expect(
       wrapper
-        .find('v-card > v-card-item > v-card-text > v-row > v-col:nth-of-type(5) > sub-menus-stub')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[4].find('sub-menus-stub')
         .getCurrentComponent().props.with_image
     ).toStrictEqual(true)
     expect(
       wrapper
-        .find('v-card > v-card-item > v-card-text > v-row > v-col:nth-of-type(6)')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[5]
         .attributes('cols')
     ).toBe('12')
     expect(
       wrapper
-        .find('v-card > v-card-item > v-card-text > v-row > v-col:nth-of-type(6) > sub-menus-stub')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[5].find('sub-menus-stub')
         .getCurrentComponent().props.menu
     ).toStrictEqual(initial_menu.menus[5])
     expect(
       wrapper
-        .find('v-card > v-card-item > v-card-text > v-row > v-col:nth-of-type(6) > sub-menus-stub')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[5].find('sub-menus-stub')
         .getCurrentComponent().props.with_image
     ).toStrictEqual(true)
     expect(
       wrapper
-        .find('v-card > v-card-item > v-card-text > v-row > v-col:nth-of-type(7)')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[6]
         .attributes('cols')
     ).toBe('auto')
     expect(
       wrapper
-        .find('v-card > v-card-item > v-card-text > v-row > v-col:nth-of-type(7) > sub-menu-stub')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[6].find('sub-menu-stub')
         .getCurrentComponent().props.menu
     ).toStrictEqual(initial_menu.menus[6])
 
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
     await wrapper
-      .find('v-card > v-card-item > v-card-text > v-row > v-col:nth-of-type(7) > sub-menu-stub')
+      .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[6].find('sub-menu-stub')
       .trigger('click', { id: 'lucterios.contacts/currentStructure' })
     expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([
       [{ id: 'lucterios.contacts/currentStructure' }, null]
     ])
 
     await wrapper
-      .find('v-card > v-card-item > v-card-text > v-row > v-col:nth-of-type(5) > sub-menus-stub')
+      .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[4].find('sub-menus-stub')
       .trigger('clickaction', { id: 'core.general' })
     expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([
       [{ id: 'lucterios.contacts/currentStructure' }, null],

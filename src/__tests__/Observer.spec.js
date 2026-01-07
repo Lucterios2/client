@@ -235,20 +235,20 @@ describe('observer', () => {
       expect(wrapper.find('div#comp > div > .frameDlg > v-card').element.childElementCount).toBe(3)
       expect(
         wrapper
-          .find(
-            'div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr:nth-of-type(2) > td > div > div > span'
+          .findAll(
+            'div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr')[1].find('td > div > div > span'
           )
           .text()
       ).toBe('aaa')
       expect(
         wrapper
-          .find(
-            'div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr:nth-of-type(3) > td > div > div > span'
+          .findAll(
+            'div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr')[2].find('td > div > div > span'
           )
           .text()
       ).toBe('bbb')
       await wrapper
-        .find('div#comp > div > .frameDlg > v-card > v-card-title > div > v-btn:nth-of-type(2)')
+        .findAll('div#comp > div > .frameDlg > v-card > v-card-title > div > v-btn')[1]
         .trigger('click')
       expect(action_fct).toHaveBeenCalledTimes(1)
       expect(action_fct).toHaveBeenNthCalledWith(
@@ -266,7 +266,7 @@ describe('observer', () => {
         '123456789'
       )
       await wrapper
-        .find('div#comp > div > .frameDlg > v-card > v-card-title > div > v-btn:nth-of-type(3)')
+        .findAll('div#comp > div > .frameDlg > v-card > v-card-title > div > v-btn')[2]
         .trigger('click')
       expect(action_fct).toHaveBeenCalledTimes(2)
       expect(action_fct).toHaveBeenNthCalledWith(
@@ -407,14 +407,14 @@ describe('observer', () => {
       expect(wrapper.find('div#comp > div > div > v-card > v-card-title').text()).toBe('title 1')
       expect(
         wrapper
-          .find(
-            'div#comp > div > div > v-card > v-card-text > v-row > v-col:nth-of-type(1) > v-icon'
+          .findAll(
+            'div#comp > div > div > v-card > v-card-text > v-row > v-col')[0].find('v-icon'
           )
           .text()
       ).toBe('mdi:mdi-information-outline')
       expect(
         wrapper
-          .find('div#comp > div > div > v-card > v-card-text > v-row > v-col:nth-of-type(2) > span')
+          .findAll('div#comp > div > div > v-card > v-card-text > v-row > v-col')[1].find('span')
           .text()
       ).toBe('text 1')
       const second_comp = await factory(
@@ -433,14 +433,14 @@ describe('observer', () => {
       expect(wrapper.find('div#comp > div > div > v-card > v-card-title').text()).toBe('title 2')
       expect(
         wrapper
-          .find(
-            'div#comp > div > div > v-card > v-card-text > v-row > v-col:nth-of-type(1) > v-icon'
+          .findAll(
+            'div#comp > div > div > v-card > v-card-text > v-row > v-col')[0].find('v-icon'
           )
           .text()
       ).toBe('mdi:mdi-help-circle-outline')
       expect(
         wrapper
-          .find('div#comp > div > div > v-card > v-card-text > v-row > v-col:nth-of-type(2) > span')
+          .findAll('div#comp > div > div > v-card > v-card-text > v-row > v-col')[1].find('span')
           .text()
       ).toBe('text 2')
       expect(action_fct).toHaveBeenCalledTimes(0)
@@ -471,15 +471,15 @@ describe('observer', () => {
       )
       expect(
         wrapper
-          .find(
-            'div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr:nth-of-type(2) > td > div > div > span'
+          .findAll(
+            'div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr')[1].find('td > div > div > span'
           )
           .text()
       ).toBe('aaa')
       expect(
         wrapper
-          .find(
-            'div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr:nth-of-type(3) > td > div > div > span'
+          .findAll(
+            'div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr')[2].find('td > div > div > span'
           )
           .text()
       ).toBe('bbb')
@@ -501,15 +501,15 @@ describe('observer', () => {
       expect(second_comp).toBe(first_comp)
       expect(
         wrapper
-          .find(
-            'div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr:nth-of-type(2) > td > div > div > span'
+          .findAll(
+            'div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr')[1].find('td > div > div > span'
           )
           .text()
       ).toBe('ccc')
       expect(
         wrapper
-          .find(
-            'div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr:nth-of-type(3) > td > div > div > span'
+          .findAll(
+            'div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr')[2].find('td > div > div > span'
           )
           .text()
       ).toBe('ddd')

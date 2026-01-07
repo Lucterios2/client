@@ -45,25 +45,25 @@ describe('SelectComp', () => {
       wrapper.find('div.checklist > div.v-field_abstract > select').element.childElementCount
     ).toBe(3)
     expect(
-      wrapper.find('div.checklist > div.v-field_abstract > select > option:nth-of-type(1)').element
+      wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[0].element
         .value
     ).toBe('1')
     expect(
-      wrapper.find('div.checklist > div.v-field_abstract > select > option:nth-of-type(1)').text()
+      wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[0].text()
     ).toBe('abc')
     expect(
-      wrapper.find('div.checklist > div.v-field_abstract > select > option:nth-of-type(2)').element
+      wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[1].element
         .value
     ).toBe('2')
     expect(
-      wrapper.find('div.checklist > div.v-field_abstract > select > option:nth-of-type(2)').text()
+      wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[1].text()
     ).toBe('def')
     expect(
-      wrapper.find('div.checklist > div.v-field_abstract > select > option:nth-of-type(3)').element
+      wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[2].element
         .value
     ).toBe('3')
     expect(
-      wrapper.find('div.checklist > div.v-field_abstract > select > option:nth-of-type(3)').text()
+      wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[2].text()
     ).toBe('ghij')
     expect(wrapper.vm.is_valid()).toBe(true)
     expect(wrapper.vm.getValue()).toStrictEqual('1')
@@ -121,25 +121,25 @@ describe('SelectComp', () => {
       wrapper.find('div.checklist > div.v-field_abstract > select').element.childElementCount
     ).toBe(3)
     expect(
-      wrapper.find('div.checklist > div.v-field_abstract > select > option:nth-of-type(1)').element
+      wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[0].element
         .value
     ).toBe('1')
     expect(
-      wrapper.find('div.checklist > div.v-field_abstract > select > option:nth-of-type(1)').text()
+      wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[0].text()
     ).toBe('abc')
     expect(
-      wrapper.find('div.checklist > div.v-field_abstract > select > option:nth-of-type(2)').element
+      wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[1].element
         .value
     ).toBe('2')
     expect(
-      wrapper.find('div.checklist > div.v-field_abstract > select > option:nth-of-type(2)').text()
+      wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[1].text()
     ).toBe('def')
     expect(
-      wrapper.find('div.checklist > div.v-field_abstract > select > option:nth-of-type(3)').element
+      wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[2].element
         .value
     ).toBe('3')
     expect(
-      wrapper.find('div.checklist > div.v-field_abstract > select > option:nth-of-type(3)').text()
+      wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[2].text()
     ).toBe('ghij')
     expect(wrapper.vm.is_valid()).toBe(true)
     expect(wrapper.vm.getValue()).toStrictEqual('3')
