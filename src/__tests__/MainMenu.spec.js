@@ -784,101 +784,99 @@ describe('MainMenu', () => {
       wrapper.find('v-card > v-card-item > v-card-text > v-row').element.childElementCount
     ).toBe(7)
     expect(
-      wrapper
-        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[0]
-        .attributes('cols')
+      wrapper.findAll('v-card > v-card-item > v-card-text > v-row > v-col')[0].attributes('cols')
     ).toBe('auto')
     expect(
       wrapper
-        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[0].find('sub-menu-stub')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[0]
+        .find('sub-menu-stub')
         .getCurrentComponent().props.menu
     ).toStrictEqual(initial_menu.menus[0])
     expect(
-      wrapper
-        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[1]
-        .attributes('cols')
+      wrapper.findAll('v-card > v-card-item > v-card-text > v-row > v-col')[1].attributes('cols')
     ).toBe('auto')
     expect(
       wrapper
-        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[1].find('sub-menu-stub')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[1]
+        .find('sub-menu-stub')
         .getCurrentComponent().props.menu
     ).toStrictEqual(initial_menu.menus[1])
     expect(
-      wrapper
-        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[2]
-        .attributes('cols')
+      wrapper.findAll('v-card > v-card-item > v-card-text > v-row > v-col')[2].attributes('cols')
     ).toBe('12')
     expect(
       wrapper
-        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[2].find('sub-menus-stub')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[2]
+        .find('sub-menus-stub')
         .getCurrentComponent().props.menu
     ).toStrictEqual(initial_menu.menus[2])
     expect(
       wrapper
-        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[2].find('sub-menus-stub')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[2]
+        .find('sub-menus-stub')
         .getCurrentComponent().props.with_image
     ).toStrictEqual(true)
     expect(
-      wrapper
-        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[3]
-        .attributes('cols')
+      wrapper.findAll('v-card > v-card-item > v-card-text > v-row > v-col')[3].attributes('cols')
     ).toBe('auto')
     expect(
       wrapper
-        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[3].find('sub-menu-stub')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[3]
+        .find('sub-menu-stub')
         .getCurrentComponent().props.menu
     ).toStrictEqual(initial_menu.menus[3])
     expect(
-      wrapper
-        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[4]
-        .attributes('cols')
+      wrapper.findAll('v-card > v-card-item > v-card-text > v-row > v-col')[4].attributes('cols')
     ).toBe('12')
     expect(
       wrapper
-        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[4].find('sub-menus-stub')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[4]
+        .find('sub-menus-stub')
         .getCurrentComponent().props.menu
     ).toStrictEqual(initial_menu.menus[4])
     expect(
       wrapper
-        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[4].find('sub-menus-stub')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[4]
+        .find('sub-menus-stub')
         .getCurrentComponent().props.with_image
     ).toStrictEqual(true)
     expect(
-      wrapper
-        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[5]
-        .attributes('cols')
+      wrapper.findAll('v-card > v-card-item > v-card-text > v-row > v-col')[5].attributes('cols')
     ).toBe('12')
     expect(
       wrapper
-        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[5].find('sub-menus-stub')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[5]
+        .find('sub-menus-stub')
         .getCurrentComponent().props.menu
     ).toStrictEqual(initial_menu.menus[5])
     expect(
       wrapper
-        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[5].find('sub-menus-stub')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[5]
+        .find('sub-menus-stub')
         .getCurrentComponent().props.with_image
     ).toStrictEqual(true)
     expect(
-      wrapper
-        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[6]
-        .attributes('cols')
+      wrapper.findAll('v-card > v-card-item > v-card-text > v-row > v-col')[6].attributes('cols')
     ).toBe('auto')
     expect(
       wrapper
-        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[6].find('sub-menu-stub')
+        .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[6]
+        .find('sub-menu-stub')
         .getCurrentComponent().props.menu
     ).toStrictEqual(initial_menu.menus[6])
 
     expect(wrapper.emitted('clickaction')).toStrictEqual(undefined)
     await wrapper
-      .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[6].find('sub-menu-stub')
+      .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[6]
+      .find('sub-menu-stub')
       .trigger('click', { id: 'lucterios.contacts/currentStructure' })
     expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([
       [{ id: 'lucterios.contacts/currentStructure' }, null]
     ])
 
     await wrapper
-      .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[4].find('sub-menus-stub')
+      .findAll('v-card > v-card-item > v-card-text > v-row > v-col')[4]
+      .find('sub-menus-stub')
       .trigger('clickaction', { id: 'core.general' })
     expect(convert_event_to_object(wrapper.emitted('clickaction'))).toStrictEqual([
       [{ id: 'lucterios.contacts/currentStructure' }, null],

@@ -235,16 +235,14 @@ describe('observer', () => {
       expect(wrapper.find('div#comp > div > .frameDlg > v-card').element.childElementCount).toBe(3)
       expect(
         wrapper
-          .findAll(
-            'div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr')[1].find('td > div > div > span'
-          )
+          .findAll('div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr')[1]
+          .find('td > div > div > span')
           .text()
       ).toBe('aaa')
       expect(
         wrapper
-          .findAll(
-            'div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr')[2].find('td > div > div > span'
-          )
+          .findAll('div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr')[2]
+          .find('td > div > div > span')
           .text()
       ).toBe('bbb')
       await wrapper
@@ -407,14 +405,14 @@ describe('observer', () => {
       expect(wrapper.find('div#comp > div > div > v-card > v-card-title').text()).toBe('title 1')
       expect(
         wrapper
-          .findAll(
-            'div#comp > div > div > v-card > v-card-text > v-row > v-col')[0].find('v-icon'
-          )
+          .findAll('div#comp > div > div > v-card > v-card-text > v-row > v-col')[0]
+          .find('v-icon')
           .text()
       ).toBe('mdi:mdi-information-outline')
       expect(
         wrapper
-          .findAll('div#comp > div > div > v-card > v-card-text > v-row > v-col')[1].find('span')
+          .findAll('div#comp > div > div > v-card > v-card-text > v-row > v-col')[1]
+          .find('span')
           .text()
       ).toBe('text 1')
       const second_comp = await factory(
@@ -433,14 +431,14 @@ describe('observer', () => {
       expect(wrapper.find('div#comp > div > div > v-card > v-card-title').text()).toBe('title 2')
       expect(
         wrapper
-          .findAll(
-            'div#comp > div > div > v-card > v-card-text > v-row > v-col')[0].find('v-icon'
-          )
+          .findAll('div#comp > div > div > v-card > v-card-text > v-row > v-col')[0]
+          .find('v-icon')
           .text()
       ).toBe('mdi:mdi-help-circle-outline')
       expect(
         wrapper
-          .findAll('div#comp > div > div > v-card > v-card-text > v-row > v-col')[1].find('span')
+          .findAll('div#comp > div > div > v-card > v-card-text > v-row > v-col')[1]
+          .find('span')
           .text()
       ).toBe('text 2')
       expect(action_fct).toHaveBeenCalledTimes(0)
@@ -471,16 +469,14 @@ describe('observer', () => {
       )
       expect(
         wrapper
-          .findAll(
-            'div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr')[1].find('td > div > div > span'
-          )
+          .findAll('div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr')[1]
+          .find('td > div > div > span')
           .text()
       ).toBe('aaa')
       expect(
         wrapper
-          .findAll(
-            'div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr')[2].find('td > div > div > span'
-          )
+          .findAll('div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr')[2]
+          .find('td > div > div > span')
           .text()
       ).toBe('bbb')
       const second_comp = await factory(
@@ -501,16 +497,14 @@ describe('observer', () => {
       expect(second_comp).toBe(first_comp)
       expect(
         wrapper
-          .findAll(
-            'div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr')[1].find('td > div > div > span'
-          )
+          .findAll('div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr')[1]
+          .find('td > div > div > span')
           .text()
       ).toBe('ccc')
       expect(
         wrapper
-          .findAll(
-            'div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr')[2].find('td > div > div > span'
-          )
+          .findAll('div#comp > div > .frameDlg > v-card > v-card-text > div > table > tr')[2]
+          .find('td > div > div > span')
           .text()
       ).toBe('ddd')
       expect(action_fct).toHaveBeenCalledTimes(0)

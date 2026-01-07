@@ -45,22 +45,19 @@ describe('SelectComp', () => {
       wrapper.find('div.checklist > div.v-field_abstract > select').element.childElementCount
     ).toBe(3)
     expect(
-      wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[0].element
-        .value
+      wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[0].element.value
     ).toBe('1')
     expect(
       wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[0].text()
     ).toBe('abc')
     expect(
-      wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[1].element
-        .value
+      wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[1].element.value
     ).toBe('2')
     expect(
       wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[1].text()
     ).toBe('def')
     expect(
-      wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[2].element
-        .value
+      wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[2].element.value
     ).toBe('3')
     expect(
       wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[2].text()
@@ -121,22 +118,19 @@ describe('SelectComp', () => {
       wrapper.find('div.checklist > div.v-field_abstract > select').element.childElementCount
     ).toBe(3)
     expect(
-      wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[0].element
-        .value
+      wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[0].element.value
     ).toBe('1')
     expect(
       wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[0].text()
     ).toBe('abc')
     expect(
-      wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[1].element
-        .value
+      wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[1].element.value
     ).toBe('2')
     expect(
       wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[1].text()
     ).toBe('def')
     expect(
-      wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[2].element
-        .value
+      wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[2].element.value
     ).toBe('3')
     expect(
       wrapper.findAll('div.checklist > div.v-field_abstract > select > option')[2].text()
