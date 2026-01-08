@@ -27,6 +27,7 @@ describe('StepComp', () => {
           tab: 0,
           description: '',
           needed: true,
+          enabled: true,
           max: 5
         }
       }
@@ -109,6 +110,7 @@ describe('StepComp', () => {
           description: 'title',
           needed: true,
           max: 8,
+          enabled: true,
           action: {
             text: 'Modify',
             id: 'ext/act',

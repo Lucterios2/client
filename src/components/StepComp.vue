@@ -49,7 +49,7 @@ export default {
     <v-btn
       class="step_btn"
       prepend-icon="mdi mdi-chevron-left"
-      :disabled="current_value == 1"
+      :disabled="!component.enabled || current_value == 1"
       @click="prevact"
     >
       {{ $t('last') }}</v-btn
@@ -66,7 +66,7 @@ export default {
     <v-btn
       class="step_btn"
       append-icon="mdi mdi-chevron-right"
-      :disabled="current_value == component.max"
+      :disabled="!component.enabled || current_value == component.max"
       @click="nextact"
       >{{ $t('next') }}</v-btn
     >

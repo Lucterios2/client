@@ -61,6 +61,9 @@ export default {
         formatstr.replaceAll('%s', '{0}')
       )
       return convertLuctoriosFormatToHtml(int_label)
+    },
+    description_formated() {
+      return convertLuctoriosFormatToHtml(this.component.description)
     }
   }
 }
@@ -68,7 +71,7 @@ export default {
 
 <template>
   <div :name="component.name">
-    <label class="v-label" v-if="component.description">{{ component.description }}</label>
+    <label class="v-label" v-if="component.description" v-html="description_formated"></label>
     <div class="v-field_abstract" :name="component.name">
       <slot />
     </div>

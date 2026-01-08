@@ -40,7 +40,7 @@ describe('CheckComp', () => {
         .attributes().class
     ).toBe('mdi-checkbox-marked mdi v-icon notranslate v-theme--light v-icon--size-default')
     expect(wrapper.find('.v-input__control > .v-selection-control').element.childElementCount).toBe(
-      1
+      2
     )
     expect(wrapper.vm.is_valid()).toBe(true)
     await wrapper

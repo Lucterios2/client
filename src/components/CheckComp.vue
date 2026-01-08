@@ -35,12 +35,15 @@ export default {
     v-model="current_value"
     :name="component.name"
     ref="tofocus"
-    :label="component.description"
     :disabled="is_disabled"
     @focusin="savefocusin"
     @change="runIfChange"
     @keyup.enter="onPressEnter"
-  />
+  >
+    <template v-slot:label>
+      <span ref="tofocus" v-html="description_formated"></span>
+    </template>
+  </v-checkbox>
 </template>
 
 <style></style>
